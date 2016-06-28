@@ -2,23 +2,23 @@ form {
     width: 800px;
     padding: 20px 10px;
     margin: 0 auto;
-    border: 1px solid $frost;
+    border: 1px solid;
+}
 
-    .input-wrapper {
-        width: 33.3%;
-        display: inline-block;
-        vertical-align: top;
-        padding: 10px;
-        box-sizing: border-box;
+form .input-wrapper {
+    width: 33.3%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px;
+    box-sizing: border-box;
+}
 
-        input {
-            height: 30px;
-            width: 100%;
-        }
-    }
+input {
+    height: 30px;
+    width: 100%;
+}
 
-    button {
-        padding: 0;
-        margin: 20px 10px;
-    }
+button {
+    padding: 0;
+    margin: 20px 10px;
 }
