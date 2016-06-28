@@ -1,0 +1,40 @@
+ body{
+ 	background-color: white;
+ 	font-family: Segoe UI;
+ }
+
+img{
+	padding: 2%;
+	margin: auto;
+}
+
+label{
+	font-weight: bold;
+	font-size: 120%;
+}
+
+footer{
+	background-color: rgb(245, 245, 245);
+	text-align: center;
+	padding: 0 0 2% 0;
+}
+
+ #header{
+ 	background-color: #11a6d7;
+ 	width:100%;
+ 	margin: auto;
+ }
+
+#loginForm{
+	text-align: center;
+	background-color: rgb(209, 224, 240);
+}
+
+#formLogin{
+	padding-bottom:2%;
+}
+
+#loginButton{
+	margin-top: 2%;
+	width: 8%;
+}
