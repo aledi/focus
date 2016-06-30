@@ -6,8 +6,16 @@ $(document).on('ready', function () {
         var password = $('#password').val();
 
         if (username === '' && password === '') {
-            $('#feedback').html('Faltan campos');
+            $('#feedback').html('Usuario y Contraseña invalidos.');
 
+            return;
+        }
+        else if(username == ''){
+            $('#feedback').html('Usuario invalido.');
+            return;
+        }
+        else if (password == '' ){
+            $('#feedback').html('Contraseña invalida.');
             return;
         }
 
@@ -23,6 +31,7 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
+                //console.log(obj);
                 $('#feedback').html(obj.status);
             },
             error: function (error) {
