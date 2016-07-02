@@ -22,7 +22,7 @@ function connect() {
 
 function validateWebCredentials ($username, $password, $tipo) {
     $conn = connect();
-    
+
     if ($conn != null) {
         $sql = "SELECT id, username, email, nombre, apPaterno, apMaterno FROM Usuario WHERE username = '$username' AND password = '$password' AND tipo = '$tipo'";
         $result = $conn->query($sql);
@@ -30,7 +30,7 @@ function validateWebCredentials ($username, $password, $tipo) {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
-            return array('status' => 'SUCCESS', 'id' => $row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre']." ".$row['apPaterno']." ".$row['apMaterno']);
+            return array('status' => 'SUCCESS', 'id' => (int)$row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre']." ".$row['apPaterno']." ".$row['apMaterno']);
         } else {
             return array('status' => 'ERROR');
         }
@@ -49,7 +49,7 @@ function validatePanelistaCredentials ($email, $password) {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
-            return array('status' => 'SUCCESS', 'id' => $row['id'], 'email' => $row['email'], 'nombre' => $row['nombre']." ".$row['apPaterno']." ".$row['apMaterno']);
+            return array('status' => 'SUCCESS', 'id' => (int)$row['id'], 'email' => $row['email'], 'nombre' => $row['nombre']." ".$row['apPaterno']." ".$row['apMaterno']);
         } else {
             return array('status' => 'ERROR');
         }
@@ -58,4 +58,33 @@ function validatePanelistaCredentials ($email, $password) {
     }
 }
 
- ?>
+// -------------------------------
+// Registration
+// -------------------------------
+
+function registerPanelista ($email, $nombre, $apPaterno, $apMaterno, $educacion, $edad, $edoCivil, $estado, $municipio, $cuartos, $banios, $regadera, $focos, $piso, $autos, $estudiosProv, $estufa, $movil, $fotoINE) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, email FROM Panelista WHERE email = '$email'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'email' => $row['email']);
+        } else {
+            $sql = "INSERT INTO Panelista (email, nombre, apPaterno, apMaterno, educacion, edad, edoCivil, estado, municipio, cuartos, banios, regadera, focos, piso, autos, estudiosProv, estufa, movil, fotoINE) VALUES ('$email', '$nombre', '$apPaterno', '$apMaterno', '$educacion', '$edad', '$edoCivil', '$estado', '$municipio', '$cuartos', '$banios', '$regadera', '$focos', '$piso', '$autos', '$estudiosProv', '$estufa', '$movil', '$fotoINE')";
+            
+            if ($conn->query($sql) === TRUE) {
+                return array('status' => 'SUCCESS');
+            } else {
+                return array('status' => 'ERROR');
+            }
+        }
+
+        $conn->close();
+    }
+}
+
+?>
