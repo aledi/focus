@@ -32,10 +32,11 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 //console.log(obj);
-                $('#feedback').html(obj.status);
+                $('#feedback').html(obj.message);
+                location.replace("home.php");
             },
             error: function (error) {
-                alert(error);
+                 $('#feedback').html("Usuario o contraseña incorrectos.");
             }
         });
     });

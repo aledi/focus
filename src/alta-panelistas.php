@@ -1,0 +1,179 @@
+<!-- python -m SimpleHTTPServer -->
+<!doctype html>
+
+<html lang='en'>
+<head>
+  	<meta charset='utf-8'>
+    <link href='css/template.css' type='text/css' rel='stylesheet'/>
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js'></script>
+    <script src='js/alta-panelistas.js' type='text/javascript'></script>
+  	<title> Focus - Home</title>
+</head>
+
+<body>
+    <div id='header'>
+    	<div id="container">
+    		<img src='img/focus_logo.png'/>
+    	</div>
+    </div>
+    <div id='loginForm'>   	
+    	<div id="emailInput">
+            <p>1. Cuenta de correo electrónico:</p>
+            <input id="email" type="text"/>
+        </div>
+        <div id="nombre_panelista">
+            <p>2. Nombre(s) de Pila:</p>
+            <input id="fName" type="text"/>
+        </div>
+        <div id="apellidos_panelista">
+            <p>3. Apellidos:</p>
+            <input id="lName" type="text"/>
+        </div>
+        <div id="genero">
+            <p>4. Género:</p>     
+            <p><input type="radio" id="masculinegender" value="masculine" name="gender">Masculino</p>
+            <p><input type="radio" value="feminine" name="gender">Femenino</p>
+        </div>
+        <div id="nivel_educacion">
+            <p>5. ¿Cuál es el nivel de educación más alto que ha recibido?</p>
+            <p><input type="radio" value="primaria" name="nivel_educativo">Primaria</p>
+            <p><input type="radio" value="secundaria" name="nivel_educativo">Secundaria</p>
+            <p><input type="radio" value="preparatoria" name="nivel_educativo">Preparatoria o Técnica</p>
+            <p><input type="radio" value="carrera" name="nivel_educativo">Profesionista</p>
+            <p><input type="radio" value="master" name="nivel_educativo">Posgrado (maestría, doctorado)</p>
+            <p><input type="radio" value="not" name="nivel_educativo">Ninguno</p>
+        </div>
+        <div id="edad">
+            <p>6. ¿Cuál es su edad?</p>
+            <p><input type="radio" value="rango-edad1" name="rango_edad">17 o menos.</p>
+            <p><input type="radio" value="rango-edad2" name="rango_edad">21 - 29</p>
+            <p><input type="radio" value="rango-edad3" name="rango_edad">30 - 39</p>
+            <p><input type="radio" value="rango-edad4" name="rango_edad">40 - 49</p>
+            <p><input type="radio" value="rango-edad5" name="rango_edad">50 - 59</p>
+            <p><input type="radio" value="rango-edad6" name="rango_edad">60 o más</p>
+        </div>
+        <div id="estado_civil">
+            <p>7. ¿Cuál es su estado civil actual?</p>
+            <p><input type="radio" value="casado" name="estadoCivil">Casado/a</p>
+            <p><input type="radio" value="viudo" name="estadoCivil">Viudo/a</p>
+            <p><input type="radio" value="divorciado" name="estadoCivil">Divorciado/a</p>
+            <p><input type="radio" value="separado" name="estadoCivil">Separado/a</p>
+            <p><input type="radio" value="soltero" name="estadoCivil">Soltero/a</p>
+            <p><input type="radio" value="union-libre" name="estadoCivil">Unión Libre</p>
+        </div>
+        <div id="vivienda_Estado">
+            <select class="form-control" id="estado">
+                <option value="0">Selecciona un estado...</option>
+                <option value="Aguascalientes">Aguascalientes</option>
+                <option value="Baja California">Baja California</option>
+                <option value="Baja California Sur">Baja California Sur</option>
+                <option value="Campeche">Campeche</option>
+                <option value="Coahuila">Coahuila</option>
+                <option value="Colima">Colima</option>
+                <option value="Chiapas">Chiapas</option>
+                <option value="Distrito Federal">Distrito Federal</option>
+                <option value="Durango">Durango</option>
+                <option value="Guanajuato">Guanajuato</option>
+                <option value="Guerrero">Guerrero</option>
+                <option value="Hidalgo">Hidalgo</option>
+                <option value="Jalisco">Jalisco</option>
+                <option value="Michoacan">Michoacán</option>
+                <option value="Morelos">Morelos</option>
+                <option value="Nayarit">Nayarit</option>
+                <option value="Nuevo Leon">Nuevo León</option>
+                <option value="Oaxaca">Oaxaca</option>
+                <option value="Puebla">Puebla</option>
+                <option value="Queretaro">Querétaro</option>
+                <option value="Quintana Roo">Quintana Roo</option>
+                <option value="San Luis Potosi">San Luis Potosí</option>
+                <option value="Sinaloa">Sinaloa</option>
+                <option value="Sonora">Sonora</option>
+                <option value="Tabasco">Tabasco</option>
+                <option value="Tamaulipas">Tamaulipas</option>
+                <option value="Tlaxcala">Tlaxcala</option>
+                <option value="Veracruz">Veracruz</option>
+                <option value="Yucatan">Yucatan</option>
+                <option value="Zacatecas">Zacatecas</option>
+            </select>
+        </div>
+        <div id="vivienda_municipio">
+            <p>9. ¿En qué municipio vive?</p>
+            <input id="municipio" type="text"/>
+        </div>
+        <div id="total_cuartos">
+            <p>10. ¿Cuál es el total de cuartos, piezas o habitaciones con que cuenta su hogar? Por favor no incluya baños, medios baños, pasillos, patios y zotehuelas.</p>
+            <p><input type="radio" value="cuartos_1" name="cuartos">1</p>
+            <p><input type="radio" value="cuartos_2" name="cuartos">2</p>
+            <p><input type="radio" value="cuartos_3" name="cuartos">3</p>
+            <p><input type="radio" value="cuartos_4" name="cuartos">4</p>
+            <p><input type="radio" value="cuartos_5" name="cuartos">5</p>
+            <p><input type="radio" value="cuartos_6" name="cuartos">6</p>
+            <p><input type="radio" value="cuartos_7" name="cuartos">7 o más</p>
+        </div>
+        <div id="WC_completos">
+            <p>11. ¿Cuántos baños completos con regadera y W.C. (excusado) hay para uso exclusivo de los integrantes de su hogar?</p>
+            <p><input type="radio" value="banos_0" name="banos">0</p>
+            <p><input type="radio" value="banos_1" name="banos">1</p>
+            <p><input type="radio" value="banos_2" name="banos">2</p>
+            <p><input type="radio" value="banos_3" name="banos">3</p>
+            <p><input type="radio" value="banos_4" name="banos">4 o más</p>
+        </div>
+        <div id="regaderas">
+            <p>12. ¿En su hogar cuenta con regadera funcionado en alguno de los baños?</p>
+            <p><input type="radio" value="regaderas_0" name="regaderas">No tiene</p>
+            <p><input type="radio" value="regaderas_1" name="regaderas">Sí tiene</p>
+        </div>
+        <div id="cantidad_focos">
+            <p>13. Contando todos los focos que utiliza para iluminar su hogar, incluyendo los de techos, paredes y lámparas de buró o piso, dígame ¿cuántos focos tiene su vivienda?</p>
+            <p><input type="radio" value="focos_1" name="focos">0 a 5</p>
+            <p><input type="radio" value="focos_2" name="focos">6 a 10</p>
+            <p><input type="radio" value="focos_3" name="focos">11 a 15</p>
+            <p><input type="radio" value="focos_4" name="focos">16 a 20</p>
+            <p><input type="radio" value="focos_5" name="focos">21 o más</p>
+        </div>
+        <div id="tipo_piso">
+            <p>14. ¿El piso de su hogar es predominantemente de tierra, o de cemento, o de algún otro tipo de acabado?</p>
+            <p><input type="radio" value="piso_0" name="piso">Tierra o cemento</p>
+            <p><input type="radio" value="piso_1" name="piso">Otro tipo de material o acabado</p>
+        </div>
+        <div id="cantidad_carros">
+            <p>15. ¿Cuántos automóviles propios, excluyendo taxis, tienen en su hogar?</p>
+            <p><input type="radio" value="auto_0" name="auto">0</p>
+            <p><input type="radio" value="auto_1" name="auto">1</p>
+            <p><input type="radio" value="auto_2" name="auto">2</p>
+            <p><input type="radio" value="auto_3" name="auto">3 o más</p>
+        </div>
+        <div id="estudio_ingreso">            
+            <p>16. Pensando en la persona que aporta la mayor parte del ingreso en este hogar, ¿cuál fue el último año de estudios que completó esa persona?</p>
+            <p><input type="radio" value="not" name="nivel_educativo_ingreso">No estudió</p>
+            <p><input type="radio" value="primaria_inc" name="nivel_educativo_ingreso">Primaria Incompleta</p>
+            <p><input type="radio" value="primaria_comp" name="nivel_educativo_ingreso">Primaria Completa</p>
+            <p><input type="radio" value="secundaria" name="nivel_educativo_ingreso">Secundaria Completa/Incompleta</p>
+            <p><input type="radio" value="carrera" name="nivel_educativo_ingreso">Carrera Comercial/Técnica</p>
+            <p><input type="radio" value="preparatoria" name="nivel_educativo_ingreso">Preparatoria Completa/Incompleta</p>
+            <p><input type="radio" value="licenciatura" name="nivel_educativo_ingreso">Licenciatura Completa/Incompleta</p>
+            <p><input type="radio" value="posgrado" name="nivel_educativo_ingreso">Diplomado/Maestría</p>
+            <p><input type="radio" value="doctorado" name="nivel_educativo_ingreso">Doctorado</p>
+        </div>
+        <div id="estufa">
+            <p>17. ¿En este hogar cuentan con estufa de gas o eléctrica?</p>
+            <p><input type="radio" value="estufa_0" name="estufa">No tiene</p>
+            <p><input type="radio" value="estufa_1" name="estufa">Sí tiene</p>
+        </div>
+        <div id="telefono">
+            <p>18. Número de teléfono móvil (10 dígitos)</p>
+            <input id="telefono_cel" type="text"/>
+        </div>
+        <div id="medioEnterado">
+        </div>
+        <div id="fotoINE">
+        </div>
+        <div id="enviarInfo">
+            <button type='submit' id='sendInfoPanelistas'>Enviar</button>
+        </div>
+    </div>
+	<footer>
+		<p>Copyright © 2016 Focus Consulting Group, SA. de C.V.</p>
+	</footer>
+</body>
+</html>
