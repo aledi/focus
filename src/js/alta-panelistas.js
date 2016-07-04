@@ -3,50 +3,53 @@ $(document).on('ready', function () {
         event.preventDefault();
 
         var email = $('#email').val();
-        var fName = $('#fName').val();
-        var lName = $('#lName').val();
-        var gender = $("input[name=gender]:checked").val();
-        var education = $("input[name=nivel_educativo]:checked").val();
-        var age = $("input[name=rango_edad]:checked").val();
-        var marriageStatus = $("input[name=estadoCivil]:checked").val();
-        var state = $("#estado").val();
-        var county = $('#municipio').val();
-        var rooms = $("input[name=cuartos]:checked").val();
-        var bathrooms = $("input[name=banos]:checked").val();
-        var showers = $("input[name=regaderas]:checked").val();
-        var bulbs = $("input[name=focos]:checked").val();
-        var floorType = $("input[name=piso]:checked").val();
-        var cars = $("input[name=auto]:checked").val();
-        var bossEducation = $("input[name=nivel_educativo_ingreso]:checked").val();
-        var stove = $("input[name=estufa]:checked").val();
-        var phoneNumber = $('#telefono_cel').val();
+        var nombre = $('#fName').val();
+        var apPaterno = $('#lName').val();
+        var apMaterno = $('$lName_materno').val();
+        var genero = $("input[name=gender]:checked").val();
+        var educacion = $("input[name=nivel_educativo]:checked").val();
+        var edad = $("input[name=rango_edad]:checked").val();
+        var edoCivil = $("input[name=estadoCivil]:checked").val();
+        var estado = $("#estado").val();
+        var municipio = $('#municipio').val();
+        var cuartos = $("input[name=cuartos]:checked").val();
+        var banios = $("input[name=banos]:checked").val();
+        var regadera = $("input[name=regaderas]:checked").val();
+        var focos = $("input[name=focos]:checked").val();
+        var piso = $("input[name=piso]:checked").val();
+        var autos = $("input[name=auto]:checked").val();
+        var estudiosProv = $("input[name=nivel_educativo_ingreso]:checked").val();
+        var estufa = $("input[name=estufa]:checked").val();
+        var movil = $('#telefono_cel').val();
+        var fotoINE = "";
 
         var parameters = {
-            'action': 'ALTA_PANELISTAS',
-            'fName': fName,
-            'lName': lName,
+            'action': 'ALTA_PANELISTA',
+            'nombre': nombre,
+            'apPaterno': apPaterno,
+            'apMaterno': apMaterno,
             'email' : email,
-            'gender' : gender,
-            'education' : education,
-            'age' : age,
-            'marriageStatus' : marriageStatus,
-            'state' : state,
-            'county' : county,
-            'rooms' : rooms,
-            'bathrooms' : bathrooms,
-            'showers' : showers,
-            'bulbs' : bulbs,
-            'floorType' : floorType,
-            'cars' : cars,
-            'bossEducation' : bossEducation,
-            'stove' : stove,
-            'phoneNumber' : phoneNumber
-
+            'genero' : genero,
+            'educacion' : educacion,
+            'edad' : edad,
+            'edoCivil' : edoCivil,
+            'estado' : estado,
+            'municipio' : municipio,
+            'cuartos' : cuartos,
+            'banios' : banios,
+            'regadera' : regadera,
+            'focos' : focos,
+            'piso' : piso,
+            'autos' : autos,
+            'estudiosProv' : estudiosProv,
+            'estufa' : estufa,
+            'movil' : movil,
+            'fotoINE' : fotoINE
         };
 
         $.ajax({
             type: 'POST',
-            url: 'controllers/controller.php',
+            url: 'api/controller.php',
             data: parameters,
             dataType: 'json',
             success: function (obj) {

@@ -26,40 +26,44 @@
             <input id="fName" type="text"/>
         </div>
         <div id="apellidos_panelista">
-            <p>3. Apellidos:</p>
+            <p>3. Apellido Paterno:</p>
             <input id="lName" type="text"/>
+        </div>
+        <div id="apellidos_panelista_materno">
+            <p>3. Apellido Materno:</p>
+            <input id="lName_materno" type="text"/>
         </div>
         <div id="genero">
             <p>4. Género:</p>     
-            <p><input type="radio" id="masculinegender" value="masculine" name="gender">Masculino</p>
-            <p><input type="radio" value="feminine" name="gender">Femenino</p>
+            <p><input type="radio" value="1" name="gender">Masculino</p>
+            <p><input type="radio" value="2" name="gender">Femenino</p>
         </div>
         <div id="nivel_educacion">
             <p>5. ¿Cuál es el nivel de educación más alto que ha recibido?</p>
-            <p><input type="radio" value="primaria" name="nivel_educativo">Primaria</p>
-            <p><input type="radio" value="secundaria" name="nivel_educativo">Secundaria</p>
-            <p><input type="radio" value="preparatoria" name="nivel_educativo">Preparatoria o Técnica</p>
-            <p><input type="radio" value="carrera" name="nivel_educativo">Profesionista</p>
-            <p><input type="radio" value="master" name="nivel_educativo">Posgrado (maestría, doctorado)</p>
-            <p><input type="radio" value="not" name="nivel_educativo">Ninguno</p>
+            <p><input type="radio" value="1" name="nivel_educativo">Primaria</p>
+            <p><input type="radio" value="2" name="nivel_educativo">Secundaria</p>
+            <p><input type="radio" value="3" name="nivel_educativo">Preparatoria o Técnica</p>
+            <p><input type="radio" value="4" name="nivel_educativo">Profesionista</p>
+            <p><input type="radio" value="5" name="nivel_educativo">Posgrado (maestría, doctorado)</p>
+            <p><input type="radio" value="0" name="nivel_educativo">Ninguno</p>
         </div>
         <div id="edad">
             <p>6. ¿Cuál es su edad?</p>
-            <p><input type="radio" value="rango-edad1" name="rango_edad">17 o menos.</p>
-            <p><input type="radio" value="rango-edad2" name="rango_edad">21 - 29</p>
-            <p><input type="radio" value="rango-edad3" name="rango_edad">30 - 39</p>
-            <p><input type="radio" value="rango-edad4" name="rango_edad">40 - 49</p>
-            <p><input type="radio" value="rango-edad5" name="rango_edad">50 - 59</p>
-            <p><input type="radio" value="rango-edad6" name="rango_edad">60 o más</p>
+            <p><input type="radio" value="1" name="rango_edad">17 o menos.</p>
+            <p><input type="radio" value="2" name="rango_edad">21 - 29</p>
+            <p><input type="radio" value="3" name="rango_edad">30 - 39</p>
+            <p><input type="radio" value="4" name="rango_edad">40 - 49</p>
+            <p><input type="radio" value="5" name="rango_edad">50 - 59</p>
+            <p><input type="radio" value="6" name="rango_edad">60 o más</p>
         </div>
         <div id="estado_civil">
             <p>7. ¿Cuál es su estado civil actual?</p>
-            <p><input type="radio" value="casado" name="estadoCivil">Casado/a</p>
-            <p><input type="radio" value="viudo" name="estadoCivil">Viudo/a</p>
-            <p><input type="radio" value="divorciado" name="estadoCivil">Divorciado/a</p>
-            <p><input type="radio" value="separado" name="estadoCivil">Separado/a</p>
-            <p><input type="radio" value="soltero" name="estadoCivil">Soltero/a</p>
-            <p><input type="radio" value="union-libre" name="estadoCivil">Unión Libre</p>
+            <p><input type="radio" value="0" name="estadoCivil">Casado/a</p>
+            <p><input type="radio" value="1" name="estadoCivil">Viudo/a</p>
+            <p><input type="radio" value="2" name="estadoCivil">Divorciado/a</p>
+            <p><input type="radio" value="3" name="estadoCivil">Separado/a</p>
+            <p><input type="radio" value="4" name="estadoCivil">Soltero/a</p>
+            <p><input type="radio" value="5" name="estadoCivil">Unión Libre</p>
         </div>
         <div id="vivienda_Estado">
             <select class="form-control" id="estado">
@@ -102,63 +106,63 @@
         </div>
         <div id="total_cuartos">
             <p>10. ¿Cuál es el total de cuartos, piezas o habitaciones con que cuenta su hogar? Por favor no incluya baños, medios baños, pasillos, patios y zotehuelas.</p>
-            <p><input type="radio" value="cuartos_1" name="cuartos">1</p>
-            <p><input type="radio" value="cuartos_2" name="cuartos">2</p>
-            <p><input type="radio" value="cuartos_3" name="cuartos">3</p>
-            <p><input type="radio" value="cuartos_4" name="cuartos">4</p>
-            <p><input type="radio" value="cuartos_5" name="cuartos">5</p>
-            <p><input type="radio" value="cuartos_6" name="cuartos">6</p>
-            <p><input type="radio" value="cuartos_7" name="cuartos">7 o más</p>
+            <p><input type="radio" value="1" name="cuartos">1</p>
+            <p><input type="radio" value="2" name="cuartos">2</p>
+            <p><input type="radio" value="3" name="cuartos">3</p>
+            <p><input type="radio" value="4" name="cuartos">4</p>
+            <p><input type="radio" value="5" name="cuartos">5</p>
+            <p><input type="radio" value="6" name="cuartos">6</p>
+            <p><input type="radio" value="7" name="cuartos">7 o más</p>
         </div>
         <div id="WC_completos">
             <p>11. ¿Cuántos baños completos con regadera y W.C. (excusado) hay para uso exclusivo de los integrantes de su hogar?</p>
-            <p><input type="radio" value="banos_0" name="banos">0</p>
-            <p><input type="radio" value="banos_1" name="banos">1</p>
-            <p><input type="radio" value="banos_2" name="banos">2</p>
-            <p><input type="radio" value="banos_3" name="banos">3</p>
-            <p><input type="radio" value="banos_4" name="banos">4 o más</p>
+            <p><input type="radio" value="0" name="banos">0</p>
+            <p><input type="radio" value="1" name="banos">1</p>
+            <p><input type="radio" value="2" name="banos">2</p>
+            <p><input type="radio" value="3" name="banos">3</p>
+            <p><input type="radio" value="4" name="banos">4 o más</p>
         </div>
         <div id="regaderas">
             <p>12. ¿En su hogar cuenta con regadera funcionado en alguno de los baños?</p>
-            <p><input type="radio" value="regaderas_0" name="regaderas">No tiene</p>
-            <p><input type="radio" value="regaderas_1" name="regaderas">Sí tiene</p>
+            <p><input type="radio" value="0" name="regaderas">No tiene</p>
+            <p><input type="radio" value="1" name="regaderas">Sí tiene</p>
         </div>
         <div id="cantidad_focos">
             <p>13. Contando todos los focos que utiliza para iluminar su hogar, incluyendo los de techos, paredes y lámparas de buró o piso, dígame ¿cuántos focos tiene su vivienda?</p>
-            <p><input type="radio" value="focos_1" name="focos">0 a 5</p>
-            <p><input type="radio" value="focos_2" name="focos">6 a 10</p>
-            <p><input type="radio" value="focos_3" name="focos">11 a 15</p>
-            <p><input type="radio" value="focos_4" name="focos">16 a 20</p>
-            <p><input type="radio" value="focos_5" name="focos">21 o más</p>
+            <p><input type="radio" value="0" name="focos">0 a 5</p>
+            <p><input type="radio" value="1" name="focos">6 a 10</p>
+            <p><input type="radio" value="2" name="focos">11 a 15</p>
+            <p><input type="radio" value="3" name="focos">16 a 20</p>
+            <p><input type="radio" value="4" name="focos">21 o más</p>
         </div>
         <div id="tipo_piso">
             <p>14. ¿El piso de su hogar es predominantemente de tierra, o de cemento, o de algún otro tipo de acabado?</p>
-            <p><input type="radio" value="piso_0" name="piso">Tierra o cemento</p>
-            <p><input type="radio" value="piso_1" name="piso">Otro tipo de material o acabado</p>
+            <p><input type="radio" value="0" name="piso">Tierra o cemento</p>
+            <p><input type="radio" value="1" name="piso">Otro tipo de material o acabado</p>
         </div>
         <div id="cantidad_carros">
             <p>15. ¿Cuántos automóviles propios, excluyendo taxis, tienen en su hogar?</p>
-            <p><input type="radio" value="auto_0" name="auto">0</p>
-            <p><input type="radio" value="auto_1" name="auto">1</p>
-            <p><input type="radio" value="auto_2" name="auto">2</p>
-            <p><input type="radio" value="auto_3" name="auto">3 o más</p>
+            <p><input type="radio" value="0" name="auto">0</p>
+            <p><input type="radio" value="1" name="auto">1</p>
+            <p><input type="radio" value="2" name="auto">2</p>
+            <p><input type="radio" value="3" name="auto">3 o más</p>
         </div>
         <div id="estudio_ingreso">            
             <p>16. Pensando en la persona que aporta la mayor parte del ingreso en este hogar, ¿cuál fue el último año de estudios que completó esa persona?</p>
-            <p><input type="radio" value="not" name="nivel_educativo_ingreso">No estudió</p>
-            <p><input type="radio" value="primaria_inc" name="nivel_educativo_ingreso">Primaria Incompleta</p>
-            <p><input type="radio" value="primaria_comp" name="nivel_educativo_ingreso">Primaria Completa</p>
-            <p><input type="radio" value="secundaria" name="nivel_educativo_ingreso">Secundaria Completa/Incompleta</p>
-            <p><input type="radio" value="carrera" name="nivel_educativo_ingreso">Carrera Comercial/Técnica</p>
-            <p><input type="radio" value="preparatoria" name="nivel_educativo_ingreso">Preparatoria Completa/Incompleta</p>
-            <p><input type="radio" value="licenciatura" name="nivel_educativo_ingreso">Licenciatura Completa/Incompleta</p>
-            <p><input type="radio" value="posgrado" name="nivel_educativo_ingreso">Diplomado/Maestría</p>
-            <p><input type="radio" value="doctorado" name="nivel_educativo_ingreso">Doctorado</p>
+            <p><input type="radio" value="0" name="nivel_educativo_ingreso">No estudió</p>
+            <p><input type="radio" value="1" name="nivel_educativo_ingreso">Primaria Incompleta</p>
+            <p><input type="radio" value="2" name="nivel_educativo_ingreso">Primaria Completa</p>
+            <p><input type="radio" value="3" name="nivel_educativo_ingreso">Secundaria Completa/Incompleta</p>
+            <p><input type="radio" value="4" name="nivel_educativo_ingreso">Carrera Comercial/Técnica</p>
+            <p><input type="radio" value="5" name="nivel_educativo_ingreso">Preparatoria Completa/Incompleta</p>
+            <p><input type="radio" value="6" name="nivel_educativo_ingreso">Licenciatura Completa/Incompleta</p>
+            <p><input type="radio" value="7" name="nivel_educativo_ingreso">Diplomado/Maestría</p>
+            <p><input type="radio" value="8" name="nivel_educativo_ingreso">Doctorado</p>
         </div>
         <div id="estufa">
             <p>17. ¿En este hogar cuentan con estufa de gas o eléctrica?</p>
-            <p><input type="radio" value="estufa_0" name="estufa">No tiene</p>
-            <p><input type="radio" value="estufa_1" name="estufa">Sí tiene</p>
+            <p><input type="radio" value="0" name="estufa">No tiene</p>
+            <p><input type="radio" value="1" name="estufa">Sí tiene</p>
         </div>
         <div id="telefono">
             <p>18. Número de teléfono móvil (10 dígitos)</p>

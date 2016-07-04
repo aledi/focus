@@ -20,20 +20,20 @@ $(document).on('ready', function () {
         }
 
         var parameters = {
-            'action': 'LOG_IN',
+            'action': 'ADMIN_LOG_IN',
             'username': username,
             'password': password
         };
 
         $.ajax({
             type: 'POST',
-            url: 'controllers/controller.php',
+            url: 'api/controller.php',
             data: parameters,
             dataType: 'json',
             success: function (obj) {
                 //console.log(obj);
                 $('#feedback').html(obj.message);
-                location.replace("home.php");
+                location.replace("alta-panelistas.php");
             },
             error: function (error) {
                  $('#feedback').html("Usuario o contraseña incorrectos.");
