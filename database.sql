@@ -2,10 +2,10 @@
 -- version 4.4.10
 -- http://www.phpmyadmin.net
 --
--- Host: localhost:8889
--- Generation Time: Jun 28, 2016 at 02:07 AM
--- Server version: 5.5.42
--- PHP Version: 5.6.10
+-- Servidor: localhost
+-- Tiempo de generación: 03-07-2016 a las 23:16:47
+-- Versión del servidor: 5.5.42
+-- Versión de PHP: 7.0.0
 
 Create Database focus; 
 use focus;
@@ -14,18 +14,19 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 --
--- Database: `focus`
+-- Base de datos: `focus`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Panelista`
+-- Estructura de tabla para la tabla `Panelista`
 --
 
 CREATE TABLE `Panelista` (
   `id` int(11) NOT NULL,
   `email` varchar(50) NOT NULL,
+  `password` varchar(25) NOT NULL,
   `nombre` varchar(25) NOT NULL,
   `apPaterno` varchar(25) NOT NULL,
   `apMaterno` varchar(25) NOT NULL,
@@ -44,56 +45,68 @@ CREATE TABLE `Panelista` (
   `estufa` int(11) NOT NULL,
   `movil` int(11) NOT NULL,
   `fotoINE` longtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `Panelista`
+--
+
+INSERT INTO `Panelista` (`id`, `email`, `password`, `nombre`, `apPaterno`, `apMaterno`, `educacion`, `edad`, `edoCivil`, `estado`, `municipio`, `cuartos`, `banios`, `regadera`, `focos`, `piso`, `autos`, `estudiosProv`, `estufa`, `movil`, `fotoINE`) VALUES
+(1, 'ecristerna@icloud.com', 'password', 'Eduardo', 'Cristerna', 'Morales', 3, 21, 1, 'Nuevo Leon', 'Monterrey', 4, 3, 1, 20, 1, 3, 4, 1, 1, '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Usuario`
+-- Estructura de tabla para la tabla `Usuario`
 --
 
 CREATE TABLE `Usuario` (
   `id` int(11) NOT NULL,
   `username` varchar(25) NOT NULL,
   `password` varchar(50) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `apPaterno` varchar(50) NOT NULL,
+  `apMaterno` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `tipo` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Usuario`
+-- Volcado de datos para la tabla `Usuario`
 --
 
-INSERT INTO `Usuario` (`id`, `username`, `password`, `email`, `tipo`) VALUES
-(1, 'ecristerna', 'password', 'ecristerna@icloud.com', 0);
+INSERT INTO `Usuario` (`id`, `username`, `password`, `nombre`, `apPaterno`, `apMaterno`, `email`, `tipo`) VALUES
+(1, 'ecristerna', 'password', 'Eduardo', 'Cristerna', 'Morales', 'ecristerna@icloud.com', 0),
+(3, 'cliente', 'cliente', 'Cliente', 'Prueba', 'Prueba', 'cliente@prueba.com', 1),
+(4, 'cgomez', 'password', 'Carlos', 'Gomez', 'Gomez', 'cgomez@campania.com', 1);
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `Panelista`
+-- Indices de la tabla `Panelista`
 --
 ALTER TABLE `Panelista`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `Usuario`
+-- Indices de la tabla `Usuario`
 --
 ALTER TABLE `Usuario`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `Panelista`
+-- AUTO_INCREMENT de la tabla `Panelista`
 --
 ALTER TABLE `Panelista`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `Usuario`
+-- AUTO_INCREMENT de la tabla `Usuario`
 --
 ALTER TABLE `Usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
