@@ -18,11 +18,28 @@ switch($action) {
     case 'ALTA_PANELISTA':
         newPanelista();
         break;
+    case 'SESSION_START':
+        startSession();
+        break;
+}
+
+function startSession ($id, $username, $email, $nombre) {
+    session_start();
+
+    $_SESSION['id'] = $id;
+    $_SESSION['username'] = $username;
+    $_SESSION['email'] = $email;
+    $_SESSION['nombre'] = $nombre;
 }
 
 function signinToDatabase ($tipo) {
     if ($tipo === 0 || $tipo === 1) {
         $signinResult = validateWebCredentials($_POST['username'], $_POST['password'], $tipo);
+
+        if($signinResult['status'] === "SUCCESS"){
+            startSession($signinResult['id'], $signinResult['username'], $signinResult['email'], $signinResult['nombre']);
+        }
+
     } else if ($tipo === 2) {
         $signinResult = validatePanelistaCredentials($_POST['email'], $_POST['password']);
     }
