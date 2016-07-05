@@ -31,12 +31,15 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                //console.log(obj);
-                $('#feedback').html(obj.message);
-                location.replace("alta-panelistas.php");
+                if (obj.status === "SUCCESS") {
+                    location.replace("alta-panelistas.php");
+                } else {
+                    $('#feedback').html("Usuario o contraseña incorrectos.");
+                }
+
             },
             error: function (error) {
-                 $('#feedback').html("Usuario o contraseña incorrectos.");
+                $('#feedback').html("Usuario o contraseña incorrectos.");
             }
         });
     });
