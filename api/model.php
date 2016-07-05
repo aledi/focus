@@ -62,7 +62,7 @@ function validatePanelistaCredentials ($email, $password) {
 // Registration
 // -------------------------------
 
-function registerPanelista ($email, $nombre, $apPaterno, $apMaterno, $educacion, $edad, $edoCivil, $estado, $municipio, $cuartos, $banios, $regadera, $focos, $piso, $autos, $estudiosProv, $estufa, $movil, $fotoINE) {
+function registerPanelista ($email, $nombre, $apPaterno, $apMaterno, $genero, $educacion, $edad, $edoCivil, $estado, $municipio, $cuartos, $banios, $regadera, $focos, $piso, $autos, $estudiosProv, $estufa, $movil, $fotoINE) {
     $conn = connect();
 
     if ($conn != null) {
@@ -74,7 +74,7 @@ function registerPanelista ($email, $nombre, $apPaterno, $apMaterno, $educacion,
 
             return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'email' => $row['email']);
         } else {
-            $sql = "INSERT INTO Panelista (email, nombre, apPaterno, apMaterno, educacion, edad, edoCivil, estado, municipio, cuartos, banios, regadera, focos, piso, autos, estudiosProv, estufa, movil, fotoINE) VALUES ('$email', '$nombre', '$apPaterno', '$apMaterno', '$educacion', '$edad', '$edoCivil', '$estado', '$municipio', '$cuartos', '$banios', '$regadera', '$focos', '$piso', '$autos', '$estudiosProv', '$estufa', '$movil', '$fotoINE')";
+            $sql = "INSERT INTO Panelista (email, nombre, apPaterno, apMaterno, genero, educacion, edad, edoCivil, estado, municipio, cuartos, banios, regadera, focos, piso, autos, estudiosProv, estufa, movil, fotoINE) VALUES ('$email', '$nombre', '$apPaterno', '$apMaterno', $genero, '$educacion', '$edad', '$edoCivil', '$estado', '$municipio', '$cuartos', '$banios', '$regadera', '$focos', '$piso', '$autos', '$estudiosProv', '$estufa', '$movil', '$fotoINE')";
             
             if ($conn->query($sql) === TRUE) {
                 return array('status' => 'SUCCESS');

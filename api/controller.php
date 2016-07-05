@@ -20,9 +20,23 @@ switch($action) {
         break;
 }
 
+function startSession ($id, $username, $email, $nombre) {
+    session_start();
+
+    $_SESSION['id'] = $id;
+    $_SESSION['username'] = $username;
+    $_SESSION['email'] = $email;
+    $_SESSION['nombre'] = $nombre;
+}
+
 function signinToDatabase ($tipo) {
     if ($tipo === 0 || $tipo === 1) {
         $signinResult = validateWebCredentials($_POST['username'], $_POST['password'], $tipo);
+
+        if($signinResult['status'] === "SUCCESS"){
+            startSession($signinResult['id'], $signinResult['username'], $signinResult['email'], $signinResult['nombre']);
+        }
+
     } else if ($tipo === 2) {
         $signinResult = validatePanelistaCredentials($_POST['email'], $_POST['password']);
     }
@@ -31,7 +45,7 @@ function signinToDatabase ($tipo) {
 }
 
 function newPanelista () {
-    $registrationResult = registerPanelista($_POST['email'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['educacion'], $_POST['edad'], $_POST['edoCivil'], $_POST['estado'], $_POST['municipio'], $_POST['cuartos'], $_POST['banios'], $_POST['regadera'], $_POST['focos'], $_POST['piso'], $_POST['autos'], $_POST['estudiosProv'], $_POST['estufa'], $_POST['movil'], $_POST['fotoINE']);
+    $registrationResult = registerPanelista($_POST['email'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['genero'], $_POST['educacion'], $_POST['edad'], $_POST['edoCivil'], $_POST['estado'], $_POST['municipio'], $_POST['cuartos'], $_POST['banios'], $_POST['regadera'], $_POST['focos'], $_POST['piso'], $_POST['autos'], $_POST['estudiosProv'], $_POST['estufa'], $_POST['movil'], $_POST['fotoINE']);
 
     echo json_encode($registrationResult);
 }
