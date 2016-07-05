@@ -75,13 +75,37 @@ function registerPanelista ($email, $nombre, $apPaterno, $apMaterno, $genero, $e
             return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'email' => $row['email']);
         } else {
             $sql = "INSERT INTO Panelista (email, nombre, apPaterno, apMaterno, genero, educacion, edad, edoCivil, estado, municipio, cuartos, banios, regadera, focos, piso, autos, estudiosProv, estufa, movil, fotoINE) VALUES ('$email', '$nombre', '$apPaterno', '$apMaterno', $genero, '$educacion', '$edad', '$edoCivil', '$estado', '$municipio', '$cuartos', '$banios', '$regadera', '$focos', '$piso', '$autos', '$estudiosProv', '$estufa', '$movil', '$fotoINE')";
-            
+
             if ($conn->query($sql) === TRUE) {
                 return array('status' => 'SUCCESS');
             } else {
                 return array('status' => 'ERROR');
             }
         }
+
+        $conn->close();
+    }
+}
+
+// -------------------------------
+// Fetch
+// -------------------------------
+
+function fetchClientes () {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, username, nombre, apPaterno, apMaterno, email FROM Usuario WHERE tipo = '1'";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $client = array('id' => $row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno']);
+            $response[] = $client;
+        }
+
+        return array('results' => $response);
 
         $conn->close();
     }
