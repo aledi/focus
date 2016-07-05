@@ -21,6 +21,9 @@ switch($action) {
     case 'GET_CLIENTES':
         getClientes();
         break;
+    case 'GET_PANELISTAS':
+        getPanelistas();
+        break;
 }
 
 function startSession ($id, $username, $email, $nombre) {
@@ -55,6 +58,12 @@ function newPanelista () {
 
 function getClientes () {
     $clientesResult = fetchClientes();
+
+    echo json_encode($clientesResult);
+}
+
+function getPanelistas () {
+    $clientesResult = fetchPanelistas();
 
     echo json_encode($clientesResult);
 }

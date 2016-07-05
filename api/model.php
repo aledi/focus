@@ -111,4 +111,24 @@ function fetchClientes () {
     }
 }
 
+function fetchPanelistas () {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre, apPaterno, apMaterno, genero, edad, edoCivil, estado, municipio FROM Panelista";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $panelista = array('id' => $row['id'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'genero' => $row['genero'], 'edad' => $row['edad'], 'edoCivil' => $row['edoCivil'], 'municipio' => $row['municipio'], 'estado' => $row['estado']);
+            $response[] = $panelista;
+        }
+
+        return array('results' => $response);
+
+        $conn->close();
+    }
+}
+
 ?>
