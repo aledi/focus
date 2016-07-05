@@ -75,13 +75,82 @@ function registerPanelista ($email, $nombre, $apPaterno, $apMaterno, $genero, $e
             return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'email' => $row['email']);
         } else {
             $sql = "INSERT INTO Panelista (email, nombre, apPaterno, apMaterno, genero, educacion, edad, edoCivil, estado, municipio, cuartos, banios, regadera, focos, piso, autos, estudiosProv, estufa, movil, fotoINE) VALUES ('$email', '$nombre', '$apPaterno', '$apMaterno', $genero, '$educacion', '$edad', '$edoCivil', '$estado', '$municipio', '$cuartos', '$banios', '$regadera', '$focos', '$piso', '$autos', '$estudiosProv', '$estufa', '$movil', '$fotoINE')";
-            
+
             if ($conn->query($sql) === TRUE) {
                 return array('status' => 'SUCCESS');
             } else {
                 return array('status' => 'ERROR');
             }
         }
+
+        $conn->close();
+    }
+}
+
+function registerPanel ($nombre, $fechaInicio, $fechaFin, $cliente, $creador) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre FROM Panel WHERE nombre = '$nombre'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            return array('status' => 'RECORD_EXISTS', 'id' => (int)$row['id'], 'nombre' => $row['nombre']);
+        } else {
+            $sql = "INSERT INTO Panel (nombre, fechaInicio, fechaFin, cliente, creador) VALUES ('$nombre', '$fechaInicio', '$fechaFin', $cliente, '$creador')";
+
+            if ($conn->query($sql) === TRUE) {
+                return array('status' => 'SUCCESS');
+            } else {
+                return array('status' => 'ERROR');
+            }
+        }
+
+        $conn->close();
+    }
+}
+
+// -------------------------------
+// Fetch
+// -------------------------------
+
+function fetchClientes () {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, username, nombre, apPaterno, apMaterno, email FROM Usuario WHERE tipo = '1'";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $client = array('id' => $row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno']);
+            $response[] = $client;
+        }
+
+        return array('results' => $response);
+
+        $conn->close();
+    }
+}
+
+function fetchPanelistas () {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre, apPaterno, apMaterno, genero, edad, edoCivil, estado, municipio FROM Panelista";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $panelista = array('id' => $row['id'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'genero' => $row['genero'], 'edad' => $row['edad'], 'edoCivil' => $row['edoCivil'], 'municipio' => $row['municipio'], 'estado' => $row['estado']);
+            $response[] = $panelista;
+        }
+
+        return array('results' => $response);
 
         $conn->close();
     }
