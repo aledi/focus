@@ -1,0 +1,90 @@
+form {
+    width: 800px;
+    padding: 20px 10px;
+    margin: 0 auto;
+    border: 1px solid;
+}
+
+form .input-wrapper {
+    width: 33.3%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+input {
+    height: 30px;
+    width: 100%;
+}
+
+button {
+    padding: 0;
+    margin: 20px 10px;
+}
+
+body{
+    background-color: white;
+    font-family: Segoe UI;
+    height:100%;
+    margin: 0;
+ }
+
+img{
+    padding: 2%;
+    margin: auto;
+}
+
+label{
+    font-weight: bold;
+    font-size: 120%;
+}
+
+footer{
+    background-color: rgb(245, 245, 245);
+    text-align: center;
+    padding: 0 0 2% 0;
+}
+
+#container{
+    margin-left: 20%;
+}
+
+ #header{
+    background-color: #11a6d7;
+    width:100%;
+    margin: auto;
+    margin-bottom: 2%;
+ }
+
+#loginForm{
+    text-align: center;
+    margin-top: 2%;
+    background-color: rgb(209, 224, 240);
+    margin: auto;
+    width: 60%;
+    height: 81vh;
+    vertical-align: middle;
+}
+
+#formLogin{
+    margin-bottom:2%;
+    vertical-align: middle;
+    display: table-cell;
+    border: none;
+    transform: translateY(50%);
+    width: 10%;
+}
+
+#loginButton{
+    margin-top: 2%;
+    width: 8%;
+    height:15%;
+}
+
+.loginInput{
+    width: 20%;
+}
+
+
+

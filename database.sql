@@ -7,6 +7,9 @@
 -- Versión del servidor: 5.5.42
 -- Versión de PHP: 7.0.0
 
+Create Database focus; 
+use focus;
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -27,6 +30,7 @@ CREATE TABLE `Panelista` (
   `nombre` varchar(25) NOT NULL,
   `apPaterno` varchar(25) NOT NULL,
   `apMaterno` varchar(25) NOT NULL,
+  `genero` int(11) NOT NULL,
   `educacion` int(11) NOT NULL,
   `edad` int(11) NOT NULL,
   `edoCivil` int(11) NOT NULL,
