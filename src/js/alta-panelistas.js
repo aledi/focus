@@ -5,7 +5,7 @@ $(document).on('ready', function () {
         var email = $('#email').val();
         var nombre = $('#fName').val();
         var apPaterno = $('#lName').val();
-        var apMaterno = $('$lName_materno').val();
+        var apMaterno = $('#lName_materno').val();
         var genero = $("input[name=gender]:checked").val();
         var educacion = $("input[name=nivel_educativo]:checked").val();
         var edad = $("input[name=rango_edad]:checked").val();
@@ -49,7 +49,7 @@ $(document).on('ready', function () {
 
         $.ajax({
             type: 'POST',
-            url: 'api/controller.php',
+            url: '../api/controller.php',
             data: parameters,
             dataType: 'json',
             success: function (obj) {

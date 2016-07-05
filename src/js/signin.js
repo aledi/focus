@@ -27,7 +27,7 @@ $(document).on('ready', function () {
 
         $.ajax({
             type: 'POST',
-            url: 'api/controller.php',
+            url: '../api/controller.php',
             data: parameters,
             dataType: 'json',
             success: function (obj) {

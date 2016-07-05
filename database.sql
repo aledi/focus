@@ -30,6 +30,7 @@ CREATE TABLE `Panelista` (
   `nombre` varchar(25) NOT NULL,
   `apPaterno` varchar(25) NOT NULL,
   `apMaterno` varchar(25) NOT NULL,
+  `genero` int(11) NOT NULL,
   `educacion` int(11) NOT NULL,
   `edad` int(11) NOT NULL,
   `edoCivil` int(11) NOT NULL,
