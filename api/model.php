@@ -1,13 +1,5 @@
 <?php
 
-function startSession ($username, $firstName, $lastName) {
-    session_start();
-
-    $_SESSION['username'] = $username;
-    $_SESSION['firstName'] = $firstName;
-    $_SESSION['lastName'] = $lastName;
-}
-
 function connect() {
     $servername = "localhost";
     $username = "root";

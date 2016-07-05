@@ -18,9 +18,6 @@ switch($action) {
     case 'ALTA_PANELISTA':
         newPanelista();
         break;
-    case 'SESSION_START':
-        startSession();
-        break;
 }
 
 function startSession ($id, $username, $email, $nombre) {
