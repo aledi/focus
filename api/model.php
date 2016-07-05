@@ -87,6 +87,31 @@ function registerPanelista ($email, $nombre, $apPaterno, $apMaterno, $genero, $e
     }
 }
 
+function registerPanel ($nombre, $fechaInicio, $fechaFin, $cliente, $creador) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre FROM Panel WHERE nombre = '$nombre'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            return array('status' => 'RECORD_EXISTS', 'id' => (int)$row['id'], 'nombre' => $row['nombre']);
+        } else {
+            $sql = "INSERT INTO Panel (nombre, fechaInicio, fechaFin, cliente, creador) VALUES ('$nombre', '$fechaInicio', '$fechaFin', $cliente, '$creador')";
+
+            if ($conn->query($sql) === TRUE) {
+                return array('status' => 'SUCCESS');
+            } else {
+                return array('status' => 'ERROR');
+            }
+        }
+
+        $conn->close();
+    }
+}
+
 // -------------------------------
 // Fetch
 // -------------------------------

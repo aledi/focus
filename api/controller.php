@@ -24,6 +24,9 @@ switch($action) {
     case 'GET_PANELISTAS':
         getPanelistas();
         break;
+    case 'ALTA_PANEL':
+        newPanel();
+        break;
 }
 
 function startSession ($id, $username, $email, $nombre) {
@@ -66,6 +69,12 @@ function getPanelistas () {
     $clientesResult = fetchPanelistas();
 
     echo json_encode($clientesResult);
+}
+
+function newPanel () {
+    $registrationResult = registerPanel($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente'], $_POST['creador']);
+
+    echo json_encode($registrationResult);
 }
 
 ?>
