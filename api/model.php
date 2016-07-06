@@ -181,4 +181,41 @@ function fetchPanelistas () {
     }
 }
 
+// -------------------------------
+// Save
+// -------------------------------
+
+function savePanelistaPanel ($panel, $panelistas) {
+    $conn = connect();
+
+    $inserts = 0;
+    $errors = 0;
+    $existing = 0;
+
+    if ($conn != null) {
+        foreach ($panelistas as &$panelista) {
+            $sql = "SELECT id FROM PanelistaEnPanel WHERE panelista = '$panelista' AND panel = '$panel'";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows === 0) {
+                $sql = "INSERT INTO PanelistaEnPanel (panelista, panel) VALUES ('$panelista', '$panel')";
+
+                if ($conn->query($sql) === TRUE) {
+                    $inserts = $inserts + 1;
+                } else {
+                    $errors = $errors + 1;
+                }
+            } else {
+                $existing = $existing + 1;
+            }
+        }
+
+        $conn->close();
+
+        return array('status' => 'SUCCESS', 'inserts' => $inserts, 'errors' => $errors, 'existing' => $existing);
+    }
+
+    return array('status' => 'ERROR');
+}
+
 ?>
