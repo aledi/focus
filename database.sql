@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 05-07-2016 a las 06:28:47
+-- Tiempo de generación: 06-07-2016 a las 02:44:50
 -- Versión del servidor: 5.5.42
 -- Versión de PHP: 7.0.0
 
@@ -27,14 +27,15 @@ CREATE TABLE `Panel` (
   `fechaFin` date NOT NULL,
   `cliente` int(11) NOT NULL,
   `creador` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `Panel`
 --
 
 INSERT INTO `Panel` (`id`, `nombre`, `fechaInicio`, `fechaFin`, `cliente`, `creador`) VALUES
-(3, 'Panel Prueba', '2016-07-04', '2016-12-31', 4, 1);
+(3, 'Panel Prueba', '2016-07-04', '2016-12-31', 4, 1),
+(4, 'Panel Prueba 2', '2016-07-04', '2016-12-31', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -78,6 +79,27 @@ INSERT INTO `Panelista` (`id`, `email`, `password`, `nombre`, `apPaterno`, `apMa
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `PanelistaEnPanel`
+--
+
+CREATE TABLE `PanelistaEnPanel` (
+  `id` int(11) NOT NULL,
+  `panelista` int(11) NOT NULL,
+  `panel` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `PanelistaEnPanel`
+--
+
+INSERT INTO `PanelistaEnPanel` (`id`, `panelista`, `panel`) VALUES
+(1, 0, 0),
+(2, 1, 0),
+(3, 2, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `Usuario`
 --
 
@@ -90,7 +112,7 @@ CREATE TABLE `Usuario` (
   `apMaterno` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `tipo` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `Usuario`
@@ -99,7 +121,9 @@ CREATE TABLE `Usuario` (
 INSERT INTO `Usuario` (`id`, `username`, `password`, `nombre`, `apPaterno`, `apMaterno`, `email`, `tipo`) VALUES
 (1, 'ecristerna', 'password', 'Eduardo', 'Cristerna', 'Morales', 'ecristerna@icloud.com', 0),
 (3, 'cliente', 'cliente', 'Cliente', 'Prueba', 'Prueba', 'cliente@prueba.com', 1),
-(4, 'cgomez', 'password', 'Carlos', 'Gomez', 'Gomez', 'cgomez@campania.com', 1);
+(4, 'cgomez', 'password', 'Carlos', 'Gomez', 'Gomez', 'cgomez@campania.com', 1),
+(5, 'newCliente', 'password', 'Nuevo', 'Cliente', 'Prueba', 'newCliente@cliente.com', 1),
+(6, 'newAdmin', 'password', 'Nuevo', 'Admin', 'Prueba', 'newAdmin@admin.com', 0);
 
 --
 -- Índices para tablas volcadas
@@ -119,6 +143,12 @@ ALTER TABLE `Panelista`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `PanelistaEnPanel`
+--
+ALTER TABLE `PanelistaEnPanel`
+  ADD PRIMARY KEY (`id`,`panelista`,`panel`);
+
+--
 -- Indices de la tabla `Usuario`
 --
 ALTER TABLE `Usuario`
@@ -132,14 +162,19 @@ ALTER TABLE `Usuario`
 -- AUTO_INCREMENT de la tabla `Panel`
 --
 ALTER TABLE `Panel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `Panelista`
 --
 ALTER TABLE `Panelista`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
+-- AUTO_INCREMENT de la tabla `PanelistaEnPanel`
+--
+ALTER TABLE `PanelistaEnPanel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT de la tabla `Usuario`
 --
 ALTER TABLE `Usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
