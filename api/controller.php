@@ -33,6 +33,9 @@ switch($action) {
     case 'GET_PANELISTAS':
         getPanelistas();
         break;
+    case 'SET_PANELISTA_PANEL':
+        setPanelistaPanel();
+        break;
 }
 
 function startSession ($id, $username, $email, $nombre) {
@@ -85,6 +88,12 @@ function getClientes () {
 
 function getPanelistas () {
     $clientesResult = fetchPanelistas();
+
+    echo json_encode($clientesResult);
+}
+
+function setPanelistaPanel () {
+    $clientesResult = savePanelistaPanel($_POST['panel'], $_POST['panelistas']);
 
     echo json_encode($clientesResult);
 }
