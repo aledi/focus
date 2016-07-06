@@ -3,12 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 03-07-2016 a las 23:16:47
+-- Tiempo de generación: 05-07-2016 a las 06:28:47
 -- Versión del servidor: 5.5.42
 -- Versión de PHP: 7.0.0
-
-Create Database focus; 
-use focus;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -16,6 +13,28 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `focus`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Panel`
+--
+
+CREATE TABLE `Panel` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `fechaInicio` date NOT NULL,
+  `fechaFin` date NOT NULL,
+  `cliente` int(11) NOT NULL,
+  `creador` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `Panel`
+--
+
+INSERT INTO `Panel` (`id`, `nombre`, `fechaInicio`, `fechaFin`, `cliente`, `creador`) VALUES
+(3, 'Panel Prueba', '2016-07-04', '2016-12-31', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -46,14 +65,15 @@ CREATE TABLE `Panelista` (
   `estufa` int(11) NOT NULL,
   `movil` int(11) NOT NULL,
   `fotoINE` longtext NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `Panelista`
 --
 
-INSERT INTO `Panelista` (`id`, `email`, `password`, `nombre`, `apPaterno`, `apMaterno`, `educacion`, `edad`, `edoCivil`, `estado`, `municipio`, `cuartos`, `banios`, `regadera`, `focos`, `piso`, `autos`, `estudiosProv`, `estufa`, `movil`, `fotoINE`) VALUES
-(1, 'ecristerna@icloud.com', 'password', 'Eduardo', 'Cristerna', 'Morales', 3, 21, 1, 'Nuevo Leon', 'Monterrey', 4, 3, 1, 20, 1, 3, 4, 1, 1, '');
+INSERT INTO `Panelista` (`id`, `email`, `password`, `nombre`, `apPaterno`, `apMaterno`, `genero`, `educacion`, `edad`, `edoCivil`, `estado`, `municipio`, `cuartos`, `banios`, `regadera`, `focos`, `piso`, `autos`, `estudiosProv`, `estufa`, `movil`, `fotoINE`) VALUES
+(1, 'ecristerna@icloud.com', 'password', 'Eduardo', 'Cristerna', 'Morales', 0, 3, 21, 1, 'Nuevo Leon', 'Monterrey', 4, 3, 1, 20, 1, 3, 4, 1, 1, ''),
+(2, 'ecristerna@panelista.com', '', 'Eduardo', 'Cristerna', 'Panelista', 0, 4, 21, 1, 'Nuevo Leon', 'Monterrey', 4, 4, 0, 20, 1, 3, 7, 0, 2147483647, ' ');
 
 -- --------------------------------------------------------
 
@@ -86,6 +106,13 @@ INSERT INTO `Usuario` (`id`, `username`, `password`, `nombre`, `apPaterno`, `apM
 --
 
 --
+-- Indices de la tabla `Panel`
+--
+ALTER TABLE `Panel`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cliente` (`cliente`,`creador`);
+
+--
 -- Indices de la tabla `Panelista`
 --
 ALTER TABLE `Panelista`
@@ -102,10 +129,15 @@ ALTER TABLE `Usuario`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `Panel`
+--
+ALTER TABLE `Panel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT de la tabla `Panelista`
 --
 ALTER TABLE `Panelista`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `Usuario`
 --
