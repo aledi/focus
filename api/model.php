@@ -62,6 +62,31 @@ function validatePanelistaCredentials ($email, $password) {
 // Registration
 // -------------------------------
 
+function registerUser ($tipo, $username, $password, $nombre, $apPaterno, $apMaterno, $email) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, username FROM Usuario WHERE username = '$username'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'username' => $row['username']);
+        } else {
+            $sql = "INSERT INTO Usuario (username, password, nombre, apPaterno, apMaterno, email, tipo) VALUES ('$username', '$password', '$nombre', '$apPaterno', '$apMaterno', '$email', '$tipo')";
+
+            if ($conn->query($sql) === TRUE) {
+                return array('status' => 'SUCCESS');
+            } else {
+                return array('status' => 'ERROR');
+            }
+        }
+
+        $conn->close();
+    }
+}
+
 function registerPanelista ($email, $nombre, $apPaterno, $apMaterno, $genero, $educacion, $edad, $edoCivil, $estado, $municipio, $cuartos, $banios, $regadera, $focos, $piso, $autos, $estudiosProv, $estufa, $movil, $fotoINE) {
     $conn = connect();
 

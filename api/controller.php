@@ -15,17 +15,23 @@ switch($action) {
     case 'PANELISTA_LOG_IN':
         signinToDatabase(2);
         break;
+    case 'ALTA_ADMIN':
+        newUser(0);
+        break;
+    case 'ALTA_CLIENTE':
+        newUser(1);
+        break;
     case 'ALTA_PANELISTA':
         newPanelista();
+        break;
+    case 'ALTA_PANEL':
+        newPanel();
         break;
     case 'GET_CLIENTES':
         getClientes();
         break;
     case 'GET_PANELISTAS':
         getPanelistas();
-        break;
-    case 'ALTA_PANEL':
-        newPanel();
         break;
 }
 
@@ -59,6 +65,18 @@ function newPanelista () {
     echo json_encode($registrationResult);
 }
 
+function newUser ($tipo) {
+    $registrationResult = registerUser($tipo, $_POST['username'], $_POST['password'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['email']);
+
+    echo json_encode($registrationResult);
+}
+
+function newPanel () {
+    $registrationResult = registerPanel($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente'], $_POST['creador']);
+
+    echo json_encode($registrationResult);
+}
+
 function getClientes () {
     $clientesResult = fetchClientes();
 
@@ -69,12 +87,6 @@ function getPanelistas () {
     $clientesResult = fetchPanelistas();
 
     echo json_encode($clientesResult);
-}
-
-function newPanel () {
-    $registrationResult = registerPanel($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente'], $_POST['creador']);
-
-    echo json_encode($registrationResult);
 }
 
 ?>
