@@ -159,6 +159,8 @@ function fetchClientes () {
 
         $conn->close();
     }
+
+    return array('status' => 'ERROR');
 }
 
 function fetchPanelistas () {
@@ -171,7 +173,7 @@ function fetchPanelistas () {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $panelista = array('id' => $row['id'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'genero' => $row['genero'], 'edad' => $row['edad'], 'edoCivil' => $row['edoCivil'], 'municipio' => $row['municipio'], 'estado' => $row['estado']);
+            $panelista = array('id' => $row['id'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'edoCivil' => (int)$row['edoCivil'], 'municipio' => $row['municipio'], 'estado' => $row['estado']);
             $response[] = $panelista;
         }
 
@@ -179,6 +181,8 @@ function fetchPanelistas () {
 
         $conn->close();
     }
+
+    return array('status' => 'ERROR');
 }
 
 // -------------------------------
