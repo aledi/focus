@@ -39,6 +39,9 @@ switch($action) {
     case 'SET_PANELISTA_PANEL':
         setPanelistaPanel();
         break;
+    case 'VERIFY_SESSION':
+        verifyActiveSession();
+        break;
     case 'LOG_OUT':
         logOut();
         break;
@@ -51,6 +54,16 @@ function startSession ($id, $username, $email, $nombre) {
     $_SESSION['username'] = $username;
     $_SESSION['email'] = $email;
     $_SESSION['nombre'] = $nombre;
+}
+
+function hasActiveSession () {
+    session_start();
+
+    if (isset($_SESSION['id'])) {
+        return array('status' => 'SUCCESS', 'id' => $_SESSION['id'], 'username' => $_SESSION['username'], 'email' => $_SESSION['email'], 'nombre' => $_SESSION['nombre']);
+    }
+
+    return array('status' => 'ERROR');
 }
 
 function destroySession () {
@@ -119,6 +132,12 @@ function setPanelistaPanel () {
     $clientesResult = savePanelistaPanel($_POST['panel'], $_POST['panelistas']);
 
     echo json_encode($clientesResult);
+}
+
+function verifyActiveSession () {
+    $validationResult = hasActiveSession();
+
+    echo json_encode($validationResult);
 }
 
 function logOut ()  {
