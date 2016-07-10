@@ -39,6 +39,9 @@ switch($action) {
     case 'SET_PANELISTA_PANEL':
         setPanelistaPanel();
         break;
+    case 'LOG_OUT':
+        logOut();
+        break;
 }
 
 function startSession ($id, $username, $email, $nombre) {
@@ -48,6 +51,16 @@ function startSession ($id, $username, $email, $nombre) {
     $_SESSION['username'] = $username;
     $_SESSION['email'] = $email;
     $_SESSION['nombre'] = $nombre;
+}
+
+function destroySession () {
+    session_start();
+
+    if (isset($_SESSION['id'])) {
+        $_SESSION = array();
+
+        session_destroy();
+    }
 }
 
 function signinToDatabase ($tipo) {
@@ -78,7 +91,8 @@ function newUser ($tipo) {
 }
 
 function newPanel () {
-    $registrationResult = registerPanel($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente'], $_POST['creador']);
+    session_start();
+    $registrationResult = registerPanel($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente'], $_SESSION['id']);
 
     echo json_encode($registrationResult);
 }
@@ -105,6 +119,12 @@ function setPanelistaPanel () {
     $clientesResult = savePanelistaPanel($_POST['panel'], $_POST['panelistas']);
 
     echo json_encode($clientesResult);
+}
+
+function logOut ()  {
+    destroySession();
+
+    echo json_encode(array('status' => 'SUCCESS'));
 }
 
 ?>
