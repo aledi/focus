@@ -61,4 +61,101 @@ $(document).on('ready', function () {
             }
         });
     });
+
+
+    $('#sendInfoAdmin').on('click', function (event) {
+        event.preventDefault();
+
+        var email = $('#email').val();
+        var nombre = $('#fName').val();
+        var apPaterno = $('#lName').val();
+        var apMaterno = $('#lName_materno').val();
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var passwordConf = $('#passwordConf').val();
+
+        if (username === '' || password === '' || email === '' || nombre === '' ||
+            apPaterno === '' || apMaterno === '') {
+            $('#feedback').html('Favor de llenar todos los campos');
+
+            return;
+        }
+
+        if(password != passwodConf){
+            $('#feedback').html('Las contraseñas no coinciden.');
+            return;
+        }
+
+        var parameters = {
+            'action': 'ALTA_ADMIN',
+            'nombre': nombre,
+            'apPaterno': apPaterno,
+            'apMaterno': apMaterno,
+            'email' : email,
+            'username' : username,
+            'password' : password
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '../api/controller.php',
+            data: parameters,
+            dataType: 'json',
+            success: function (obj) {
+                //console.log(obj);
+                alert("Admin added successfully.");
+            },
+            error: function (error) {
+                 $('#feedback').html("Administrador no añadido, ha ocurrido un error.");
+            }
+        });
+    });
+
+    $('#sendInfoCliente').on('click', function (event) {
+        event.preventDefault();
+
+        var email = $('#email').val();
+        var nombre = $('#fName').val();
+        var apPaterno = $('#lName').val();
+        var apMaterno = $('#lName_materno').val();
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var passwordConf = $('#passwordConf').val();
+
+        if (username === '' || password === '' || email === '' || nombre === '' ||
+            apPaterno === '' || apMaterno === '') {
+            $('#feedback').html('Favor de llenar todos los campos');
+
+            return;
+        }
+
+        if(password != passwordConf){
+            $('#feedback').html('Las contraseñas no coinciden.');
+            return;
+        }
+
+        var parameters = {
+            'action': 'ALTA_CLIENTE',
+            'nombre': nombre,
+            'apPaterno': apPaterno,
+            'apMaterno': apMaterno,
+            'email' : email,
+            'username' : username,
+            'password' : password
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '../api/controller.php',
+            data: parameters,
+            dataType: 'json',
+            success: function (obj) {
+                //console.log(obj);
+                alert("Client added successfully.");
+            },
+            error: function (error) {
+                 $('#feedback').html("Cliente no añadido, ha ocurrido un error.");
+            }
+        });
+    });
 });

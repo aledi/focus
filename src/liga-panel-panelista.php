@@ -7,17 +7,17 @@
   	<meta charset='utf-8'>
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js'></script>
-    <script src='js/signin.js' type='text/javascript'></script>
-  	<title> Focus - Home</title>
+    <script src='js/liga-panel.js' type='text/javascript'></script>
+  	<title> Focus - Iniciar Sesión</title>
 </head>
 
 <body>
     <div id='header'>
     	<div id="container">
-    		<img src='img/focus_logo.png' href='home.php'/>
+    		<img src='img/focus_logo.png'/>
     	</div>
     </div>
-    <div id='loginForm'>   	
+    <div id='loginForm'>
     	<div id='navigationBar'>
             <ul>
                 <li><a href="alta-panelistas.php">Alta Panelistas</a></li>
@@ -33,6 +33,26 @@
               <li style="float:right"><a class="active" href="#about">About</a></li>
             </ul>
         </div>
+
+    	<form id='formLogin'>
+    		<h1> Ligar Panelistas a un Panel</h1>
+            <div id="paneles">
+                <p>1. Seleccionar Panel: </p>
+                <select id="panelesDropdown">
+                </select>
+            </div>
+
+            <div id="panelista">
+                <p>2. Seleccionar Panelistas: (Mantener presionado Cntrl para varios)</p>
+                <select id="panelistasDropdown" multiple>
+                </select>
+            </div>
+
+	  		<div>
+            	<button type='submit' id='loginButtonLigarPanel'>Ligar Panelistas</button>
+        	</div>
+            <div id='feedback'></div>
+		</form>
     </div>
 	<footer>
 		<p>Copyright © 2016 Focus Consulting Group, SA. de C.V.</p>
