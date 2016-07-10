@@ -163,6 +163,30 @@ function fetchClientes () {
     return array('status' => 'ERROR');
 }
 
+
+function fetchPanel () {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, cliente, creador FROM Panel";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $client = array('id' => $row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'cliente' => $row['cliente'], 'creador' => $row['creador']);
+            $response[] = $client;
+        }
+
+        return array('results' => $response);
+
+        $conn->close();
+    }
+
+    return array('status' => 'ERROR');
+}
+
+
 function fetchPanelistas () {
     $conn = connect();
 

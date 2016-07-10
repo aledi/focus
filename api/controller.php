@@ -30,6 +30,9 @@ switch($action) {
     case 'GET_CLIENTES':
         getClientes();
         break;
+    case 'GET_PANEL':
+        getPanel();
+        break;
     case 'GET_PANELISTAS':
         getPanelistas();
         break;
@@ -88,6 +91,12 @@ function getClientes () {
 
 function getPanelistas () {
     $clientesResult = fetchPanelistas();
+
+    echo json_encode($clientesResult);
+}
+
+function getPanel() {
+    $clientesResult = fetchPanel();
 
     echo json_encode($clientesResult);
 }
