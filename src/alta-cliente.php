@@ -29,7 +29,7 @@
                 </li>
               <li><a href="alta-panel.php">Nuevo Panel</a></li>
               <li><a href="liga-panel-panelista.php">Ligar Panelistas</li>
-              <li style="float:right"><a class="active" href="#about">About</a></li>
+              <li style="float:right"><a class="active signOutButton" href="#about">Sign Out</a></li>
             </ul>
         </div>
         <div id="emailInput">
