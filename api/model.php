@@ -20,17 +20,17 @@ function connect() {
 // Log In
 // -------------------------------
 
-function validateWebCredentials ($username, $password, $tipo) {
+function validateWebCredentials ($username, $password) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, username, email, nombre, apPaterno, apMaterno FROM Usuario WHERE username = '$username' AND password = '$password' AND tipo = '$tipo'";
+        $sql = "SELECT id, username, email, nombre, apPaterno, apMaterno, tipo FROM Usuario WHERE username = '$username' AND password = '$password'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
-            return array('status' => 'SUCCESS', 'id' => (int)$row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre']." ".$row['apPaterno']." ".$row['apMaterno']);
+            return array('status' => 'SUCCESS', 'id' => (int)$row['id'], 'tipo' => (int)$row['tipo'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre']." ".$row['apPaterno']." ".$row['apMaterno']);
         } else {
             return array('status' => 'ERROR');
         }
