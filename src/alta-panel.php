@@ -30,7 +30,7 @@
                 </li>
               <li><a href="alta-panel.php">Nuevo Panel</a></li>
               <li><a href="liga-panel-panelista.php">Ligar Panelistas</li>
-              <li style="float:right"><a class="active" href="#about">About</a></li>
+              <li style="float:right"><a class="active signOutButton" href="#about">Sign Out</a></li>
             </ul>
         </div>
 
@@ -56,12 +56,7 @@
                 <select id="clientesDropdown">
                 </select>
             </div>
-
-            <div id="date_ends">
-                <p>5. Creador del Panel:</p>
-                <input id="panelCreator" type="text"/>
-            </div>
-
+            
 	  		<div>
             	<button type='submit' id='loginButtonNuevoPanel'>Crear Panel</button>
         	</div>
