@@ -10,7 +10,6 @@ $(document).on('ready', function () {
         data: parameters,
         dataType: 'json',
         success: function (obj) {
-            //console.log(obj);
             var currentHTML = "";
             var x = 0;
 
@@ -35,8 +34,7 @@ $(document).on('ready', function () {
         var fechaFin = $('#dateEnds').val();
         var cliente = $("#clientesDropdown").val();
 
-        if (nombre === '' || fechaInicio === '' || fechaFin === '' || cliente === '' ||
-            creador === '') {
+        if (nombre === '' || fechaInicio === '' || fechaFin === '' || cliente === '') {
             $('#feedback').html('Favor de llenar todos los campos');
 
             return;
@@ -93,4 +91,4 @@ $(document).on('ready', function () {
         });
     });
 
-});	
+});

@@ -150,7 +150,6 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                //console.log(obj);
                 alert("Cliente añadido exitosamente.");
             },
             error: function (error) {
@@ -175,13 +174,9 @@ $(document).on('ready', function () {
                 if (obj.status === "SUCCESS") {
                     alert("¡Hasta pronto!");
                     location.replace("signin.php");
-                } else {
-                    $('#feedback').html("Correo o contraseña incorrectos.");
                 }
-
             },
             error: function (error) {
-                $('#feedback').html("Correo o contraseña incorrectos.");
             }
         });
     });
