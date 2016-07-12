@@ -54,9 +54,8 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                //console.log(obj);
                 alert("Panel creado exitosamente.");
-                window.location.reload('liga-panel-panelista.php');
+                location.replace("liga-panel-panelista.php");
             },
             error: function (error) {
                  $('#feedback').html("Panel no añadido, ha ocurrido un error.");

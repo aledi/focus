@@ -20,7 +20,7 @@ $(document).on('ready', function () {
         }
 
         var parameters = {
-            'action': 'WEB_LOGIN',
+            'action': 'WEB_LOG_IN',
             'username': username,
             'password': password
         };
