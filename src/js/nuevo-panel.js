@@ -10,7 +10,6 @@ $(document).on('ready', function () {
         data: parameters,
         dataType: 'json',
         success: function (obj) {
-            //console.log(obj);
             var currentHTML = "";
             var x = 0;
 
@@ -35,8 +34,7 @@ $(document).on('ready', function () {
         var fechaFin = $('#dateEnds').val();
         var cliente = $("#clientesDropdown").val();
 
-        if (nombre === '' || fechaInicio === '' || fechaFin === '' || cliente === '' ||
-            creador === '') {
+        if (nombre === '' || fechaInicio === '' || fechaFin === '' || cliente === '') {
             $('#feedback').html('Favor de llenar todos los campos');
 
             return;
@@ -56,9 +54,8 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                //console.log(obj);
                 alert("Panel creado exitosamente.");
-                window.location.reload('liga-panel-panelista.php');
+                location.replace("liga-panel-panelista.php");
             },
             error: function (error) {
                  $('#feedback').html("Panel no añadido, ha ocurrido un error.");
@@ -93,4 +90,4 @@ $(document).on('ready', function () {
         });
     });
 
-});	
+});

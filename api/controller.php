@@ -6,11 +6,8 @@ require_once 'model.php';
 $action = $_POST['action'];
 
 switch($action) {
-    case 'ADMIN_LOG_IN':
+    case 'WEB_LOG_IN':
         signinToDatabase(0);
-        break;
-    case 'CLIENTE_LOG_IN':
-        signinToDatabase(1);
         break;
     case 'PANELISTA_LOG_IN':
         signinToDatabase(2);
@@ -39,23 +36,50 @@ switch($action) {
     case 'SET_PANELISTA_PANEL':
         setPanelistaPanel();
         break;
+    case 'VERIFY_SESSION':
+        verifyActiveSession();
+        break;
+    case 'LOG_OUT':
+        logOut();
+        break;
 }
 
-function startSession ($id, $username, $email, $nombre) {
+function startSession ($id, $tipo, $username, $email, $nombre) {
     session_start();
 
     $_SESSION['id'] = $id;
+    $_SESSION['tipo'] = $tipo;
     $_SESSION['username'] = $username;
     $_SESSION['email'] = $email;
     $_SESSION['nombre'] = $nombre;
 }
 
+function hasActiveSession () {
+    session_start();
+
+    if (isset($_SESSION['id'])) {
+        return array('status' => 'SUCCESS', 'id' => $_SESSION['id'], 'tipo' => $_SESSION['tipo'], 'username' => $_SESSION['username'], 'email' => $_SESSION['email'], 'nombre' => $_SESSION['nombre']);
+    }
+
+    return array('status' => 'ERROR');
+}
+
+function destroySession () {
+    session_start();
+
+    if (isset($_SESSION['id'])) {
+        $_SESSION = array();
+
+        session_destroy();
+    }
+}
+
 function signinToDatabase ($tipo) {
-    if ($tipo === 0 || $tipo === 1) {
-        $signinResult = validateWebCredentials($_POST['username'], $_POST['password'], $tipo);
+    if ($tipo === 0) {
+        $signinResult = validateWebCredentials($_POST['username'], $_POST['password']);
 
         if($signinResult['status'] === "SUCCESS"){
-            startSession($signinResult['id'], $signinResult['username'], $signinResult['email'], $signinResult['nombre']);
+            startSession($signinResult['id'], $signinResult['tipo'], $signinResult['username'], $signinResult['email'], $signinResult['nombre']);
         }
 
     } else if ($tipo === 2) {
@@ -78,7 +102,8 @@ function newUser ($tipo) {
 }
 
 function newPanel () {
-    $registrationResult = registerPanel($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente'], $_POST['creador']);
+    session_start();
+    $registrationResult = registerPanel($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente'], $_SESSION['id']);
 
     echo json_encode($registrationResult);
 }
@@ -105,6 +130,18 @@ function setPanelistaPanel () {
     $clientesResult = savePanelistaPanel($_POST['panel'], $_POST['panelistas']);
 
     echo json_encode($clientesResult);
+}
+
+function verifyActiveSession () {
+    $validationResult = hasActiveSession();
+
+    echo json_encode($validationResult);
+}
+
+function logOut ()  {
+    destroySession();
+
+    echo json_encode(array('status' => 'SUCCESS'));
 }
 
 ?>

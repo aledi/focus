@@ -78,7 +78,6 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                //console.log(obj);
                 alert("Panel ligado exitosamente.");
             },
             error: function (error) {
@@ -115,4 +114,4 @@ $(document).on('ready', function () {
         });
     });
 
-});	
+});
