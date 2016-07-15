@@ -10,7 +10,6 @@ $(document).on('ready', function () {
         data: parameters,
         dataType: 'json',
         success: function (obj) {
-            //console.log(obj);
             var currentHTML = "";
             var x = 0;
 
@@ -34,10 +33,8 @@ $(document).on('ready', function () {
         var fechaInicio = $('#dateStarts').val();
         var fechaFin = $('#dateEnds').val();
         var cliente = $("#clientesDropdown").val();
-        var creador = $("#panelCreator").val();
 
-        if (nombre === '' || fechaInicio === '' || fechaFin === '' || cliente === '' ||
-            creador === '') {
+        if (nombre === '' || fechaInicio === '' || fechaFin === '' || cliente === '') {
             $('#feedback').html('Favor de llenar todos los campos');
 
             return;
@@ -48,8 +45,7 @@ $(document).on('ready', function () {
             'nombre': nombre,
             'fechaInicio': fechaInicio,
             'fechaFin': fechaFin,
-            'cliente' : cliente,
-            'creador' : creador
+            'cliente' : cliente
         };
 
         $.ajax({
@@ -58,8 +54,8 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                //console.log(obj);
-                alert("Panel added successfully.");
+                alert("Panel creado exitosamente.");
+                location.replace("liga-panel-panelista.php");
             },
             error: function (error) {
                  $('#feedback').html("Panel no añadido, ha ocurrido un error.");
@@ -67,5 +63,31 @@ $(document).on('ready', function () {
         });
     });
 
+    $('#signOutButton').on('click', function (event) {
+        event.preventDefault();
 
-});	
+        var parameters = {
+            'action': 'LOG_OUT '
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '../api/controller.php',
+            data: parameters,
+            dataType: 'json',
+            success: function (obj) {
+                if (obj.status === "SUCCESS") {
+                    alert("¡Hasta pronto!");
+                    location.replace("signin.php");
+                } else {
+                    $('#feedback').html("Correo o contraseña incorrectos.");
+                }
+
+            },
+            error: function (error) {
+                $('#feedback').html("Correo o contraseña incorrectos.");
+            }
+        });
+    });
+
+});

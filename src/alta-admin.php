@@ -1,4 +1,3 @@
-<!-- python -m SimpleHTTPServer -->
 <!doctype html>
 
 <html lang='en'>
@@ -17,21 +16,8 @@
     	</div>
     </div>
     <div id='loginForm'>
-        <div id='navigationBar'>
-            <ul>
-                <li><a href="alta-panelistas.php">Alta Panelistas</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Nuevo Usuario</a>
-                    <div class="dropdown-content">
-                        <a href="alta-admin.php">Alta Administrador</a>
-                        <a href="alta-cliente.php">Alta Cliente</a>
-                    </div>
-                </li>
-              <li><a href="alta-panel.php">Nuevo Panel</a></li>
-              <li><a href="liga-panel-panelista.php">Ligar Panelistas</li>
-              <li style="float:right"><a class="active" href="#about">About</a></li>
-            </ul>
-        </div>
+        <?php include_once('elements/navigation-bar.php');?>
+
         <div id="emailInput">
             <p>1. Cuenta de correo electrónico:</p>
             <input id="email" type="text"/>
@@ -51,7 +37,7 @@
             <p>4. Apellido Materno:</p>
             <input id="lName_materno" type="text"/>
         </div>
-        
+
         <div id="usernameInput">
             <p>5. Nombre de Usuario:</p>
             <input id="username" type="text"/>
@@ -72,8 +58,6 @@
         </div>
         <div id='feedback'></div>
     </div>
-	<footer>
-		<p>Copyright © 2016 Focus Consulting Group, SA. de C.V.</p>
-	</footer>
+    <?php include_once('elements/footer.php');?>
 </body>
 </html>

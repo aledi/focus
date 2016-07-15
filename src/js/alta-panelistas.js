@@ -54,10 +54,10 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 //console.log(obj);
-                alert("User added successfully.");
+                alert("Panelista agregado exitosamente.");
             },
             error: function (error) {
-                 $('#feedback').html("Usuario no añadido, ha ocurrido un error.");
+                 $('#feedback').html("Panelista no añadido, ha ocurrido un error.");
             }
         });
     });
@@ -103,7 +103,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 //console.log(obj);
-                alert("Admin added successfully.");
+                alert("Adminsitrador añadido exitosamente.");
             },
             error: function (error) {
                  $('#feedback').html("Administrador no añadido, ha ocurrido un error.");
@@ -150,11 +150,33 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                //console.log(obj);
-                alert("Client added successfully.");
+                alert("Cliente añadido exitosamente.");
             },
             error: function (error) {
                  $('#feedback').html("Cliente no añadido, ha ocurrido un error.");
+            }
+        });
+    });
+
+    $('#signOutButton').on('click', function (event) {
+        event.preventDefault();
+
+        var parameters = {
+            'action': 'LOG_OUT '
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '../api/controller.php',
+            data: parameters,
+            dataType: 'json',
+            success: function (obj) {
+                if (obj.status === "SUCCESS") {
+                    alert("¡Hasta pronto!");
+                    location.replace("signin.php");
+                }
+            },
+            error: function (error) {
             }
         });
     });

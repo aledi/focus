@@ -1,4 +1,3 @@
-<!-- python -m SimpleHTTPServer -->
 <!doctype html>
 
 <html lang='en'>
@@ -17,22 +16,7 @@
     	</div>
     </div>
     <div id='loginForm'>
-
-        <div id='navigationBar'>
-            <ul>
-                <li><a href="alta-panelistas.php">Alta Panelistas</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Nuevo Usuario</a>
-                    <div class="dropdown-content">
-                        <a href="alta-admin.php">Alta Administrador</a>
-                        <a href="alta-cliente.php">Alta Cliente</a>
-                    </div>
-                </li>
-              <li><a href="alta-panel.php">Nuevo Panel</a></li>
-              <li><a href="liga-panel-panelista.php">Ligar Panelistas</li>
-              <li style="float:right"><a class="active" href="#about">About</a></li>
-            </ul>
-        </div>
+        <?php include_once('elements/navigation-bar.php');?>
 
     	<div id="emailInput">
             <p>1. Cuenta de correo electrónico:</p>
@@ -51,7 +35,7 @@
             <input id="lName_materno" type="text"/>
         </div>
         <div id="genero">
-            <p>4. Género:</p>     
+            <p>4. Género:</p>
             <p><input type="radio" value="1" name="gender">Masculino</p>
             <p><input type="radio" value="2" name="gender">Femenino</p>
         </div>
@@ -164,7 +148,7 @@
             <p><input type="radio" value="2" name="auto">2</p>
             <p><input type="radio" value="3" name="auto">3 o más</p>
         </div>
-        <div id="estudio_ingreso">            
+        <div id="estudio_ingreso">
             <p>16. Pensando en la persona que aporta la mayor parte del ingreso en este hogar, ¿cuál fue el último año de estudios que completó esa persona?</p>
             <p><input type="radio" value="0" name="nivel_educativo_ingreso">No estudió</p>
             <p><input type="radio" value="1" name="nivel_educativo_ingreso">Primaria Incompleta</p>
@@ -193,8 +177,6 @@
             <button type='submit' id='sendInfoPanelistas'>Enviar</button>
         </div>
     </div>
-	<footer>
-		<p>Copyright © 2016 Focus Consulting Group, SA. de C.V.</p>
-	</footer>
+	<?php include_once('elements/footer.php');?>
 </body>
 </html>
