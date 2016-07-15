@@ -3,7 +3,7 @@
 function connect() {
     $servername = "localhost";
     $username = "root";
-    $password = "root";
+    $password = "serpentine";
     $dbname = "focus";
 
     $connection = new mysqli($servername, $username, $password, $dbname);
@@ -174,7 +174,7 @@ function fetchPanel () {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $client = array('id' => $row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'cliente' => $row['cliente'], 'creador' => $row['creador']);
+            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], (int)'cliente' => $row['cliente'], (int)'creador' => $row['creador']);
             $response[] = $client;
         }
 
