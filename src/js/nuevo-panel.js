@@ -14,7 +14,7 @@ $(document).on('ready', function () {
             var x = 0;
 
             for(x = 0; x < obj.results.length; x++){
-            	currentHTML += '<option value=' + obj.results[x].id + '>' + obj.results[x].username + '</option>';
+            	currentHTML += '<option value=' + obj.results[x].id + '>' + obj.results[x].nombre + '</option>';
             }
 
             $("#clientesDropdown").append(currentHTML);
