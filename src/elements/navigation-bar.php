@@ -9,17 +9,14 @@
             </div>
         </li>
       <li><a href="alta-panel.php">Nuevo Panel</a></li>
-      <li><a href="liga-panel-panelista.php">Ligar Panelistas</li>
-      <li style="float:right"><button id="logOutButton" class="active">Sign Out</button></li>
+      <li><a href="liga-panel-panelista.php">Ligar Panelistas</a></li>
+      <li style="float:right"><a class="active signOutButton">Sign Out</a></li>
     </ul>
-    <!-- <ul id = 'logOutButton' class='nav navbar-nav navbar-right'>
-        <li><a href='logIn.php'>Cerrar Sesión <span class='glyphicon glyphicon-log-out'></span></a></li>
-    </ul> -->
 </div>
 
 <script type = 'text/javascript'>
 
-$('#logOutButton').on('click', function (event) {
+$('.signOutButton').on('click', function (event) {
     event.preventDefault();
 
     var parameters = {
