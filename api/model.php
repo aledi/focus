@@ -3,7 +3,7 @@
 function connect() {
     $servername = "localhost";
     $username = "root";
-    $password = "serpentine";
+    $password = "root";
     $dbname = "focus";
 
     $connection = new mysqli($servername, $username, $password, $dbname);
