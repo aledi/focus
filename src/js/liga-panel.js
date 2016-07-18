@@ -87,7 +87,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#signOutButton').on('click', function (event) {
+    $('.signOutButton').on('click', function (event) {
         event.preventDefault();
 
         var parameters = {
@@ -104,12 +104,12 @@ $(document).on('ready', function () {
                     alert("¡Hasta pronto!");
                     location.replace("signin.php");
                 } else {
-                    $('#feedback').html("Correo o contraseña incorrectos.");
+                    $('#feedback').html("Error terminando la sesión.");
                 }
 
             },
             error: function (error) {
-                $('#feedback').html("Correo o contraseña incorrectos.");
+                $('#feedback').html("Error terminando la sesión.");
             }
         });
     });

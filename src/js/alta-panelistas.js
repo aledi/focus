@@ -158,7 +158,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#signOutButton').on('click', function (event) {
+    $('.signOutButton').on('click', function (event) {
         event.preventDefault();
 
         var parameters = {
@@ -174,9 +174,13 @@ $(document).on('ready', function () {
                 if (obj.status === "SUCCESS") {
                     alert("¡Hasta pronto!");
                     location.replace("signin.php");
+                } else {
+                    $('#feedback').html("Error terminando la sesión.");
                 }
+
             },
             error: function (error) {
+                $('#feedback').html("Error terminando la sesión.");
             }
         });
     });
