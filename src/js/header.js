@@ -13,6 +13,7 @@ $(document).on('ready', function () {
 
             if (obj.status == 'SUCCESS') {
                 console.log(obj.username);
+                document.getElementsByTagName("html")[0].style.visibility = "visible";
             }
             else {
                 //alert("Please login to continue");
