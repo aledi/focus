@@ -1,5 +1,5 @@
 $(document).on('ready', function () {
-	parametersSession = }
+	parameters = {
         'action' : 'VERIFY_SESSION'
     };
 
@@ -10,7 +10,14 @@ $(document).on('ready', function () {
         data: parameters,
         dataType: 'json',
         success: function (obj) {
-            console.log(obj.username);
+
+            if (obj.status == 'SUCCESS') {
+                console.log(obj.username);
+            }
+            else {
+                //alert("Please login to continue");
+                window.location.replace('signin.php');
+            }
 
         },
         error: function (error) {

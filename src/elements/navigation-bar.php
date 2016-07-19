@@ -1,3 +1,9 @@
+<?php 
+    if (!isset($_SESSION['id'])){
+        header("Location: signin.php");
+    }
+?>
+
 <div id='navigationBar'>
     <ul>
         <li><a href="alta-panelistas.php">Alta Panelistas</a></li>
