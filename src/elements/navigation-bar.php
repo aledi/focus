@@ -1,8 +1,3 @@
-<?php
-    if (!isset($_SESSION['id'])) {
-        header("Location: signin.php");
-    }
-?>
 <script src='js/header.js' type='text/javascript'></script>
 <div id='navigationBar'>
     <ul>

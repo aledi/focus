@@ -11,6 +11,7 @@ $(document).on('ready', function () {
         success: function (obj) {
             if (obj.status == 'SUCCESS') {
                 console.log(obj.username);
+                document.getElementsByTagName("html")[0].style.visibility = "visible";
             }
             else {
                 window.location.replace('signin.php');
