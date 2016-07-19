@@ -6,7 +6,7 @@
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js'></script>
     <script src='js/liga-panel.js' type='text/javascript'></script>
-  	<title> Focus - Iniciar Sesión</title>
+  	<title> Focus - Ligar Panelista</title>
 </head>
 
 <body>
