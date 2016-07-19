@@ -6,7 +6,7 @@
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js'></script>
     <script src='js/alta-panelistas.js' type='text/javascript'></script>
-  	<title> Focus - Home</title>
+  	<title> Focus - Alta Cliente</title>
 </head>
 
 <body>
