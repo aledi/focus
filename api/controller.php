@@ -36,6 +36,9 @@ switch($action) {
     case 'SET_PANELISTA_PANEL':
         setPanelistaPanel();
         break;
+    case 'DELETE_PANELISTA':
+        deletePanelista();
+        break;
     case 'VERIFY_SESSION':
         verifyActiveSession();
         break;
@@ -90,7 +93,11 @@ function signinToDatabase ($tipo) {
 }
 
 function newPanelista () {
-    $registrationResult = registerPanelista($_POST['email'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['genero'], $_POST['educacion'], $_POST['edad'], $_POST['edoCivil'], $_POST['estado'], $_POST['municipio'], $_POST['cuartos'], $_POST['banios'], $_POST['regadera'], $_POST['focos'], $_POST['piso'], $_POST['autos'], $_POST['estudiosProv'], $_POST['estufa'], $_POST['movil'], $_POST['fotoINE']);
+    if (isset($_POST['id'])) {
+        $registrationResult = updatePanelista($_POST['id'], $_POST['email'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['genero'], $_POST['educacion'], $_POST['edad'], $_POST['edoCivil'], $_POST['estado'], $_POST['municipio'], $_POST['cuartos'], $_POST['banios'], $_POST['regadera'], $_POST['focos'], $_POST['piso'], $_POST['autos'], $_POST['estudiosProv'], $_POST['estufa'], $_POST['movil'], $_POST['fotoINE']);
+    } else {
+        $registrationResult = registerPanelista($_POST['email'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['genero'], $_POST['educacion'], $_POST['edad'], $_POST['edoCivil'], $_POST['estado'], $_POST['municipio'], $_POST['cuartos'], $_POST['banios'], $_POST['regadera'], $_POST['focos'], $_POST['piso'], $_POST['autos'], $_POST['estudiosProv'], $_POST['estufa'], $_POST['movil'], $_POST['fotoINE']);
+    }
 
     echo json_encode($registrationResult);
 }
@@ -130,6 +137,12 @@ function setPanelistaPanel () {
     $clientesResult = savePanelistaPanel($_POST['panel'], $_POST['panelistas']);
 
     echo json_encode($clientesResult);
+}
+
+function deletePanelista () {
+    $deleteResult = removePanelista($_POST["id"]);
+
+    echo json_encode($deleteResult);
 }
 
 function verifyActiveSession () {
