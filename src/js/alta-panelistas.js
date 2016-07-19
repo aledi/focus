@@ -1,4 +1,5 @@
 $(document).on('ready', function () {
+    
     $('#sendInfoPanelistas').on('click', function (event) {
         event.preventDefault();
 
