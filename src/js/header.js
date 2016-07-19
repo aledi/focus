@@ -3,19 +3,16 @@ $(document).on('ready', function () {
         'action' : 'VERIFY_SESSION'
     };
 
-
     $.ajax({
         type: 'POST',
         url: '../api/controller.php',
         data: parameters,
         dataType: 'json',
         success: function (obj) {
-
             if (obj.status == 'SUCCESS') {
                 console.log(obj.username);
             }
             else {
-                //alert("Please login to continue");
                 window.location.replace('signin.php');
             }
 
