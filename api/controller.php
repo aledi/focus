@@ -24,8 +24,11 @@ switch($action) {
     case 'ALTA_PANEL':
         newPanel();
         break;
+    case 'GET_ADMINS':
+        getUsers(0);
+        break;
     case 'GET_CLIENTES':
-        getClientes();
+        getUsers(1);
         break;
     case 'GET_PANEL':
         getPanel();
@@ -35,6 +38,9 @@ switch($action) {
         break;
     case 'SET_PANELISTA_PANEL':
         setPanelistaPanel();
+        break;
+    case 'DELETE_ADMIN':
+        deleteUser(0);
         break;
     case 'DELETE_CLIENTE':
         deleteUser(1);
@@ -122,10 +128,10 @@ function newPanel () {
     echo json_encode($registrationResult);
 }
 
-function getClientes () {
-    $clientesResult = fetchClientes();
+function getUsers ($tipo) {
+    $usersResult = fetchUsers($tipo);
 
-    echo json_encode($clientesResult);
+    echo json_encode($usersResult);
 }
 
 function getPanelistas () {

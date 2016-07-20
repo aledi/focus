@@ -141,11 +141,11 @@ function registerPanel ($nombre, $fechaInicio, $fechaFin, $cliente, $creador) {
 // Fetch
 // -------------------------------
 
-function fetchClientes () {
+function fetchUsers ($tipo) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, username, nombre, apPaterno, apMaterno, email FROM Usuario WHERE tipo = '1'";
+        $sql = "SELECT id, username, nombre, apPaterno, apMaterno, email FROM Usuario WHERE tipo = '$tipo'";
         $result = $conn->query($sql);
 
         $response = array();
