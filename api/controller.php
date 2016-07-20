@@ -24,8 +24,11 @@ switch($action) {
     case 'ALTA_PANEL':
         newPanel();
         break;
+    case 'GET_ADMINS':
+        getUsers(0);
+        break;
     case 'GET_CLIENTES':
-        getClientes();
+        getUsers(1);
         break;
     case 'GET_PANEL':
         getPanel();
@@ -36,8 +39,14 @@ switch($action) {
     case 'SET_PANELISTA_PANEL':
         setPanelistaPanel();
         break;
+    case 'DELETE_ADMIN':
+        deleteUser(0);
+        break;
+    case 'DELETE_CLIENTE':
+        deleteUser(1);
+        break;
     case 'DELETE_PANELISTA':
-        deletePanelista();
+        deleteUser(2);
         break;
     case 'VERIFY_SESSION':
         verifyActiveSession();
@@ -103,7 +112,11 @@ function newPanelista () {
 }
 
 function newUser ($tipo) {
-    $registrationResult = registerUser($tipo, $_POST['username'], $_POST['password'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['email']);
+    if (isset($_POST['id'])) {
+        $registrationResult = updateUser($_POST['id'], $_POST['username'], $_POST['password'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['email']);
+    } else {
+        $registrationResult = registerUser($tipo, $_POST['username'], $_POST['password'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['email']);
+    }
 
     echo json_encode($registrationResult);
 }
@@ -115,10 +128,10 @@ function newPanel () {
     echo json_encode($registrationResult);
 }
 
-function getClientes () {
-    $clientesResult = fetchClientes();
+function getUsers ($tipo) {
+    $usersResult = fetchUsers($tipo);
 
-    echo json_encode($clientesResult);
+    echo json_encode($usersResult);
 }
 
 function getPanelistas () {
@@ -139,8 +152,8 @@ function setPanelistaPanel () {
     echo json_encode($clientesResult);
 }
 
-function deletePanelista () {
-    $deleteResult = removePanelista($_POST["id"]);
+function deleteUser ($tipo) {
+    $deleteResult = removeUser($_POST['id'], $tipo);
 
     echo json_encode($deleteResult);
 }
