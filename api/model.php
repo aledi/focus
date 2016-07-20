@@ -151,7 +151,7 @@ function fetchClientes () {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $client = array('id' => $row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno']);
+            $client = array('id' => (int)$row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno']);
             $response[] = $client;
         }
 
@@ -197,7 +197,7 @@ function fetchPanelistas () {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $panelista = array('id' => $row['id'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'edoCivil' => (int)$row['edoCivil'], 'municipio' => $row['municipio'], 'estado' => $row['estado']);
+            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'edoCivil' => (int)$row['edoCivil'], 'municipio' => $row['municipio'], 'estado' => $row['estado']);
             $response[] = $panelista;
         }
 
@@ -254,6 +254,15 @@ function updatePanelista ($id, $email, $nombre, $apPaterno, $apMaterno, $genero,
     $conn = connect();
 
     if ($conn != null) {
+        $sql = "SELECT id, email FROM Panelista WHERE email = '$email'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'email' => $row['email']);
+        }
+
         $sql = "UPDATE Panelista SET email = '$email', nombre = '$nombre', apPaterno = '$apPaterno', apMaterno = '$apMaterno', genero = '$genero', educacion = '$educacion', edad = '$edad', edoCivil = '$edoCivil', estado = '$estado', municipio = '$municipio', cuartos = '$cuartos', banios = '$banios', regadera = '$regadera', focos = '$focos', piso = '$piso', autos = '$autos', estudiosProv = '$estudiosProv', estufa = '$estufa', movil = '$movil', fotoINE = '$fotoINE' WHERE id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
@@ -268,15 +277,48 @@ function updatePanelista ($id, $email, $nombre, $apPaterno, $apMaterno, $genero,
     return array('status' => 'ERROR');
 }
 
+function updateUser ($id, $username, $password, $nombre, $apPaterno, $apMaterno, $email) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, username FROM Usuario WHERE username = '$username'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'username' => $row['username']);
+        }
+
+        $sql = "UPDATE Usuario SET username = '$username' WHERE id = '$id'";
+
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
+        }
+
+        $conn->close();
+        return array('status' => 'ERROR');
+    }
+
+    $conn->close();
+    return array('status' => 'ERROR');
+}
+
 // -------------------------------
 // Delete
 // -------------------------------
 
-function removePanelista ($id) {
+function removeUser ($id, $tipo) {
     $conn = connect();
+    $table = "Usuario";
+
+    if ($tipo === 2) {
+        $table = "Panelista";
+    }
 
     if ($conn != null) {
-        $sql = "DELETE FROM Panelista WHERE id = '$id'";
+        $sql = "DELETE FROM $table WHERE id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
             $conn->close();
