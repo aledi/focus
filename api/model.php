@@ -290,7 +290,7 @@ function updateUser ($id, $username, $password, $nombre, $apPaterno, $apMaterno,
             return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'username' => $row['username']);
         }
 
-        $sql = "UPDATE Usuario SET username = '$username' WHERE id = '$id'";
+        $sql = "UPDATE Usuario SET username = '$username', password = '$password', nombre = '$nombre', apPaterno = '$apPaterno', apMaterno = '$apMaterno', email = '$email' WHERE id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
             $conn->close();
