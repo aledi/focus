@@ -40,16 +40,16 @@ switch($action) {
         setPanelistaPanel();
         break;
     case 'DELETE_ADMIN':
-        deleteUser(0);
+        deleteRecord('User');
         break;
     case 'DELETE_CLIENTE':
-        deleteUser(1);
+        deleteRecord('User');
         break;
     case 'DELETE_PANELISTA':
-        deleteUser(2);
+        deleteRecord('Panelista');
         break;
     case 'DELETE_PANEL':
-        deletePanel();
+        deleteRecord('Panel');
         break;
     case 'VERIFY_SESSION':
         verifyActiveSession();
@@ -159,14 +159,8 @@ function setPanelistaPanel () {
     echo json_encode($clientesResult);
 }
 
-function deleteUser ($tipo) {
-    $deleteResult = removeUser($_POST['id'], $tipo);
-
-    echo json_encode($deleteResult);
-}
-
-function deletePanel () {
-    $deleteResult = removePanel($_POST['id']);
+function deleteRecord ($table) {
+    $deleteResult = removeRecord($_POST['id'], $table);
 
     echo json_encode($deleteResult);
 }
