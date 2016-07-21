@@ -34,10 +34,13 @@ switch($action) {
         getUsers(1);
         break;
     case 'GET_PANELES':
-        getPanel();
+        getPaneles();
         break;
     case 'GET_PANELISTAS':
         getPanelistas();
+        break;
+    case 'GET_ENCUESTAS':
+        getEncuestas();
         break;
     case 'SET_PANELISTA_PANEL':
         setPanelistaPanel();
@@ -152,21 +155,27 @@ function newEnuesta () {
 }
 
 function getUsers ($tipo) {
-    $usersResult = fetchUsers($tipo);
+    $fetchResult = fetchUsers($tipo);
 
-    echo json_encode($usersResult);
+    echo json_encode($fetchResult);
 }
 
 function getPanelistas () {
-    $clientesResult = fetchPanelistas();
+    $fetchResult = fetchPanelistas();
 
-    echo json_encode($clientesResult);
+    echo json_encode($fetchResult);
 }
 
-function getPanel() {
-    $clientesResult = fetchPanel();
+function getPaneles() {
+    $fetchResult = fetchPaneles();
 
-    echo json_encode($clientesResult);
+    echo json_encode($fetchResult);
+}
+
+function getEncuestas() {
+    $fetchResult = fetchEncuestas();
+
+    echo json_encode($fetchResult);
 }
 
 function setPanelistaPanel () {

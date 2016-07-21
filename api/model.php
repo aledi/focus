@@ -188,7 +188,7 @@ function fetchUsers ($tipo) {
     return array('status' => 'ERROR');
 }
 
-function fetchPanel () {
+function fetchPaneles () {
     $conn = connect();
 
     if ($conn != null) {
@@ -221,6 +221,28 @@ function fetchPanelistas () {
 
         while ($row = $result->fetch_assoc()) {
             $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'edoCivil' => (int)$row['edoCivil'], 'municipio' => $row['municipio'], 'estado' => $row['estado']);
+            $response[] = $panelista;
+        }
+
+        return array('results' => $response);
+
+        $conn->close();
+    }
+
+    return array('status' => 'ERROR');
+}
+
+function fetchEncuestas () {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel FROM Encuesta";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => (int)$row['panel']);
             $response[] = $panelista;
         }
 
