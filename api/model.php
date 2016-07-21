@@ -163,7 +163,6 @@ function fetchUsers ($tipo) {
     return array('status' => 'ERROR');
 }
 
-
 function fetchPanel () {
     $conn = connect();
 
@@ -174,7 +173,7 @@ function fetchPanel () {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'cliente' => (int)$row['cliente'], 'creador' => (int)$row['creador']);
+            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => (int)$row['cliente'], 'creador' => (int)$row['creador']);
             $response[] = $client;
         }
 
@@ -185,7 +184,6 @@ function fetchPanel () {
 
     return array('status' => 'ERROR');
 }
-
 
 function fetchPanelistas () {
     $conn = connect();
@@ -260,7 +258,9 @@ function updatePanelista ($id, $email, $nombre, $apPaterno, $apMaterno, $genero,
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
-            return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'email' => $row['email']);
+            if ((int)$row['id'] != $id) {
+                return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'email' => $row['email']);
+            }
         }
 
         $sql = "UPDATE Panelista SET email = '$email', nombre = '$nombre', apPaterno = '$apPaterno', apMaterno = '$apMaterno', genero = '$genero', educacion = '$educacion', edad = '$edad', edoCivil = '$edoCivil', estado = '$estado', municipio = '$municipio', cuartos = '$cuartos', banios = '$banios', regadera = '$regadera', focos = '$focos', piso = '$piso', autos = '$autos', estudiosProv = '$estudiosProv', estufa = '$estufa', movil = '$movil', fotoINE = '$fotoINE' WHERE id = '$id'";
@@ -287,7 +287,9 @@ function updateUser ($id, $username, $password, $nombre, $apPaterno, $apMaterno,
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
-            return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'username' => $row['username']);
+            if ((int)$row['id'] != $id) {
+                return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'username' => $row['username']);
+            }
         }
 
         $sql = "UPDATE Usuario SET username = '$username', password = '$password', nombre = '$nombre', apPaterno = '$apPaterno', apMaterno = '$apMaterno', email = '$email' WHERE id = '$id'";
@@ -301,7 +303,35 @@ function updateUser ($id, $username, $password, $nombre, $apPaterno, $apMaterno,
         return array('status' => 'ERROR');
     }
 
-    $conn->close();
+    return array('status' => 'ERROR');
+}
+
+function updatePanel ($id, $nombre, $fechaInicio, $fechaFin, $cliente) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre FROM Panel WHERE nombre = '$nombre'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            if ((int)$row['id'] != $id) {
+                return array('status' => 'RECORD_EXISTS', 'id' => (int)$row['id'], 'nombre' => $row['nombre']);
+            }
+        }
+
+        $sql = "UPDATE Panel SET nombre = '$nombre', fechaInicio = '$fechaInicio', fechaFin = '$fechaFin', cliente = '$cliente' WHERE id = '$id'";
+
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
+        }
+
+        $conn->close();
+        return array('status' => 'ERROR');
+    }
+
     return array('status' => 'ERROR');
 }
 

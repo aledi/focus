@@ -30,7 +30,7 @@ switch($action) {
     case 'GET_CLIENTES':
         getUsers(1);
         break;
-    case 'GET_PANEL':
+    case 'GET_PANELES':
         getPanel();
         break;
     case 'GET_PANELISTAS':
@@ -125,8 +125,12 @@ function newUser ($tipo) {
 }
 
 function newPanel () {
-    session_start();
-    $registrationResult = registerPanel($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente'], $_SESSION['id']);
+    if (isset($_POST['id'])) {
+        $registrationResult = updatePanel($_POST['id'], $_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente']);
+    } else {
+        session_start();
+        $registrationResult = registerPanel($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente'], $_SESSION['id']);
+    }
 
     echo json_encode($registrationResult);
 }
