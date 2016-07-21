@@ -43,13 +43,13 @@ switch ($action) {
         getRecords('ENCUESTAS');
         break;
     case 'SET_PANELISTA_PANEL':
-        setPanelistaPanel();
+        setPanelistasPanel();
         break;
     case 'DELETE_ADMIN':
-        deleteRecord('User');
+        deleteRecord('Usuario');
         break;
     case 'DELETE_CLIENTE':
-        deleteRecord('User');
+        deleteRecord('Usuario');
         break;
     case 'DELETE_PANELISTA':
         deleteRecord('Panelista');
@@ -174,8 +174,8 @@ function getRecords ($type) {
     }
 }
 
-function setPanelistaPanel () {
-    $clientesResult = savePanelistaPanel($_POST['panel'], $_POST['panelistas']);
+function setPanelistasPanel () {
+    $clientesResult = savePanelistasPanel($_POST['panel'], $_POST['panelistas']);
 
     echo json_encode($clientesResult);
 }
