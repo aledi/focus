@@ -68,7 +68,7 @@ $(document).on('ready', function () {
         event.preventDefault();
 
         var parameters = {
-            'action': 'GET_PANELISTAS'
+            'action': 'GET_PANELES'
         };
 
         $.ajax({

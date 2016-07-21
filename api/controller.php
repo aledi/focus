@@ -42,7 +42,7 @@ switch ($action) {
     case 'GET_ENCUESTAS':
         getRecords('ENCUESTAS');
         break;
-    case 'SET_PANELISTA_PANEL':
+    case 'SET_PANELISTAS_PANEL':
         setPanelistaPanel();
         break;
     case 'DELETE_ADMIN':

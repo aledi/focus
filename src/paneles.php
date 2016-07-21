@@ -19,7 +19,7 @@
     <div id='loginForm'>
     	<ul class="tabs">
 			<li class="tab-link current" data-tab="tab-agregarPanel">Agregar Panel</li>
-			<li class="tab-link" id="tab-modPanel" data-tab="tab-modificarPanel">Modificar Panel</li>
+			<li class="tab-link" id="tab-modPanel" data-tab="tab-modificarPaneles">Modificar Panel</li>
 		</ul>
 
 		<div id="tab-agregarPanel" class="tab-content current">
@@ -43,8 +43,8 @@
 
             <div id="clients">
                 <p>4. Seleccionar Cliente: </p>
-                <select id="clientesDropdown">
-                </select>
+                <table id="tableClientes">
+                </table>
             </div>
 
 	  		<div>
@@ -54,7 +54,7 @@
 		</div>
 
 		
-		<div id="tab-modificarUsuario" class="tab-content">
+		<div id="tab-modificarPaneles" class="tab-content">
 			<table id="allPanels">
 
 			</table>
