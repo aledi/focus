@@ -332,4 +332,22 @@ function removeUser ($id, $tipo) {
     return array('status' => 'ERROR');
 }
 
+function removePanel ($id) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "DELETE FROM Panel WHERE id = '$id'";
+
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
+        }
+
+        $conn->close();
+        return array('status' => 'ERROR');
+    }
+
+    return array('status' => 'ERROR');
+}
+
 ?>

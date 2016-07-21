@@ -48,6 +48,9 @@ switch($action) {
     case 'DELETE_PANELISTA':
         deleteUser(2);
         break;
+    case 'DELETE_PANEL':
+        deletePanel();
+        break;
     case 'VERIFY_SESSION':
         verifyActiveSession();
         break;
@@ -154,6 +157,12 @@ function setPanelistaPanel () {
 
 function deleteUser ($tipo) {
     $deleteResult = removeUser($_POST['id'], $tipo);
+
+    echo json_encode($deleteResult);
+}
+
+function deletePanel () {
+    $deleteResult = removePanel($_POST['id']);
 
     echo json_encode($deleteResult);
 }
