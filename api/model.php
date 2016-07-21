@@ -11,9 +11,9 @@ function connect() {
     # Check connection
     if ($connection->connect_error) {
         return null;
-    } else {
-        return $connection;
     }
+
+    return $connection;
 }
 
 // -------------------------------
@@ -30,13 +30,15 @@ function validateWebCredentials ($username, $password) {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
+            $conn->close();
             return array('status' => 'SUCCESS', 'id' => (int)$row['id'], 'tipo' => (int)$row['tipo'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre']." ".$row['apPaterno']." ".$row['apMaterno']);
-        } else {
-            return array('status' => 'ERROR');
         }
 
         $conn->close();
+        return array('status' => 'ERROR');
     }
+
+    return array('status' => 'DATABASE_ERROR');
 }
 
 function validatePanelistaCredentials ($email, $password) {
@@ -49,13 +51,15 @@ function validatePanelistaCredentials ($email, $password) {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
+            $conn->close();
             return array('status' => 'SUCCESS', 'id' => (int)$row['id'], 'email' => $row['email'], 'nombre' => $row['nombre']." ".$row['apPaterno']." ".$row['apMaterno']);
-        } else {
-            return array('status' => 'ERROR');
         }
 
         $conn->close();
+        return array('status' => 'ERROR');
     }
+
+    return array('status' => 'DATABASE_ERROR');
 }
 
 // -------------------------------
@@ -72,19 +76,22 @@ function registerUser ($tipo, $username, $password, $nombre, $apPaterno, $apMate
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
+            $conn->close();
             return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'username' => $row['username']);
-        } else {
-            $sql = "INSERT INTO Usuario (username, password, nombre, apPaterno, apMaterno, email, tipo) VALUES ('$username', '$password', '$nombre', '$apPaterno', '$apMaterno', '$email', '$tipo')";
+        }
 
-            if ($conn->query($sql) === TRUE) {
-                return array('status' => 'SUCCESS');
-            } else {
-                return array('status' => 'ERROR');
-            }
+        $sql = "INSERT INTO Usuario (username, password, nombre, apPaterno, apMaterno, email, tipo) VALUES ('$username', '$password', '$nombre', '$apPaterno', '$apMaterno', '$email', '$tipo')";
+
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
         }
 
         $conn->close();
+        return array('status' => 'ERROR');
     }
+
+    return array('status' => 'DATABASE_ERROR');
 }
 
 function registerPanelista ($email, $nombre, $apPaterno, $apMaterno, $genero, $educacion, $edad, $edoCivil, $estado, $municipio, $cuartos, $banios, $regadera, $focos, $piso, $autos, $estudiosProv, $estufa, $movil, $fotoINE) {
@@ -97,19 +104,22 @@ function registerPanelista ($email, $nombre, $apPaterno, $apMaterno, $genero, $e
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
+            $conn->close();
             return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'email' => $row['email']);
-        } else {
-            $sql = "INSERT INTO Panelista (email, nombre, apPaterno, apMaterno, genero, educacion, edad, edoCivil, estado, municipio, cuartos, banios, regadera, focos, piso, autos, estudiosProv, estufa, movil, fotoINE) VALUES ('$email', '$nombre', '$apPaterno', '$apMaterno', $genero, '$educacion', '$edad', '$edoCivil', '$estado', '$municipio', '$cuartos', '$banios', '$regadera', '$focos', '$piso', '$autos', '$estudiosProv', '$estufa', '$movil', '$fotoINE')";
+        }
 
-            if ($conn->query($sql) === TRUE) {
-                return array('status' => 'SUCCESS');
-            } else {
-                return array('status' => 'ERROR');
-            }
+        $sql = "INSERT INTO Panelista (email, nombre, apPaterno, apMaterno, genero, educacion, edad, edoCivil, estado, municipio, cuartos, banios, regadera, focos, piso, autos, estudiosProv, estufa, movil, fotoINE) VALUES ('$email', '$nombre', '$apPaterno', '$apMaterno', $genero, '$educacion', '$edad', '$edoCivil', '$estado', '$municipio', '$cuartos', '$banios', '$regadera', '$focos', '$piso', '$autos', '$estudiosProv', '$estufa', '$movil', '$fotoINE')";
+
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
         }
 
         $conn->close();
+        return array('status' => 'ERROR');
     }
+
+    return array('status' => 'DATABASE_ERROR');
 }
 
 function registerPanel ($nombre, $fechaInicio, $fechaFin, $cliente, $creador) {
@@ -122,19 +132,50 @@ function registerPanel ($nombre, $fechaInicio, $fechaFin, $cliente, $creador) {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
+            $conn->close();
             return array('status' => 'RECORD_EXISTS', 'id' => (int)$row['id'], 'nombre' => $row['nombre']);
-        } else {
-            $sql = "INSERT INTO Panel (nombre, fechaInicio, fechaFin, cliente, creador) VALUES ('$nombre', '$fechaInicio', '$fechaFin', $cliente, '$creador')";
+        }
 
-            if ($conn->query($sql) === TRUE) {
-                return array('status' => 'SUCCESS');
-            } else {
-                return array('status' => 'ERROR');
-            }
+        $sql = "INSERT INTO Panel (nombre, fechaInicio, fechaFin, cliente, creador) VALUES ('$nombre', '$fechaInicio', '$fechaFin', $cliente, '$creador')";
+
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
         }
 
         $conn->close();
+        return array('status' => 'ERROR');
     }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function registerEncuesta ($nombre, $fechaInicio, $fechaFin, $panel) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre, panel FROM Encuesta WHERE nombre = '$nombre' AND panel = '$panel'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            $conn->close();
+            return array('status' => 'RECORD_EXISTS', 'id' => (int)$row['id'], 'nombre' => $row['nombre'], 'panel' => (int)$row['panel']);
+        }
+
+        $sql = "INSERT INTO Encuesta (nombre, fechaInicio, fechaFin, panel) VALUES ('$nombre', '$fechaInicio', '$fechaFin', '$panel')";
+
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
+        }
+
+        $conn->close();
+        return array('status' => 'ERROR');
+    }
+
+    return array('status' => 'DATABASE_ERROR');
 }
 
 // -------------------------------
@@ -155,16 +196,14 @@ function fetchUsers ($tipo) {
             $response[] = $client;
         }
 
-        return array('results' => $response);
-
         $conn->close();
+        return array('results' => $response);
     }
 
-    return array('status' => 'ERROR');
+    return array('status' => 'DATABASE_ERROR');
 }
 
-
-function fetchPanel () {
+function fetchPaneles () {
     $conn = connect();
 
     if ($conn != null) {
@@ -174,18 +213,16 @@ function fetchPanel () {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'cliente' => (int)$row['cliente'], 'creador' => (int)$row['creador']);
+            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => (int)$row['cliente'], 'creador' => (int)$row['creador']);
             $response[] = $client;
         }
 
-        return array('results' => $response);
-
         $conn->close();
+        return array('results' => $response);
     }
 
-    return array('status' => 'ERROR');
+    return array('status' => 'DATABASE_ERROR');
 }
-
 
 function fetchPanelistas () {
     $conn = connect();
@@ -201,12 +238,32 @@ function fetchPanelistas () {
             $response[] = $panelista;
         }
 
-        return array('results' => $response);
-
         $conn->close();
+        return array('results' => $response);
     }
 
-    return array('status' => 'ERROR');
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function fetchEncuestas () {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel FROM Encuesta";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => (int)$row['panel']);
+            $response[] = $panelista;
+        }
+
+        $conn->close();
+        return array('results' => $response);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
 }
 
 // -------------------------------
@@ -239,11 +296,10 @@ function savePanelistaPanel ($panel, $panelistas) {
         }
 
         $conn->close();
-
         return array('status' => 'SUCCESS', 'inserts' => $inserts, 'errors' => $errors, 'existing' => $existing);
     }
 
-    return array('status' => 'ERROR');
+    return array('status' => 'DATABASE_ERROR');
 }
 
 // -------------------------------
@@ -260,7 +316,10 @@ function updatePanelista ($id, $email, $nombre, $apPaterno, $apMaterno, $genero,
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
-            return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'email' => $row['email']);
+            if ((int)$row['id'] != $id) {
+                $conn->close();
+                return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'email' => $row['email']);
+            }
         }
 
         $sql = "UPDATE Panelista SET email = '$email', nombre = '$nombre', apPaterno = '$apPaterno', apMaterno = '$apMaterno', genero = '$genero', educacion = '$educacion', edad = '$edad', edoCivil = '$edoCivil', estado = '$estado', municipio = '$municipio', cuartos = '$cuartos', banios = '$banios', regadera = '$regadera', focos = '$focos', piso = '$piso', autos = '$autos', estudiosProv = '$estudiosProv', estufa = '$estufa', movil = '$movil', fotoINE = '$fotoINE' WHERE id = '$id'";
@@ -274,7 +333,7 @@ function updatePanelista ($id, $email, $nombre, $apPaterno, $apMaterno, $genero,
         return array('status' => 'ERROR');
     }
 
-    return array('status' => 'ERROR');
+    return array('status' => 'DATABASE_ERROR');
 }
 
 function updateUser ($id, $username, $password, $nombre, $apPaterno, $apMaterno, $email) {
@@ -287,7 +346,10 @@ function updateUser ($id, $username, $password, $nombre, $apPaterno, $apMaterno,
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
-            return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'username' => $row['username']);
+            if ((int)$row['id'] != $id) {
+                $conn->close();
+                return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'username' => $row['username']);
+            }
         }
 
         $sql = "UPDATE Usuario SET username = '$username', password = '$password', nombre = '$nombre', apPaterno = '$apPaterno', apMaterno = '$apMaterno', email = '$email' WHERE id = '$id'";
@@ -301,21 +363,75 @@ function updateUser ($id, $username, $password, $nombre, $apPaterno, $apMaterno,
         return array('status' => 'ERROR');
     }
 
-    $conn->close();
-    return array('status' => 'ERROR');
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function updatePanel ($id, $nombre, $fechaInicio, $fechaFin, $cliente) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre FROM Panel WHERE nombre = '$nombre'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            if ((int)$row['id'] != $id) {
+                $conn->close();
+                return array('status' => 'RECORD_EXISTS', 'id' => (int)$row['id'], 'nombre' => $row['nombre']);
+            }
+        }
+
+        $sql = "UPDATE Panel SET nombre = '$nombre', fechaInicio = '$fechaInicio', fechaFin = '$fechaFin', cliente = '$cliente' WHERE id = '$id'";
+
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
+        }
+
+        $conn->close();
+        return array('status' => 'ERROR');
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function updateEncuesta ($id, $nombre, $fechaInicio, $fechaFin, $panel) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre, panel FROM Encuesta WHERE nombre = '$nombre' AND panel = '$panel'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            if ((int)$row['id'] != $id) {
+                $conn->close();
+                return array('status' => 'RECORD_EXISTS', 'id' => (int)$row['id'], 'nombre' => $row['nombre'], 'panel' => (int)$row['panel']);
+            }
+        }
+
+        $sql = "UPDATE Encuesta SET nombre = '$nombre', fechaInicio = '$fechaInicio', fechaFin = '$fechaFin', panel = '$panel' WHERE id = '$id'";
+
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
+        }
+
+        $conn->close();
+        return array('status' => 'ERROR');
+    }
+
+    return array('status' => 'DATABASE_ERROR');
 }
 
 // -------------------------------
 // Delete
 // -------------------------------
 
-function removeUser ($id, $tipo) {
+function removeRecord ($id, $table) {
     $conn = connect();
-    $table = "Usuario";
-
-    if ($tipo === 2) {
-        $table = "Panelista";
-    }
 
     if ($conn != null) {
         $sql = "DELETE FROM $table WHERE id = '$id'";
@@ -329,7 +445,7 @@ function removeUser ($id, $tipo) {
         return array('status' => 'ERROR');
     }
 
-    return array('status' => 'ERROR');
+    return array('status' => 'DATABASE_ERROR');
 }
 
 ?>

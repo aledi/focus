@@ -5,7 +5,7 @@ require_once 'model.php';
 
 $action = $_POST['action'];
 
-switch($action) {
+switch ($action) {
     case 'WEB_LOG_IN':
         signinToDatabase(0);
         break;
@@ -24,29 +24,41 @@ switch($action) {
     case 'ALTA_PANEL':
         newPanel();
         break;
+    case 'ALTA_ENCUESTA':
+        newEnuesta();
+        break;
     case 'GET_ADMINS':
-        getUsers(0);
+        getRecords('ADMINS');
         break;
     case 'GET_CLIENTES':
-        getUsers(1);
+        getRecords('CLIENTES');
         break;
-    case 'GET_PANEL':
-        getPanel();
+    case 'GET_PANELES':
+        getRecords('PANELES');
         break;
     case 'GET_PANELISTAS':
-        getPanelistas();
+        getRecords('PANELISTAS');
+        break;
+    case 'GET_ENCUESTAS':
+        getRecords('ENCUESTAS');
         break;
     case 'SET_PANELISTA_PANEL':
         setPanelistaPanel();
         break;
     case 'DELETE_ADMIN':
-        deleteUser(0);
+        deleteRecord('User');
         break;
     case 'DELETE_CLIENTE':
-        deleteUser(1);
+        deleteRecord('User');
         break;
     case 'DELETE_PANELISTA':
-        deleteUser(2);
+        deleteRecord('Panelista');
+        break;
+    case 'DELETE_PANEL':
+        deleteRecord('Panel');
+        break;
+    case 'DELETE_ENCUESTA':
+        deleteRecord('Encuesta');
         break;
     case 'VERIFY_SESSION':
         verifyActiveSession();
@@ -122,28 +134,44 @@ function newUser ($tipo) {
 }
 
 function newPanel () {
-    session_start();
-    $registrationResult = registerPanel($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente'], $_SESSION['id']);
+    if (isset($_POST['id'])) {
+        $registrationResult = updatePanel($_POST['id'], $_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente']);
+    } else {
+        session_start();
+        $registrationResult = registerPanel($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente'], $_SESSION['id']);
+    }
 
     echo json_encode($registrationResult);
 }
 
-function getUsers ($tipo) {
-    $usersResult = fetchUsers($tipo);
+function newEnuesta () {
+    if (isset($_POST['id'])) {
+        $registrationResult = updateEncuesta($_POST['id'], $_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['panel']);
+    } else {
+        $registrationResult = registerEncuesta($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['panel']);
+    }
 
-    echo json_encode($usersResult);
+    echo json_encode($registrationResult);
 }
 
-function getPanelistas () {
-    $clientesResult = fetchPanelistas();
-
-    echo json_encode($clientesResult);
-}
-
-function getPanel() {
-    $clientesResult = fetchPanel();
-
-    echo json_encode($clientesResult);
+function getRecords ($type) {
+    switch ($type) {
+        case 'ADMINS':
+            echo json_encode(fetchUsers(0));
+            break;
+        case 'CLIENTES':
+            echo json_encode(fetchUsers(1));
+            break;
+        case 'PANELISTAS':
+            echo json_encode(fetchPanelistas());
+            break;
+        case 'PANELES':
+            echo json_encode(fetchPaneles());
+            break;
+        case 'ENCUESTAS':
+            echo json_encode(fetchEncuestas());
+            break;
+    }
 }
 
 function setPanelistaPanel () {
@@ -152,8 +180,8 @@ function setPanelistaPanel () {
     echo json_encode($clientesResult);
 }
 
-function deleteUser ($tipo) {
-    $deleteResult = removeUser($_POST['id'], $tipo);
+function deleteRecord ($table) {
+    $deleteResult = removeRecord($_POST['id'], $table);
 
     echo json_encode($deleteResult);
 }
