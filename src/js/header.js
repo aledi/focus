@@ -25,23 +25,34 @@ $(document).on('ready', function () {
     });
 
     $('.signOutButton').on('click', function (event) {
-    event.preventDefault();
+        event.preventDefault();
 
-    var parameters = {
-        'action': 'LOG_OUT'
-    };
+        var parameters = {
+            'action': 'LOG_OUT'
+        };
 
-    $.ajax({
-        type: 'POST',
-        url: '../api/controller.php',
-        data: parameters,
-        dataType: 'json',
-        success: function (obj) {
-            if (obj.status === "SUCCESS") {
-                alert("¡Hasta pronto!");
-                location.replace("signin.php");
+        $.ajax({
+            type: 'POST',
+            url: '../api/controller.php',
+            data: parameters,
+            dataType: 'json',
+            success: function (obj) {
+                if (obj.status === "SUCCESS") {
+                    alert("¡Hasta pronto!");
+                    location.replace("signin.php");
+                }
             }
-        }
+        });
     });
-});
+ 
+    $('ul.tabs li').click(function(){
+        var tab_id = $(this).attr('data-tab');
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $(this).addClass('current');
+        $("#"+tab_id).addClass('current');
+    });
+
 });

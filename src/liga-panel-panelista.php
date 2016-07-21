@@ -14,10 +14,9 @@
     	<div id="container">
     		<img src='img/focus_logo.png'/>
     	</div>
+        <?php include_once('elements/navigation-bar.php');?>
     </div>
     <div id='loginForm'>
-    	<?php include_once('elements/navigation-bar.php');?>
-
     	<form id='formLogin'>
     		<h1> Ligar Panelistas a un Panel</h1>
             <div id="paneles">

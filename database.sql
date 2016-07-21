@@ -7,6 +7,9 @@
 -- Versión del servidor: 5.5.46
 -- Versión de PHP: 5.6.22
 
+CREATE DATABASE focus;
+USE focus;
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 

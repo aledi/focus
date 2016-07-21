@@ -46,10 +46,10 @@ switch ($action) {
         setPanelistaPanel();
         break;
     case 'DELETE_ADMIN':
-        deleteRecord('User');
+        deleteRecord('Usuario');
         break;
     case 'DELETE_CLIENTE':
-        deleteRecord('User');
+        deleteRecord('Usuario');
         break;
     case 'DELETE_PANELISTA':
         deleteRecord('Panelista');
