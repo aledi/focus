@@ -5,7 +5,7 @@ require_once 'model.php';
 
 $action = $_POST['action'];
 
-switch($action) {
+switch ($action) {
     case 'WEB_LOG_IN':
         signinToDatabase(0);
         break;
@@ -28,19 +28,19 @@ switch($action) {
         newEnuesta();
         break;
     case 'GET_ADMINS':
-        getUsers(0);
+        getRecords('ADMINS');
         break;
     case 'GET_CLIENTES':
-        getUsers(1);
+        getRecords('CLIENTES');
         break;
     case 'GET_PANELES':
-        getPaneles();
+        getRecords('PANELES');
         break;
     case 'GET_PANELISTAS':
-        getPanelistas();
+        getRecords('PANELISTAS');
         break;
     case 'GET_ENCUESTAS':
-        getEncuestas();
+        getRecords('ENCUESTAS');
         break;
     case 'SET_PANELISTA_PANEL':
         setPanelistaPanel();
@@ -154,28 +154,24 @@ function newEnuesta () {
     echo json_encode($registrationResult);
 }
 
-function getUsers ($tipo) {
-    $fetchResult = fetchUsers($tipo);
-
-    echo json_encode($fetchResult);
-}
-
-function getPanelistas () {
-    $fetchResult = fetchPanelistas();
-
-    echo json_encode($fetchResult);
-}
-
-function getPaneles() {
-    $fetchResult = fetchPaneles();
-
-    echo json_encode($fetchResult);
-}
-
-function getEncuestas() {
-    $fetchResult = fetchEncuestas();
-
-    echo json_encode($fetchResult);
+function getRecords ($type) {
+    switch ($type) {
+        case 'ADMINS':
+            echo json_encode(fetchUsers(0));
+            break;
+        case 'CLIENTES':
+            echo json_encode(fetchUsers(1));
+            break;
+        case 'PANELISTAS':
+            echo json_encode(fetchPanelistas());
+            break;
+        case 'PANELES':
+            echo json_encode(fetchPaneles());
+            break;
+        case 'ENCUESTAS':
+            echo json_encode(fetchEncuestas());
+            break;
+    }
 }
 
 function setPanelistaPanel () {
