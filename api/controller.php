@@ -24,8 +24,11 @@ switch($action) {
     case 'ALTA_PANEL':
         newPanel();
         break;
+    case 'GET_ADMINS':
+        getUsers(0);
+        break;
     case 'GET_CLIENTES':
-        getClientes();
+        getUsers(1);
         break;
     case 'GET_PANEL':
         getPanel();
@@ -35,6 +38,15 @@ switch($action) {
         break;
     case 'SET_PANELISTA_PANEL':
         setPanelistaPanel();
+        break;
+    case 'DELETE_ADMIN':
+        deleteUser(0);
+        break;
+    case 'DELETE_CLIENTE':
+        deleteUser(1);
+        break;
+    case 'DELETE_PANELISTA':
+        deleteUser(2);
         break;
     case 'VERIFY_SESSION':
         verifyActiveSession();
@@ -90,13 +102,21 @@ function signinToDatabase ($tipo) {
 }
 
 function newPanelista () {
-    $registrationResult = registerPanelista($_POST['email'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['genero'], $_POST['educacion'], $_POST['edad'], $_POST['edoCivil'], $_POST['estado'], $_POST['municipio'], $_POST['cuartos'], $_POST['banios'], $_POST['regadera'], $_POST['focos'], $_POST['piso'], $_POST['autos'], $_POST['estudiosProv'], $_POST['estufa'], $_POST['movil'], $_POST['fotoINE']);
+    if (isset($_POST['id'])) {
+        $registrationResult = updatePanelista($_POST['id'], $_POST['email'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['genero'], $_POST['educacion'], $_POST['edad'], $_POST['edoCivil'], $_POST['estado'], $_POST['municipio'], $_POST['cuartos'], $_POST['banios'], $_POST['regadera'], $_POST['focos'], $_POST['piso'], $_POST['autos'], $_POST['estudiosProv'], $_POST['estufa'], $_POST['movil'], $_POST['fotoINE']);
+    } else {
+        $registrationResult = registerPanelista($_POST['email'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['genero'], $_POST['educacion'], $_POST['edad'], $_POST['edoCivil'], $_POST['estado'], $_POST['municipio'], $_POST['cuartos'], $_POST['banios'], $_POST['regadera'], $_POST['focos'], $_POST['piso'], $_POST['autos'], $_POST['estudiosProv'], $_POST['estufa'], $_POST['movil'], $_POST['fotoINE']);
+    }
 
     echo json_encode($registrationResult);
 }
 
 function newUser ($tipo) {
-    $registrationResult = registerUser($tipo, $_POST['username'], $_POST['password'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['email']);
+    if (isset($_POST['id'])) {
+        $registrationResult = updateUser($_POST['id'], $_POST['username'], $_POST['password'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['email']);
+    } else {
+        $registrationResult = registerUser($tipo, $_POST['username'], $_POST['password'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['email']);
+    }
 
     echo json_encode($registrationResult);
 }
@@ -108,10 +128,10 @@ function newPanel () {
     echo json_encode($registrationResult);
 }
 
-function getClientes () {
-    $clientesResult = fetchClientes();
+function getUsers ($tipo) {
+    $usersResult = fetchUsers($tipo);
 
-    echo json_encode($clientesResult);
+    echo json_encode($usersResult);
 }
 
 function getPanelistas () {
@@ -130,6 +150,12 @@ function setPanelistaPanel () {
     $clientesResult = savePanelistaPanel($_POST['panel'], $_POST['panelistas']);
 
     echo json_encode($clientesResult);
+}
+
+function deleteUser ($tipo) {
+    $deleteResult = removeUser($_POST['id'], $tipo);
+
+    echo json_encode($deleteResult);
 }
 
 function verifyActiveSession () {
