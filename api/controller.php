@@ -24,6 +24,9 @@ switch($action) {
     case 'ALTA_PANEL':
         newPanel();
         break;
+    case 'ALTA_ENCUESTA':
+        newEnuesta();
+        break;
     case 'GET_ADMINS':
         getUsers(0);
         break;
@@ -50,6 +53,9 @@ switch($action) {
         break;
     case 'DELETE_PANEL':
         deleteRecord('Panel');
+        break;
+    case 'DELETE_ENCUESTA':
+        deleteRecord('Encuesta');
         break;
     case 'VERIFY_SESSION':
         verifyActiveSession();
@@ -130,6 +136,16 @@ function newPanel () {
     } else {
         session_start();
         $registrationResult = registerPanel($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente'], $_SESSION['id']);
+    }
+
+    echo json_encode($registrationResult);
+}
+
+function newEnuesta () {
+    if (isset($_POST['id'])) {
+        $registrationResult = updateEncuesta($_POST['id'], $_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['panel']);
+    } else {
+        $registrationResult = registerEncuesta($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['panel']);
     }
 
     echo json_encode($registrationResult);

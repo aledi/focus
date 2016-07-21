@@ -137,6 +137,31 @@ function registerPanel ($nombre, $fechaInicio, $fechaFin, $cliente, $creador) {
     }
 }
 
+function registerEncuesta ($nombre, $fechaInicio, $fechaFin, $panel) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre, panel FROM Encuesta WHERE nombre = '$nombre' AND panel = '$panel'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            return array('status' => 'RECORD_EXISTS', 'id' => (int)$row['id'], 'nombre' => $row['nombre'], 'panel' => (int)$row['panel']);
+        } else {
+            $sql = "INSERT INTO Encuesta (nombre, fechaInicio, fechaFin, panel) VALUES ('$nombre', '$fechaInicio', '$fechaFin', '$panel')";
+
+            if ($conn->query($sql) === TRUE) {
+                return array('status' => 'SUCCESS');
+            } else {
+                return array('status' => 'ERROR');
+            }
+        }
+
+        $conn->close();
+    }
+}
+
 // -------------------------------
 // Fetch
 // -------------------------------
@@ -322,6 +347,35 @@ function updatePanel ($id, $nombre, $fechaInicio, $fechaFin, $cliente) {
         }
 
         $sql = "UPDATE Panel SET nombre = '$nombre', fechaInicio = '$fechaInicio', fechaFin = '$fechaFin', cliente = '$cliente' WHERE id = '$id'";
+
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
+        }
+
+        $conn->close();
+        return array('status' => 'ERROR');
+    }
+
+    return array('status' => 'ERROR');
+}
+
+function updateEncuesta ($id, $nombre, $fechaInicio, $fechaFin, $panel) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre, panel FROM Encuesta WHERE nombre = '$nombre' AND panel = '$panel'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            if ((int)$row['id'] != $id) {
+                return array('status' => 'RECORD_EXISTS', 'id' => (int)$row['id'], 'nombre' => $row['nombre'], 'panel' => (int)$row['panel']);
+            }
+        }
+
+        $sql = "UPDATE Encuesta SET nombre = '$nombre', fechaInicio = '$fechaInicio', fechaFin = '$fechaFin', panel = '$panel' WHERE id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
             $conn->close();
