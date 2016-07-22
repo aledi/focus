@@ -83,8 +83,9 @@ function registerUser ($tipo, $username, $password, $nombre, $apPaterno, $apMate
         $sql = "INSERT INTO Usuario (username, password, nombre, apPaterno, apMaterno, email, tipo) VALUES ('$username', '$password', '$nombre', '$apPaterno', '$apMaterno', '$email', '$tipo')";
 
         if ($conn->query($sql) === TRUE) {
+            $lastId = mysqli_insert_id($conn);
             $conn->close();
-            return array('status' => 'SUCCESS');
+            return array('status' => 'SUCCESS', 'id' => $lastId);
         }
 
         $conn->close();
@@ -111,8 +112,9 @@ function registerPanelista ($email, $nombre, $apPaterno, $apMaterno, $genero, $e
         $sql = "INSERT INTO Panelista (email, nombre, apPaterno, apMaterno, genero, educacion, edad, edoCivil, estado, municipio, cuartos, banios, regadera, focos, piso, autos, estudiosProv, estufa, movil, fotoINE) VALUES ('$email', '$nombre', '$apPaterno', '$apMaterno', $genero, '$educacion', '$edad', '$edoCivil', '$estado', '$municipio', '$cuartos', '$banios', '$regadera', '$focos', '$piso', '$autos', '$estudiosProv', '$estufa', '$movil', '$fotoINE')";
 
         if ($conn->query($sql) === TRUE) {
+            $lastId = mysqli_insert_id($conn);
             $conn->close();
-            return array('status' => 'SUCCESS');
+            return array('status' => 'SUCCESS', 'id' => $lastId);
         }
 
         $conn->close();
@@ -139,8 +141,9 @@ function registerPanel ($nombre, $fechaInicio, $fechaFin, $cliente, $creador) {
         $sql = "INSERT INTO Panel (nombre, fechaInicio, fechaFin, cliente, creador) VALUES ('$nombre', '$fechaInicio', '$fechaFin', $cliente, '$creador')";
 
         if ($conn->query($sql) === TRUE) {
+            $lastId = mysqli_insert_id($conn);
             $conn->close();
-            return array('status' => 'SUCCESS');
+            return array('status' => 'SUCCESS', 'id' => $lastId);
         }
 
         $conn->close();
@@ -167,8 +170,9 @@ function registerEncuesta ($nombre, $fechaInicio, $fechaFin, $panel) {
         $sql = "INSERT INTO Encuesta (nombre, fechaInicio, fechaFin, panel) VALUES ('$nombre', '$fechaInicio', '$fechaFin', '$panel')";
 
         if ($conn->query($sql) === TRUE) {
+            $lastId = mysqli_insert_id($conn);
             $conn->close();
-            return array('status' => 'SUCCESS');
+            return array('status' => 'SUCCESS', 'id' => $lastId);
         }
 
         $conn->close();
