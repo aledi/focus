@@ -266,37 +266,68 @@ function fetchEncuestas () {
     return array('status' => 'DATABASE_ERROR');
 }
 
+function fetchPanelistasPanel ($panel) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre, apPaterno, apMaterno, genero, edad, edoCivil, estado, municipio FROM Panelista";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $id = $row['id'];
+            $sql2 = "SELECT id FROM PanelistaEnPanel WHERE panel = '$panel' AND panelista = '$id'";
+            $result2 = $conn->query($sql2);
+            $checked = FALSE;
+
+            if ($result2->num_rows > 0) {
+                $checked = TRUE;
+            }
+
+            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'edoCivil' => (int)$row['edoCivil'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'checked' => $checked);
+            $response[] = $panelista;
+        }
+
+        $conn->close();
+        return array('results' => $response);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 // -------------------------------
 // Save
 // -------------------------------
 
-function savePanelistaPanel ($panel, $panelistas) {
+function savePanelistasPanel ($panel, $panelistas) {
     $conn = connect();
 
     $inserts = 0;
     $errors = 0;
-    $existing = 0;
+    $deletes = 0;
 
     if ($conn != null) {
+        $sql = "SELECT * FROM PanelistaEnPanel WHERE panel = '$panel'";
+        $result = $conn->query($sql);
+        $deletes = $result->num_rows;
+        $sql = "DELETE FROM PanelistaEnPanel WHERE panel = '$panel'";
+        $result = $conn->query($sql);
+
         foreach ($panelistas as &$panelista) {
-            $sql = "SELECT id FROM PanelistaEnPanel WHERE panelista = '$panelista' AND panel = '$panel'";
-            $result = $conn->query($sql);
+            $sql = "INSERT INTO PanelistaEnPanel (panelista, panel) VALUES ('$panelista', '$panel')";
 
-            if ($result->num_rows === 0) {
-                $sql = "INSERT INTO PanelistaEnPanel (panelista, panel) VALUES ('$panelista', '$panel')";
-
-                if ($conn->query($sql) === TRUE) {
-                    $inserts = $inserts + 1;
-                } else {
-                    $errors = $errors + 1;
-                }
+            if ($conn->query($sql) === TRUE) {
+                $inserts = $inserts + 1;
             } else {
-                $existing = $existing + 1;
+                $errors = $errors + 1;
             }
         }
 
+        $deletes = $deletes - $errors - $inserts;
+
         $conn->close();
-        return array('status' => 'SUCCESS', 'inserts' => $inserts, 'errors' => $errors, 'existing' => $existing);
+        return array('status' => 'SUCCESS', 'inserts' => $inserts, 'errors' => $errors, 'deletes' => $deletes);
     }
 
     return array('status' => 'DATABASE_ERROR');
