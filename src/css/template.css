@@ -26,7 +26,7 @@ footer{
 }
 
 #container{
-    margin-left: 20%;
+    margin-left: 0%;
 }
 
  #header{
@@ -111,4 +111,40 @@ li.dropdown {
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.formHeader{
+    font-size: 120%;
+}
+
+/*
+    Contenido tabulado para mostrar dinamicamente.
+*/
+
+ul.tabs{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+ul.tabs li{
+    background: none;
+    color: #222;
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+ul.tabs li.current{
+    background: #ededed;
+    color: #222;
+}
+
+.tab-content{
+    display: none;
+    background: #ededed;
+    padding: 15px;
+}
+
+.tab-content.current{
+    display: inherit;
 }

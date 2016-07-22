@@ -1,33 +1,17 @@
+function getCheckedCheckboxesFor(checkboxName) {
+    var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
+    Array.prototype.forEach.call(checkboxes, function(el) {
+        values.push(parseInt(el.value, 10));
+    });
+    return values;
+}
+
 $(document).on('ready', function () {
 
-	parameters = {
-		'action': 'GET_PANEL'
-	};
+    var flagLoadingPanelist = 0;
+    event.preventDefault();
 
-	$.ajax({
-        type: 'POST',
-        url: '../api/controller.php',
-        data: parameters,
-        dataType: 'json',
-        success: function (obj) {
-            //console.log(obj);
-            var currentHTML = "";
-            var x = 0;
-
-            for(x = 0; x < obj.results.length; x++){
-            	currentHTML += '<option value=' + obj.results[x].id + '>' + obj.results[x].nombre + '</option>';
-            }
-
-            $("#panelesDropdown").append(currentHTML);
-            currentHTML = "";
-
-        },
-        error: function (error) {
-             $('#feedback').html("Paneles han producido un error.");
-        }
-    });
-
-    parameters = {
+    var parameters = {
         'action': 'GET_PANELISTAS'
     };
 
@@ -37,39 +21,63 @@ $(document).on('ready', function () {
         data: parameters,
         dataType: 'json',
         success: function (obj) {
-            //console.log(obj);
+
             var currentHTML = "";
-            var x = 0;
-
-            for(x = 0; x < obj.results.length; x++){
-                currentHTML += '<option value=' + obj.results[x].id + '>' + obj.results[x].nombre + '</option>';
-            }
-
-            $("#panelistasDropdown").append(currentHTML);
-            currentHTML = "";
-
+            if(flagLoadingPanelist == 0){
+                currentHTML += '<tr>';
+                    currentHTML += '<th></th>';
+                    currentHTML += '<th>ID</th>';
+                    currentHTML += '<th>Nombre</th>';
+                    currentHTML += '<th>Género</th>';
+                    currentHTML += '<th>Edad</th>';
+                    currentHTML += '<th>Estado Civil</th>';
+                    currentHTML += '<th>Municipio</th>';
+                    currentHTML += '<th>Estado</th>';
+                    currentHTML += '<th></th>';
+                currentHTML += '</tr>';
+                for(var i = 0; i < obj.results.length; i++) {
+                    currentHTML += "<tr>";
+                        currentHTML += "<td></td>";
+                        currentHTML += "<td class='id'>" + obj.results[i].id +"</td>";
+                        currentHTML += "<td>" + obj.results[i].nombre +"</td>";
+                        currentHTML += "<td>" + convertData('Genero', obj.results[i].genero) +"</td>";
+                        currentHTML += "<td>" + obj.results[i].edad +"</td>";
+                        currentHTML += "<td>" + convertData('edoCivil', obj.results[i].edoCivil) +"</td>";
+                        currentHTML += "<td>" + obj.results[i].municipio +"</td>";
+                        currentHTML += "<td>" + obj.results[i].estado +"</td>";
+                        currentHTML += '<td><input type="checkbox" value=' + obj.results[i].id + ' name="panelistas"></td>"';
+                    currentHTML += "</tr>";
+                    $("#tablaPanelistas").append(currentHTML);
+                    currentHTML = "";
+                }
+                flagLoadingPanelist = 1;
+            }       
         },
         error: function (error) {
-             $('#feedback').html("Panelistas han producido un error.");
+             $('#feedback').html("Error cargando los clientes.");
         }
     });
 
 	$('#loginButtonLigarPanel').on('click', function (event) {
         event.preventDefault();
 
-        var panel = $('#panelesDropdown').val();
-        var panelistas = $('#panelistasDropdown').val();
+        var panelistas = getCheckedCheckboxesFor('panelistas');
+        var id = window.location.search.substring(1)
+        id = id.substring(3); 
 
-        if (panel === '' || panelistas === '') {
+        console.log(id);
+        console.log(panelistas);
+        
+        if (panelistas === '') {
             $('#feedback').html('Favor de llenar todos los campos');
 
             return;
         }
 
         var parameters = {
-            'action': 'SET_PANELISTA_PANEL',
-            'panel': panel,
-            'panelistas': panelistas
+            'action': 'SET_PANELISTAS_PANEL',
+            'panelistas': panelistas,
+            'panel' : id
         };
 
         $.ajax({
