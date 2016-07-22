@@ -49,7 +49,6 @@ $(document).on('ready', function () {
         var fechaInicio = $('#dateStarts').val();
         var fechaFin = $('#dateEnds').val();
         var cliente = $("input[name=id]:checked").val();
-        console.log(cliente);
 
         if (nombre === '' || fechaInicio === '' || fechaFin === '' || cliente === '') {
             $('#feedback').html('Favor de llenar todos los campos');
@@ -72,7 +71,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 alert("Panel creado exitosamente.");
-                location.replace("liga-panel-panelista.php");
+                location.replace("liga-panel-panelista.php?id=" + cliente);
             },
             error: function (error) {
                  $('#feedback').html("Panel no añadido, ha ocurrido un error.");

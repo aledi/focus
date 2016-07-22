@@ -1,5 +1,4 @@
 $(document).on('ready', function () {
-
 	parameters = {
 		'action': 'GET_PANEL'
 	};
