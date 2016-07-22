@@ -20,16 +20,11 @@
     <div id='loginForm'>
     	<form id='formLogin'>
     		<h1> Ligar Panelistas a un Panel</h1>
-            <div id="paneles">
-                <p>1. Seleccionar Panel: </p>
-                <select id="panelesDropdown">
-                </select>
-            </div>
-
             <div id="panelista">
-                <p>2. Seleccionar Panelistas: (Mantener presionado Cntrl para varios)</p>
-                <select id="panelistasDropdown" multiple>
-                </select>
+                <p>1. Seleccionar Panelistas:</p>
+                <table id="tablaPanelistas">
+
+                </table>
             </div>
 
 	  		<div>

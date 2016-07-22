@@ -71,7 +71,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 alert("Panel creado exitosamente.");
-                location.replace("liga-panel-panelista.php?id=" + cliente);
+                location.replace("liga-panel-panelista.php?id=" + obj.id);
             },
             error: function (error) {
                  $('#feedback').html("Panel no añadido, ha ocurrido un error.");

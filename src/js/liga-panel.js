@@ -1,5 +1,5 @@
 $(document).on('ready', function () {
-	parameters = {
+	/*parameters = {
 		'action': 'GET_PANEL'
 	};
 
@@ -24,9 +24,12 @@ $(document).on('ready', function () {
         error: function (error) {
              $('#feedback').html("Paneles han producido un error.");
         }
-    });
+    });*/
 
-    parameters = {
+    var flagLoadingPanelist = 0;
+    event.preventDefault();
+
+    var parameters = {
         'action': 'GET_PANELISTAS'
     };
 
@@ -36,20 +39,40 @@ $(document).on('ready', function () {
         data: parameters,
         dataType: 'json',
         success: function (obj) {
-            //console.log(obj);
+
             var currentHTML = "";
-            var x = 0;
-
-            for(x = 0; x < obj.results.length; x++){
-                currentHTML += '<option value=' + obj.results[x].id + '>' + obj.results[x].nombre + '</option>';
-            }
-
-            $("#panelistasDropdown").append(currentHTML);
-            currentHTML = "";
-
+            if(flagLoadingPanelist == 0){
+                currentHTML += '<tr>';
+                    currentHTML += '<th></th>';
+                    currentHTML += '<th>ID</th>';
+                    currentHTML += '<th>Nombre</th>';
+                    currentHTML += '<th>Género</th>';
+                    currentHTML += '<th>Edad</th>';
+                    currentHTML += '<th>Estado Civil</th>';
+                    currentHTML += '<th>Municipio</th>';
+                    currentHTML += '<th>Estado</th>';
+                    currentHTML += '<th></th>';
+                currentHTML += '</tr>';
+                for(var i = 0; i < obj.results.length; i++) {
+                    currentHTML += "<tr>";
+                        currentHTML += "<td></td>";
+                        currentHTML += "<td class='id'>" + obj.results[i].id +"</td>";
+                        currentHTML += "<td>" + obj.results[i].nombre +"</td>";
+                        currentHTML += "<td>" + convertData('Genero', obj.results[i].genero) +"</td>";
+                        currentHTML += "<td>" + obj.results[i].edad +"</td>";
+                        currentHTML += "<td>" + convertData('edoCivil', obj.results[i].edoCivil) +"</td>";
+                        currentHTML += "<td>" + obj.results[i].municipio +"</td>";
+                        currentHTML += "<td>" + obj.results[i].estado +"</td>";
+                        currentHTML += "<td class=selectButton><input id= select type=  submit  value= Select ></td>"
+                    currentHTML += "</tr>";
+                    $("#tablaPanelistas").append(currentHTML);
+                    currentHTML = "";
+                }
+                flagLoadingPanelist = 1;
+            }       
         },
         error: function (error) {
-             $('#feedback').html("Panelistas han producido un error.");
+             $('#feedback').html("Error cargando los clientes.");
         }
     });
 
