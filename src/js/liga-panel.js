@@ -63,7 +63,7 @@ $(document).on('ready', function () {
                         currentHTML += "<td>" + convertData('edoCivil', obj.results[i].edoCivil) +"</td>";
                         currentHTML += "<td>" + obj.results[i].municipio +"</td>";
                         currentHTML += "<td>" + obj.results[i].estado +"</td>";
-                        currentHTML += "<td class=selectButton><input id= select type=  submit  value= Select ></td>"
+                        currentHTML += '<td><input type="checkbox" value=' + obj.results[i].id + ' name="id"></td>"';
                     currentHTML += "</tr>";
                     $("#tablaPanelistas").append(currentHTML);
                     currentHTML = "";
