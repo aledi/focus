@@ -44,6 +44,7 @@
             <div id="clients">
                 <p>4. Seleccionar Cliente: </p>
                 <table id="tableClientes">
+                
                 </table>
             </div>
 

@@ -1,28 +1,44 @@
 $(document).on('ready', function () {
+	var flagLoadingUser = 0;
+    var parameters = {
+        'action': 'GET_CLIENTES'
+    };
 
-	parameters = {
-		'action': 'GET_CLIENTES'
-	};
-
-	$.ajax({
+    $.ajax({
         type: 'POST',
         url: '../api/controller.php',
         data: parameters,
         dataType: 'json',
         success: function (obj) {
+
             var currentHTML = "";
-            var x = 0;
-
-            for(x = 0; x < obj.results.length; x++){
-            	currentHTML += '<option value=' + obj.results[x].id + '>' + obj.results[x].nombre + '</option>';
-            }
-
-            $("#clientesDropdown").append(currentHTML);
-            currentHTML = "";
-
+            if(flagLoadingUser == 0){
+                currentHTML += '<tr>';
+                    currentHTML += '<th></th>';
+                    currentHTML += '<th>ID</th>';
+                    currentHTML += '<th>Username</th>';
+                    currentHTML += '<th>Nombre</th>';
+                    currentHTML += '<th>Correo</th>';
+                    currentHTML += '<th>Seleccionar</th>';
+                currentHTML += '</tr>';
+                for(var i = 0; i < obj.results.length; i++)
+                {
+                    currentHTML += "<tr>";
+                        currentHTML += "<td></td>";
+                        currentHTML += "<td class='id'>" + obj.results[i].id+"</td>";
+                        currentHTML += "<td>" + obj.results[i].username+"</td>";
+                        currentHTML += "<td>" + obj.results[i].nombre+"</td>";
+                        currentHTML += "<td>" + obj.results[i].email+"</td>";
+                        currentHTML += '<td><input type="radio" value=' + obj.results[i].id + ' name="id"></td>';
+                    currentHTML += "</tr>";
+                    $("#tableClientes").append(currentHTML);
+                    currentHTML = "";
+                }
+                flagLoadingUser = 1;
+            }       
         },
         error: function (error) {
-             $('#feedback').html("Cliente no añadido, ha ocurrido un error.");
+             $('#feedback').html("Error cargando los clientes.");
         }
     });
 
@@ -32,7 +48,8 @@ $(document).on('ready', function () {
         var nombre = $('#panelName').val();
         var fechaInicio = $('#dateStarts').val();
         var fechaFin = $('#dateEnds').val();
-        var cliente = $("#clientesDropdown").val();
+        var cliente = $("input[name=id]:checked").val();
+        console.log(cliente);
 
         if (nombre === '' || fechaInicio === '' || fechaFin === '' || cliente === '') {
             $('#feedback').html('Favor de llenar todos los campos');
