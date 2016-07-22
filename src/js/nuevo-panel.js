@@ -35,7 +35,7 @@ $(document).on('ready', function () {
                     currentHTML = "";
                 }
                 flagLoadingUser = 1;
-            }       
+            }
         },
         error: function (error) {
              $('#feedback').html("Error cargando los clientes.");
@@ -123,7 +123,7 @@ $(document).on('ready', function () {
                         currentHTML = "";
                     }
                     flagLoadingPanel = 1;
-                }       
+                }
             },
             error: function (error) {
                  $('#feedback').html("Error cargando los clientes.");
@@ -133,7 +133,7 @@ $(document).on('ready', function () {
 
     $("#allPanels").on("click",".deleteButton", function(){
         var parameters = {
-            "action": "DELETE_PANELISTA",
+            "action": "DELETE_PANEL",
             "id": $(this).parent().find("td.id").text()
         }
         console.log(parameters);

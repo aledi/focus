@@ -11,8 +11,12 @@ $(document).on('ready', function () {
     var flagLoadingPanelist = 0;
     event.preventDefault();
 
+	var id = window.location.search.substring(1)
+	id = id.substring(3);
+
     var parameters = {
-        'action': 'GET_PANELISTAS'
+        'action': 'GET_PANELISTAS',
+		'panel': id
     };
 
     $.ajax({
@@ -45,13 +49,13 @@ $(document).on('ready', function () {
                         currentHTML += "<td>" + convertData('edoCivil', obj.results[i].edoCivil) +"</td>";
                         currentHTML += "<td>" + obj.results[i].municipio +"</td>";
                         currentHTML += "<td>" + obj.results[i].estado +"</td>";
-                        currentHTML += '<td><input type="checkbox" value=' + obj.results[i].id + ' name="panelistas"></td>"';
+                        currentHTML += '<td><input type="checkbox" value=' + obj.results[i].id + ' name="panelistas"' + 'checked=' + obj.results[i].estado + '></td>"';
                     currentHTML += "</tr>";
                     $("#tablaPanelistas").append(currentHTML);
                     currentHTML = "";
                 }
                 flagLoadingPanelist = 1;
-            }       
+            }
         },
         error: function (error) {
              $('#feedback').html("Error cargando los clientes.");
@@ -62,12 +66,10 @@ $(document).on('ready', function () {
         event.preventDefault();
 
         var panelistas = getCheckedCheckboxesFor('panelistas');
-        var id = window.location.search.substring(1)
-        id = id.substring(3); 
 
         console.log(id);
         console.log(panelistas);
-        
+
         if (panelistas === '') {
             $('#feedback').html('Favor de llenar todos los campos');
 
@@ -94,5 +96,5 @@ $(document).on('ready', function () {
             }
         });
     });
-	
+
 });
