@@ -77,7 +77,7 @@ $(document).on('ready', function () {
         var parameters = {
             'action': 'SET_PANELISTAS_PANEL',
             'panelistas': panelistas,
-            'id' : id
+            'panel' : id
         };
 
         $.ajax({
