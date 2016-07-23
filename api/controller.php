@@ -45,6 +45,9 @@ switch ($action) {
     case 'SET_PANELISTAS_PANEL':
         setPanelistasPanel();
         break;
+    case 'SET_PREGUNTAS_ENCUESTA':
+        setPreguntasEncuesta();
+        break;
     case 'DELETE_ADMIN':
         deleteRecord('Usuario');
         break;
@@ -67,7 +70,7 @@ switch ($action) {
         logOut();
         break;
     default:
-        echo json_encode(array('status' => 'INVALID_ACTION'));
+        echo json_encode(array('status' => 'INVALID_ACTION', 'action' => $action));
         break;
 }
 
@@ -184,6 +187,12 @@ function getRecords ($type) {
 
 function setPanelistasPanel () {
     $saveResult = savePanelistasPanel($_POST['panel'], $_POST['panelistas']);
+
+    echo json_encode($saveResult);
+}
+
+function setPreguntasEncuesta () {
+    $saveResult = savePreguntasEncuesta($_POST['encuesta'], $_POST['preguntas']);
 
     echo json_encode($saveResult);
 }

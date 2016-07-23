@@ -337,6 +337,54 @@ function savePanelistasPanel ($panel, $panelistas) {
     return array('status' => 'DATABASE_ERROR');
 }
 
+function savePreguntasEncuesta ($encuesta, $preguntas) {
+    $conn = connect();
+
+    $inserts = 0;
+    $errors = 0;
+    $deletes = 0;
+
+    if ($conn != null) {
+        $sql = "SELECT * FROM Preguntas WHERE encuesta = '$encuesta'";
+        $result = $conn->query($sql);
+        $deletes = $result->num_rows;
+        $sql = "DELETE FROM Preguntas WHERE encuesta = '$encuesta'";
+        $result = $conn->query($sql);
+
+        foreach ($preguntas as &$pregunta) {
+            $numPregunta = $pregunta['numPregunta'];
+            $preguntaText = $pregunta['pregunta'];
+            $video = $pregunta['video'];
+            $imagen = $pregunta['imagen'];
+            $op1 = $pregunta['op1'];
+            $op2 = $pregunta['op2'];
+            $op3 = $pregunta['op3'];
+            $op4 = $pregunta['op4'];
+            $op5 = $pregunta['op5'];
+            $op6 = $pregunta['op6'];
+            $op7 = $pregunta['op7'];
+            $op8 = $pregunta['op8'];
+            $op9 = $pregunta['op9'];
+            $op10 = $pregunta['op10'];
+
+            $sql = "INSERT INTO Preguntas (encuesta, numPregunta, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10) VALUES ('$encuesta', '$numPregunta', '$preguntaTexto', '$video', '$imagen', '$op1', '$op2', '$op3', '$op4', '$op5', '$op6', '$op7', '$op8', '$op9', '$op10')";
+
+            if ($conn->query($sql) === TRUE) {
+                $inserts = $inserts + 1;
+            } else {
+                $errors = $errors + 1;
+            }
+        }
+
+        $deletes = $deletes - $errors - $inserts;
+
+        $conn->close();
+        return array('status' => 'SUCCESS', 'inserts' => $inserts, 'errors' => $errors, 'deletes' => $deletes);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 // -------------------------------
 // Alter
 // -------------------------------
