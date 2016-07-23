@@ -158,5 +158,224 @@ $(document).on('ready', function () {
             }
         });
     });
+
+    var flagLoading = 0;
+    $('#tab-modAdmin').on('click', function (event) {
+        event.preventDefault();
+
+        var parameters = {
+            'action': 'GET_ADMINS'
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '../api/controller.php',
+            data: parameters,
+            dataType: 'json',
+            success: function (obj) {
+
+                var currentHTML = "";
+                if(flagLoading == 0){
+                    currentHTML += '<tr>';
+                        currentHTML += '<th></th>';
+                        currentHTML += '<th>ID</th>';
+                        currentHTML += '<th>Username</th>';
+                        currentHTML += '<th>Nombre</th>';
+                        currentHTML += '<th>Correo</th>';
+                        currentHTML += '<th colspan="2">Acción</th>';
+                    currentHTML += '</tr>';
+                    for(var i = 0; i < obj.results.length; i++)
+                    {
+                        currentHTML += "<tr>";
+                            currentHTML += "<td></td>";
+                            currentHTML += "<td class='id'>" + obj.results[i].id+"</td>";
+                            currentHTML += "<td>" + obj.results[i].username+"</td>";
+                            currentHTML += "<td>" + obj.results[i].nombre+"</td>";
+                            currentHTML += "<td>" + obj.results[i].email+"</td>";
+                            currentHTML += "<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>"
+                            currentHTML += "<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>";
+                        currentHTML += "</tr>";
+                        $("#allAdmin").append(currentHTML);
+                        currentHTML = "";
+                    }
+                    flagLoading = 1;
+                }       
+            },
+            error: function (error) {
+                 $('#feedback').html("Error cargando los administradores.");
+            }
+        });
+    });
     
+    var flagLoadingUser = 0;
+    $('#tab-modUser').on('click', function (event) {
+        event.preventDefault();
+
+        var parameters = {
+            'action': 'GET_CLIENTES'
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '../api/controller.php',
+            data: parameters,
+            dataType: 'json',
+            success: function (obj) {
+
+                var currentHTML = "";
+                if(flagLoadingUser == 0){
+                    currentHTML += '<tr>';
+                        currentHTML += '<th></th>';
+                        currentHTML += '<th>ID</th>';
+                        currentHTML += '<th>Username</th>';
+                        currentHTML += '<th>Nombre</th>';
+                        currentHTML += '<th>Correo</th>';
+                        currentHTML += '<th colspan="2">Acción</th>';
+                    currentHTML += '</tr>';
+                    for(var i = 0; i < obj.results.length; i++)
+                    {
+                        currentHTML += "<tr>";
+                            currentHTML += "<td></td>";
+                            currentHTML += "<td class='id'>" + obj.results[i].id+"</td>";
+                            currentHTML += "<td>" + obj.results[i].username+"</td>";
+                            currentHTML += "<td>" + obj.results[i].nombre+"</td>";
+                            currentHTML += "<td>" + obj.results[i].email+"</td>";
+                            currentHTML += "<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>"
+                            currentHTML += "<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>";
+                        currentHTML += "</tr>";
+                        $("#allUsers").append(currentHTML);
+                        currentHTML = "";
+                    }
+                    flagLoadingUser = 1;
+                }       
+            },
+            error: function (error) {
+                 $('#feedback').html("Error cargando los clientes.");
+            }
+        });
+    });
+
+    $("#allUsers").on("click",".deleteButton", function(){
+        var parameters = {
+            "action": "DELETE_CLIENTE",
+            "id": $(this).parent().find("td.id").text()
+        }
+        console.log(parameters);
+        $.ajax({
+            url: "../api/controller.php",
+            type: "POST",
+            data: parameters,
+            dataType: "json",
+            success: function(obj){
+                alert("Cliente Eliminado!");
+                console.log(obj.status);
+                $(this).parent().find("td.id").remove();
+            },
+            error: function(errorMsg)
+            {
+                alert("Error eliminando cliente");
+            }
+        });
+    });
+
+    $("#allAdmin").on("click",".deleteButton", function(){
+        var parameters = {
+            "action": "DELETE_CLIENTE",
+            "id": $(this).parent().find("td.id").text()
+        }
+        console.log(parameters);
+        $.ajax({
+            url: "../api/controller.php",
+            type: "POST",
+            data: parameters,
+            dataType: "json",
+            success: function(obj){
+                alert("¡Administrador Eliminado!");
+                console.log(obj.status);
+                $(this).parent().find("td.id").remove();
+            },
+            error: function(errorMsg)
+            {
+                alert("Error eliminando administrador");
+            }
+        });
+    });
+
+
+    var flagLoadingPanelist = 0;
+    $('#tab-modPanelist').on('click', function (event) {
+        event.preventDefault();
+
+        var parameters = {
+            'action': 'GET_PANELISTAS'
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '../api/controller.php',
+            data: parameters,
+            dataType: 'json',
+            success: function (obj) {
+
+                var currentHTML = "";
+                if(flagLoadingPanelist == 0){
+                    currentHTML += '<tr>';
+                        currentHTML += '<th></th>';
+                        currentHTML += '<th>ID</th>';
+                        currentHTML += '<th>Nombre</th>';
+                        currentHTML += '<th>Género</th>';
+                        currentHTML += '<th>Edad</th>';
+                        currentHTML += '<th>Estado Civil</th>';
+                        currentHTML += '<th>Municipio</th>';
+                        currentHTML += '<th>Estado</th>';
+                        currentHTML += '<th colspan="2">Acción</th>';
+                    currentHTML += '</tr>';
+                    for(var i = 0; i < obj.results.length; i++)
+                    {
+                        currentHTML += "<tr>";
+                            currentHTML += "<td></td>";
+                            currentHTML += "<td class='id'>" + obj.results[i].id +"</td>";
+                            currentHTML += "<td>" + obj.results[i].nombre +"</td>";
+                            currentHTML += "<td>" + convertData('Genero', obj.results[i].genero) +"</td>";
+                            currentHTML += "<td>" + obj.results[i].edad +"</td>";
+                            currentHTML += "<td>" + convertData('edoCivil', obj.results[i].edoCivil) +"</td>";
+                            currentHTML += "<td>" + obj.results[i].municipio +"</td>";
+                            currentHTML += "<td>" + obj.results[i].estado +"</td>";
+                            currentHTML += "<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>"
+                            currentHTML += "<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>";
+                        currentHTML += "</tr>";
+                        $("#allPanelists").append(currentHTML);
+                        currentHTML = "";
+                    }
+                    flagLoadingPanelist = 1;
+                }       
+            },
+            error: function (error) {
+                 $('#feedback').html("Error cargando los clientes.");
+            }
+        });
+    });
+
+    $("#allPanelists").on("click",".deleteButton", function(){
+        var parameters = {
+            "action": "DELETE_PANELISTA",
+            "id": $(this).parent().find("td.id").text()
+        }
+        console.log(parameters);
+        $.ajax({
+            url: "../api/controller.php",
+            type: "POST",
+            data: parameters,
+            dataType: "json",
+            success: function(obj){
+                alert("Panelista Eliminado!");
+                console.log(obj.status);
+                $(this).parent().find("td.id").remove();
+            },
+            error: function(errorMsg)
+            {
+                alert("Error eliminando Panelista");
+            }
+        });
+    });
 });
