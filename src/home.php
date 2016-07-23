@@ -11,9 +11,9 @@
 <body>
     <div id='header'>
     	<div id="container">
-    		<img src='img/focus_logo.png' href='home.php'/>
+            <?php include_once('elements/navigation-bar.php');?>
     	</div>
-        <?php include_once('elements/navigation-bar.php');?>
+        
     </div>
     <div id='loginForm'>
 
