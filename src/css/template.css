@@ -10,7 +10,8 @@ body{
  }
 
 img{
-    padding: 2%;
+   
+    padding:1%;
     margin: auto;
 }
 
@@ -45,6 +46,11 @@ footer{
     vertical-align: middle;
 }
 
+#logo {
+    float:left;
+}
+
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -66,26 +72,18 @@ li a {
     text-decoration: none;
 }
 
-li a:hover:not(.active) {
+li a:hover{
     background-color: #ddd;
-}
-
-li a.active {
-    color: white;
-    background-color: #4CAF50;
 }
 
 li a, .dropbtn {
     display: inline-block;
-    
+    height: 33.06px;
     text-align: center;
-    padding: 14px 16px;
+    padding: 20px 16px;
     text-decoration: none;
 }
 
-li a:hover, .dropdown:hover .dropbtn {
-    background-color: #4CAF50;
-}
 
 li.dropdown {
     display: inline-block;
