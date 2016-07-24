@@ -42,6 +42,9 @@ switch ($action) {
     case 'GET_ENCUESTAS':
         getRecords('ENCUESTAS');
         break;
+    case 'GET_PREGUNTAS':
+        getRecords('PREGUNTAS');
+        break;
     case 'SET_PANELISTAS_PANEL':
         setPanelistasPanel();
         break;
@@ -181,6 +184,14 @@ function getRecords ($type) {
             break;
         case 'ENCUESTAS':
             echo json_encode(fetchEncuestas());
+            break;
+        case 'PREGUNTAS':
+            if (isset($_POST['encuesta'])) {
+                echo json_encode(fetchPreguntasEncuesta($_POST['encuesta']));
+                return;
+            }
+
+            // echo json_encode(fetchPreguntas());
             break;
     }
 }
