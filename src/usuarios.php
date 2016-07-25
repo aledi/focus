@@ -7,7 +7,7 @@
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js'></script>
     <script src='js/alta-panelistas.js' type='text/javascript'></script>
     <script src='js/modify-delete.js' type='text/javascript'></script>
-  	<title> Focus - Administradores</title>
+  	<title> Focus - Usuarios</title>
 </head>
 
 <body>
