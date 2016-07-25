@@ -3,10 +3,16 @@
 <div id='navigationBar'>
     <ul>
       <li><a href="panelistas.php">Panelistas</a></li>
-      <li><a href="usuarios.php">Usuarios</a></li>
+      <li class="dropdown">
+    	<a class="dropbtn">Usuarios</a>
+	    <div class="dropdown-content">
+	      <a href="usuarios.php">Clientes</a>
+	      <a href="administradores.php">Administradores</a>
+	    </div>
+	  </li>
       <li><a href="paneles.php">Paneles</a></li>
       <li><a href="reportes.php">Reportes</a></li>
-      <li style="float:right"><a class="signOutButton">Sign Out</a></li>
+      <li style="float:right"><a class="signOutButton" href="">Sign Out</a></li>
     </ul>
 </div>
 

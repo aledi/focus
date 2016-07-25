@@ -1,7 +1,8 @@
 $(document).on('ready', function () {
     
     $('#sendInfoPanelistas').on('click', function (event) {
-        event.preventDefault();
+        var idPanelista = window.location.search.substring(1)
+        idPanelista = idPanelista.substring(3);
 
         var email = $('#email').val();
         var nombre = $('#fName').val();
@@ -24,29 +25,59 @@ $(document).on('ready', function () {
         var movil = $('#telefono_cel').val();
         var fotoINE = "";
 
-        var parameters = {
-            'action': 'ALTA_PANELISTA',
-            'nombre': nombre,
-            'apPaterno': apPaterno,
-            'apMaterno': apMaterno,
-            'email' : email,
-            'genero' : genero,
-            'educacion' : educacion,
-            'edad' : edad,
-            'edoCivil' : edoCivil,
-            'estado' : estado,
-            'municipio' : municipio,
-            'cuartos' : cuartos,
-            'banios' : banios,
-            'regadera' : regadera,
-            'focos' : focos,
-            'piso' : piso,
-            'autos' : autos,
-            'estudiosProv' : estudiosProv,
-            'estufa' : estufa,
-            'movil' : movil,
-            'fotoINE' : fotoINE
-        };
+        if(idPanelista == ''){
+            var parameters = {
+                'action': 'ALTA_PANELISTA',
+                'nombre': nombre,
+                'apPaterno': apPaterno,
+                'apMaterno': apMaterno,
+                'email' : email,
+                'genero' : genero,
+                'educacion' : educacion,
+                'edad' : edad,
+                'edoCivil' : edoCivil,
+                'estado' : estado,
+                'municipio' : municipio,
+                'cuartos' : cuartos,
+                'banios' : banios,
+                'regadera' : regadera,
+                'focos' : focos,
+                'piso' : piso,
+                'autos' : autos,
+                'estudiosProv' : estudiosProv,
+                'estufa' : estufa,
+                'movil' : movil,
+                'fotoINE' : fotoINE
+            };
+        }
+
+        else {
+            console.log(idPanelista);
+            var parameters = {
+                'action': 'ALTA_PANELISTA',
+                'nombre': nombre,
+                'apPaterno': apPaterno,
+                'apMaterno': apMaterno,
+                'email' : email,
+                'genero' : genero,
+                'educacion' : educacion,
+                'edad' : edad,
+                'edoCivil' : edoCivil,
+                'estado' : estado,
+                'municipio' : municipio,
+                'cuartos' : cuartos,
+                'banios' : banios,
+                'regadera' : regadera,
+                'focos' : focos,
+                'piso' : piso,
+                'autos' : autos,
+                'estudiosProv' : estudiosProv,
+                'estufa' : estufa,
+                'movil' : movil,
+                'fotoINE' : fotoINE,
+                'id' : idPanelista
+            };
+        }
 
         $.ajax({
             type: 'POST',
@@ -65,55 +96,9 @@ $(document).on('ready', function () {
 
 
     $('#sendInfoAdmin').on('click', function (event) {
-        event.preventDefault();
 
-        var email = $('#email').val();
-        var nombre = $('#fName').val();
-        var apPaterno = $('#lName').val();
-        var apMaterno = $('#lName_materno').val();
-        var username = $('#username').val();
-        var password = $('#password').val();
-        var passwordConf = $('#passwordConf').val();
-
-        if (username === '' || password === '' || email === '' || nombre === '' ||
-            apPaterno === '' || apMaterno === '') {
-            $('#feedback').html('Favor de llenar todos los campos');
-
-            return;
-        }
-
-        if(password != passwodConf){
-            $('#feedback').html('Las contraseñas no coinciden.');
-            return;
-        }
-
-        var parameters = {
-            'action': 'ALTA_ADMIN',
-            'nombre': nombre,
-            'apPaterno': apPaterno,
-            'apMaterno': apMaterno,
-            'email' : email,
-            'username' : username,
-            'password' : password
-        };
-
-        $.ajax({
-            type: 'POST',
-            url: '../api/controller.php',
-            data: parameters,
-            dataType: 'json',
-            success: function (obj) {
-                //console.log(obj);
-                alert("Adminsitrador añadido exitosamente.");
-            },
-            error: function (error) {
-                 $('#feedback').html("Administrador no añadido, ha ocurrido un error.");
-            }
-        });
-    });
-
-    $('#sendInfoCliente').on('click', function (event) {
-        event.preventDefault();
+        var idAdministrador = window.location.search.substring(1)
+        idAdministrador = idAdministrador.substring(3);
 
         var email = $('#email').val();
         var nombre = $('#fName').val();
@@ -135,15 +120,94 @@ $(document).on('ready', function () {
             return;
         }
 
-        var parameters = {
-            'action': 'ALTA_CLIENTE',
-            'nombre': nombre,
-            'apPaterno': apPaterno,
-            'apMaterno': apMaterno,
-            'email' : email,
-            'username' : username,
-            'password' : password
-        };
+        if(idAdministrador == ''){
+            var parameters = {
+                'action': 'ALTA_ADMIN',
+                'nombre': nombre,
+                'apPaterno': apPaterno,
+                'apMaterno': apMaterno,
+                'email' : email,
+                'username' : username,
+                'password' : password
+            };
+        }
+        else {
+            var parameters = {
+                'action': 'ALTA_ADMIN',
+                'nombre': nombre,
+                'apPaterno': apPaterno,
+                'apMaterno': apMaterno,
+                'email' : email,
+                'username' : username,
+                'password' : password,
+                'id' : idAdministrador
+            };
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '../api/controller.php',
+            data: parameters,
+            dataType: 'json',
+            success: function (obj) {
+                //console.log(obj);
+                alert("Adminsitrador añadido exitosamente.");
+            },
+            error: function (error) {
+                 $('#feedback').html("Administrador no añadido, ha ocurrido un error.");
+            }
+        });
+    });
+
+    $('#sendInfoCliente').on('click', function (event) {
+
+        var idCliente = window.location.search.substring(1)
+        idCliente = idCliente.substring(3);
+
+        var email = $('#email').val();
+        var nombre = $('#fName').val();
+        var apPaterno = $('#lName').val();
+        var apMaterno = $('#lName_materno').val();
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var passwordConf = $('#passwordConf').val();
+
+        if (username === '' || password === '' || email === '' || nombre === '' ||
+            apPaterno === '' || apMaterno === '') {
+            $('#feedback').html('Favor de llenar todos los campos');
+
+            return;
+        }
+
+        if(password != passwordConf){
+            $('#feedback').html('Las contraseñas no coinciden.');
+            return;
+        }
+
+
+        if (idCliente == ''){
+            var parameters = {
+                'action': 'ALTA_CLIENTE',
+                'nombre': nombre,
+                'apPaterno': apPaterno,
+                'apMaterno': apMaterno,
+                'email' : email,
+                'username' : username,
+                'password' : password
+            };
+        }
+        else {
+            var parameters = {
+                'action': 'ALTA_CLIENTE',
+                'nombre': nombre,
+                'apPaterno': apPaterno,
+                'apMaterno': apMaterno,
+                'email' : email,
+                'username' : username,
+                'password' : password,
+                'id' : idCliente
+            };
+        }
 
         $.ajax({
             type: 'POST',
@@ -152,6 +216,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 alert("Cliente añadido exitosamente.");
+                console.log("h");
             },
             error: function (error) {
                  $('#feedback').html("Cliente no añadido, ha ocurrido un error.");
@@ -160,9 +225,7 @@ $(document).on('ready', function () {
     });
 
     var flagLoading = 0;
-    $('#tab-modAdmin').on('click', function (event) {
-        event.preventDefault();
-
+    setTimeout(function () {
         var parameters = {
             'action': 'GET_ADMINS'
         };
@@ -205,12 +268,9 @@ $(document).on('ready', function () {
                  $('#feedback').html("Error cargando los administradores.");
             }
         });
-    });
+    }, 500);
     
-    var flagLoadingUser = 0;
-    $('#tab-modUser').on('click', function (event) {
-        event.preventDefault();
-
+    setTimeout(function (event) {
         var parameters = {
             'action': 'GET_CLIENTES'
         };
@@ -221,91 +281,37 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-
-                var currentHTML = "";
-                if(flagLoadingUser == 0){
-                    currentHTML += '<tr>';
-                        currentHTML += '<th></th>';
-                        currentHTML += '<th>ID</th>';
-                        currentHTML += '<th>Username</th>';
-                        currentHTML += '<th>Nombre</th>';
-                        currentHTML += '<th>Correo</th>';
-                        currentHTML += '<th colspan="2">Acción</th>';
-                    currentHTML += '</tr>';
-                    for(var i = 0; i < obj.results.length; i++)
-                    {
-                        currentHTML += "<tr>";
-                            currentHTML += "<td></td>";
-                            currentHTML += "<td class='id'>" + obj.results[i].id+"</td>";
-                            currentHTML += "<td>" + obj.results[i].username+"</td>";
-                            currentHTML += "<td>" + obj.results[i].nombre+"</td>";
-                            currentHTML += "<td>" + obj.results[i].email+"</td>";
-                            currentHTML += "<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>"
-                            currentHTML += "<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>";
-                        currentHTML += "</tr>";
-                        $("#allUsers").append(currentHTML);
-                        currentHTML = "";
-                    }
-                    flagLoadingUser = 1;
-                }       
+            var currentHTML = "";
+                currentHTML += '<tr>';
+                    currentHTML += '<th></th>';
+                    currentHTML += '<th>ID</th>';
+                    currentHTML += '<th>Username</th>';
+                    currentHTML += '<th>Nombre</th>';
+                    currentHTML += '<th>Correo</th>';
+                    currentHTML += '<th colspan="2">Acción</th>';
+                currentHTML += '</tr>';
+                for(var i = 0; i < obj.results.length; i++) {
+                    currentHTML += "<tr>";
+                        currentHTML += "<td></td>";
+                        currentHTML += "<td class='id'>" + obj.results[i].id+"</td>";
+                        currentHTML += "<td>" + obj.results[i].username+"</td>";
+                        currentHTML += "<td>" + obj.results[i].nombre+"</td>";
+                        currentHTML += "<td>" + obj.results[i].email+"</td>";
+                        currentHTML += "<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>"
+                        currentHTML += "<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>";
+                    currentHTML += "</tr>";
+                    $("#allUsers").append(currentHTML);
+                    currentHTML = "";
+                }     
             },
             error: function (error) {
                  $('#feedback').html("Error cargando los clientes.");
             }
         });
-    });
-
-    $("#allUsers").on("click",".deleteButton", function(){
-        var parameters = {
-            "action": "DELETE_CLIENTE",
-            "id": $(this).parent().find("td.id").text()
-        }
-        console.log(parameters);
-        $.ajax({
-            url: "../api/controller.php",
-            type: "POST",
-            data: parameters,
-            dataType: "json",
-            success: function(obj){
-                alert("Cliente Eliminado!");
-                console.log(obj.status);
-                $(this).parent().find("td.id").remove();
-            },
-            error: function(errorMsg)
-            {
-                alert("Error eliminando cliente");
-            }
-        });
-    });
-
-    $("#allAdmin").on("click",".deleteButton", function(){
-        var parameters = {
-            "action": "DELETE_CLIENTE",
-            "id": $(this).parent().find("td.id").text()
-        }
-        console.log(parameters);
-        $.ajax({
-            url: "../api/controller.php",
-            type: "POST",
-            data: parameters,
-            dataType: "json",
-            success: function(obj){
-                alert("¡Administrador Eliminado!");
-                console.log(obj.status);
-                $(this).parent().find("td.id").remove();
-            },
-            error: function(errorMsg)
-            {
-                alert("Error eliminando administrador");
-            }
-        });
-    });
-
+    }, 500);
 
     var flagLoadingPanelist = 0;
-    $('#tab-modPanelist').on('click', function (event) {
-        event.preventDefault();
-
+    setTimeout(function (event) {
         var parameters = {
             'action': 'GET_PANELISTAS'
         };
@@ -354,28 +360,5 @@ $(document).on('ready', function () {
                  $('#feedback').html("Error cargando los clientes.");
             }
         });
-    });
-
-    $("#allPanelists").on("click",".deleteButton", function(){
-        var parameters = {
-            "action": "DELETE_PANELISTA",
-            "id": $(this).parent().find("td.id").text()
-        }
-        console.log(parameters);
-        $.ajax({
-            url: "../api/controller.php",
-            type: "POST",
-            data: parameters,
-            dataType: "json",
-            success: function(obj){
-                alert("Panelista Eliminado!");
-                console.log(obj.status);
-                $(this).parent().find("td.id").remove();
-            },
-            error: function(errorMsg)
-            {
-                alert("Error eliminando Panelista");
-            }
-        });
-    });
+    }, 500);
 });
