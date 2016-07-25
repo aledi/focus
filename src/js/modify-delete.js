@@ -244,4 +244,58 @@ $(document).on('ready', function () {
             }
         });
     });
+
+    $("#allSurveys").on("click",".deleteButton", function(){
+        var parameters = {
+            "action": "DELETE_ENCUESTA",
+            "id": $(this).parent().find("td.id").text()
+        }
+        console.log(parameters);
+        $.ajax({
+            url: "../api/controller.php",
+            type: "POST",
+            data: parameters,
+            dataType: "json",
+            success: function(obj){
+                alert("Encuesta Eliminada!");
+                $(this).parent().find("td.id").remove();
+            },
+            error: function(errorMsg)
+            {
+                alert("Error eliminando cliente");
+            }
+        });
+    });
+
+    $("#allSurveys").on("click",".modifyButton", function(){
+        var idSurvey = $(this).parent().find("td.id").text();
+        var parameters = {
+            "action": "GET_ENCUESTAS",
+            "id": idSurvey
+        }
+        $.ajax({
+            url: "../api/controller.php",
+            type: "POST",
+            data: parameters,
+            dataType: "json",
+            success: function(obj){
+                console.log(obj);
+                for(var i = 0; i < obj.results.length; i++) {
+                    if(obj.results[i].id == idSurvey){
+                        $('#nombre').val(obj.results[i].nombre);
+                        $('#dateStarts').val(obj.results[i].fechaInicio);
+                        $('#dateEnds').val(obj.results[i].fechaFin);
+                        $("input[name=id][value=" + obj.results[i].panel + "]").prop('checked', true);
+                        var myURL = document.location;
+                        myURL = myURL + "?id=" + obj.results[i].id;
+                        history.pushState({}, null, myURL);
+                    }
+                }
+            },
+            error: function(errorMsg)
+            {
+                alert("Error modificando Panelista");
+            }
+        });
+    });
 });
