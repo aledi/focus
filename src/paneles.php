@@ -6,6 +6,7 @@
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js'></script>
 	<script src='js/nuevo-panel.js' type='text/javascript'></script>
+    <script src='js/modify-delete.js' type='text/javascript'></script>
   	<title> Focus - Paneles</title>
 </head>
 
@@ -15,13 +16,8 @@
     		<?php include_once('elements/navigation-bar.php');?>
     	</div>
     </div>
-    <div id='loginForm'>
-    	<ul class="tabs">
-			<li class="tab-link current" data-tab="tab-agregarPanel">Agregar Panel</li>
-			<li class="tab-link" id="tab-modPanel" data-tab="tab-modificarPaneles">Modificar Panel</li>
-		</ul>
-
-		<div id="tab-agregarPanel" class="tab-content current">
+    <div id='contentContainer'>
+		<div id="contentLeft">
 			<div class="formHeader">
 				<h2>Agregar Panel</h2>
 			</div>
@@ -48,13 +44,15 @@
             </div>
 
 	  		<div>
-            	<button type='submit' id='loginButtonNuevoPanel'>Crear Panel</button>
+            	<button type='submit' id='loginButtonNuevoPanel'>Confirmar</button>
         	</div>
             <div id='feedback'></div>
 		</div>
-
-		
-		<div id="tab-modificarPaneles" class="tab-content">
+	
+		<div id="content">
+            <div class="formHeader">
+                <h2>Paneles Disponibles</h2>
+            </div>
 			<table id="allPanels">
 
 			</table>
