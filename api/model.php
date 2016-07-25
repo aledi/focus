@@ -232,13 +232,13 @@ function fetchPanelistas () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, apPaterno, apMaterno, genero, edad, edoCivil, estado, municipio FROM Panelista";
+        $sql = "SELECT id, email, nombre, apPaterno, apMaterno, genero, educacion, cuartos, banios, regadera, focos, piso, autos, estudiosProv, estufa, movil, fotoINE, edad, edoCivil, estado, municipio FROM Panelista";
         $result = $conn->query($sql);
 
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'edoCivil' => (int)$row['edoCivil'], 'municipio' => $row['municipio'], 'estado' => $row['estado']);
+            $panelista = array('id' => (int)$row['id'], 'email' => $row['email'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'genero' => (int)$row['genero'], 'educacion' => $row['educacion'], 'edad' => (int)$row['edad'], 'edoCivil' => (int)$row['edoCivil'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cuartos' => (int)$row['cuartos'], 'banios' => (int)$row['banios'], 'regadera' => (int)$row['regadera'], 'focos' => (int)$row['focos'], 'piso' => (int)$row['piso'], 'autos' => (int)$row['autos'], 'estudiosProv' => (int)$row['estudiosProv'], 'estufa' => (int)$row['estufa'], 'movil' => $row['movil'], 'fotoINE' => $row['foto']);
             $response[] = $panelista;
         }
 
