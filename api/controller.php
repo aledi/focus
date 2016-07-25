@@ -42,8 +42,14 @@ switch ($action) {
     case 'GET_ENCUESTAS':
         getRecords('ENCUESTAS');
         break;
+    case 'GET_PREGUNTAS':
+        getRecords('PREGUNTAS');
+        break;
     case 'SET_PANELISTAS_PANEL':
         setPanelistasPanel();
+        break;
+    case 'SET_PREGUNTAS_ENCUESTA':
+        setPreguntasEncuesta();
         break;
     case 'DELETE_ADMIN':
         deleteRecord('Usuario');
@@ -67,7 +73,7 @@ switch ($action) {
         logOut();
         break;
     default:
-        echo json_encode(array('status' => 'INVALID_ACTION'));
+        echo json_encode(array('status' => 'INVALID_ACTION', 'action' => $action));
         break;
 }
 
@@ -179,11 +185,25 @@ function getRecords ($type) {
         case 'ENCUESTAS':
             echo json_encode(fetchEncuestas());
             break;
+        case 'PREGUNTAS':
+            if (isset($_POST['encuesta'])) {
+                echo json_encode(fetchPreguntasEncuesta($_POST['encuesta']));
+                return;
+            }
+
+            // echo json_encode(fetchPreguntas());
+            break;
     }
 }
 
 function setPanelistasPanel () {
     $saveResult = savePanelistasPanel($_POST['panel'], $_POST['panelistas']);
+
+    echo json_encode($saveResult);
+}
+
+function setPreguntasEncuesta () {
+    $saveResult = savePreguntasEncuesta($_POST['encuesta'], $_POST['preguntas']);
 
     echo json_encode($saveResult);
 }
