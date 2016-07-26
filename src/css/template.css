@@ -53,19 +53,48 @@ footer{
 
 #contentContainer {
     width: 95%;
-    padding-left: 15%;
+    padding-left: 5%;
 
 }
 
-#contentLeft {
-    float: left;
-    width: 40%;
+/*
+ * Contenido tabulado en pestañas.
+*/
+
+#contentContainer{
+    width: 70%;
+    margin: 0 auto;
 }
 
-#content {
-    margin-left: 10%;
-    padding-top: 0.5%;
+ul.tabs{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
 }
+ul.tabs li{ 
+    background: none;
+    color: #222;
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+    
+ul.tabs li.current{
+    background: #ededed;
+    color: #222;
+}
+
+.tab-content{
+    display: none;
+    background: #ededed;
+    padding: 15px 15px 15px 30%;
+}
+
+.tab-content.current{
+    display: inherit;
+}
+
+/* *********************************** */
 
 /*
     Navigation Bar style and dropdown.

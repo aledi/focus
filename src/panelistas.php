@@ -17,7 +17,13 @@
     	</div>
     </div>
     <div id='contentContainer'>
-		<div id="contentLeft">
+
+    	<ul class="tabs">
+            <li class="tab-link current" data-tab="tab-agregarPanelista">Agregar Panelista</li>
+            <li class="tab-link" data-tab="tab-modificarPanelista">Modificar Panelista</li>
+        </ul>
+
+		<div id="tab-agregarPanelista" class="tab-content current">
 			<div class="formHeader">
 				<h2>Agregar Panelista</h2>
 			</div>
@@ -183,7 +189,7 @@
 	        <div id='feedback'></div>
 		</div>
 
-		<div id="content">
+		<div id="tab-modificarPanelista" class="tab-content">
 			<div class="formHeader">
 				<h2>Panelistas Disponibles</h2>
 			</div>
