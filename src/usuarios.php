@@ -17,7 +17,13 @@
     	</div>
     </div>
     <div id='contentContainer'>
-		<div id="contentLeft">
+
+    	<ul class="tabs">
+			<li class="tab-link current" data-tab="tab-agregarUsuario">Agregar Usuario</li>
+			<li class="tab-link" data-tab="tab-modificarUsuario">Modificar Usuario</li>
+		</ul>
+
+		<div id="tab-agregarUsuario" class="tab-content current">
 			<div class="formHeader">
 				<h2>Agregar Cliente</h2>
 			</div>
@@ -63,7 +69,7 @@
 	        <div id='feedback'></div>
 		</div>
 	
-		<div id="content">
+		<div id="tab-modificarUsuario" class="tab-content">
             <div class="formHeader">
                 <h2>Usuarios Disponibles</h2>
             </div>

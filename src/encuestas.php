@@ -7,6 +7,7 @@
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js'></script>
     <script src='js/encuestas.js' type='text/javascript'></script>
     <script src='js/modify-delete.js' type='text/javascript'></script>
+    <script src='js/header.js' type='text/javascript'></script>
   	<title> Focus - Encuestas</title>
 </head>
 
@@ -17,7 +18,12 @@
     	</div>
     </div>
     <div id='contentContainer'>
-		<div id="contentLeft">
+    	<ul class="tabs">
+			<li class="tab-link current" data-tab="tab-agregarEncuesta">Agregar Encuesta</li>
+			<li class="tab-link" data-tab="tab-modificarEncuesta">Modificar Encuesta</li>
+		</ul>
+		
+		<div id="tab-agregarEncuesta" class="tab-content current">
 			<div class="formHeader">
 				<h2>Agregar Encuesta</h2>
 			</div>
@@ -50,7 +56,7 @@
 	        <div id='feedback'></div>
 		</div>
 	
-		<div id="content">
+		<div id="tab-modificarEncuesta" class="tab-content">
             <div class="formHeader">
                 <h2>Encuestas Disponibles</h2>
             </div>
