@@ -14,9 +14,8 @@
 <body>
     <div id='header'>
     	<div id="container">
-    		<img src='img/focus_logo.png'/>
-    	</div>
-        <?php include_once('elements/navigation-bar.php');?>
+    		<?php include_once('elements/navigation-bar.php');?>
+    	</div>    
     </div>
     <div id='loginForm'>
     	<form id='formLogin'>

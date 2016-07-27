@@ -24,6 +24,7 @@ footer{
     background-color: rgb(245, 245, 245);
     text-align: center;
     padding: 0 0 2% 0;
+    clear: both;
 }
 
 #container{
@@ -50,6 +51,54 @@ footer{
     float:left;
 }
 
+#contentContainer {
+    width: 95%;
+    padding-left: 5%;
+
+}
+
+/*
+ * Contenido tabulado en pestañas.
+*/
+
+#contentContainer{
+    width: 70%;
+    margin: 0 auto;
+}
+
+ul.tabs{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+ul.tabs li{ 
+    background: none;
+    color: #222;
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+    
+ul.tabs li.current{
+    background: #ededed;
+    color: #222;
+}
+
+.tab-content{
+    display: none;
+    background: #ededed;
+    padding: 15px 15px 15px 30%;
+}
+
+.tab-content.current{
+    display: inherit;
+}
+
+/* *********************************** */
+
+/*
+    Navigation Bar style and dropdown.
+*/
 
 ul {
     list-style-type: none;
@@ -76,11 +125,19 @@ li a:hover{
     background-color: #ddd;
 }
 
-li a, .dropbtn {
+li a {
     display: inline-block;
     height: 33.06px;
     text-align: center;
     padding: 20px 16px;
+    text-decoration: none;
+}
+
+
+li a, .dropbtn {
+    display: inline-block;
+    text-align: center;
+    padding: 14px 16px;
     text-decoration: none;
 }
 
@@ -105,7 +162,9 @@ li.dropdown {
     text-align: left;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {
+    background-color: #f1f1f1
+}
 
 .dropdown:hover .dropdown-content {
     display: block;
@@ -115,34 +174,3 @@ li.dropdown {
     font-size: 120%;
 }
 
-/*
-    Contenido tabulado para mostrar dinamicamente.
-*/
-
-ul.tabs{
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
-}
-ul.tabs li{
-    background: none;
-    color: #222;
-    display: inline-block;
-    padding: 10px 15px;
-    cursor: pointer;
-}
-
-ul.tabs li.current{
-    background: #ededed;
-    color: #222;
-}
-
-.tab-content{
-    display: none;
-    background: #ededed;
-    padding: 15px;
-}
-
-.tab-content.current{
-    display: inherit;
-}

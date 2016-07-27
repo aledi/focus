@@ -6,6 +6,7 @@
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js'></script>
 	<script src='js/alta-panelistas.js' type='text/javascript'></script>
+	<script src='js/modify-delete.js' type='text/javascript'></script>
   	<title> Focus - Panelistas</title>
 </head>
 
@@ -15,11 +16,12 @@
     		<?php include_once('elements/navigation-bar.php');?>
     	</div>
     </div>
-    <div id='loginForm'>
+    <div id='contentContainer'>
+
     	<ul class="tabs">
-			<li class="tab-link current" data-tab="tab-agregarPanelista">Agregar Panelista</li>
-			<li class="tab-link" id="tab-modPanelist" data-tab="tab-modificarPanelistas">Modificar Panelista</li>
-		</ul>
+            <li class="tab-link current" data-tab="tab-agregarPanelista">Agregar Panelista</li>
+            <li class="tab-link" data-tab="tab-modificarPanelista">Modificar Panelista</li>
+        </ul>
 
 		<div id="tab-agregarPanelista" class="tab-content current">
 			<div class="formHeader">
@@ -43,8 +45,8 @@
 	        </div>
 	        <div id="genero">
 	            <p>4. Género:</p>
-	            <p><input type="radio" value="1" name="gender">Masculino</p>
-	            <p><input type="radio" value="2" name="gender">Femenino</p>
+	            <p><input type="radio" value="0" name="gender">Masculino</p>
+	            <p><input type="radio" value="1" name="gender">Femenino</p>
 	        </div>
 	        <div id="nivel_educacion">
 	            <p>5. ¿Cuál es el nivel de educación más alto que ha recibido?</p>
@@ -69,7 +71,8 @@
 	            <p><input type="radio" value="5" name="estadoCivil">Unión Libre</p>
 	        </div>
 	        <div id="vivienda_Estado">
-	            <select class="form-control" id="estado">
+	        	<p>8. Estado de Vivienda: </p>
+	            <select class="form-control" id="estado" name="estado">
 	                <option value="0">Selecciona un estado...</option>
 	                <option value="Aguascalientes">Aguascalientes</option>
 	                <option value="Baja California">Baja California</option>
@@ -181,60 +184,14 @@
 	        <div id='feedback'></div>
 		</div>
 
-		<div id="tab-agregarAdmin" class="tab-content">
+		<div id="tab-modificarPanelista" class="tab-content">
 			<div class="formHeader">
-				<h2>Agregar Administrador</h2>
+				<h2>Panelistas Disponibles</h2>
 			</div>
-			 <div id="emailInput">
-	            <p>1. Cuenta de correo electrónico:</p>
-	            <input id="email" type="text"/>
-	        </div>
-
-	        <div id="nombre_admin">
-	            <p>2. Nombre(s) de Pila:</p>
-	            <input id="fName" type="text"/>
-	        </div>
-
-	        <div id="apellidos_admin">
-	            <p>3. Apellido Paterno:</p>
-	            <input id="lName" type="text"/>
-	        </div>
-
-	        <div id="apellidos_admin_materno">
-	            <p>4. Apellido Materno:</p>
-	            <input id="lName_materno" type="text"/>
-	        </div>
-
-	        <div id="usernameInput">
-	            <p>5. Nombre de Usuario:</p>
-	            <input id="username" type="text"/>
-	        </div>
-
-	        <div class='paswordInput'>
-	            <p> Password: </p>
-	            <input type='password' name='Password' placeholder='***************' id='password'>
-	        </div>
-
-	        <div class='paswordConfirmInput'>
-	            <p> Password Confirmation: </p>
-	            <input type='password' name='Password' placeholder='***************' id='passwordConf'>
-	        </div>
-
-	        <div id="enviarInfo">
-	        	<br/>
-	            <button type='submit' id='sendInfoAdmin'>Registrar Administrador</button>
-	        </div>
-	        <div id='feedback'></div>
-		</div>
-		<div id="tab-modificarUsuario" class="tab-content">
-			<table id="allUsers">
-
-			</table>
-		</div>
-		<div id="tab-modificarPanelistas" class="tab-content">
 			<table id="allPanelists">
 
 			</table>
+	        <div id='feedback'></div>
 		</div>
     </div>
 	<?php include_once('elements/footer.php');?>
