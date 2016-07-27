@@ -378,6 +378,7 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
         $result = $conn->query($sql);
 
         foreach ($preguntas as &$pregunta) {
+            $tipo = $pregunta['tipo'];
             $numPregunta = $pregunta['numPregunta'];
             $preguntaText = $pregunta['pregunta'];
             $video = $pregunta['video'];
@@ -393,7 +394,7 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
             $op9 = $pregunta['op9'];
             $op10 = $pregunta['op10'];
 
-            $sql = "INSERT INTO Preguntas (encuesta, numPregunta, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10) VALUES ('$encuesta', '$numPregunta', '$preguntaText', '$video', '$imagen', '$op1', '$op2', '$op3', '$op4', '$op5', '$op6', '$op7', '$op8', '$op9', '$op10')";
+            $sql = "INSERT INTO Preguntas (encuesta, tipo, numPregunta, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$op1', '$op2', '$op3', '$op4', '$op5', '$op6', '$op7', '$op8', '$op9', '$op10')";
 
             if ($conn->query($sql) === TRUE) {
                 $inserts = $inserts + 1;
