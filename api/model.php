@@ -217,7 +217,12 @@ function fetchPaneles () {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => (int)$row['cliente'], 'creador' => (int)$row['creador']);
+            $cliente = $row['cliente'];
+            $sql2 = "SELECT nombre, apPaterno, apMaterno FROM Usuario WHERE id = '$cliente'";
+            $result2 = $conn->query($sql2);
+            $row2 = $result2->fetch_assoc();
+
+            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'creador' => (int)$row['creador']);
             $response[] = $client;
         }
 
@@ -238,11 +243,6 @@ function fetchPanelistas () {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            // $fechaNacimiento = <$row['fechaNacimiento'];
-            // $fechaNacimiento = explode("/", $fechaNacimiento);
-            //
-            // $edad = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md") ? ((date("Y") - $birthDate[2]) - 1) : (date("Y") - $birthDate[2]));
-
             $panelista = array('id' => (int)$row['id'], 'email' => $row['email'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'genero' => (int)$row['genero'], 'educacion' => $row['educacion'], 'edad' => (int)$row['edad'], 'edoCivil' => (int)$row['edoCivil'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cuartos' => (int)$row['cuartos'], 'banios' => (int)$row['banios'], 'regadera' => (int)$row['regadera'], 'focos' => (int)$row['focos'], 'piso' => (int)$row['piso'], 'autos' => (int)$row['autos'], 'estudiosProv' => (int)$row['estudiosProv'], 'estufa' => (int)$row['estufa'], 'movil' => $row['movil'], 'fotoINE' => $row['foto']);
             $response[] = $panelista;
         }
@@ -264,7 +264,12 @@ function fetchEncuestas () {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => (int)$row['panel']);
+            $panel = $row['panel'];
+            $sql2 = "SELECT nombre FROM Panel WHERE id = '$panel'";
+            $result2 = $conn->query($sql2);
+            $row2 = $result2->fetch_assoc();
+
+            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
             $response[] = $panelista;
         }
 
