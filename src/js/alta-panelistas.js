@@ -287,24 +287,24 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 var currentHTML = "";
-                currentHTML += '<tr>';
-                currentHTML += '<th></th>';
-                currentHTML += '<th>ID</th>';
-                currentHTML += '<th>Username</th>';
-                currentHTML += '<th>Nombre</th>';
-                currentHTML += '<th>Correo</th>';
-                currentHTML += '<th colspan="2">Acción</th>';
-                currentHTML += '</tr>';
+                    currentHTML += '<tr>';
+                    currentHTML += '<th></th>';
+                    currentHTML += '<th>ID</th>';
+                    currentHTML += '<th>Username</th>';
+                    currentHTML += '<th>Nombre</th>';
+                    currentHTML += '<th>Correo</th>';
+                    currentHTML += '<th colspan="2">Acción</th>';
+                    currentHTML += '</tr>';
                 for(var i = 0; i < obj.results.length; i++) {
                     currentHTML += "<tr>";
-                    currentHTML += "<td></td>";
-                    currentHTML += "<td class='id'>" + obj.results[i].id+"</td>";
-                    currentHTML += "<td>" + obj.results[i].username+"</td>";
-                    currentHTML += "<td>" + obj.results[i].nombre+"</td>";
-                    currentHTML += "<td>" + obj.results[i].email+"</td>";
-                    currentHTML += "<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>"
-                    currentHTML += "<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>";
-                    currentHTML += "</tr>";
+                        currentHTML += "<td></td>";
+                        currentHTML += "<td class='id'>" + obj.results[i].id+"</td>";
+                        currentHTML += "<td>" + obj.results[i].username+"</td>";
+                        currentHTML += "<td>" + obj.results[i].nombre+"</td>";
+                        currentHTML += "<td>" + obj.results[i].email+"</td>";
+                        currentHTML += "<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>"
+                        currentHTML += "<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>";
+                        currentHTML += "</tr>";
                     $("#allUsers").append(currentHTML);
                     currentHTML = "";
                 }

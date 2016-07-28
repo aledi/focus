@@ -222,7 +222,7 @@ function fetchPaneles () {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'creador' => (int)$row['creador']);
+            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => $row2['nombre'].' '.$row2['apPaterno'].' '.$row2['apMaterno'], 'creador' => (int)$row['creador']);
             $response[] = $client;
         }
 
