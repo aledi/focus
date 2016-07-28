@@ -243,7 +243,7 @@ function fetchPanelistas () {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $panelista = array('id' => (int)$row['id'], 'email' => $row['email'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'genero' => (int)$row['genero'], 'educacion' => $row['educacion'], 'edad' => (int)$row['edad'], 'edoCivil' => (int)$row['edoCivil'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cuartos' => (int)$row['cuartos'], 'banios' => (int)$row['banios'], 'regadera' => (int)$row['regadera'], 'focos' => (int)$row['focos'], 'piso' => (int)$row['piso'], 'autos' => (int)$row['autos'], 'estudiosProv' => (int)$row['estudiosProv'], 'estufa' => (int)$row['estufa'], 'movil' => $row['movil'], 'fotoINE' => $row['foto']);
+            $panelista = array('id' => (int)$row['id'], 'email' => $row['email'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'genero' => (int)$row['genero'], 'educacion' => $row['educacion'], 'edad' => (int)$row['edad'], 'edoCivil' => (int)$row['edoCivil'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cuartos' => (int)$row['cuartos'], 'banios' => (int)$row['banios'], 'regadera' => (int)$row['regadera'], 'focos' => (int)$row['focos'], 'piso' => (int)$row['piso'], 'autos' => (int)$row['autos'], 'estudiosProv' => (int)$row['estudiosProv'], 'estufa' => (int)$row['estufa'], 'movil' => $row['movil'], 'fotoINE' => $row['fotoINE']);
             $response[] = $panelista;
         }
 
@@ -326,6 +326,58 @@ function fetchPreguntasEncuesta ($encuesta) {
 
         $conn->close();
         return array('results' => $response);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function fetchMobileData ($panelista) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT Panel.id, nombre, fechaInicio, fechaFin FROM Panel INNER JOIN PanelistaEnPanel ON Panel.id = PanelistaEnPanel.panel WHERE PanelistaEnPanel.panelista = '$panelista'";
+        $result = $conn->query($sql);
+
+        $paneles = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $panelId = $row['id'];
+            $sql2 = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE panel = '$panelId'";
+            $result2 = $conn->query($sql2);
+
+            $encuestas = array();
+
+            while ($row2 = $result2->fetch_assoc()) {
+                $encuestaId = $row2['id'];
+                $sql3 = "SELECT id, tipo, numPregunta, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Preguntas WHERE encuesta = '$encuestaId'";
+                $result3 = $conn->query($sql3);
+
+                $preguntas = array();
+
+                while ($row3 = $result3->fetch_assoc()) {
+                    $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'op1' => $row3['op1'], 'op2' => $row3['op2'], 'op3' => $row3['op3'], 'op4' => $row3['op4'], 'op5' => $row3['op5'], 'op6' => $row3['op6'], 'op7' => $row3['op7'], 'op8' => $row3['op8'], 'op9' => $row3['op9'], 'op10' => $row3['op10']);
+                    $preguntas[] = $pregunta;
+                }
+
+                $contestada = FALSE;
+
+                $sql4 = "SELECT id FROM Respuestas WHERE encuesta = '$encuestaId' AND panelista = '$panelista'";
+                $result4 = $conn->query($sql4);
+
+                if ($result4->num_rows > 0) {
+                    $contestada = TRUE;
+                }
+
+                $encuesta = array('id' => (int)$row2['id'], 'nombre' => $row2['nombre'], 'fechaInicio' => $row2['fechaInicio'], 'fechaFin' => $row2['fechaFin'], 'contestada' => $contestada, 'preguntas' => $preguntas);
+                $encuestas[] = $encuesta;
+            }
+
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'encuestas' => $encuestas);
+            $paneles[] = $panel;
+        }
+
+        $conn->close();
+        return array('paneles' => $paneles);
     }
 
     return array('status' => 'DATABASE_ERROR');
