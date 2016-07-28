@@ -286,15 +286,15 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                var currentHTML = "";
-                    currentHTML += '<tr>';
+            var currentHTML = "";
+                currentHTML += '<tr>';
                     currentHTML += '<th></th>';
                     currentHTML += '<th>ID</th>';
                     currentHTML += '<th>Username</th>';
                     currentHTML += '<th>Nombre</th>';
                     currentHTML += '<th>Correo</th>';
                     currentHTML += '<th colspan="2">Acción</th>';
-                    currentHTML += '</tr>';
+                currentHTML += '</tr>';
                 for(var i = 0; i < obj.results.length; i++) {
                     currentHTML += "<tr>";
                         currentHTML += "<td></td>";
@@ -304,7 +304,7 @@ $(document).on('ready', function () {
                         currentHTML += "<td>" + obj.results[i].email+"</td>";
                         currentHTML += "<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>"
                         currentHTML += "<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>";
-                        currentHTML += "</tr>";
+                    currentHTML += "</tr>";
                     $("#allUsers").append(currentHTML);
                     currentHTML = "";
                 }
