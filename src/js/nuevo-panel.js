@@ -110,7 +110,6 @@ $(document).on('ready', function () {
                     currentHTML += '<th>Fecha Inicio</th>';
                     currentHTML += '<th>Fecha Fin</th>';
                     currentHTML += '<th>Cliente</th>';
-                    currentHTML += '<th>Creador</th>';
                     currentHTML += '<th colspan="2">Acción</th>';
                 currentHTML += '</tr>';
                 for(var i = 0; i < obj.results.length; i++) {
@@ -121,7 +120,6 @@ $(document).on('ready', function () {
                         currentHTML += "<td>" + obj.results[i].fechaInicio +"</td>";
                         currentHTML += "<td>" + obj.results[i].fechaFin +"</td>";
                         currentHTML += "<td>" + obj.results[i].cliente +"</td>";
-                        currentHTML += "<td>" + obj.results[i].creador +"</td>";
                         currentHTML += "<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>"
                         currentHTML += "<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>";
                     currentHTML += "</tr>";

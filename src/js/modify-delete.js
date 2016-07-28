@@ -1,5 +1,5 @@
 $(document).on('ready', function () {
-       
+
     $("#allUsers").on("click",".deleteButton", function(){
         var parameters = {
             "action": "DELETE_CLIENTE",
@@ -25,7 +25,7 @@ $(document).on('ready', function () {
 
     $("#allUsers").on("click",".modifyButton", function(){
         var idUser = $(this).parent().find("td.id").text();
-        
+
         var parameters = {
             "action": "GET_CLIENTES",
             "id": idUser
@@ -45,7 +45,7 @@ $(document).on('ready', function () {
                         $('#lName').val(nombre[1]);
                         $('#lName_materno').val(nombre[2]);
                         $('#username').val(obj.results[i].username);
-                        
+
                         var myURL = document.location;
                         myURL = myURL + "?id=" + obj.results[i].id;
                         history.pushState({}, null, myURL);
@@ -84,7 +84,7 @@ $(document).on('ready', function () {
 
     $("#allAdmin").on("click",".modifyButton", function(){
         var idAdministador = $(this).parent().find("td.id").text();
-        
+
         var parameters = {
             "action": "GET_ADMINS",
             "id": idAdministador
@@ -105,7 +105,7 @@ $(document).on('ready', function () {
                         $('#lName').val(nombre[1]);
                         $('#lName_materno').val(nombre[2]);
                         $('#username').val(obj.results[i].username);
-                        
+
                         var myURL = document.location;
                         myURL = myURL + "?id=" + obj.results[i].id;
                         history.pushState({}, null, myURL);
@@ -153,7 +153,7 @@ $(document).on('ready', function () {
             type: "POST",
             data: parameters,
             dataType: "json",
-            success: function(obj){ 
+            success: function(obj){
                 for(var i = 0; i < obj.results.length; i++) {
                     if(obj.results[i].id == idPanelista){
                         console.log(obj);
@@ -256,12 +256,11 @@ $(document).on('ready', function () {
             type: "POST",
             data: parameters,
             dataType: "json",
-            success: function(obj){
+            success: function(obj) {
                 alert("Encuesta Eliminada!");
                 $(this).parent().find("td.id").remove();
             },
-            error: function(errorMsg)
-            {
+            error: function(errorMsg) {
                 alert("Error eliminando cliente");
             }
         });
@@ -278,7 +277,7 @@ $(document).on('ready', function () {
             type: "POST",
             data: parameters,
             dataType: "json",
-            success: function(obj){
+            success: function(obj) {
                 console.log(obj);
                 for(var i = 0; i < obj.results.length; i++) {
                     if(obj.results[i].id == idSurvey){
@@ -292,8 +291,7 @@ $(document).on('ready', function () {
                     }
                 }
             },
-            error: function(errorMsg)
-            {
+            error: function(errorMsg) {
                 alert("Error modificando Panelista");
             }
         });

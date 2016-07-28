@@ -1,5 +1,5 @@
 $(document).on('ready', function () {
-	
+
 	setTimeout(function (event) {
         var parameters = {
             'action': 'GET_PANELES'
@@ -20,18 +20,16 @@ $(document).on('ready', function () {
                     currentHTML += '<th>Fecha Inicio</th>';
                     currentHTML += '<th>Fecha Fin</th>';
                     currentHTML += '<th>Cliente</th>';
-                    currentHTML += '<th>Creador</th>';
                     currentHTML += '<th>Seleccionar</th>';
                 currentHTML += '</tr>';
                 for(var i = 0; i < obj.results.length; i++) {
                     currentHTML += "<tr>";
                         currentHTML += "<td></td>";
                         currentHTML += "<td class='id'>" + obj.results[i].id +"</td>";
-                        currentHTML += '<td><a href="liga-panel-panelista.php?id=' + obj.results[i].id +'">' + obj.results[i].nombre +"</a></td>";
+                        currentHTML += "<td>" + obj.results[i].nombre +"</td>";
                         currentHTML += "<td>" + obj.results[i].fechaInicio +"</td>";
                         currentHTML += "<td>" + obj.results[i].fechaFin +"</td>";
                         currentHTML += "<td>" + obj.results[i].cliente +"</td>";
-                        currentHTML += "<td>" + obj.results[i].creador +"</td>";
                          currentHTML += '<td><input type="radio" value=' + obj.results[i].id + ' name="id"></td>';
                      currentHTML += "</tr>";
                     $("#allPanels").append(currentHTML);
@@ -132,7 +130,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 alert("Encuesta creada exitosamente.");
-             
+
             },
             error: function (error) {
                  $('#feedback').html("Encuesta no añadida, ha ocurrido un error.");

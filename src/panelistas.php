@@ -57,14 +57,9 @@
 	            <p><input type="radio" value="5" name="nivel_educativo">Posgrado (maestría, doctorado)</p>
 	            <p><input type="radio" value="0" name="nivel_educativo">Ninguno</p>
 	        </div>
-	        <div id="edad">
-	            <p>6. ¿Cuál es su edad?</p>
-	            <p><input type="radio" value="1" name="rango_edad">17 o menos.</p>
-	            <p><input type="radio" value="2" name="rango_edad">21 - 29</p>
-	            <p><input type="radio" value="3" name="rango_edad">30 - 39</p>
-	            <p><input type="radio" value="4" name="rango_edad">40 - 49</p>
-	            <p><input type="radio" value="5" name="rango_edad">50 - 59</p>
-	            <p><input type="radio" value="6" name="rango_edad">60 o más</p>
+            <div id="fechaNacimiento">
+	            <p>6. Fecha Nacimiento:</p>
+	            <input id="fechaNacimiento" type="text"/>
 	        </div>
 	        <div id="estado_civil">
 	            <p>7. ¿Cuál es su estado civil actual?</p>
@@ -194,7 +189,7 @@
 				<h2>Panelistas Disponibles</h2>
 			</div>
 			<table id="allPanelists">
-			
+
 			</table>
 	        <div id='feedback'></div>
 		</div>
