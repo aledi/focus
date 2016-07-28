@@ -45,6 +45,9 @@ switch ($action) {
     case 'GET_PREGUNTAS':
         getRecords('PREGUNTAS');
         break;
+    case 'GET_MOBILE_DATA':
+    getRecords('MOBILE');
+        break;
     case 'SET_PANELISTAS_PANEL':
         setPanelistasPanel();
         break;
@@ -192,6 +195,9 @@ function getRecords ($type) {
             }
 
             // echo json_encode(fetchPreguntas());
+            break;
+        case 'MOBILE':
+            echo json_encode(fetchMobileData($_POST['panelista']));
             break;
     }
 }
