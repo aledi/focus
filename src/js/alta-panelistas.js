@@ -1,5 +1,5 @@
 $(document).on('ready', function () {
-    
+
     $('#sendInfoPanelistas').on('click', function (event) {
         var idPanelista = window.location.search.substring(1)
         idPanelista = idPanelista.substring(3);
@@ -10,7 +10,7 @@ $(document).on('ready', function () {
         var apMaterno = $('#lName_materno').val();
         var genero = $("input[name=gender]:checked").val();
         var educacion = $("input[name=nivel_educativo]:checked").val();
-        var edad = $("input[name=rango_edad]:checked").val();
+        var fechaNacimiento = $('#fechaNacimiento').val();;
         var edoCivil = $("input[name=estadoCivil]:checked").val();
         var estado = $("#estado").val();
         var municipio = $('#municipio').val();
@@ -34,7 +34,7 @@ $(document).on('ready', function () {
                 'email' : email,
                 'genero' : genero,
                 'educacion' : educacion,
-                'edad' : edad,
+                'fechaNacimiento' : fechaNacimiento,
                 'edoCivil' : edoCivil,
                 'estado' : estado,
                 'municipio' : municipio,
@@ -61,7 +61,7 @@ $(document).on('ready', function () {
                 'email' : email,
                 'genero' : genero,
                 'educacion' : educacion,
-                'edad' : edad,
+                'fechaNacimiento' : fechaNacimiento,
                 'edoCivil' : edoCivil,
                 'estado' : estado,
                 'municipio' : municipio,
@@ -262,14 +262,19 @@ $(document).on('ready', function () {
                         currentHTML = "";
                     }
                     flagLoading = 1;
-                }       
+                }
             },
             error: function (error) {
                  $('#feedback').html("Error cargando los administradores.");
             }
         });
+    });
+
+    var flagLoadingUser = 0;
+    $('#tab-modUser').on('click', function (event) {
+        event.preventDefault();
     }, 500);
-    
+
     setTimeout(function (event) {
         var parameters = {
             'action': 'GET_CLIENTES'
@@ -302,7 +307,7 @@ $(document).on('ready', function () {
                     currentHTML += "</tr>";
                     $("#allUsers").append(currentHTML);
                     currentHTML = "";
-                }     
+                }
             },
             error: function (error) {
                  $('#feedback').html("Error cargando los clientes.");
@@ -354,7 +359,7 @@ $(document).on('ready', function () {
                         currentHTML = "";
                     }
                     flagLoadingPanelist = 1;
-                }       
+                }
             },
             error: function (error) {
                  $('#feedback').html("Error cargando los clientes.");

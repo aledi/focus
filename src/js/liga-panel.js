@@ -37,7 +37,7 @@ $(document).on('ready', function () {
                     currentHTML += '<th>Estado Civil</th>';
                     currentHTML += '<th>Municipio</th>';
                     currentHTML += '<th>Estado</th>';
-                    currentHTML += '<th></th>';
+                    currentHTML += '<th>Selección</th>';
                 currentHTML += '</tr>';
                 for(var i = 0; i < obj.results.length; i++) {
                     currentHTML += "<tr>";
@@ -49,7 +49,13 @@ $(document).on('ready', function () {
                         currentHTML += "<td>" + convertData('edoCivil', obj.results[i].edoCivil) +"</td>";
                         currentHTML += "<td>" + obj.results[i].municipio +"</td>";
                         currentHTML += "<td>" + obj.results[i].estado +"</td>";
-                        currentHTML += '<td><input type="checkbox" value=' + obj.results[i].id + ' name="panelistas"' + 'checked=' + obj.results[i].estado + '></td>"';
+
+                        if (obj.results[i].checked) {
+                            currentHTML += '<td><input type="checkbox" value=' + obj.results[i].id + ' name="panelistas"' + ' checked></td>';
+                        } else {
+                            currentHTML += '<td><input type="checkbox" value=' + obj.results[i].id + ' name="panelistas"></td>';
+                        }
+                        
                     currentHTML += "</tr>";
                     $("#tablaPanelistas").append(currentHTML);
                     currentHTML = "";
