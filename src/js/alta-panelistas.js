@@ -78,7 +78,7 @@ $(document).on('ready', function () {
                 'id' : idPanelista
             };
         }
-        
+
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -268,18 +268,14 @@ $(document).on('ready', function () {
                  $('#feedback').html("Error cargando los administradores.");
             }
         });
-<<<<<<< HEAD
     });
 
     var flagLoadingUser = 0;
     $('#tab-modUser').on('click', function (event) {
         event.preventDefault();
-
-=======
     }, 500);
 
     setTimeout(function (event) {
->>>>>>> development
         var parameters = {
             'action': 'GET_CLIENTES'
         };
@@ -290,58 +286,28 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-<<<<<<< HEAD
-
                 var currentHTML = "";
-                if(flagLoadingUser == 0){
-                    currentHTML += '<tr>';
-                        currentHTML += '<th></th>';
-                        currentHTML += '<th>ID</th>';
-                        currentHTML += '<th>Username</th>';
-                        currentHTML += '<th>Nombre</th>';
-                        currentHTML += '<th>Correo</th>';
-                        currentHTML += '<th colspan="2">Acción</th>';
-                    currentHTML += '</tr>';
-                    for(var i = 0; i < obj.results.length; i++)
-                    {
-                        currentHTML += "<tr>";
-                            currentHTML += "<td></td>";
-                            currentHTML += "<td class='id'>" + obj.results[i].id+"</td>";
-                            currentHTML += "<td>" + obj.results[i].username+"</td>";
-                            currentHTML += "<td>" + obj.results[i].nombre+"</td>";
-                            currentHTML += "<td>" + obj.results[i].email+"</td>";
-                            currentHTML += "<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>"
-                            currentHTML += "<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>";
-                        currentHTML += "</tr>";
-                        $("#allUsers").append(currentHTML);
-                        currentHTML = "";
-                    }
-                    flagLoadingUser = 1;
-                }
-=======
-            var currentHTML = "";
                 currentHTML += '<tr>';
-                    currentHTML += '<th></th>';
-                    currentHTML += '<th>ID</th>';
-                    currentHTML += '<th>Username</th>';
-                    currentHTML += '<th>Nombre</th>';
-                    currentHTML += '<th>Correo</th>';
-                    currentHTML += '<th colspan="2">Acción</th>';
+                currentHTML += '<th></th>';
+                currentHTML += '<th>ID</th>';
+                currentHTML += '<th>Username</th>';
+                currentHTML += '<th>Nombre</th>';
+                currentHTML += '<th>Correo</th>';
+                currentHTML += '<th colspan="2">Acción</th>';
                 currentHTML += '</tr>';
                 for(var i = 0; i < obj.results.length; i++) {
                     currentHTML += "<tr>";
-                        currentHTML += "<td></td>";
-                        currentHTML += "<td class='id'>" + obj.results[i].id+"</td>";
-                        currentHTML += "<td>" + obj.results[i].username+"</td>";
-                        currentHTML += "<td>" + obj.results[i].nombre+"</td>";
-                        currentHTML += "<td>" + obj.results[i].email+"</td>";
-                        currentHTML += "<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>"
-                        currentHTML += "<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>";
+                    currentHTML += "<td></td>";
+                    currentHTML += "<td class='id'>" + obj.results[i].id+"</td>";
+                    currentHTML += "<td>" + obj.results[i].username+"</td>";
+                    currentHTML += "<td>" + obj.results[i].nombre+"</td>";
+                    currentHTML += "<td>" + obj.results[i].email+"</td>";
+                    currentHTML += "<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>"
+                    currentHTML += "<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>";
                     currentHTML += "</tr>";
                     $("#allUsers").append(currentHTML);
                     currentHTML = "";
                 }
->>>>>>> development
             },
             error: function (error) {
                  $('#feedback').html("Error cargando los clientes.");

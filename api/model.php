@@ -284,7 +284,7 @@ function fetchPanelistasPanel ($panel) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, apPaterno, apMaterno, genero, edad, edoCivil, estado, municipio FROM Panelista";
+        $sql = "SELECT id, nombre, apPaterno, apMaterno, genero, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, edoCivil, estado, municipio FROM Panelista";
         $result = $conn->query($sql);
 
         $response = array();
