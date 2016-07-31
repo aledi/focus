@@ -19,7 +19,7 @@
     </div>
     <div id='contentContainer'>
     	<ul class="tabs">
-			<li class="tab-link current" data-tab="tab-agregarPregunta">Ligar Pregunta</li>
+			<li class="tab-link current" data-tab="tab-agregarEncuesta">Ligar Pregunta</li>
 			<!--<li class="tab-link" data-tab="tab-modificarEncuesta">Modificar Encuesta</li>-->
 		</ul>
 		
@@ -29,7 +29,12 @@
 			</div>
             <div id="questions">
                 <div id="1" class="questionForm">
+                    <div class="questionInput">
+                        <p>Pregunta 1:</p>
+                        <input class="pregunta" name="1" type="text"/>
+                    </div>
                     <div class="questionType">
+                        <p>Tipo de pregunta: </p>
                         <select class="tipoPregunta" name="tipoPregunta" required>
                           <option value="0">Seleccionar Tipo...</option>
                           <option value="1">Selección Única</option>
@@ -39,12 +44,6 @@
                         </select>
                         <p class="feedTypeQuestion"></p>
                     </div>
-
-        			<div class="questionInput">
-        	            <p>Pregunta 1:</p>
-        	            <input class="pregunta" name="1" type="text"/>
-        	        </div>
-
         	        <div class="imagen_content">
                         <p>Imagen URL:</p>
                         <input class="imagen" type="text"/>
@@ -62,7 +61,9 @@
             </div>
             <div class="enviarInfo">
                 <br/>
-                <button type='submit' class='addQuestion'>Agregar Pregunta</button>
+                <button type='submit' id='addQuestion'>Agregar Pregunta</button>
+                <button type='submit' id='submitQuestions'>Confimar Preguntas</button>
+                <br/>
             </div>
 		</div>
     </div>
