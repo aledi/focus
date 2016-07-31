@@ -31,10 +31,11 @@ $(document).on('ready', function () {
 
 	$(".addQuestion").on("click", function(){
 		var currentHTML = '';
-		var lastQuestion = $("#questions div:last-child").attr('id');
-
+		
+		var lastQuestion = $("#questions").children().length;
 		lastQuestion = parseInt(lastQuestion) + 1;
 		console.log(lastQuestion);
+
 		currentHTML += '<div id="' + lastQuestion + '" class="questionForm">';
 			currentHTML += '<div class="questionType">' +
                         		  '<select class="tipoPregunta" name="tipoPregunta" required>' +
@@ -47,7 +48,7 @@ $(document).on('ready', function () {
                         		'<p class="feedTypeQuestion"></p>' +
                     		'</div>';
             currentHTML += '<div class="questionInput">' +
-		        	            '<p>Pregunta 1:</p>' +
+		        	            '<p>Pregunta '+ lastQuestion +' :</p>' +
 		        	            '<input class="pregunta" name="1" type="text"/>' +
 		        	        '</div>';
 	        currentHTML += '<div class="imagen_content">' +
