@@ -302,7 +302,7 @@ $(document).on('ready', function () {
                         currentHTML += "<td>" + obj.results[i].username+"</td>";
                         currentHTML += "<td>" + obj.results[i].nombre+"</td>";
                         currentHTML += "<td>" + obj.results[i].email+"</td>";
-                        currentHTML += "<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>"
+                        currentHTML += "<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>";
                         currentHTML += "<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>";
                     currentHTML += "</tr>";
                     $("#allUsers").append(currentHTML);
