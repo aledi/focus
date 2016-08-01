@@ -30,7 +30,7 @@ $(document).on('ready', function () {
             if(flagLoadingPanelist == 0){
                 currentHTML += '<tr>';
                     currentHTML += '<th></th>';
-                    currentHTML += '<th>ID</th>';
+                    currentHTML += '<th></th>';
                     currentHTML += '<th>Nombre</th>';
                     currentHTML += '<th>Género</th>';
                     currentHTML += '<th>Edad</th>';

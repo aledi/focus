@@ -15,7 +15,7 @@ $(document).on('ready', function () {
             var currentHTML = "";
                 currentHTML += '<tr>';
                     currentHTML += '<th></th>';
-                    currentHTML += '<th>ID</th>';
+                    currentHTML += '<th></th>';
                     currentHTML += '<th>Nombre</th>';
                     currentHTML += '<th>Fecha Inicio</th>';
                     currentHTML += '<th>Fecha Fin</th>';
@@ -57,7 +57,7 @@ $(document).on('ready', function () {
             var currentHTML = "";
                 currentHTML += '<tr>';
                     currentHTML += '<th></th>';
-                    currentHTML += '<th>ID</th>';
+                    currentHTML += '<th></th>';
                     currentHTML += '<th>Nombre</th>';
                     currentHTML += '<th>Fecha Inicio</th>';
                     currentHTML += '<th>Fecha Fin</th>';

@@ -241,7 +241,7 @@ $(document).on('ready', function () {
                 if(flagLoading == 0){
                     currentHTML += '<tr>';
                         currentHTML += '<th></th>';
-                        currentHTML += '<th>ID</th>';
+                        currentHTML += '<th></th>';
                         currentHTML += '<th>Username</th>';
                         currentHTML += '<th>Nombre</th>';
                         currentHTML += '<th>Correo</th>';
@@ -289,7 +289,7 @@ $(document).on('ready', function () {
             var currentHTML = "";
                 currentHTML += '<tr>';
                     currentHTML += '<th></th>';
-                    currentHTML += '<th>ID</th>';
+                    currentHTML += '<th></th>';
                     currentHTML += '<th>Username</th>';
                     currentHTML += '<th>Nombre</th>';
                     currentHTML += '<th>Correo</th>';
@@ -332,7 +332,7 @@ $(document).on('ready', function () {
                 if(flagLoadingPanelist == 0){
                     currentHTML += '<tr>';
                         currentHTML += '<th></th>';
-                        currentHTML += '<th>ID</th>';
+                        currentHTML += '<th></th>';
                         currentHTML += '<th>Nombre</th>';
                         currentHTML += '<th>Género</th>';
                         currentHTML += '<th>Edad</th>';

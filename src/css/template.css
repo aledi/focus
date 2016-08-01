@@ -174,3 +174,6 @@ li.dropdown {
     font-size: 120%;
 }
 
+.id{
+    visibility: hidden;
+}
