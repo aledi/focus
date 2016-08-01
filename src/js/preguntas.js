@@ -13,17 +13,17 @@ $(document).on('ready', function () {
 		$(this).parent().parent().find(answersClass).empty();
 
 		if(typeQuestion != 2){
-			for(x = 1; x < 10; x++){
+			for(x = 1; x <= 10; x++){
 				currentHTML += '<div class="answer">';
-	            	currentHTML += '<p>Opción ' + (x + 1) + '</p>';
-	            	currentHTML += '<input class="respuesta' + (x + 1) + '" name="respuesta" type="text"/>';
+	            	currentHTML += '<p>Opción ' + x + '</p>';
+	            	currentHTML += '<input class="respuesta' + x + '" name="respuesta'+questionID+'" type="text"/>';
 	            currentHTML += "</div>";
 	     	}
     	}
     	else {
     		currentHTML += '<div class="answer">';
     			currentHTML += '<p>Respuesta</p>';
-            	currentHTML += '<textarea class="respuesta" name="respuesta"></textarea>';
+            	currentHTML += '<textarea class="respuesta'+questionID+'" name="respuesta'+questionID+'"></textarea>';
     		currentHTML += '</div>';
     	}
 
@@ -44,11 +44,11 @@ $(document).on('ready', function () {
 			currentHTML += '<hr>';
 			currentHTML += '<div class="questionInput">' +
 		        	            '<p>Pregunta '+ lastQuestion +' :</p>' +
-		        	            '<input class="pregunta" name="respuesta" type="text"/>' +
+		        	            '<input class="pregunta" name="respuesta'+lastQuestion+'" type="text"/>' +
 		        	        '</div>';
 			currentHTML += '<div class="questionType">' +
 								  	'<p>Tipo de pregunta: </p>' +
-                        		  	'<select class="tipoPregunta" name="respuesta" required>' +
+                        		  	'<select class="tipoPregunta" name="respuesta'+lastQuestion+'" required>' +
 		                          	'<option value="0">Seleccionar Tipo...</option>' +
 		                          	'<option value="1">Selección Única</option>' +
 		                          	'<option value="2">Abiertas</option>' +
@@ -59,11 +59,11 @@ $(document).on('ready', function () {
                     		'</div>';
 	        currentHTML += '<div class="imagen_content">' +
 		                        '<p>Imagen URL:</p>' +
-		                        '<input class="imagen" name="respuesta" type="text"/>' +
+		                        '<input class="imagen" name="respuesta'+lastQuestion+'" type="text"/>' +
 		                    '</div>';
             currentHTML += '<div class="videoContent">' +
 		                        '<p>Video URL:</p>' +
-		                        '<input class="video" name="respuesta" type="text"/>' +
+		                        '<input class="video" name="respuesta'+lastQuestion+'" type="text"/>' +
 		                    '</div>';
             currentHTML += '<div id="Answers'+lastQuestion+'">' +
             				'</div>' +
@@ -74,20 +74,104 @@ $(document).on('ready', function () {
 	});
 
 	$('#submitQuestions').on('click', function(){
-		console.log("Entra Botón");
+		var iteration = 1;
+		var numeroPregunta = 1;
 		var nombrePregunta;
 		var tipoPregunta;
 		var imagenPregunta;
 		var videoPregunta;
 		var respuesta = 0;
-		var taskArray = new Array();
+		var questionsArray = [];
+		var questionObject = {};
 
 		$('#questions').children().each(function () {
-    		alert(this.value); // "this" is the current element in the loop
+    	//	alert(this.value); // "this" is the current element in the loop
 			
-			$("input[name=task]").each(function() {
-   				taskArray.push($(this).val());
+			$('[name=respuesta'+numeroPregunta+']').each(function() {
+				if(iteration === 1){
+					questionObject.numPregunta = numeroPregunta;
+					questionObject.pregunta = $(this).val();
+				}
+				else if(iteration === 2){
+					questionObject.tipo = $(this).val();
+				}
+				else if(iteration === 3){
+					questionObject.imagen = $(this).val();
+				}
+				else if(iteration === 4) {
+					questionObject.video = $(this).val();
+				}
+				else if(iteration === 5) {
+					questionObject.op1 = $(this).val();
+				}
+				else if(iteration === 6) {
+					questionObject.op2 = $(this).val();
+				}
+				else if(iteration === 7) {
+					questionObject.op3 = $(this).val();
+				}
+				else if(iteration === 8) {
+					questionObject.op4 = $(this).val();
+				}
+				else if(iteration === 9) {
+					questionObject.op5 = $(this).val();
+				}
+				else if(iteration === 10) {
+					questionObject.op6 = $(this).val();
+				}
+				else if(iteration === 11) {
+					questionObject.op7 = $(this).val();
+				}
+				else if(iteration === 12) {
+					questionObject.op8 = $(this).val();
+				}
+				else if(iteration === 13) {
+					questionObject.op9 = $(this).val();
+				}
+				else if(iteration === 14) {
+					questionObject.op10 = $(this).val();
+				}
+				iteration++;			
 			});
+
+			if(questionObject.tipo == 2){
+				questionObject.op2 = '';
+				questionObject.op3 = '';
+				questionObject.op4 = '';
+				questionObject.op5 = '';
+				questionObject.op6 = '';
+				questionObject.op7 = '';
+				questionObject.op8 = '';
+				questionObject.op9 = '';
+				questionObject.op10 = '';
+			}
+			iteration = 1;
+			questionsArray.push(questionObject);
+			numeroPregunta++;
+			questionObject = {};
 		});
+
+		var idEncuesta = window.location.search.substring(1)
+        idEncuesta = idEncuesta.substring(3);
+
+        var parameters = {
+            'action': 'SET_PREGUNTAS_ENCUESTA',
+            'encuesta': idEncuesta,
+            'preguntas': questionsArray
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '../api/controller.php',
+            data: parameters,
+            dataType: 'json',
+            success: function (obj) {
+                alert("Preguntas ligadas exitosamente.");
+                //location.replace("preguntas.php?id=" + obj.id);
+            },
+            error: function (error) {
+                 $('#feedback').html("Preguntas no añadidas, ha ocurrido un error.");
+            }
+        });
 	})
 });

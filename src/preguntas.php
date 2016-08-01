@@ -31,11 +31,11 @@
                 <div id="1" class="questionForm">
                     <div class="questionInput">
                         <p>Pregunta 1:</p>
-                        <input class="pregunta" name="1" type="text"/>
+                        <input class="pregunta" name="respuesta1" type="text"/>
                     </div>
                     <div class="questionType">
                         <p>Tipo de pregunta: </p>
-                        <select class="tipoPregunta" name="tipoPregunta" required>
+                        <select class="tipoPregunta" name="respuesta1" required>
                           <option value="0">Seleccionar Tipo...</option>
                           <option value="1">Selección Única</option>
                           <option value="2">Abiertas</option>
@@ -46,12 +46,12 @@
                     </div>
         	        <div class="imagen_content">
                         <p>Imagen URL:</p>
-                        <input class="imagen" type="text"/>
+                        <input class="imagen" name="respuesta1" type="text"/>
                     </div>
 
                     <div class="videoContent">
                         <p>Video URL:</p>
-                        <input class="video" type="text"/>
+                        <input class="video" name="respuesta1" type="text"/>
                     </div>
                     <div id="Answers1">
             	        
