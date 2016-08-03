@@ -241,7 +241,6 @@ $(document).on('ready', function () {
                 if(flagLoading == 0){
                     currentHTML += '<tr>';
                         currentHTML += '<th></th>';
-                        currentHTML += '<th></th>';
                         currentHTML += '<th>Username</th>';
                         currentHTML += '<th>Nombre</th>';
                         currentHTML += '<th>Correo</th>';
@@ -249,9 +248,8 @@ $(document).on('ready', function () {
                     currentHTML += '</tr>';
                     for(var i = 0; i < obj.results.length; i++)
                     {
-                        currentHTML += "<tr>";
+                        currentHTML += '<tr value="'+ obj.results[i].id +'">';
                             currentHTML += "<td></td>";
-                            currentHTML += "<td class='id'>" + obj.results[i].id+"</td>";
                             currentHTML += "<td>" + obj.results[i].username+"</td>";
                             currentHTML += "<td>" + obj.results[i].nombre+"</td>";
                             currentHTML += "<td>" + obj.results[i].email+"</td>";
@@ -289,16 +287,14 @@ $(document).on('ready', function () {
             var currentHTML = "";
                 currentHTML += '<tr>';
                     currentHTML += '<th></th>';
-                    currentHTML += '<th></th>';
                     currentHTML += '<th>Username</th>';
                     currentHTML += '<th>Nombre</th>';
                     currentHTML += '<th>Correo</th>';
                     currentHTML += '<th colspan="2">Acción</th>';
                 currentHTML += '</tr>';
                 for(var i = 0; i < obj.results.length; i++) {
-                    currentHTML += "<tr>";
+                    currentHTML += '<tr value="'+ obj.results[i].id + '">';
                         currentHTML += "<td></td>";
-                        currentHTML += "<td class='id'>" + obj.results[i].id+"</td>";
                         currentHTML += "<td>" + obj.results[i].username+"</td>";
                         currentHTML += "<td>" + obj.results[i].nombre+"</td>";
                         currentHTML += "<td>" + obj.results[i].email+"</td>";
@@ -332,7 +328,6 @@ $(document).on('ready', function () {
                 if(flagLoadingPanelist == 0){
                     currentHTML += '<tr>';
                         currentHTML += '<th></th>';
-                        currentHTML += '<th></th>';
                         currentHTML += '<th>Nombre</th>';
                         currentHTML += '<th>Género</th>';
                         currentHTML += '<th>Edad</th>';
@@ -343,9 +338,8 @@ $(document).on('ready', function () {
                     currentHTML += '</tr>';
                     for(var i = 0; i < obj.results.length; i++)
                     {
-                        currentHTML += "<tr>";
+                        currentHTML += '<tr value="' + obj.results[i].id +'">';
                             currentHTML += "<td></td>";
-                            currentHTML += "<td class='id'>" + obj.results[i].id +"</td>";
                             currentHTML += "<td>" + obj.results[i].nombre +"</td>";
                             currentHTML += "<td>" + convertData('Genero', obj.results[i].genero) +"</td>";
                             currentHTML += "<td>" + obj.results[i].edad +"</td>";

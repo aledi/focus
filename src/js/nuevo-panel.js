@@ -13,16 +13,14 @@ $(document).on('ready', function () {
         var currentHTML = "";
             currentHTML += '<tr>';
                 currentHTML += '<th></th>';
-                currentHTML += '<th></th>';
                 currentHTML += '<th>Username</th>';
                 currentHTML += '<th>Nombre</th>';
                 currentHTML += '<th>Correo</th>';
                 currentHTML += '<th>Seleccionar</th>';
             currentHTML += '</tr>';
             for(var i = 0; i < obj.results.length; i++){
-                currentHTML += "<tr>";
+                currentHTML += '<tr value="' + obj.results[i].id + '">';
                     currentHTML += "<td></td>";
-                    currentHTML += "<td class='id'>" + obj.results[i].id+"</td>";
                     currentHTML += "<td>" + obj.results[i].username+"</td>";
                     currentHTML += "<td>" + obj.results[i].nombre+"</td>";
                     currentHTML += "<td>" + obj.results[i].email+"</td>";
@@ -105,7 +103,6 @@ $(document).on('ready', function () {
             var currentHTML = "";
                 currentHTML += '<tr>';
                     currentHTML += '<th></th>';
-                    currentHTML += '<th></th>';
                     currentHTML += '<th>Nombre</th>';
                     currentHTML += '<th>Fecha Inicio</th>';
                     currentHTML += '<th>Fecha Fin</th>';
@@ -113,9 +110,8 @@ $(document).on('ready', function () {
                     currentHTML += '<th colspan="2">Acción</th>';
                 currentHTML += '</tr>';
                 for(var i = 0; i < obj.results.length; i++) {
-                    currentHTML += "<tr>";
+                    currentHTML += '<tr value="'+ obj.results[i].id +'">';
                         currentHTML += "<td></td>";
-                        currentHTML += "<td class='id'>" + obj.results[i].id +"</td>";
                         currentHTML += '<td><a href="liga-panel-panelista.php?id=' + obj.results[i].id +'">' + obj.results[i].nombre +"</a></td>";
                         currentHTML += "<td>" + obj.results[i].fechaInicio +"</td>";
                         currentHTML += "<td>" + obj.results[i].fechaFin +"</td>";
