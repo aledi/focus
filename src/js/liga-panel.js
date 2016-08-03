@@ -30,7 +30,6 @@ $(document).on('ready', function () {
             if(flagLoadingPanelist == 0){
                 currentHTML += '<tr>';
                     currentHTML += '<th></th>';
-                    currentHTML += '<th>ID</th>';
                     currentHTML += '<th>Nombre</th>';
                     currentHTML += '<th>Género</th>';
                     currentHTML += '<th>Edad</th>';
@@ -40,9 +39,8 @@ $(document).on('ready', function () {
                     currentHTML += '<th>Selección</th>';
                 currentHTML += '</tr>';
                 for(var i = 0; i < obj.results.length; i++) {
-                    currentHTML += "<tr>";
+                    currentHTML += '<tr value="' + obj.results[i].id +'">';
                         currentHTML += "<td></td>";
-                        currentHTML += "<td class='id'>" + obj.results[i].id +"</td>";
                         currentHTML += "<td>" + obj.results[i].nombre +"</td>";
                         currentHTML += "<td>" + convertData('Genero', obj.results[i].genero) +"</td>";
                         currentHTML += "<td>" + obj.results[i].edad +"</td>";
