@@ -3,7 +3,7 @@ $(document).on('ready', function () {
     $("#allUsers").on("click",".deleteButton", function(){
         var parameters = {
             "action": "DELETE_CLIENTE",
-            "id": $(this).parent().find("td.id").text()
+            "id": $(this).parent().attr('value')
         }
         console.log(parameters);
         $.ajax({
@@ -24,13 +24,12 @@ $(document).on('ready', function () {
     });
 
     $("#allUsers").on("click",".modifyButton", function(){
-        var idUser = $(this).parent().find("td.id").text();
-
+        var idUser = $(this).parent().attr('value');
         var parameters = {
             "action": "GET_CLIENTES",
             "id": idUser
         }
-        console.log(parameters);
+        //console.log(parameters);
         $.ajax({
             url: "../api/controller.php",
             type: "POST",
@@ -62,7 +61,7 @@ $(document).on('ready', function () {
     $("#allAdmin").on("click",".deleteButton", function(){
         var parameters = {
             "action": "DELETE_ADMIN",
-            "id": $(this).parent().find("td.id").text()
+            "id": $(this).parent().attr('value')
         }
         console.log(parameters);
         $.ajax({
@@ -83,7 +82,7 @@ $(document).on('ready', function () {
     });
 
     $("#allAdmin").on("click",".modifyButton", function(){
-        var idAdministador = $(this).parent().find("td.id").text();
+        var idAdministador = $(this).parent().attr('value')
 
         var parameters = {
             "action": "GET_ADMINS",
@@ -96,7 +95,7 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: "json",
             success: function(obj){
-                console.log(obj.status);
+                //console.log(obj.status);
                 for(var i = 0; i < obj.results.length; i++) {
                     if(obj.results[i].id == idAdministador){
                         var nombre = obj.results[i].nombre.split(" ");
@@ -122,7 +121,7 @@ $(document).on('ready', function () {
     $("#allPanelists").on("click",".deleteButton", function(){
         var parameters = {
             "action": "DELETE_PANELISTA",
-            "id": $(this).parent().find("td.id").text()
+            "id": $(this).parent().attr('value')
         }
         console.log(parameters);
         $.ajax({
@@ -143,7 +142,7 @@ $(document).on('ready', function () {
     });
 
     $("#allPanelists").on("click",".modifyButton", function(){
-        var idPanelista = $(this).parent().find("td.id").text();
+        var idPanelista = $(this).parent().attr('value');
         var parameters = {
             "action": "GET_PANELISTAS",
             "id": idPanelista
@@ -193,7 +192,7 @@ $(document).on('ready', function () {
     $("#allPanels").on("click",".deleteButton", function(){
         var parameters = {
             "action": "DELETE_PANEL",
-            "id": $(this).parent().find("td.id").text()
+            "id": $(this).parent().attr('value')
         }
         console.log(parameters);
         $.ajax({
@@ -214,7 +213,7 @@ $(document).on('ready', function () {
     });
 
     $("#allPanels").on("click",".modifyButton", function(){
-        var idPanel = $(this).parent().find("td.id").text();
+        var idPanel = $(this).parent().attr('value');
         var parameters = {
             "action": "GET_PANELES",
             "id": idPanel
@@ -231,7 +230,7 @@ $(document).on('ready', function () {
                         $('#panelName').val(obj.results[i].nombre);
                         $('#dateStarts').val(obj.results[i].fechaInicio);
                         $('#dateEnds').val(obj.results[i].fechaFin);
-                        $("input[name=id][value=" + obj.results[i].cliente + "]").prop('checked', true);
+                        $("input[name=id][value=" + obj.results[i].id + "]").prop('checked', true);
                         var myURL = document.location;
                         myURL = myURL + "?id=" + obj.results[i].id;
                         history.pushState({}, null, myURL);
@@ -248,7 +247,7 @@ $(document).on('ready', function () {
     $("#allSurveys").on("click",".deleteButton", function(){
         var parameters = {
             "action": "DELETE_ENCUESTA",
-            "id": $(this).parent().find("td.id").text()
+            "id": $(this).parent().attr('value')
         }
         console.log(parameters);
         $.ajax({
@@ -267,7 +266,7 @@ $(document).on('ready', function () {
     });
 
     $("#allSurveys").on("click",".modifyButton", function(){
-        var idSurvey = $(this).parent().find("td.id").text();
+        var idSurvey = $(this).parent().attr('value');
         var parameters = {
             "action": "GET_ENCUESTAS",
             "id": idSurvey
@@ -284,7 +283,7 @@ $(document).on('ready', function () {
                         $('#nombre').val(obj.results[i].nombre);
                         $('#dateStarts').val(obj.results[i].fechaInicio);
                         $('#dateEnds').val(obj.results[i].fechaFin);
-                        $("input[name=id][value=" + obj.results[i].panel + "]").prop('checked', true);
+                        $("input[name=id][value=" + obj.results[i].id + "]").prop('checked', true);
                         var myURL = document.location;
                         myURL = myURL + "?id=" + obj.results[i].id;
                         history.pushState({}, null, myURL);
