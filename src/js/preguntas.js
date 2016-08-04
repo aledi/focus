@@ -1,18 +1,11 @@
 $(document).on('ready', function () {
-	$(document).on("change", ".tipoPregunta", function(){
-		console.log('Form Value:');
-		console.log($(this).val());
-		var typeQuestion = $(this).val();
-		var currentHTML = '';
+	var idEncuesta = -1;
+	idEncuesta = window.location.search.substring(1)
+    idEncuesta = idEncuesta.substring(3);
 
-		var questionID = $(this).parent().parent().attr('id');
-		console.log('QuestionID:');	
-		console.log(questionID);
-		var answersClass = "div#Answers" + questionID;
-
-		$(this).parent().parent().find(answersClass).empty();
-
-		if(typeQuestion != 2){
+    function appendQuestions(typeQuestion, questionID){
+    	var currentHTML = '';
+    	if(typeQuestion != 2){
 			for(x = 1; x <= 10; x++){
 				currentHTML += '<div class="answer">';
 	            	currentHTML += '<p>Opción ' + x + '</p>';
@@ -28,6 +21,73 @@ $(document).on('ready', function () {
     	}
 
     	$("#Answers" + questionID).append(currentHTML);
+    }
+
+    if(idEncuesta != -1){
+
+    	var parameters = {
+    		action : 'GET_PREGUNTAS',
+    		encuesta : idEncuesta
+    	};
+
+    	console.log(parameters);
+
+        $.ajax({
+            url: "../api/controller.php",
+            type: "POST",
+            data: parameters,
+            dataType: "json",
+            success: function(obj){
+                console.log(obj);
+                var typeQuestion = obj.results[0].tipo;
+                var questionID = obj.results[0].numPregunta;
+
+                $('.pregunta').val(obj.results[0].pregunta);
+                $('.tipoPregunta').val(obj.results[0].tipo);
+
+                appendQuestions(typeQuestion, questionID);
+
+                $('.imagen').val(obj.results[0].imagen);
+                $('.video').val(obj.results[0].video);
+
+                if(typeQuestion == 2){
+                	$('.respuesta' + questionID).val(obj.results[0].op1);
+                }
+                else {
+        			$('.respuesta1').val(obj.results[0].op1);
+        			$('.respuesta2').val(obj.results[0].op2);
+        			$('.respuesta3').val(obj.results[0].op3);
+        			$('.respuesta4').val(obj.results[0].op4);
+        			$('.respuesta5').val(obj.results[0].op5);
+        			$('.respuesta6').val(obj.results[0].op6);
+        			$('.respuesta7').val(obj.results[0].op7);
+        			$('.respuesta8').val(obj.results[0].op8);
+        			$('.respuesta9').val(obj.results[0].op9);
+        			$('.respuesta10').val(obj.results[0].op10);
+                }
+            },
+            error: function(errorMsg)
+            {
+                alert("Error llenando preguntas");
+            }
+        });
+    }
+
+	$(document).on("change", ".tipoPregunta", function(){
+		console.log('Form Value:');
+		console.log($(this).val());
+		var typeQuestion = $(this).val();
+		var currentHTML = '';
+
+		var questionID = $(this).parent().parent().attr('id');
+		console.log('QuestionID:');	
+		console.log(questionID);
+		var answersClass = "div#Answers" + questionID;
+
+		$(this).parent().parent().find(answersClass).empty();
+
+		appendQuestions(typeQuestion, questionID);
+
     	currentHTML = '';
     	//console.log($(this).parent().parent().find("div.Answers").text());
 	});
@@ -174,4 +234,6 @@ $(document).on('ready', function () {
             }
         });
 	})
+
+
 });

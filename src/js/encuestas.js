@@ -24,7 +24,7 @@ $(document).on('ready', function () {
                 for(var i = 0; i < obj.results.length; i++) {
                     currentHTML += '<tr value="' + obj.results[i].id +'">';
                         currentHTML += "<td></td>";
-                        currentHTML += "<td>" + obj.results[i].nombre +"</td>";
+                        currentHTML += '<td>' + obj.results[i].nombre +'</td>';
                         currentHTML += "<td>" + obj.results[i].fechaInicio +"</td>";
                         currentHTML += "<td>" + obj.results[i].fechaFin +"</td>";
                         currentHTML += "<td>" + obj.results[i].cliente +"</td>";
@@ -64,7 +64,7 @@ $(document).on('ready', function () {
                 for(var i = 0; i < obj.results.length; i++) {
                     currentHTML += '<tr value="' + obj.results[i].id +'">';
                         currentHTML += "<td></td>";
-                        currentHTML += '<td>' + obj.results[i].nombre +"</td>";
+                        currentHTML += '<td><a href="preguntas.php?id='+ obj.results[i].id +'">' + obj.results[i].nombre +"</a></td>";
                         currentHTML += "<td>" + obj.results[i].fechaInicio +"</td>";
                         currentHTML += "<td>" + obj.results[i].fechaFin +"</td>";
                         currentHTML += "<td>" + obj.results[i].panel +"</td>";
