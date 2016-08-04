@@ -20,7 +20,7 @@ $(document).on('ready', function () {
             	currentHTML += '<textarea class="respuesta'+questionID+'" name="respuesta'+questionID+'"></textarea>';
     		currentHTML += '</div>';
     	}
-
+    	console.log("Perform append.");
     	$("#Answers" + questionID).append(currentHTML);
     }
 
@@ -55,7 +55,7 @@ $(document).on('ready', function () {
             				'</div>' +
             				'<div class="feedback"></div>' + 
             				'</div>';
-
+		
         $("#questions").append(currentHTML);
     }
 
@@ -74,21 +74,25 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: "json",
             success: function(obj){
-            	console.log(obj.results.length);
+            	//console.log(obj.results.length);
 
             	for(var x = 2; x <= obj.results.length; x++) {
             		appendQuestions(x);
             	}
 
+            	$('div#Answers1').empty();
+            	
             	for(var x = 0; x < obj.results.length; x++) {
             		var typeQuestion = obj.results[x].tipo;
                 	var questionID = obj.results[x].numPregunta;
+                	console.log(questionID);
 
+                	
                 	$('input.pregunta[name=respuesta' + questionID +']').val(obj.results[x].pregunta);
                 	$('select.tipoPregunta[name=respuesta' + questionID +']').val(obj.results[x].tipo);
                 	
                 	appendAnswers(typeQuestion, questionID);
-
+					
                 	$('input.imagen[name=respuesta' + questionID +']').val(obj.results[x].imagen);
                 	$('input.video[name=respuesta' + questionID +']').val(obj.results[x].video);
                 	

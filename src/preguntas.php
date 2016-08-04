@@ -36,9 +36,8 @@
                     <div class="questionType">
                         <p>Tipo de pregunta: </p>
                         <select class="tipoPregunta" name="respuesta1" required>
-                          <option value="0">Seleccionar Tipo...</option>
-                          <option value="1">Selección Única</option>
                           <option value="2">Abiertas</option>
+                          <option value="1">Selección Única</option>
                           <option value="3">Ordenamiento</option>
                           <option value="4">Selección Múltiple</option>
                         </select>
@@ -54,7 +53,10 @@
                         <input class="video" name="respuesta1" type="text"/>
                     </div>
                     <div id="Answers1">
-            	        
+            	        <div class="answer">
+                            <p>Respuesta</p>
+                            <textarea class="respuesta1" name="respuesta"></textarea>
+                        </div>
                     </div>
         	        <div class='feedback'></div>
                 </div>
