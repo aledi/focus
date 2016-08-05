@@ -6,7 +6,7 @@ $(document).on('ready', function () {
 
     function appendAnswers(typeQuestion, questionID){
     	var currentHTML = '';
-    	if(typeQuestion != 2){
+    	if(typeQuestion != 1){
 			for(x = 1; x <= 10; x++){
 				currentHTML += '<div class="answer">';
 	            	currentHTML += '<p>Opción ' + x + '</p>';
@@ -35,9 +35,8 @@ $(document).on('ready', function () {
 			currentHTML += '<div class="questionType">' +
 								  	'<p>Tipo de pregunta: </p>' +
                         		  	'<select class="tipoPregunta" name="respuesta'+lastQuestion+'" required>' +
-		                          	'<option value="0">Seleccionar Tipo...</option>' +
-		                          	'<option value="1">Selección Única</option>' +
 		                          	'<option value="2">Abiertas</option>' +
+		                          	'<option value="1">Selección Única</option>' +
 		                          	'<option value="3">Ordenamiento</option>' +
 		                          	'<option value="4">Selección Múltiple</option>' +
                         		'</select>' +
@@ -57,6 +56,7 @@ $(document).on('ready', function () {
             				'</div>';
 		
         $("#questions").append(currentHTML);
+        appendAnswers(1, lastQuestion);
     }
 
     if(idEncuesta != ''){
@@ -96,7 +96,7 @@ $(document).on('ready', function () {
                 	$('input.imagen[name=respuesta' + questionID +']').val(obj.results[x].imagen);
                 	$('input.video[name=respuesta' + questionID +']').val(obj.results[x].video);
                 	
-                	if(typeQuestion == 2){
+                	if(typeQuestion == 1){
 	                	$('textarea.respuesta'+ questionID +'[name=respuesta' + questionID +']').val(obj.results[x].op1);
                 	}
 	                else {
@@ -215,7 +215,7 @@ $(document).on('ready', function () {
 				iteration++;			
 			});
 
-			if(questionObject.tipo == 2){
+			if(questionObject.tipo == 1){
 				questionObject.op2 = '';
 				questionObject.op3 = '';
 				questionObject.op4 = '';
