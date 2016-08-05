@@ -36,8 +36,8 @@
                     <div class="questionType">
                         <p>Tipo de pregunta: </p>
                         <select class="tipoPregunta" name="respuesta1" required>
-                          <option value="2">Abiertas</option>
-                          <option value="1">Selección Única</option>
+                          <option value="1">Abiertas</option>
+                          <option value="2">Selección Única</option>
                           <option value="3">Ordenamiento</option>
                           <option value="4">Selección Múltiple</option>
                         </select>
