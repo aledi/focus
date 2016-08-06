@@ -22,6 +22,13 @@ $(document).on('ready', function () {
 
     $('#allUsers').on('click','.modifyButton', function () {
         var idUser = $(this).parent().attr('value');
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $('ul.tabs li').first().addClass('current');
+        $("#tab-agregarUsuario").addClass('current');
+
         var parameters = {
             'action': 'GET_CLIENTES',
             'id': idUser
@@ -79,6 +86,12 @@ $(document).on('ready', function () {
     $('#allAdmin').on('click','.modifyButton', function(){
         var idAdministador = $(this).parent().attr('value')
 
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $('ul.tabs li').first().addClass('current');
+        $("#tab-agregarAdministrador").addClass('current');
+
         var parameters = {
             'action': 'GET_ADMINS',
             'id': idAdministador
@@ -135,6 +148,13 @@ $(document).on('ready', function () {
 
     $('#allPanelists').on('click','.modifyButton', function(){
         var idPanelista = $(this).parent().attr('value');
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $('ul.tabs li').first().addClass('current');
+        $("#tab-agregarPanelista").addClass('current');
+
         var parameters = {
             'action': 'GET_PANELISTAS',
             'id': idPanelista
@@ -196,6 +216,13 @@ $(document).on('ready', function () {
 
     $('#allPanels').on('click','.modifyButton', function(){
         var idPanel = $(this).parent().attr('value');
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $('ul.tabs li').first().addClass('current');
+        $("#tab-agregarPanel").addClass('current');
+
         var parameters = {
             'action': 'GET_PANELES',
             'id': idPanel
@@ -249,6 +276,13 @@ $(document).on('ready', function () {
 
     $('#allSurveys').on('click','.modifyButton', function(){
         var idSurvey = $(this).parent().attr('value');
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $('ul.tabs li').first().addClass('current');
+        $("#tab-agregarEncuesta").addClass('current');
+
         var parameters = {
             'action': 'GET_ENCUESTAS',
             'id': idSurvey
