@@ -13,6 +13,7 @@
       <li><a href="paneles.php">Paneles</a></li>
       <li><a href="reportes.php">Reportes</a></li>
       <li><a href="encuestas.php">Encuestas</a></li>
+      <li><a href="preguntas.php">Preguntas</a></li>
       <li style="float:right"><a class="signOutButton" href="">Sign Out</a></li>
     </ul>
 </div>
