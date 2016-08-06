@@ -14,11 +14,6 @@ $(document).on('ready', function () {
 	            currentHTML += "</div>";
 	     	}
     	}
-    	else {
-    		currentHTML += '<div class="answer">';
-            	currentHTML += '<textarea class="respuesta'+questionID+'" name="respuesta'+questionID+'"></textarea>';
-    		currentHTML += '</div>';
-    	}
     	console.log("Perform append.");
     	$("#Answers" + questionID).append(currentHTML);
     }

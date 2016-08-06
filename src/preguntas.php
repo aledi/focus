@@ -53,9 +53,7 @@
                         <input class="video" name="respuesta1" type="text"/>
                     </div>
                     <div id="Answers1">
-            	        <div class="answer">
-                            <textarea class="respuesta1" name="respuesta"></textarea>
-                        </div>
+            	        
                     </div>
         	        <div class='feedback'></div>
                 </div>
