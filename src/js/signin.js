@@ -6,16 +6,13 @@ $(document).on('ready', function () {
         var password = $('#password').val();
 
         if (username === '' && password === '') {
-            $('#feedback').html('Usuario y Contraseña invalidos.');
-
+            $('#feedback').html('Por favor, indique su usuario y contraseña');
             return;
-        }
-        else if(username == ''){
-            $('#feedback').html('Usuario invalido.');
+        } else if(username == '') {
+            $('#feedback').html('Por favor, indique su usuario');
             return;
-        }
-        else if (password == '' ){
-            $('#feedback').html('Contraseña invalida.');
+        } else if (password == '' ) {
+            $('#feedback').html('Por favor, indique su contraseña');
             return;
         }
 
@@ -31,15 +28,14 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                if (obj.status === "SUCCESS") {
-                    location.replace("home.php");
+                if (obj.status === 'SUCCESS') {
+                    location.replace('home.php');
                 } else {
-                    $('#feedback').html("Usuario o contraseña incorrectos.");
+                    $('#feedback').html('Usuario o contraseña incorrectos.');
                 }
-
             },
             error: function (error) {
-                $('#feedback').html("Usuario o contraseña incorrectos.");
+                $('#feedback').html('Usuario o contraseña incorrectos ERROR.');
             }
         });
     });

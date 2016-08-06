@@ -1,228 +1,210 @@
 $(document).on('ready', function () {
-
-    $("#allUsers").on("click",".deleteButton", function(){
+    $('#allUsers').on('click','.deleteButton', function(){
         var parameters = {
-            "action": "DELETE_CLIENTE",
-            "id": $(this).parent().attr('value')
+            'action': 'DELETE_CLIENTE',
+            'id': $(this).parent().attr('value')
         }
-        console.log(parameters);
+
         $.ajax({
-            url: "../api/controller.php",
-            type: "POST",
+            url: '../api/controller.php',
+            type: 'POST',
             data: parameters,
-            dataType: "json",
-            success: function(obj){
-                alert("Cliente Eliminado!");
-                console.log(obj.status);
-                $(this).parent().find("td.id").remove();
+            dataType: 'json',
+            success: function (obj) {
+                alert('Cliente Eliminado!');
+                $(this).parent().find('td.id').remove();
             },
-            error: function(errorMsg)
-            {
-                alert("Error eliminando cliente");
+            error: function (errorMsg) {
+                alert('Error eliminando cliente');
             }
         });
     });
 
-    $("#allUsers").on("click",".modifyButton", function(){
+    $('#allUsers').on('click','.modifyButton', function () {
         var idUser = $(this).parent().attr('value');
         var parameters = {
-            "action": "GET_CLIENTES",
-            "id": idUser
+            'action': 'GET_CLIENTES',
+            'id': idUser
         }
-        //console.log(parameters);
+
         $.ajax({
-            url: "../api/controller.php",
-            type: "POST",
+            url: '../api/controller.php',
+            type: 'POST',
             data: parameters,
-            dataType: "json",
-            success: function(obj){
-                for(var i = 0; i < obj.results.length; i++) {
+            dataType: 'json',
+            success: function (obj) {
+                for (var i = 0; i < obj.results.length; i++) {
                     if(obj.results[i].id == idUser){
-                        var nombre = obj.results[i].nombre.split(" ");
+                        var nombre = obj.results[i].nombre.split(' ');
+
                         $('#email').val(obj.results[i].email);
                         $('#fName').val(nombre[0]);
                         $('#lName').val(nombre[1]);
                         $('#lName_materno').val(nombre[2]);
                         $('#username').val(obj.results[i].username);
 
-                        var myURL = document.location;
-                        myURL = myURL + "?id=" + obj.results[i].id;
+                        var myURL = window.location.href.split('?')[0];
+                        myURL = myURL + '?id=' + obj.results[i].id;
                         history.pushState({}, null, myURL);
                     }
                 }
             },
-            error: function(errorMsg)
-            {
-                alert("Error modificando administrador");
+            error: function (errorMsg) {
+                alert('Error modificando administrador');
             }
         });
     });
 
-    $("#allAdmin").on("click",".deleteButton", function(){
+    $('#allAdmin').on('click','.deleteButton', function(){
         var parameters = {
-            "action": "DELETE_ADMIN",
-            "id": $(this).parent().attr('value')
+            'action': 'DELETE_ADMIN',
+            'id': $(this).parent().attr('value')
         }
         console.log(parameters);
         $.ajax({
-            url: "../api/controller.php",
-            type: "POST",
+            url: '../api/controller.php',
+            type: 'POST',
             data: parameters,
-            dataType: "json",
+            dataType: 'json',
             success: function(obj){
-                alert("¡Administrador Eliminado!");
-                console.log(obj.status);
-                $(this).parent().find("td.id").remove();
+                alert('¡Administrador Eliminado!');
+                $(this).parent().find('td.id').remove();
             },
-            error: function(errorMsg)
-            {
-                alert("Error eliminando administrador");
+            error: function (errorMsg) {
+                alert('Error eliminando administrador');
             }
         });
     });
 
-    $("#allAdmin").on("click",".modifyButton", function(){
+    $('#allAdmin').on('click','.modifyButton', function(){
         var idAdministador = $(this).parent().attr('value')
 
         var parameters = {
-            "action": "GET_ADMINS",
-            "id": idAdministador
+            'action': 'GET_ADMINS',
+            'id': idAdministador
         }
         console.log(parameters);
         $.ajax({
-            url: "../api/controller.php",
-            type: "POST",
+            url: '../api/controller.php',
+            type: 'POST',
             data: parameters,
-            dataType: "json",
+            dataType: 'json',
             success: function(obj){
-                //console.log(obj.status);
                 for(var i = 0; i < obj.results.length; i++) {
                     if(obj.results[i].id == idAdministador){
-                        var nombre = obj.results[i].nombre.split(" ");
+                        var nombre = obj.results[i].nombre.split(' ');
+
                         $('#email').val(obj.results[i].email);
                         $('#fName').val(nombre[0]);
                         $('#lName').val(nombre[1]);
                         $('#lName_materno').val(nombre[2]);
                         $('#username').val(obj.results[i].username);
 
-                        var myURL = document.location;
-                        myURL = myURL + "?id=" + obj.results[i].id;
+                        var myURL = window.location.href.split('?')[0];
+                        myURL = myURL + '?id=' + obj.results[i].id;
                         history.pushState({}, null, myURL);
                     }
                 }
             },
-            error: function(errorMsg)
-            {
-                alert("Error modificando administrador");
+            error: function (errorMsg) {
+                alert('Error modificando administrador');
             }
         });
     });
 
-    $("#allPanelists").on("click",".deleteButton", function(){
+    $('#allPanelists').on('click','.deleteButton', function(){
         var parameters = {
-            "action": "DELETE_PANELISTA",
-            "id": $(this).parent().attr('value')
+            'action': 'DELETE_PANELISTA',
+            'id': $(this).parent().attr('value')
         }
         console.log(parameters);
         $.ajax({
-            url: "../api/controller.php",
-            type: "POST",
+            url: '../api/controller.php',
+            type: 'POST',
             data: parameters,
-            dataType: "json",
-            success: function(obj){
-                alert("Panelista Eliminado!");
-                console.log(obj.status);
-                $(this).parent().find("td.id").remove();
+            dataType: 'json',
+            success: function (obj) {
+                alert('Panelista Eliminado!');
+                $(this).parent().find('td.id').remove();
             },
-            error: function(errorMsg)
-            {
-                alert("Error eliminando Panelista");
+            error: function (errorMsg) {
+                alert('Error eliminando Panelista');
             }
         });
     });
 
-    $("#allPanelists").on("click",".modifyButton", function(){
+    $('#allPanelists').on('click','.modifyButton', function(){
         var idPanelista = $(this).parent().attr('value');
         var parameters = {
-            "action": "GET_PANELISTAS",
-            "id": idPanelista
+            'action': 'GET_PANELISTAS',
+            'id': idPanelista
         }
         $.ajax({
-            url: "../api/controller.php",
-            type: "POST",
+            url: '../api/controller.php',
+            type: 'POST',
             data: parameters,
-            dataType: "json",
+            dataType: 'json',
             success: function(obj){
                 for(var i = 0; i < obj.results.length; i++) {
                     if(obj.results[i].id == idPanelista){
-                        console.log(obj);
-                        var nombre = obj.results[i].nombre.split(" ");
-                        $('#email').val(obj.results[i].email);
+                        var nombre = obj.results[i].nombre.split(' ');
+
                         $('#fName').val(nombre[0]);
-                        $('#lName').val(nombre[1]);
-                        $('#lName_materno').val(nombre[2]);
-                        $("input[name=gender][value=" + obj.results[i].genero + "]").prop('checked', true);
-                        $("input[name=nivel_educativo][value=" + obj.results[i].educacion + "]").prop('checked', true);
-                        $("input[name=rango_edad][value=" + obj.results[i].edad + "]").prop('checked', true);
-                        $("input[name=estadoCivil][value=" + obj.results[i].edoCivil + "]").prop('checked', true);
+                        $('#lName').val(nombre[1] + ' ' + nombre[2]);
+                        $('#email').val(obj.results[i].email);
+                        $('#username').val(obj.results[i].username);
+                        $('input[name="gender"][value="' + obj.results[i].genero + '"]').prop('checked', true);
+                        $('input[name="nivel_educativo"][value="' + obj.results[i].educacion + '"]').prop('checked', true);
+                        $('#calleNumero').val(obj.results[i].calleNumero);
+                        $('#colonia').val(obj.results[i].colonia);
                         $('#municipio').val(obj.results[i].municipio);
-                        $('select[name^="estado"] option[value="' + obj.results[i].estado + '"]').attr("selected","selected");
-                        $("input[name=cuartos][value=" + obj.results[i].cuartos + "]").prop('checked', true);
-                        $("input[name=banos][value=" + obj.results[i].banios + "]").prop('checked', true);
-                        $("input[name=regaderas][value=" + obj.results[i].regadera + "]").prop('checked', true);
-                        $("input[name=focos][value=" + obj.results[i].focos + "]").prop('checked', true);
-                        $("input[name=piso][value=" + obj.results[i].piso + "]").prop('checked', true);
-                        $("input[name=auto][value=" + obj.results[i].autos + "]").prop('checked', true);
-                        $("input[name=nivel_educativo_ingreso][value=" + obj.results[i].estudiosProv + "]").prop('checked', true);
-                        $("input[name=estufa][value=" + obj.results[i].estufa + "]").prop('checked', true);
-                        $('#telefono_cel').val(obj.results[i].movil);
-                        var myURL = document.location;
-                        myURL = myURL + "?id=" + obj.results[i].id;
+                        $('#estado').val(obj.results[i].estado);
+                        $('#cp').val(obj.results[i].cp);
+
+                        var myURL = window.location.href.split('?')[0];
+                        myURL = myURL + '?id=' + obj.results[i].id;
                         history.pushState({}, null, myURL);
                     }
                 }
             },
-            error: function(errorMsg)
-            {
-                alert("Error modificando Panelista");
+            error: function (errorMsg) {
+                alert('Error modificando Panelista');
             }
         });
     });
 
-    $("#allPanels").on("click",".deleteButton", function(){
+    $('#allPanels').on('click','.deleteButton', function(){
         var parameters = {
-            "action": "DELETE_PANEL",
-            "id": $(this).parent().attr('value')
+            'action': 'DELETE_PANEL',
+            'id': $(this).parent().attr('value')
         }
         console.log(parameters);
         $.ajax({
-            url: "../api/controller.php",
-            type: "POST",
+            url: '../api/controller.php',
+            type: 'POST',
             data: parameters,
-            dataType: "json",
-            success: function(obj){
-                alert("Panelista Eliminado!");
-                console.log(obj.status);
-                $(this).parent().find("td.id").remove();
+            dataType: 'json',
+            success: function (obj) {
+                alert('Panelista Eliminado!');
+                $(this).parent().find('td.id').remove();
             },
-            error: function(errorMsg)
-            {
-                alert("Error eliminando Panelista");
+            error: function (errorMsg) {
+                alert('Error eliminando Panelista');
             }
         });
     });
 
-    $("#allPanels").on("click",".modifyButton", function(){
+    $('#allPanels').on('click','.modifyButton', function(){
         var idPanel = $(this).parent().attr('value');
         var parameters = {
-            "action": "GET_PANELES",
-            "id": idPanel
+            'action': 'GET_PANELES',
+            'id': idPanel
         }
         $.ajax({
-            url: "../api/controller.php",
-            type: "POST",
+            url: '../api/controller.php',
+            type: 'POST',
             data: parameters,
-            dataType: "json",
+            dataType: 'json',
             success: function(obj){
                 console.log(obj);
                 for(var i = 0; i < obj.results.length; i++) {
@@ -230,52 +212,52 @@ $(document).on('ready', function () {
                         $('#panelName').val(obj.results[i].nombre);
                         $('#dateStarts').val(obj.results[i].fechaInicio);
                         $('#dateEnds').val(obj.results[i].fechaFin);
-                        $("input[name=id][value=" + obj.results[i].id + "]").prop('checked', true);
-                        var myURL = document.location;
-                        myURL = myURL + "?id=" + obj.results[i].id;
+                        $('input[name="id"][value="' + obj.results[i].id + '"]').prop('checked', true);
+
+                        var myURL = window.location.href.split('?')[0];
+                        myURL = myURL + '?id=' + obj.results[i].id;
                         history.pushState({}, null, myURL);
                     }
                 }
             },
-            error: function(errorMsg)
-            {
-                alert("Error modificando Panelista");
+            error: function (errorMsg) {
+                alert('Error modificando Panelista');
             }
         });
     });
 
-    $("#allSurveys").on("click",".deleteButton", function(){
+    $('#allSurveys').on('click','.deleteButton', function(){
         var parameters = {
-            "action": "DELETE_ENCUESTA",
-            "id": $(this).parent().attr('value')
+            'action': 'DELETE_ENCUESTA',
+            'id': $(this).parent().attr('value')
         }
         console.log(parameters);
         $.ajax({
-            url: "../api/controller.php",
-            type: "POST",
+            url: '../api/controller.php',
+            type: 'POST',
             data: parameters,
-            dataType: "json",
-            success: function(obj) {
-                alert("Encuesta Eliminada!");
-                $(this).parent().find("td.id").remove();
+            dataType: 'json',
+            success: function (obj) {
+                alert('Encuesta Eliminada!');
+                $(this).parent().find('td.id').remove();
             },
-            error: function(errorMsg) {
-                alert("Error eliminando cliente");
+            error: function (errorMsg) {
+                alert('Error eliminando cliente');
             }
         });
     });
 
-    $("#allSurveys").on("click",".modifyButton", function(){
+    $('#allSurveys').on('click','.modifyButton', function(){
         var idSurvey = $(this).parent().attr('value');
         var parameters = {
-            "action": "GET_ENCUESTAS",
-            "id": idSurvey
+            'action': 'GET_ENCUESTAS',
+            'id': idSurvey
         }
         $.ajax({
-            url: "../api/controller.php",
-            type: "POST",
+            url: '../api/controller.php',
+            type: 'POST',
             data: parameters,
-            dataType: "json",
+            dataType: 'json',
             success: function(obj) {
                 console.log(obj);
                 for(var i = 0; i < obj.results.length; i++) {
@@ -283,15 +265,16 @@ $(document).on('ready', function () {
                         $('#nombre').val(obj.results[i].nombre);
                         $('#dateStarts').val(obj.results[i].fechaInicio);
                         $('#dateEnds').val(obj.results[i].fechaFin);
-                        $("input[name=id][value=" + obj.results[i].id + "]").prop('checked', true);
-                        var myURL = document.location;
-                        myURL = myURL + "?id=" + obj.results[i].id;
+                        $('input[name=id][value="' + obj.results[i].id + '"]').prop('checked', true);
+
+                        var myURL = window.location.href.split('?')[0];
+                        myURL = myURL + '?id=' + obj.results[i].id;
                         history.pushState({}, null, myURL);
                     }
                 }
             },
-            error: function(errorMsg) {
-                alert("Error modificando Panelista");
+            error: function (errorMsg) {
+                alert('Error modificando Panelista');
             }
         });
     });

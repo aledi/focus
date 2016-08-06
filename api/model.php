@@ -24,7 +24,7 @@ function validateWebCredentials ($username, $password) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, username, email, nombre, apPaterno, apMaterno, tipo FROM Usuario WHERE username = '$username' AND password = '$password'";
+        $sql = "SELECT id, username, nombre, apPaterno, apMaterno, email, tipo FROM Usuario WHERE username = '$username' AND password = '$password'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -41,18 +41,18 @@ function validateWebCredentials ($username, $password) {
     return array('status' => 'DATABASE_ERROR');
 }
 
-function validatePanelistaCredentials ($email, $password) {
+function validatePanelistaCredentials ($username, $password) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, email, nombre, apPaterno, apMaterno FROM Panelista WHERE email = '$email' AND password = '$password'";
+        $sql = "SELECT id, username, email, nombre, apellidos FROM Panelista WHERE username = '$username' AND password = '$password'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
             $conn->close();
-            return array('status' => 'SUCCESS', 'id' => (int)$row['id'], 'email' => $row['email'], 'nombre' => $row['nombre']." ".$row['apPaterno']." ".$row['apMaterno']);
+            return array('status' => 'SUCCESS', 'id' => (int)$row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre']." ".$row['apellidos']);
         }
 
         $conn->close();
@@ -95,21 +95,21 @@ function registerUser ($tipo, $username, $password, $nombre, $apPaterno, $apMate
     return array('status' => 'DATABASE_ERROR');
 }
 
-function registerPanelista ($email, $nombre, $apPaterno, $apMaterno, $genero, $educacion, $fechaNacimiento, $edoCivil, $estado, $municipio, $cuartos, $banios, $regadera, $focos, $piso, $autos, $estudiosProv, $estufa, $movil, $fotoINE) {
+function registerPanelista ($username, $password, $nombre, $apellidos, $email, $genero, $fechaNacimiento, $educacion, $calleNumero, $colonia, $municipio, $estado, $cp) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, email FROM Panelista WHERE email = '$email'";
+        $sql = "SELECT id, username, email FROM Panelista WHERE username = '$username' OR email = '$email'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
             $conn->close();
-            return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'email' => $row['email']);
+            return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'username' => $row['username'], 'email' => $row['email']);
         }
 
-        $sql = "INSERT INTO Panelista (email, nombre, apPaterno, apMaterno, genero, educacion, fechaNacimiento, edoCivil, estado, municipio, cuartos, banios, regadera, focos, piso, autos, estudiosProv, estufa, movil, fotoINE) VALUES ('$email', '$nombre', '$apPaterno', '$apMaterno', $genero, '$educacion', '$fechaNacimiento', '$edoCivil', '$estado', '$municipio', '$cuartos', '$banios', '$regadera', '$focos', '$piso', '$autos', '$estudiosProv', '$estufa', '$movil', '$fotoINE')";
+        $sql = "INSERT INTO Panelista (username, password, nombre, apellidos, email, genero, fechaNacimiento, educacion, calleNumero, colonia, municipio, estado, cp) VALUES ('$usenrame', '$password', '$nombre', '$apellidos', '$email', '$genero', '$fechaNacimiento', '$educacion', '$calleNumero', '$colonia', '$municipio', '$estado', '$cp')";
 
         if ($conn->query($sql) === TRUE) {
             $lastId = mysqli_insert_id($conn);
@@ -124,7 +124,7 @@ function registerPanelista ($email, $nombre, $apPaterno, $apMaterno, $genero, $e
     return array('status' => 'DATABASE_ERROR');
 }
 
-function registerPanel ($nombre, $fechaInicio, $fechaFin, $cliente, $creador) {
+function registerPanel ($nombre, $descripcion, $fechaInicio, $fechaFin, $cliente, $creador) {
     $conn = connect();
 
     if ($conn != null) {
@@ -138,7 +138,7 @@ function registerPanel ($nombre, $fechaInicio, $fechaFin, $cliente, $creador) {
             return array('status' => 'RECORD_EXISTS', 'id' => (int)$row['id'], 'nombre' => $row['nombre']);
         }
 
-        $sql = "INSERT INTO Panel (nombre, fechaInicio, fechaFin, cliente, creador) VALUES ('$nombre', '$fechaInicio', '$fechaFin', $cliente, '$creador')";
+        $sql = "INSERT INTO Panel (nombre, decripcion, fechaInicio, fechaFin, cliente, creador) VALUES ('$nombre', '$descripcion', '$fechaInicio', '$fechaFin', $cliente, '$creador')";
 
         if ($conn->query($sql) === TRUE) {
             $lastId = mysqli_insert_id($conn);
@@ -237,13 +237,13 @@ function fetchPanelistas () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, email, nombre, apPaterno, apMaterno, genero, educacion, cuartos, banios, regadera, focos, piso, autos, estudiosProv, estufa, movil, fotoINE, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, edoCivil, estado, municipio FROM Panelista";
+        $sql = "SELECT id, username, nombre, apellidos, email, genero, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, educacion, calleNumero, colonia, municipio, estado, cp FROM Panelista";
         $result = $conn->query($sql);
 
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $panelista = array('id' => (int)$row['id'], 'email' => $row['email'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'genero' => (int)$row['genero'], 'educacion' => $row['educacion'], 'edad' => (int)$row['edad'], 'edoCivil' => (int)$row['edoCivil'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cuartos' => (int)$row['cuartos'], 'banios' => (int)$row['banios'], 'regadera' => (int)$row['regadera'], 'focos' => (int)$row['focos'], 'piso' => (int)$row['piso'], 'autos' => (int)$row['autos'], 'estudiosProv' => (int)$row['estudiosProv'], 'estufa' => (int)$row['estufa'], 'movil' => $row['movil'], 'fotoINE' => $row['fotoINE']);
+            $panelista = array('id' => (int)$row['id'], 'username' => $row['username'], 'nombre' => $row['nombre'].' '.$row['apellidos'], 'email' => $row['email'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'calleNumero' => $row['calleNumero'], 'colonia' => $row['colonia'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cp' => (int)$row['cp']);
             $response[] = $panelista;
         }
 
@@ -470,14 +470,14 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
 }
 
 // -------------------------------
-// Alter
+// Update
 // -------------------------------
 
-function updatePanelista ($id, $email, $nombre, $apPaterno, $apMaterno, $genero, $educacion, $edad, $edoCivil, $estado, $municipio, $cuartos, $banios, $regadera, $focos, $piso, $autos, $estudiosProv, $estufa, $movil, $fotoINE) {
+function updatePanelista ($id, $username, $password, $nombre, $apellidos, $email, $genero, $fechaNacimiento, $educacion, $calleNumero, $colonia, $municipio, $estado, $cp) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, email FROM Panelista WHERE email = '$email'";
+        $sql = "SELECT id, username, email FROM Panelista WHERE username = '$username' OR email = '$email'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -485,11 +485,11 @@ function updatePanelista ($id, $email, $nombre, $apPaterno, $apMaterno, $genero,
 
             if ((int)$row['id'] != $id) {
                 $conn->close();
-                return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'email' => $row['email']);
+                return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'username' => $row['username'], 'email' => $row['email']);
             }
         }
 
-        $sql = "UPDATE Panelista SET email = '$email', nombre = '$nombre', apPaterno = '$apPaterno', apMaterno = '$apMaterno', genero = '$genero', educacion = '$educacion', edad = '$edad', edoCivil = '$edoCivil', estado = '$estado', municipio = '$municipio', cuartos = '$cuartos', banios = '$banios', regadera = '$regadera', focos = '$focos', piso = '$piso', autos = '$autos', estudiosProv = '$estudiosProv', estufa = '$estufa', movil = '$movil', fotoINE = '$fotoINE' WHERE id = '$id'";
+        $sql = "UPDATE Panelista SET username = '$username', password = '$password', nombre = '$nombre', apellidos = '$apellidos', email = '$email', genero = '$genero', fechaNacimiento = '$fechaNacimiento', educacion = '$educacion', calleNumero = '$calleNumero', colonia = '$colonia', municipio = '$municipio', estado = '$estado', cp = '$cp' WHERE id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
             $conn->close();
@@ -533,7 +533,7 @@ function updateUser ($id, $username, $password, $nombre, $apPaterno, $apMaterno,
     return array('status' => 'DATABASE_ERROR');
 }
 
-function updatePanel ($id, $nombre, $fechaInicio, $fechaFin, $cliente) {
+function updatePanel ($id, $nombre, $descripcion, $fechaInicio, $fechaFin, $cliente) {
     $conn = connect();
 
     if ($conn != null) {
@@ -549,7 +549,7 @@ function updatePanel ($id, $nombre, $fechaInicio, $fechaFin, $cliente) {
             }
         }
 
-        $sql = "UPDATE Panel SET nombre = '$nombre', fechaInicio = '$fechaInicio', fechaFin = '$fechaFin', cliente = '$cliente' WHERE id = '$id'";
+        $sql = "UPDATE Panel SET nombre = '$nombre', descripcion = '$descripcion', fechaInicio = '$fechaInicio', fechaFin = '$fechaFin', cliente = '$cliente' WHERE id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
             $conn->close();
