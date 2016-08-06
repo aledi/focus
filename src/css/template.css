@@ -27,6 +27,12 @@ footer{
     clear: both;
 }
 
+textarea{
+    margin-top: 2%;
+    width: 400px;
+    height: 60px;
+}
+
 #container{
     margin-left: 0%;
 }
