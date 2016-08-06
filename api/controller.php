@@ -119,7 +119,7 @@ function signinToDatabase ($tipo) {
         }
 
     } else if ($tipo === 2) {
-        $signinResult = validatePanelistaCredentials($_POST['email'], $_POST['password']);
+        $signinResult = validatePanelistaCredentials($_POST['username'], $_POST['password']);
     }
 
     echo json_encode($signinResult);
