@@ -16,7 +16,6 @@
     	</div>
     </div>
     <div id='loginForm'>
-
     	<form id='formLogin'>
     		<h1> Login </h1>
             <div class='input-wrapper'>
