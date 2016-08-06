@@ -95,7 +95,7 @@ function registerUser ($tipo, $username, $password, $nombre, $apPaterno, $apMate
     return array('status' => 'DATABASE_ERROR');
 }
 
-function registerPanelista ($usenrame, $password, $nombre, $apellidos, $email, $genero, $fechaNacimiento, $educacion, $calleNumero, $colonia, $municipio, $estado, $cp) {
+function registerPanelista ($username, $password, $nombre, $apellidos, $email, $genero, $fechaNacimiento, $educacion, $calleNumero, $colonia, $municipio, $estado, $cp) {
     $conn = connect();
 
     if ($conn != null) {
@@ -473,7 +473,7 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
 // Update
 // -------------------------------
 
-function updatePanelista ($id, $usenrame, $password, $nombre, $apellidos, $email, $genero, $fechaNacimiento, $educacion, $calleNumero, $colonia, $municipio, $estado, $cp) {
+function updatePanelista ($id, $username, $password, $nombre, $apellidos, $email, $genero, $fechaNacimiento, $educacion, $calleNumero, $colonia, $municipio, $estado, $cp) {
     $conn = connect();
 
     if ($conn != null) {
