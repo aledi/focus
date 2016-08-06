@@ -113,7 +113,7 @@ function destroySession () {
 function signinToDatabase ($tipo) {
     if ($tipo === 0) {
         $signinResult = validateWebCredentials($_POST['username'], $_POST['password']);
-        
+
         if($signinResult['status'] === "SUCCESS"){
             startSession($signinResult['id'], $signinResult['tipo'], $signinResult['username'], $signinResult['email'], $signinResult['nombre']);
         }
@@ -127,9 +127,9 @@ function signinToDatabase ($tipo) {
 
 function newPanelista () {
     if (isset($_POST['id'])) {
-        $registrationResult = updatePanelista($_POST['id'], $_POST['username'], $_POST['password'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['email'], $_POST['genero'], $_POST['fechaNacimiento'], $_POST['educacion'], $_POST['calleNumero'], $_POST['colonia'], $_POST['municipio'], $_POST['estado'], $_POST['banios'], $_POST['cp']);
+        $registrationResult = updatePanelista($_POST['id'], $_POST['username'], $_POST['password'], $_POST['nombre'], $_POST['apellidos'], $_POST['email'], $_POST['genero'], $_POST['fechaNacimiento'], $_POST['educacion'], $_POST['calleNumero'], $_POST['colonia'], $_POST['municipio'], $_POST['estado'], $_POST['banios'], $_POST['cp']);
     } else {
-        $registrationResult = registerPanelista($_POST['username'], $_POST['password'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['email'], $_POST['genero'], $_POST['fechaNacimiento'], $_POST['educacion'], $_POST['calleNumero'], $_POST['colonia'], $_POST['municipio'], $_POST['estado'], $_POST['cp']);
+        $registrationResult = registerPanelista($_POST['username'], $_POST['password'], $_POST['nombre'], $_POST['apellidos'], $_POST['email'], $_POST['genero'], $_POST['fechaNacimiento'], $_POST['educacion'], $_POST['calleNumero'], $_POST['colonia'], $_POST['municipio'], $_POST['estado'], $_POST['cp']);
     }
 
     echo json_encode($registrationResult);
