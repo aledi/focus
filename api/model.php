@@ -41,18 +41,18 @@ function validateWebCredentials ($username, $password) {
     return array('status' => 'DATABASE_ERROR');
 }
 
-function validatePanelistaCredentials ($email, $password) {
+function validatePanelistaCredentials ($username, $password) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, email, nombre, apPaterno, apMaterno FROM Panelista WHERE email = '$email' AND password = '$password'";
+        $sql = "SELECT id, username, email, nombre, apellidos FROM Panelista WHERE username = '$username' AND password = '$password'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
             $conn->close();
-            return array('status' => 'SUCCESS', 'id' => (int)$row['id'], 'email' => $row['email'], 'nombre' => $row['nombre']." ".$row['apPaterno']." ".$row['apMaterno']);
+            return array('status' => 'SUCCESS', 'id' => (int)$row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre']." ".$row['apellidos']);
         }
 
         $conn->close();
