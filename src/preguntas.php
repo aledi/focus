@@ -54,7 +54,6 @@
                     </div>
                     <div id="Answers1">
             	        <div class="answer">
-                            <p>Respuesta</p>
                             <textarea class="respuesta1" name="respuesta"></textarea>
                         </div>
                     </div>
