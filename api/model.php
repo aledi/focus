@@ -24,7 +24,7 @@ function validateWebCredentials ($username, $password) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, username, email, nombre, apPaterno, apMaterno, tipo FROM Usuario WHERE username = '$username' AND password = '$password'";
+        $sql = "SELECT id, username, nombre, apPaterno, apMaterno, email, tipo FROM Usuario WHERE username = '$username' AND password = '$password'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -237,13 +237,13 @@ function fetchPanelistas () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, email, nombre, apPaterno, apMaterno, genero, educacion, cuartos, banios, regadera, focos, piso, autos, estudiosProv, estufa, movil, fotoINE, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, edoCivil, estado, municipio FROM Panelista";
+        $sql = "SELECT id, username, nombre, apPaterno, apMaterno, email, genero, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, educacion, calleNumero, colonia, municipio, estado, cp FROM Panelista";
         $result = $conn->query($sql);
 
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $panelista = array('id' => (int)$row['id'], 'email' => $row['email'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'genero' => (int)$row['genero'], 'educacion' => $row['educacion'], 'edad' => (int)$row['edad'], 'edoCivil' => (int)$row['edoCivil'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cuartos' => (int)$row['cuartos'], 'banios' => (int)$row['banios'], 'regadera' => (int)$row['regadera'], 'focos' => (int)$row['focos'], 'piso' => (int)$row['piso'], 'autos' => (int)$row['autos'], 'estudiosProv' => (int)$row['estudiosProv'], 'estufa' => (int)$row['estufa'], 'movil' => $row['movil'], 'fotoINE' => $row['fotoINE']);
+            $panelista = array('id' => (int)$row['id'], 'username' => $row['username'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'email' => (int)$row['email'], 'genero' => $row['genero'], 'edad' => (int)$row['edad'], 'educacion' => $row['educacion'], 'calleNumero' => $row['calleNumero'], 'colonia' => (int)$row['colonia'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cp' => $row['cp']);
             $response[] = $panelista;
         }
 
