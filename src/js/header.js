@@ -2,15 +2,10 @@ function convertData(caso, data){
     switch(caso){
         case 'Genero' :
             return convertGender(data);
-        break;
-
         case 'edoCivil' :
             return convertedoCivil(data);
-        break;
-
         default :
             return 'ERROR';
-        break;
     }
 }
 
@@ -18,43 +13,27 @@ function convertedoCivil(data){
     switch(data){
         case 0 :
             return 'Casado';
-        break;
-
         case 1 :
             return 'Viudo';
-        break;
-
         case 2 :
             return 'Divorciado';
-        break;
-
         case 3 :
             return 'Separado';
-        break;
-
         case 4 :
             return 'Soltero';
-        break;
-
         case 5 :
             return 'Unión Libre';
-        break;
-
         default :
             return 'ERROR';
-        break;
     }
 }
-
 
 function convertGender(data){
     switch(data){
         case 0 :
             return 'Masculino';
-        break;
         case 1 :
             return 'Femenino';
-        break;
     }
 }
 

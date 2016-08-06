@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 28-07-2016 a las 04:12:35
+-- Tiempo de generación: 06-08-2016 a las 20:54:08
 -- Versión del servidor: 5.5.42
 -- Versión de PHP: 7.0.0
 
@@ -26,7 +26,7 @@ CREATE TABLE `Encuesta` (
   `nombre` varchar(50) NOT NULL,
   `fechaInicio` date NOT NULL,
   `fechaFin` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Encuesta`
@@ -46,22 +46,23 @@ INSERT INTO `Encuesta` (`id`, `panel`, `nombre`, `fechaInicio`, `fechaFin`) VALU
 CREATE TABLE `Panel` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
+  `descripcion` text NOT NULL,
   `fechaInicio` date NOT NULL,
   `fechaFin` date NOT NULL,
   `cliente` int(11) NOT NULL,
   `creador` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Panel`
 --
 
-INSERT INTO `Panel` (`id`, `nombre`, `fechaInicio`, `fechaFin`, `cliente`, `creador`) VALUES
-(3, 'Panel Prueba', '2016-07-04', '2016-12-31', 4, 1),
-(4, 'Panel Prueba 2', '2016-07-04', '2016-12-31', 4, 1),
-(8, 'adnsljfn', '2016-01-01', '2016-01-01', 1, 1),
-(9, 'adnsljfna', '2016-01-01', '2016-01-01', 1, 1),
-(10, 'adnsljfna1', '2016-01-01', '2016-01-01', 1, 1);
+INSERT INTO `Panel` (`id`, `nombre`, `descripcion`, `fechaInicio`, `fechaFin`, `cliente`, `creador`) VALUES
+(3, 'Panel Prueba', '', '2016-07-04', '2016-12-31', 4, 1),
+(4, 'Panel Prueba 2', '', '2016-07-04', '2016-12-31', 4, 1),
+(8, 'adnsljfn', '', '2016-01-01', '2016-01-01', 1, 1),
+(9, 'adnsljfna', '', '2016-01-01', '2016-01-01', 1, 1),
+(10, 'adnsljfna1', '', '2016-01-01', '2016-01-01', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -71,37 +72,20 @@ INSERT INTO `Panel` (`id`, `nombre`, `fechaInicio`, `fechaFin`, `cliente`, `crea
 
 CREATE TABLE `Panelista` (
   `id` int(11) NOT NULL,
-  `email` varchar(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
   `password` varchar(25) NOT NULL,
   `nombre` varchar(25) NOT NULL,
-  `apPaterno` varchar(25) NOT NULL,
-  `apMaterno` varchar(25) NOT NULL,
+  `apellidos` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
   `genero` int(11) NOT NULL,
-  `educacion` int(11) NOT NULL,
   `fechaNacimiento` date NOT NULL,
-  `edoCivil` int(11) NOT NULL,
-  `estado` varchar(25) NOT NULL,
+  `educacion` int(11) NOT NULL,
+  `calleNumero` varchar(50) NOT NULL,
+  `colonia` varchar(50) NOT NULL,
   `municipio` varchar(25) NOT NULL,
-  `cuartos` int(11) NOT NULL,
-  `banios` int(11) NOT NULL,
-  `regadera` tinyint(1) NOT NULL,
-  `focos` int(11) NOT NULL,
-  `piso` int(11) NOT NULL,
-  `autos` int(11) NOT NULL,
-  `estudiosProv` int(11) NOT NULL,
-  `estufa` int(11) NOT NULL,
-  `movil` int(11) NOT NULL,
-  `fotoINE` longtext NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `Panelista`
---
-
-INSERT INTO `Panelista` (`id`, `email`, `password`, `nombre`, `apPaterno`, `apMaterno`, `genero`, `educacion`, `fechaNacimiento`, `edoCivil`, `estado`, `municipio`, `cuartos`, `banios`, `regadera`, `focos`, `piso`, `autos`, `estudiosProv`, `estufa`, `movil`, `fotoINE`) VALUES
-(2, 'ecristerna@panelista.com', 'password', 'Eduardo', 'Cristerna', 'Panelista', 0, 4, '1994-09-04', 1, 'Nuevo Leon', 'Monterrey', 4, 4, 0, 20, 1, 3, 7, 0, 2147483647, ' '),
-(3, 'ecristerna@panelista.com', 'password', 'Eduardo', 'Cristerna', 'Panelista', 0, 4, '1994-09-04', 1, 'Nuevo Leon', 'Monterrey', 4, 4, 0, 20, 1, 3, 7, 0, 2147483647, ' '),
-(4, 'ecristerna@panelista.com2', 'password', 'Eduardo', 'Cristerna', 'Panelista', 1, 4, '1994-07-28', 1, 'Nuevo Leon', 'Monterrey', 4, 4, 0, 20, 1, 3, 7, 0, 2147483647, ' ');
+  `estado` varchar(25) NOT NULL,
+  `cp` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -113,15 +97,7 @@ CREATE TABLE `PanelistaEnPanel` (
   `id` int(11) NOT NULL,
   `panelista` int(11) NOT NULL,
   `panel` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `PanelistaEnPanel`
---
-
-INSERT INTO `PanelistaEnPanel` (`id`, `panelista`, `panel`) VALUES
-(2, 2, 4),
-(21, 2, 3);
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -147,7 +123,7 @@ CREATE TABLE `Preguntas` (
   `op8` text NOT NULL,
   `op9` text NOT NULL,
   `op10` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Preguntas`
@@ -168,14 +144,7 @@ CREATE TABLE `Respuestas` (
   `encuesta` int(11) NOT NULL,
   `panelista` int(11) NOT NULL,
   `respuestas` longtext NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `Respuestas`
---
-
-INSERT INTO `Respuestas` (`id`, `encuesta`, `panelista`, `respuestas`) VALUES
-(1, 2, 2, 'respuestas');
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -192,7 +161,7 @@ CREATE TABLE `Usuario` (
   `apMaterno` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `tipo` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Usuario`
