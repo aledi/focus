@@ -124,7 +124,7 @@ function registerPanelista ($usenrame, $password, $nombre, $apPaterno, $apMatern
     return array('status' => 'DATABASE_ERROR');
 }
 
-function registerPanel ($nombre, $fechaInicio, $fechaFin, $cliente, $creador) {
+function registerPanel ($nombre, $descripcion, $fechaInicio, $fechaFin, $cliente, $creador) {
     $conn = connect();
 
     if ($conn != null) {
@@ -138,7 +138,7 @@ function registerPanel ($nombre, $fechaInicio, $fechaFin, $cliente, $creador) {
             return array('status' => 'RECORD_EXISTS', 'id' => (int)$row['id'], 'nombre' => $row['nombre']);
         }
 
-        $sql = "INSERT INTO Panel (nombre, fechaInicio, fechaFin, cliente, creador) VALUES ('$nombre', '$fechaInicio', '$fechaFin', $cliente, '$creador')";
+        $sql = "INSERT INTO Panel (nombre, decripcion, fechaInicio, fechaFin, cliente, creador) VALUES ('$nombre', '$descripcion', '$fechaInicio', '$fechaFin', $cliente, '$creador')";
 
         if ($conn->query($sql) === TRUE) {
             $lastId = mysqli_insert_id($conn);
@@ -533,7 +533,7 @@ function updateUser ($id, $username, $password, $nombre, $apPaterno, $apMaterno,
     return array('status' => 'DATABASE_ERROR');
 }
 
-function updatePanel ($id, $nombre, $fechaInicio, $fechaFin, $cliente) {
+function updatePanel ($id, $nombre, $descripcion, $fechaInicio, $fechaFin, $cliente) {
     $conn = connect();
 
     if ($conn != null) {
@@ -549,7 +549,7 @@ function updatePanel ($id, $nombre, $fechaInicio, $fechaFin, $cliente) {
             }
         }
 
-        $sql = "UPDATE Panel SET nombre = '$nombre', fechaInicio = '$fechaInicio', fechaFin = '$fechaFin', cliente = '$cliente' WHERE id = '$id'";
+        $sql = "UPDATE Panel SET nombre = '$nombre', descripcion = '$descripcion', fechaInicio = '$fechaInicio', fechaFin = '$fechaFin', cliente = '$cliente' WHERE id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
             $conn->close();

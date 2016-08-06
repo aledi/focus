@@ -147,10 +147,10 @@ function newUser ($tipo) {
 
 function newPanel () {
     if (isset($_POST['id'])) {
-        $registrationResult = updatePanel($_POST['id'], $_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente']);
+        $registrationResult = updatePanel($_POST['id'], $_POST['nombre'], $_POST['descripcion'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente']);
     } else {
         session_start();
-        $registrationResult = registerPanel($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente'], $_SESSION['id']);
+        $registrationResult = registerPanel($_POST['nombre'], $_POST['descripcion'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente'], $_SESSION['id']);
     }
 
     echo json_encode($registrationResult);
