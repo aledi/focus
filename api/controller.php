@@ -54,6 +54,9 @@ switch ($action) {
     case 'SET_PREGUNTAS_ENCUESTA':
         setPreguntasEncuesta();
         break;
+    case 'SAVE_RESPUESTAS':
+        setRespuestas();
+        break;
     case 'DELETE_ADMIN':
         deleteRecord('Usuario');
         break;
@@ -210,6 +213,12 @@ function setPanelistasPanel () {
 
 function setPreguntasEncuesta () {
     $saveResult = savePreguntasEncuesta($_POST['encuesta'], $_POST['preguntas']);
+
+    echo json_encode($saveResult);
+}
+
+function setRespuestas () {
+    $saveResult = saveRespuestas($_POST['encuesta'], $_POST['panelista'], $_POST['respuestas']);
 
     echo json_encode($saveResult);
 }

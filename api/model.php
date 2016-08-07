@@ -475,6 +475,24 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
     return array('status' => 'DATABASE_ERROR');
 }
 
+function saveRespuestas ($encuesta, $panelista, $respuestas) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "INSERT INTO Respuestas (encuesta, panelista, respuestas) VALUES ('$encuesta', '$panelista', '$respuestas')";
+
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
+        }
+
+        $conn->close();
+        return array('status' => 'ERROR');
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 // -------------------------------
 // Update
 // -------------------------------
