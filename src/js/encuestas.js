@@ -12,7 +12,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
 
-            var currentHTML = "";
+            var currentHTML = '';
                 currentHTML += '<tr>';
                     currentHTML += '<th></th>';
                     currentHTML += '<th>Nombre</th>';
@@ -23,19 +23,19 @@ $(document).on('ready', function () {
                 currentHTML += '</tr>';
                 for(var i = 0; i < obj.results.length; i++) {
                     currentHTML += '<tr value="' + obj.results[i].id +'">';
-                        currentHTML += "<td></td>";
-                        currentHTML += "<td>" + obj.results[i].nombre +"</td>";
-                        currentHTML += "<td>" + obj.results[i].fechaInicio +"</td>";
-                        currentHTML += "<td>" + obj.results[i].fechaFin +"</td>";
-                        currentHTML += "<td>" + obj.results[i].cliente +"</td>";
+                        currentHTML += '<td></td>';
+                        currentHTML += '<td>' + obj.results[i].nombre +'</td>';
+                        currentHTML += '<td>' + obj.results[i].fechaInicio +'</td>';
+                        currentHTML += '<td>' + obj.results[i].fechaFin +'</td>';
+                        currentHTML += '<td>' + obj.results[i].cliente +'</td>';
                          currentHTML += '<td><input type="radio" value=' + obj.results[i].id + ' name="id"></td>';
-                     currentHTML += "</tr>";
-                    $("#allPanels").append(currentHTML);
-                    currentHTML = "";
+                     currentHTML += '</tr>';
+                    $('#allPanels').append(currentHTML);
+                    currentHTML = '';
                 }
             },
             error: function (error) {
-                 $('#feedback').html("Error cargando los clientes.");
+                 $('#feedback').html('Error cargando los clientes.');
             }
         });
     }, 500);
@@ -52,7 +52,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
 
-            var currentHTML = "";
+            var currentHTML = '';
                 currentHTML += '<tr>';
                     currentHTML += '<th></th>';
                     currentHTML += '<th>Nombre</th>';
@@ -63,20 +63,20 @@ $(document).on('ready', function () {
                 currentHTML += '</tr>';
                 for(var i = 0; i < obj.results.length; i++) {
                     currentHTML += '<tr value="' + obj.results[i].id +'">';
-                        currentHTML += "<td></td>";
-                        currentHTML += '<td>' + obj.results[i].nombre +"</td>";
-                        currentHTML += "<td>" + obj.results[i].fechaInicio +"</td>";
-                        currentHTML += "<td>" + obj.results[i].fechaFin +"</td>";
-                        currentHTML += "<td>" + obj.results[i].panel +"</td>";
-                        currentHTML += "<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>"
-                        currentHTML += "<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>";
-                    currentHTML += "</tr>";
-                    $("#allSurveys").append(currentHTML);
-                    currentHTML = "";
+                        currentHTML += '<td></td>';
+                        currentHTML += '<td><a href="preguntas.php?id='+ obj.results[i].id +'">' + obj.results[i].nombre +'</a></td>';
+                        currentHTML += '<td>' + obj.results[i].fechaInicio +'</td>';
+                        currentHTML += '<td>' + obj.results[i].fechaFin +'</td>';
+                        currentHTML += '<td>' + obj.results[i].panel +'</td>';
+                        currentHTML += '<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>'
+                        currentHTML += '<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>';
+                    currentHTML += '</tr>';
+                    $('#allSurveys').append(currentHTML);
+                    currentHTML = '';
                 }
             },
             error: function (error) {
-                 $('#feedback').html("Error cargando los clientes.");
+                 $('#feedback').html('Error cargando los clientes.');
             }
         });
     }, 500);
@@ -90,7 +90,7 @@ $(document).on('ready', function () {
         var nombre = $('#nombre').val();
         var fechaInicio = $('#dateStarts').val();
         var fechaFin = $('#dateEnds').val();
-        var panel = $("input[name=id]:checked").val();
+        var panel = $('input[name=id]:checked').val();
 
         if (nombre === '' || fechaInicio === '' || fechaFin === '' || panel === '') {
             $('#feedback').html('Favor de llenar todos los campos');
@@ -125,11 +125,11 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                alert("Encuesta creada exitosamente.");
-
+                alert('Encuesta creada exitosamente.');
+                location.replace('preguntas.php?id=' + obj.id);
             },
             error: function (error) {
-                 $('#feedback').html("Encuesta no añadida, ha ocurrido un error.");
+                 $('#feedback').html('Encuesta no añadida, ha ocurrido un error.');
             }
         });
     });
