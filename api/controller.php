@@ -54,6 +54,9 @@ switch ($action) {
     case 'SET_PREGUNTAS_ENCUESTA':
         setPreguntasEncuesta();
         break;
+    case 'SAVE_RESPUESTAS':
+        setRespuestas();
+        break;
     case 'DELETE_ADMIN':
         deleteRecord('Usuario');
         break;
@@ -214,6 +217,12 @@ function setPreguntasEncuesta () {
     echo json_encode($saveResult);
 }
 
+function setRespuestas () {
+    $saveResult = saveRespuestas($_POST['encuesta'], $_POST['panelista'], $_POST['respuestas']);
+
+    echo json_encode($saveResult);
+}
+
 function deleteRecord ($table) {
     $deleteResult = removeRecord($_POST['id'], $table);
 
@@ -228,8 +237,55 @@ function verifyActiveSession () {
 
 function logOut ()  {
     destroySession();
-
+    sendPushNotification("log out", "6ba6306858418726803cc0dfe96c2bcfd6a6c6b4d814ed4da9b52c4a30e3961b");
     echo json_encode(array('status' => 'SUCCESS'));
+}
+
+function sendPushNotification ($message, $deviceToken) {
+    // Put your private key's passphrase here:
+    $passphrase = '';
+
+    $ctx = stream_context_create();
+    stream_context_set_option($ctx, 'ssl', 'local_cert', 'focus-apns.pem');
+    stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+
+    // Open a connection to the APNS server
+    $fp = stream_socket_client(
+        'ssl://gateway.sandbox.push.apple.com:2195',
+        $err,
+        $errstr,
+        60,
+        STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT,
+        $ctx
+    );
+
+    if (!$fp)
+      exit("Failed to connect: $err $errstr" . PHP_EOL);
+
+    echo 'Connected to APNS' . PHP_EOL;
+
+    // Create the payload body
+    $body['aps'] = array(
+      'alert' => $message,
+      'sound' => 'default'
+    );
+    
+    // Encode the payload as JSON
+    $payload = json_encode($body);
+
+    // Build the binary notification
+    $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
+
+    // Send it to the server
+    $result = fwrite($fp, $msg, strlen($msg));
+
+    if (!$result)
+      echo 'Message not delivered' . PHP_EOL;
+    else
+      echo 'Message successfully delivered' . PHP_EOL;
+
+    // Close the connection to the server
+    fclose($fp);
 }
 
 ?>

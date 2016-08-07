@@ -7,7 +7,6 @@ function getCheckedCheckboxesFor(checkboxName) {
 }
 
 $(document).on('ready', function () {
-
     var flagLoadingPanelist = 0;
     event.preventDefault();
 
@@ -31,9 +30,7 @@ $(document).on('ready', function () {
                 currentHTML += '<tr>';
                     currentHTML += '<th></th>';
                     currentHTML += '<th>Nombre</th>';
-                    currentHTML += '<th>Género</th>';
                     currentHTML += '<th>Edad</th>';
-                    currentHTML += '<th>Estado Civil</th>';
                     currentHTML += '<th>Municipio</th>';
                     currentHTML += '<th>Estado</th>';
                     currentHTML += '<th>Selección</th>';
@@ -42,9 +39,7 @@ $(document).on('ready', function () {
                     currentHTML += '<tr value="' + obj.results[i].id +'">';
                         currentHTML += "<td></td>";
                         currentHTML += "<td>" + obj.results[i].nombre +"</td>";
-                        currentHTML += "<td>" + convertData('Genero', obj.results[i].genero) +"</td>";
                         currentHTML += "<td>" + obj.results[i].edad +"</td>";
-                        currentHTML += "<td>" + convertData('edoCivil', obj.results[i].edoCivil) +"</td>";
                         currentHTML += "<td>" + obj.results[i].municipio +"</td>";
                         currentHTML += "<td>" + obj.results[i].estado +"</td>";
 

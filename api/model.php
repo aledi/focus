@@ -138,7 +138,7 @@ function registerPanel ($nombre, $descripcion, $fechaInicio, $fechaFin, $cliente
             return array('status' => 'RECORD_EXISTS', 'id' => (int)$row['id'], 'nombre' => $row['nombre']);
         }
 
-        $sql = "INSERT INTO Panel (nombre, decripcion, fechaInicio, fechaFin, cliente, creador) VALUES ('$nombre', '$descripcion', '$fechaInicio', '$fechaFin', $cliente, '$creador')";
+        $sql = "INSERT INTO Panel (nombre, descripcion, fechaInicio, fechaFin, cliente, creador) VALUES ('$nombre', '$descripcion', '$fechaInicio', '$fechaFin', $cliente, '$creador')";
 
         if ($conn->query($sql) === TRUE) {
             $lastId = mysqli_insert_id($conn);
@@ -284,7 +284,7 @@ function fetchPanelistasPanel ($panel) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, apPaterno, apMaterno, genero, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, edoCivil, estado, municipio FROM Panelista";
+        $sql = "SELECT id, nombre, apellidos, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, estado, municipio FROM Panelista";
         $result = $conn->query($sql);
 
         $response = array();
@@ -299,7 +299,7 @@ function fetchPanelistasPanel ($panel) {
                 $checked = TRUE;
             }
 
-            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'].' '.$row['apPaterno'].' '.$row['apMaterno'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'edoCivil' => (int)$row['edoCivil'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'checked' => $checked);
+            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'].' '.$row['apellidos'], 'edad' => (int)$row['edad'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'checked' => $checked);
             $response[] = $panelista;
         }
 
@@ -335,14 +335,14 @@ function fetchMobileData ($panelista) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT Panel.id, nombre, fechaInicio, fechaFin FROM Panel INNER JOIN PanelistaEnPanel ON Panel.id = PanelistaEnPanel.panel WHERE PanelistaEnPanel.panelista = '$panelista'";
+        $sql = "SELECT Panel.id, nombre, fechaInicio, fechaFin FROM Panel INNER JOIN PanelistaEnPanel ON Panel.id = PanelistaEnPanel.panel WHERE Panel.fechaInicio <= CURDATE() AND Panel.fechaFin >= CURDATE() AND PanelistaEnPanel.panelista = '$panelista'";
         $result = $conn->query($sql);
 
         $paneles = array();
 
         while ($row = $result->fetch_assoc()) {
             $panelId = $row['id'];
-            $sql2 = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE panel = '$panelId'";
+            $sql2 = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE panel = '$panelId' AND fechaInicio <= CURDATE() AND fechaFin >= CURDATE()";
             $result2 = $conn->query($sql2);
 
             $encuestas = array();
@@ -355,7 +355,9 @@ function fetchMobileData ($panelista) {
                 $preguntas = array();
 
                 while ($row3 = $result3->fetch_assoc()) {
-                    $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'op1' => $row3['op1'], 'op2' => $row3['op2'], 'op3' => $row3['op3'], 'op4' => $row3['op4'], 'op5' => $row3['op5'], 'op6' => $row3['op6'], 'op7' => $row3['op7'], 'op8' => $row3['op8'], 'op9' => $row3['op9'], 'op10' => $row3['op10']);
+                    $opciones = array($row3['op1'], $row3['op2'], $row3['op3'], $row3['op4'], $row3['op5'], $row3['op6'], $row3['op7'], $row3['op8'], $row3['op9'], $row3['op10']);
+                    $opciones = array_filter($opciones, 'emptyString');
+                    $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'opciones' => $opciones);
                     $preguntas[] = $pregunta;
                 }
 
@@ -381,6 +383,10 @@ function fetchMobileData ($panelista) {
     }
 
     return array('status' => 'DATABASE_ERROR');
+}
+
+function emptyString ($string) {
+    return($string !== '');
 }
 
 // -------------------------------
@@ -464,6 +470,24 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
 
         $conn->close();
         return array('status' => 'SUCCESS', 'inserts' => $inserts, 'errors' => $errors, 'deletes' => $deletes);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function saveRespuestas ($encuesta, $panelista, $respuestas) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "INSERT INTO Respuestas (encuesta, panelista, respuestas) VALUES ('$encuesta', '$panelista', '$respuestas')";
+
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
+        }
+
+        $conn->close();
+        return array('status' => 'ERROR');
     }
 
     return array('status' => 'DATABASE_ERROR');

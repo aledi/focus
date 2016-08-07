@@ -42,35 +42,27 @@ $(document).on('ready', function () {
         idPanel = idPanel.substring(3);
 
         var nombre = $('#panelName').val();
+        var descripcion = $('#descripcion').val();
         var fechaInicio = $('#dateStarts').val();
         var fechaFin = $('#dateEnds').val();
         var cliente = $("input[name=id]:checked").val();
 
-        if (nombre === '' || fechaInicio === '' || fechaFin === '' || cliente === '') {
+        if (nombre === '' || fechaInicio === '' || fechaFin === '' || typeof cliente === "undefined") {
             $('#feedback').html('Favor de llenar todos los campos');
-
             return;
         }
 
-        if(idPanel == ''){
-            console.log(idPanel);
-            var parameters = {
-                'action': 'ALTA_PANEL',
-                'nombre': nombre,
-                'fechaInicio': fechaInicio,
-                'fechaFin': fechaFin,
-                'cliente' : cliente
-            };
-        }
-        else {
-            var parameters = {
-                'action': 'ALTA_PANEL',
-                'nombre': nombre,
-                'fechaInicio': fechaInicio,
-                'fechaFin': fechaFin,
-                'cliente' : cliente,
-                'id' : idPanel
-            };
+        var parameters = {
+            'action': 'ALTA_PANEL',
+            'nombre': nombre,
+            'descripcion' : descripcion,
+            'fechaInicio': fechaInicio,
+            'fechaFin': fechaFin,
+            'cliente' : cliente
+        };
+
+        if (idPanel != '') {
+            parameters['id'] = idPanel;
         }
 
         $.ajax({
@@ -79,8 +71,12 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                alert("Panel creado exitosamente.");
-                location.replace("liga-panel-panelista.php?id=" + obj.id);
+                if (obj.status == 'SUCCESS') {
+                    alert("Panel creado exitosamente.");
+                    location.replace("liga-panel-panelista.php?id=" + obj.id);
+                } else {
+                    $('#feedback').html("Panel no añadido, ha ocurrido un errorrr.");
+                }
             },
             error: function (error) {
                  $('#feedback').html("Panel no añadido, ha ocurrido un error.");
