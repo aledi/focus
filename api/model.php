@@ -479,13 +479,13 @@ function saveRespuestas ($encuesta, $panelista, $respuestas) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "INSERT INTO Preguntas (encuesta, tipo, numPregunta, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$op1', '$op2', '$op3', '$op4', '$op5', '$op6', '$op7', '$op8', '$op9', '$op10')";
+        $sql = "INSERT INTO Respuestas (encuesta, panelista, respuestas) VALUES ('$encuesta', '$panelista', '$respuestas')";
 
         if ($conn->query($sql) === TRUE) {
             $conn->close();
             return array('status' => 'SUCCESS');
         }
-        
+
         $conn->close();
         return array('status' => 'ERROR');
     }
