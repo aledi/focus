@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-08-2016 a las 19:48:52
+-- Tiempo de generación: 08-08-2016 a las 05:02:40
 -- Versión del servidor: 5.5.42
 -- Versión de PHP: 7.0.0
 
@@ -26,14 +26,14 @@ CREATE TABLE `Encuesta` (
   `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `fechaInicio` date NOT NULL,
   `fechaFin` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Encuesta`
 --
 
 INSERT INTO `Encuesta` (`id`, `panel`, `nombre`, `fechaInicio`, `fechaFin`) VALUES
-(4, 11, 'Encuesta Demo MZ', '2016-08-06', '2016-08-07');
+(1, 1, 'Encuesta Demo MZ', '2016-08-06', '2016-08-07');
 
 -- --------------------------------------------------------
 
@@ -49,14 +49,14 @@ CREATE TABLE `Panel` (
   `fechaFin` date NOT NULL,
   `cliente` int(11) NOT NULL,
   `creador` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Panel`
 --
 
 INSERT INTO `Panel` (`id`, `nombre`, `descripcion`, `fechaInicio`, `fechaFin`, `cliente`, `creador`) VALUES
-(11, 'Margarita Zavala', '', '2016-08-06', '2016-08-31', 7, 1);
+(1, 'Margarita Zavala', '', '2016-08-06', '2016-08-31', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -497,14 +497,14 @@ CREATE TABLE `PanelistaEnPanel` (
   `id` int(11) NOT NULL,
   `panelista` int(11) NOT NULL,
   `panel` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `PanelistaEnPanel`
 --
 
 INSERT INTO `PanelistaEnPanel` (`id`, `panelista`, `panel`) VALUES
-(23, 1, 11);
+(1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -530,19 +530,19 @@ CREATE TABLE `Preguntas` (
   `op8` text COLLATE utf8_spanish_ci NOT NULL,
   `op9` text COLLATE utf8_spanish_ci NOT NULL,
   `op10` text COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Preguntas`
 --
 
 INSERT INTO `Preguntas` (`id`, `encuesta`, `tipo`, `numPregunta`, `pregunta`, `video`, `imagen`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`) VALUES
-(41, 4, 1, 1, 'Â¿QuÃ© cosas ha escuchado recientemente de Margarita Zavala?', '', '', '', '', '', '', '', '', '', '', '', ''),
-(42, 4, 2, 2, 'Â¿Su opiniÃ³n sobre Margarita Zavala es?', '', '', 'Positiva', 'Negativa', 'Neutra', '', '', '', '', '', '', ''),
-(43, 4, 3, 3, 'Â¿Conoce la asociaciÃ³n que promueve Margarita Zavala?', '', '', 'SÃ­', 'No', '', '', '', '', '', '', '', ''),
-(44, 4, 2, 4, 'Â¿Sabe usted quÃ© promueve dicha asociaciÃ³n?', '', '', 'SÃ­', 'No', '', '', '', '', '', '', '', ''),
-(45, 4, 2, 5, 'DespuÃ©s de ver el video, su opiniÃ³n sobre MZ...', '', '', 'MejorÃ³', 'EmpeorÃ³', 'Sigue igual', '', '', '', '', '', '', ''),
-(46, 4, 2, 6, 'Â¿Cree usted que tiene posibilidades para ser Presidenta de MÃ©xico?', '', '', 'SÃ­', 'No', 'AÃºn es muy pronto para dar una opiniÃ³n', '', '', '', '', '', '', '');
+(1, 1, 1, 1, 'Â¿QuÃ© cosas ha escuchado recientemente de Margarita Zavala?', '', '', '', '', '', '', '', '', '', '', '', ''),
+(2, 1, 2, 2, 'Â¿Su opiniÃ³n sobre Margarita Zavala es?', '', '', 'Positiva', 'Negativa', 'Neutra', '', '', '', '', '', '', ''),
+(3, 1, 3, 3, 'Â¿Conoce la asociaciÃ³n que promueve Margarita Zavala?', '', '', 'SÃ­', 'No', '', '', '', '', '', '', '', ''),
+(4, 1, 2, 4, 'Â¿Sabe usted quÃ© promueve dicha asociaciÃ³n?', '', '', 'SÃ­', 'No', '', '', '', '', '', '', '', ''),
+(5, 1, 2, 5, 'DespuÃ©s de ver el video, su opiniÃ³n sobre MZ...', '', '', 'MejorÃ³', 'EmpeorÃ³', 'Sigue igual', '', '', '', '', '', '', ''),
+(6, 1, 2, 6, 'Â¿Cree usted que tiene posibilidades para ser Presidenta de MÃ©xico?', '', '', 'SÃ­', 'No', 'AÃºn es muy pronto para dar una opiniÃ³n', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -555,7 +555,7 @@ CREATE TABLE `Respuestas` (
   `encuesta` int(11) NOT NULL,
   `panelista` int(11) NOT NULL,
   `respuestas` longtext COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -572,7 +572,7 @@ CREATE TABLE `Usuario` (
   `apMaterno` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `email` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `tipo` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Usuario`
@@ -580,7 +580,7 @@ CREATE TABLE `Usuario` (
 
 INSERT INTO `Usuario` (`id`, `username`, `password`, `nombre`, `apPaterno`, `apMaterno`, `email`, `tipo`) VALUES
 (1, 'admin', 'admin', 'Administrador', '', '', '', 0),
-(7, 'mzavala', 'pass', 'Margarita', 'Zavala', ' ', 'mzavala@pan.com', 1);
+(2, 'mzavala', 'pass', 'Margarita', 'Zavala', ' ', 'mzavala@pan.com', 1);
 
 --
 -- Índices para tablas volcadas
@@ -645,12 +645,12 @@ ALTER TABLE `Usuario`
 -- AUTO_INCREMENT de la tabla `Encuesta`
 --
 ALTER TABLE `Encuesta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `Panel`
 --
 ALTER TABLE `Panel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `Panelista`
 --
@@ -660,22 +660,22 @@ ALTER TABLE `Panelista`
 -- AUTO_INCREMENT de la tabla `PanelistaEnPanel`
 --
 ALTER TABLE `PanelistaEnPanel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `Preguntas`
 --
 ALTER TABLE `Preguntas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `Respuestas`
 --
 ALTER TABLE `Respuestas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `Usuario`
 --
 ALTER TABLE `Usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- Restricciones para tablas volcadas
 --
