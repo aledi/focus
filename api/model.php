@@ -171,8 +171,18 @@ function registerEncuesta ($nombre, $fechaInicio, $fechaFin, $panel) {
 
         if ($conn->query($sql) === TRUE) {
             $lastId = mysqli_insert_id($conn);
+
+            $tokens = array();
+
+            $sql2 = "SELECT deviceToken FROM Panelista INNER JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = '$panel' AND Panelista.deviceToken != ''";
+
+            $result = $conn->query($sql2);
+            while ($row = $result->fetch_assoc()) {
+                array_push($tokens, $row['deviceToken']);
+            }
+
             $conn->close();
-            return array('status' => 'SUCCESS', 'id' => $lastId);
+            return array('status' => 'SUCCESS', 'id' => $lastId, 'deviceTokens' => $tokens);
         }
 
         $conn->close();
@@ -407,20 +417,28 @@ function savePanelistasPanel ($panel, $panelistas) {
         $sql = "DELETE FROM PanelistaEnPanel WHERE panel = '$panel'";
         $result = $conn->query($sql);
 
+        $tokens = array();
+
         foreach ($panelistas as &$panelista) {
             $sql = "INSERT INTO PanelistaEnPanel (panelista, panel) VALUES ('$panelista', '$panel')";
+            $sql2 = "SELECT deviceToken FROM Panelista WHERE id = '$panelista' AND deviceToken != ''";
 
             if ($conn->query($sql) === TRUE) {
                 $inserts = $inserts + 1;
             } else {
                 $errors = $errors + 1;
             }
+
+            $result = $conn->query($sql2);
+            if ($row = $result->fetch_assoc()) {
+                array_push($tokens, $row['deviceToken']);
+            }
         }
 
         $deletes = $deletes - $errors - $inserts;
 
         $conn->close();
-        return array('status' => 'SUCCESS', 'inserts' => $inserts, 'errors' => $errors, 'deletes' => $deletes);
+        return array('status' => 'SUCCESS', 'inserts' => $inserts, 'errors' => $errors, 'deletes' => $deletes, 'deviceTokens' => $tokens);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -626,6 +644,46 @@ function removeRecord ($id, $table) {
 
     if ($conn != null) {
         $sql = "DELETE FROM $table WHERE id = '$id'";
+
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
+        }
+
+        $conn->close();
+        return array('status' => 'ERROR');
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+// -------------------------------
+// Devices
+// -------------------------------
+
+function registerDeviceToken ($id, $token, $type) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "UPDATE Panelista SET deviceToken = '$token', deviceType = '$type' WHERE id = '$id'";
+
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
+        }
+
+        $conn->close();
+        return array('status' => 'ERROR');
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function unregisterDeviceToken ($id) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "UPDATE Panelista SET deviceToken = '', deviceType = '' WHERE id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
             $conn->close();
