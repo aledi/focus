@@ -25,7 +25,7 @@
 
 		<div id='tab-agregarPanelista' class='tab-content current'>
 			<div class='formHeader'>
-				<h2>Agregar Panelista</h2>
+				<h2 id='headerTitle'>Agregar Panelista</h2>
 			</div>
             <div id='nombre_panelista'>
 	            <p>Nombre(s)</p>

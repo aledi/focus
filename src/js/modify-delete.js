@@ -1,4 +1,5 @@
 $(document).on('ready', function () {
+
     $('#allUsers').on('click','.deleteButton', function(){
         var parameters = {
             'action': 'DELETE_CLIENTE',
@@ -22,6 +23,8 @@ $(document).on('ready', function () {
 
     $('#allUsers').on('click','.modifyButton', function () {
         var idUser = $(this).parent().attr('value');
+
+        $('#headerTitle').text('Modificar Usuario');
 
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
@@ -92,6 +95,8 @@ $(document).on('ready', function () {
         $('ul.tabs li').first().addClass('current');
         $("#tab-agregarAdministrador").addClass('current');
 
+        $('#headerTitle').text('Modificar Administrador');
+
         var parameters = {
             'action': 'GET_ADMINS',
             'id': idAdministador
@@ -154,6 +159,9 @@ $(document).on('ready', function () {
 
         $('ul.tabs li').first().addClass('current');
         $("#tab-agregarPanelista").addClass('current');
+
+        $('#headerTitle').text('Modificar Panelista');
+
 
         var parameters = {
             'action': 'GET_PANELISTAS',
@@ -223,6 +231,9 @@ $(document).on('ready', function () {
         $('ul.tabs li').first().addClass('current');
         $("#tab-agregarPanel").addClass('current');
 
+        $('#headerTitle').text('Modificar Panel');
+
+
         var parameters = {
             'action': 'GET_PANELES',
             'id': idPanel
@@ -282,6 +293,8 @@ $(document).on('ready', function () {
 
         $('ul.tabs li').first().addClass('current');
         $("#tab-agregarEncuesta").addClass('current');
+
+        $('#headerTitle').text('Modificar Encuesta');
 
         var parameters = {
             'action': 'GET_ENCUESTAS',

@@ -25,7 +25,7 @@
 
 		<div id="tab-agregarUsuario" class="tab-content current">
 			<div class="formHeader">
-				<h2>Agregar Cliente</h2>
+				<h2 id='headerTitle'>Agregar Cliente</h2>
 			</div>
 			<div id="emailInput">
 	            <p>1. Cuenta de correo electrónico:</p>

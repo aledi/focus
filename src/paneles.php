@@ -25,7 +25,7 @@
 
 		<div id='tab-agregarPanel' class='tab-content current'>
 			<div class='formHeader'>
-				<h2>Agregar Panel</h2>
+				<h2 id='headerTitle'>Agregar Panel</h2>
 			</div>
 			<div id='panelInput'>
                 <p>Nombre del Panel:</p>
