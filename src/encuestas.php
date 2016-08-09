@@ -26,7 +26,7 @@
 		
 		<div id="tab-agregarEncuesta" class="tab-content current">
 			<div class="formHeader">
-				<h2>Agregar Encuesta</h2>
+				<h2 id='headerTitle'>Agregar Encuesta</h2>
 			</div>
 			<div id="emailInput">
 	            <p>1. Nombre de Encuesta:</p>

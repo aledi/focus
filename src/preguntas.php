@@ -25,7 +25,7 @@
 		
 		<div id="tab-agregarEncuesta" class="tab-content current">
 			<div class="formHeader">
-				<h2>Ligar Pregunta</h2>
+				<h2 id='headerTitle'>Ligar Pregunta</h2>
 			</div>
             <div id="questions">
                 <div id="1" class="questionForm">

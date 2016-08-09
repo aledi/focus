@@ -25,7 +25,7 @@
 
 		<div id="tab-agregarAdministrador" class="tab-content current">
 			<div class="formHeader">
-                <h2>Agregar Administrador</h2>
+                <h2 id='headerTitle'>Agregar Administrador</h2>
             </div>
              <div id="emailInput">
                 <p>1. Cuenta de correo electrónico:</p>
