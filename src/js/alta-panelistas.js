@@ -231,13 +231,12 @@ $(document).on('ready', function () {
             data: {'action': 'GET_PANELISTAS'},
             dataType: 'json',
             success: function (obj) {
-                if (flagLoadingPanelist == 0) {
+                if(flagLoadingPanelist == 0){
                     var currentHTML = '<tr>';
                     currentHTML += '<th></th>';
                     currentHTML += '<th>Nombre</th>';
                     currentHTML += '<th>Género</th>';
                     currentHTML += '<th>Edad</th>';
-                    currentHTML += '<th>Estado Civil</th>';
                     currentHTML += '<th>Municipio</th>';
                     currentHTML += '<th>Estado</th>';
                     currentHTML += '<th colspan="2">Acción</th>';
@@ -249,7 +248,6 @@ $(document).on('ready', function () {
                         currentHTML += '<td>' + obj.results[i].nombre +'</td>';
                         currentHTML += '<td>' + convertGenero(obj.results[i].genero) +'</td>';
                         currentHTML += '<td>' + obj.results[i].edad +'</td>';
-                        currentHTML += '<td>' + convertEdoCivil(obj.results[i].edoCivil) +'</td>';
                         currentHTML += '<td>' + obj.results[i].municipio +'</td>';
                         currentHTML += '<td>' + obj.results[i].estado +'</td>';
                         currentHTML += '<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>'

@@ -3,6 +3,7 @@
 function connect() {
     // servername, username, password, dbname
     $connection = new mysqli("localhost", "root", "root", "focus");
+    $connection->set_charset("utf8");
 
     # Check connection
     if ($connection->connect_error) {
@@ -20,6 +21,7 @@ function validateWebCredentials ($username, $password) {
     $conn = connect();
 
     if ($conn != null) {
+
         $sql = "SELECT id, username, nombre, apPaterno, apMaterno, email, tipo FROM Usuario WHERE username = '$username' AND password = '$password'";
         $result = $conn->query($sql);
 

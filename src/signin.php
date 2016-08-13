@@ -2,9 +2,15 @@
 
 <html lang='en'>
 <head>
+<<<<<<< HEAD
     <meta charset='utf-8'>
     <link href='css/signin.css' type='text/css' rel='stylesheet'/>
     <script src="js/jquery-1.12.3.js"></script>
+=======
+  	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<link href='css/signin.css' type='text/css' rel='stylesheet'/>
+	<script src="js/jquery-1.12.3.js"></script>
+>>>>>>> development
     <script src='js/signin.js' type='text/javascript'></script>
     <title> Focus - Iniciar Sesión</title>
 </head>
