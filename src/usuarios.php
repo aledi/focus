@@ -53,12 +53,12 @@
 
             <div class='paswordInput'>
                 <p> Password: </p>
-                <input type='password' name='Password' placeholder='***************' id='password'>
+                <input type='password' name='Password' placeholder='••••••••' id='password'>
             </div>
 
             <div class='paswordConfirmInput'>
                 <p> Password Confirmation: </p>
-                <input type='password' name='Password' placeholder='***************' id='passwordConf'>
+                <input type='password' name='Password' placeholder='••••••••' id='passwordConf'>
             </div>
 
             <div id="enviarInfo">

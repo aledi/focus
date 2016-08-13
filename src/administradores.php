@@ -3,7 +3,7 @@
 <html lang='en'>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <link href='css/template.css' type='text/css' rel='stylesheet'/>
+    <link href='css/template.css' type='text/css' rel='stylesheet' />
     <script src="js/jquery-1.12.3.js"></script>
     <script src='js/administradores.js' type='text/javascript'></script>
     <title> Focus - Administradores</title>
@@ -53,12 +53,12 @@
 
             <div class='paswordInput'>
                 <p> Password: </p>
-                <input type='password' name='Password' placeholder='***************' id='password'>
+                <input type='password' name='Password' placeholder='••••••••' id='password'>
             </div>
 
             <div class='paswordConfirmInput'>
                 <p> Password Confirmation: </p>
-                <input type='password' name='Password' placeholder='***************' id='passwordConf'>
+                <input type='password' name='Password' placeholder='••••••••' id='passwordConf'>
             </div>
 
             <div id="enviarInfo">
