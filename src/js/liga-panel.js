@@ -7,6 +7,45 @@ function getCheckedCheckboxesFor(checkboxName) {
 }
 
 $(document).on('ready', function () {
+    
+    /*
+    *   Función tomada de internet, funciona bien, pero aparentemente
+    *   pueda llegar a tener problemas de ineficiencia dado a que es
+    *   un objeto dependiente de la tabla y la cantidad de panelistas.
+    */
+
+    $("#filteringText").keyup(function () {
+        //split the current value of searchInput
+        var data = this.value.split(" ");
+        //create a jquery object of the rows
+        var jo = $("#fbody").find("tr");
+        if (this.value == "") {
+            jo.show();
+            return;
+        }
+        //hide all the rows
+        jo.hide();
+
+        //Recusively filter the jquery object to get results.
+        jo.filter(function (i, v) {
+            var $t = $(this);
+            for (var d = 0; d < data.length; ++d) {
+                if ($t.is(":contains('" + data[d] + "')")) {
+                    return true;
+                }
+            }
+            return false;
+        })
+        //show the rows that match.
+        .show();
+    }).focus(function () {
+        this.value = "";
+        $(this).css({
+            "color": "black"
+        });
+        $(this).unbind('focus');
+    });
+
     var flagLoadingPanelist = 0;
     event.preventDefault();
 
@@ -37,7 +76,7 @@ $(document).on('ready', function () {
                     currentHTML += '<th>Selección</th>';
                 currentHTML += '</tr>';
                 currentHTML += '</thead>';
-                currentHTML += '<tbody>';
+                currentHTML += '<tbody id="fbody">';
                 currentHTML 
                 for(var i = 0; i < obj.results.length; i++) {
                     currentHTML += '<tr value="' + obj.results[i].id +'">';
@@ -60,7 +99,7 @@ $(document).on('ready', function () {
                 flagLoadingPanelist = 1;
             }
             currentHTML += '</tbody>';
-            $("#tablaPanelistas").tablesorter(); 
+            $("#tablaPanelistas").tablesorter();
         },
         error: function (error) {
              $('#feedback').html("Error cargando los clientes.");

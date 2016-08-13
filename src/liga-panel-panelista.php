@@ -20,9 +20,10 @@
     </div>
     <div id='loginForm'>
     	<form id='formLogin'>
-    		<h1> Ligar Panelistas a un Panel</h1>
+    		<h1> Ligar Panelistas</h1>
             <div id="panelista">
-                <p>1. Seleccionar Panelistas:</p>
+                <input type="text" id="filteringText"/>
+                <p>Seleccionar Panelistas:</p>
                 <table id="tablaPanelistas">
 
                 </table>
