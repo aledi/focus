@@ -27,6 +27,7 @@ $(document).on('ready', function () {
 
             var currentHTML = "";
             if(flagLoadingPanelist == 0){
+                currentHTML += '<thead>';
                 currentHTML += '<tr>';
                     currentHTML += '<th></th>';
                     currentHTML += '<th>Nombre</th>';
@@ -35,6 +36,9 @@ $(document).on('ready', function () {
                     currentHTML += '<th>Estado</th>';
                     currentHTML += '<th>Selección</th>';
                 currentHTML += '</tr>';
+                currentHTML += '</thead>';
+                currentHTML += '<tbody>';
+                currentHTML 
                 for(var i = 0; i < obj.results.length; i++) {
                     currentHTML += '<tr value="' + obj.results[i].id +'">';
                         currentHTML += "<td></td>";
@@ -55,6 +59,8 @@ $(document).on('ready', function () {
                 }
                 flagLoadingPanelist = 1;
             }
+            currentHTML += '</tbody>';
+            $("#tablaPanelistas").tablesorter(); 
         },
         error: function (error) {
              $('#feedback').html("Error cargando los clientes.");
