@@ -45,7 +45,8 @@ label {
 }
 
 footer {
-    padding: 0 0 2% 0;
+    position: absolute;
+    right: 0; bottom: 0; left: 0;
     background-color: rgb(245, 245, 245);
     text-align: center;
 }
@@ -56,22 +57,21 @@ footer {
 
 .header {
     width: 100%;
-    margin: auto;
-    margin-bottom: 2%;
     background-color: #11a6d7;
 }
 
 .login-form {
-    height: 400px;
-    width: 600px;
+    height: 350px;
+    width: 500px;
     vertical-align: middle;
     margin: auto;
+    margin-top: 80px;
     background-color: #D1E0F0;
     text-align: center;
 }
 
 .form-login {
-    padding: 20px 200px;
+    padding: 20px 150px;
     border: none;
 }
 
