@@ -22,7 +22,7 @@
     	<form id='formLogin'>
     		<h1> Ligar Panelistas</h1>
             <div id="panelista">
-                <input type="text" id="filteringText"/>
+                <p>Filtrar Panelistas: <input type="text" id="filteringText"/></p>
                 <p>Seleccionar Panelistas:</p>
                 <table id="tablaPanelistas">
 
