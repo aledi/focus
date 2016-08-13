@@ -23,41 +23,41 @@ button {
     margin: 20px 10px;
 }
 
-body{
+body {
     background-color: white;
     font-family: Segoe UI;
-    height:100%;
+    height: 100%;
     margin: 0;
- }
+}
 
-img{
+img {
     padding: 2%;
     margin: auto;
 }
 
-label{
+label {
     font-weight: bold;
     font-size: 120%;
 }
 
-footer{
+footer {
     background-color: rgb(245, 245, 245);
     text-align: center;
     padding: 0 0 2% 0;
 }
 
-#container{
+#container {
     margin-left: 20%;
 }
 
- #header{
+#header {
     background-color: #11a6d7;
-    width:100%;
+    width: 100%;
     margin: auto;
     margin-bottom: 2%;
- }
+}
 
-#loginForm{
+#loginForm {
     text-align: center;
     margin-top: 2%;
     background-color: rgb(209, 224, 240);
@@ -67,8 +67,8 @@ footer{
     vertical-align: middle;
 }
 
-#formLogin{
-    margin-bottom:2%;
+#formLogin {
+    margin-bottom: 2%;
     vertical-align: middle;
     display: table-cell;
     border: none;
@@ -76,15 +76,12 @@ footer{
     width: 10%;
 }
 
-#loginButton{
+#loginButton {
     margin-top: 2%;
     width: 8%;
-    height:15%;
+    height: 15%;
 }
 
-.loginInput{
+.loginInput {
     width: 20%;
 }
-
-
-

@@ -1,50 +1,49 @@
 html {
- visibility:hidden; 
+    visibility: hidden;
 }
 
-body{
+body {
     background-color: white;
     font-family: Segoe UI;
-    height:100%;
+    height: 100%;
     margin: 0;
- }
+}
 
-img{
-   
-    padding:1%;
+img {
+    padding: 1%;
     margin: auto;
 }
 
-label{
+label {
     font-weight: bold;
     font-size: 120%;
 }
 
-footer{
+footer {
     background-color: rgb(245, 245, 245);
     text-align: center;
     padding: 0 0 2% 0;
     clear: both;
 }
 
-textarea{
+textarea {
     margin-top: 2%;
     width: 400px;
     height: 60px;
 }
 
-#container{
+#container {
     margin-left: 0%;
 }
 
- #header{
+#header {
     background-color: #11a6d7;
-    width:100%;
+    width: 100%;
     margin: auto;
     margin-bottom: 2%;
- }
+}
 
- #loginForm{
+#loginForm {
     text-align: center;
     margin-top: 2%;
     background-color: rgb(209, 224, 240);
@@ -54,43 +53,43 @@ textarea{
 }
 
 #logo {
-    float:left;
+    float: left;
 }
 
 #contentContainer {
     width: 95%;
     padding-left: 5%;
-
 }
 
 /*
- * Contenido tabulado en pestañas.
+* Contenido tabulado en pestañas.
 */
 
-#contentContainer{
+#contentContainer {
     width: 70%;
     margin: 0 auto;
 }
 
-ul.tabs{
+ul.tabs {
     margin: 0px;
     padding: 0px;
     list-style: none;
 }
-ul.tabs li{ 
+
+ul.tabs li {
     background: none;
     color: #222;
     display: inline-block;
     padding: 10px 15px;
     cursor: pointer;
 }
-    
-ul.tabs li.current{
+
+ul.tabs li.current {
     background: #ededed;
     color: #222;
 }
 
-.tab-content{
+.tab-content {
     display: none;
     background: #ededed;
     padding: 15px 15px 15px 30%;
@@ -103,7 +102,7 @@ ul.tabs li.current{
 /* *********************************** */
 
 /*
-    Navigation Bar style and dropdown.
+Navigation Bar style and dropdown.
 */
 
 ul {
@@ -176,6 +175,6 @@ li.dropdown {
     display: block;
 }
 
-.formHeader{
+.formHeader {
     font-size: 120%;
 }

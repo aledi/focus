@@ -1,15 +1,12 @@
 $(document).on('ready', function () {
-
-    $('#allUsers').on('click','.deleteButton', function(){
-        var parameters = {
-            'action': 'DELETE_CLIENTE',
-            'id': $(this).parent().attr('value')
-        }
-
+    $('#allUsers').on('click','.deleteButton', function () {
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
-            data: parameters,
+            data: {
+                'action': 'DELETE_CLIENTE',
+                'id': $(this).parent().attr('value')
+            },
             dataType: 'json',
             success: function (obj) {
                 alert('Cliente Eliminado!');
@@ -22,8 +19,6 @@ $(document).on('ready', function () {
     });
 
     $('#allUsers').on('click','.modifyButton', function () {
-        var idUser = $(this).parent().attr('value');
-
         $('#headerTitle').text('Modificar Usuario');
 
         $('ul.tabs li').removeClass('current');
@@ -32,19 +27,17 @@ $(document).on('ready', function () {
         $('ul.tabs li').first().addClass('current');
         $("#tab-agregarUsuario").addClass('current');
 
-        var parameters = {
-            'action': 'GET_CLIENTES',
-            'id': idUser
-        }
-
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
-            data: parameters,
+            data: parameters = {
+                'action': 'GET_CLIENTES',
+                'id': $(this).parent().attr('value')
+            },
             dataType: 'json',
             success: function (obj) {
                 for (var i = 0; i < obj.results.length; i++) {
-                    if(obj.results[i].id == idUser){
+                    if (obj.results[i].id == idUser) {
                         var nombre = obj.results[i].nombre.split(' ');
 
                         $('#email').val(obj.results[i].email);
@@ -66,15 +59,13 @@ $(document).on('ready', function () {
     });
 
     $('#allAdmin').on('click','.deleteButton', function(){
-        var parameters = {
-            'action': 'DELETE_ADMIN',
-            'id': $(this).parent().attr('value')
-        }
-        console.log(parameters);
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
-            data: parameters,
+            data: {
+                'action': 'DELETE_ADMIN',
+                'id': $(this).parent().attr('value')
+            },
             dataType: 'json',
             success: function(obj){
                 alert('¡Administrador Eliminado!');

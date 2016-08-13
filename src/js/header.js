@@ -38,8 +38,7 @@ function convertGender(data){
 }
 
 $(document).on('ready', function () {
-
-    $('ul.tabs li').click(function(){
+    $('ul.tabs li').click(function() {
         var tab_id = $(this).attr('data-tab');
 
         $('ul.tabs li').removeClass('current');
@@ -49,24 +48,17 @@ $(document).on('ready', function () {
         $("#"+tab_id).addClass('current');
     });
 
-	parameters = {
-        'action' : 'VERIFY_SESSION'
-    };
-
     $.ajax({
         type: 'POST',
         url: '../api/controller.php',
-        data: parameters,
+        data: {'action': 'VERIFY_SESSION'},
         dataType: 'json',
         success: function (obj) {
             if (obj.status == 'SUCCESS') {
-                console.log(obj.username);
                 document.getElementsByTagName("html")[0].style.visibility = "visible";
-            }
-            else {
+            } else {
                 window.location.replace('signin.php');
             }
-
         },
         error: function (error) {
             alert("Please login to continue");
@@ -77,14 +69,10 @@ $(document).on('ready', function () {
     $('.signOutButton').on('click', function (event) {
         event.preventDefault();
 
-        var parameters = {
-            'action': 'LOG_OUT'
-        };
-
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: parameters,
+            data: {'action': 'LOG_OUT'},
             dataType: 'json',
             success: function (obj) {
                 if (obj.status === "SUCCESS") {
@@ -104,5 +92,4 @@ $(document).on('ready', function () {
         $(this).addClass('current');
         $("#"+tab_id).addClass('current');
     });
-
 });

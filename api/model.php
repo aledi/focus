@@ -1,12 +1,8 @@
 <?php
 
 function connect() {
-    $servername = "localhost";
-    $username = "root";
-    $password = "root";
-    $dbname = "focus";
-
-    $connection = new mysqli($servername, $username, $password, $dbname);
+    // servername, username, password, dbname
+    $connection = new mysqli("localhost", "root", "root", "focus");
 
     # Check connection
     if ($connection->connect_error) {
