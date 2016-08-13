@@ -6,6 +6,16 @@ function getCheckedCheckboxesFor(checkboxName) {
     return values;
 }
 
+
+function checkAll(bx) {
+    var cbs = document.getElementsByTagName('input');
+    for(var i=0; i < cbs.length; i++) {
+        if(cbs[i].type == 'checkbox') {
+            cbs[i].checked = bx.checked;
+        }
+    }
+}
+
 $(document).on('ready', function () {
     var flagLoadingPanelist = 0;
     event.preventDefault();
@@ -33,7 +43,7 @@ $(document).on('ready', function () {
                     currentHTML += '<th>Edad</th>';
                     currentHTML += '<th>Municipio</th>';
                     currentHTML += '<th>Estado</th>';
-                    currentHTML += '<th>Selección</th>';
+                    currentHTML += '<th><input type="checkbox" onclick="checkAll(this)"/></th>';
                 currentHTML += '</tr>';
                 for(var i = 0; i < obj.results.length; i++) {
                     currentHTML += '<tr value="' + obj.results[i].id +'">';
