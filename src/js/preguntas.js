@@ -1,3 +1,5 @@
+'use strict';
+
 $(document).on('ready', function () {
     var idEncuesta = -1;
     idEncuesta = window.location.search.substring(1)

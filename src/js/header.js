@@ -1,3 +1,5 @@
+'use strict';
+
 function convertEdoCivil(data){
     switch(data){
         case 0 :

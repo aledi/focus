@@ -1,3 +1,5 @@
+'use strict';
+
 $(document).on('ready', function () {
     $('#allUsers').on('click','.deleteButton', function () {
         $.ajax({
