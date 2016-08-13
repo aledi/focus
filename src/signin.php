@@ -10,25 +10,24 @@
 </head>
 
 <body>
-    <div id='header'>
-        <div id="container">
+    <div class='header'>
+        <div class='container'>
             <img src='img/focus_logo.png'/>
         </div>
     </div>
-    <div id='loginForm'>
-        <form id='formLogin'>
-            <h1> Login </h1>
+    <div class='login-form'>
+        <form class='form-login'>
+            <h1>Login</h1>
             <div class='input-wrapper'>
-                <label> Username: </label><br/>
-                <input type='text' name='Username' placeholder='Username' id='username' required />
+                <label>Usuario</label>
+                <input type='text' name='Username' placeholder='Usuario' id='username' required />
             </div>
-            <br/>
             <div class='input-wrapper'>
-                <label> Password: </label><br/>
+                <label>Contraseña</label>
                 <input type='password' name='Password' placeholder='***************' id='password'>
             </div>
             <div>
-                <button type='submit' id='loginButton'>Iniciar Sesión</button>
+                <button type='submit' id='loginButton' class='login-button'>Iniciar Sesión</button>
             </div>
             <div id='feedback'></div>
         </form>

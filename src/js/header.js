@@ -55,7 +55,7 @@ $(document).on('ready', function () {
         }
     });
 
-    $('.signOutButton').on('click', function (event) {
+    $('#signOutButton').on('click', function (event) {
         event.preventDefault();
 
         $.ajax({

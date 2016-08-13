@@ -1,12 +1,11 @@
 form {
-    width: 800px;
     padding: 20px 10px;
     margin: 0 auto;
     border: 1px solid;
 }
 
 form .input-wrapper {
-    width: 33.3%;
+    width: 100%;
     display: inline-block;
     vertical-align: top;
     padding: 10px;
@@ -16,6 +15,8 @@ form .input-wrapper {
 input {
     height: 30px;
     width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
 }
 
 button {
@@ -24,10 +25,10 @@ button {
 }
 
 body {
-    background-color: white;
-    font-family: Segoe UI;
     height: 100%;
     margin: 0;
+    background-color: white;
+    font-family: Segoe UI;
 }
 
 img {
@@ -36,50 +37,48 @@ img {
 }
 
 label {
+    display: block;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
     font-weight: bold;
-    font-size: 120%;
+    font-size: 16px;
 }
 
 footer {
+    padding: 0 0 2% 0;
     background-color: rgb(245, 245, 245);
     text-align: center;
-    padding: 0 0 2% 0;
 }
 
-#container {
+.container {
     margin-left: 20%;
 }
 
-#header {
-    background-color: #11a6d7;
+.header {
     width: 100%;
     margin: auto;
     margin-bottom: 2%;
+    background-color: #11a6d7;
 }
 
-#loginForm {
-    text-align: center;
-    margin-top: 2%;
-    background-color: rgb(209, 224, 240);
+.login-form {
+    height: 400px;
+    width: 600px;
+    vertical-align: middle;
     margin: auto;
-    width: 60%;
-    height: 81vh;
-    vertical-align: middle;
+    background-color: #D1E0F0;
+    text-align: center;
 }
 
-#formLogin {
-    margin-bottom: 2%;
-    vertical-align: middle;
-    display: table-cell;
+.form-login {
+    padding: 20px 200px;
     border: none;
-    transform: translateY(50%);
-    width: 10%;
 }
 
-#loginButton {
-    margin-top: 2%;
-    width: 8%;
-    height: 15%;
+.login-button {
+    height: 30px;
+    width: 150px;
+    cursor: pointer;
 }
 
 .loginInput {

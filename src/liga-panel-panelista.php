@@ -12,13 +12,13 @@
 </head>
 
 <body>
-    <div id='header'>
-        <div id="container">
+    <div class='header'>
+        <div class='container'>
             <?php include_once('elements/navigation-bar.php');?>
         </div>
     </div>
-    <div id='loginForm'>
-        <form id='formLogin'>
+    <div class='login-form'>
+        <form class='form-login'>
             <h1> Ligar Panelistas a un Panel</h1>
             <div id="panelista">
                 <p>1. Seleccionar Panelistas:</p>

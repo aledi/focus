@@ -10,14 +10,14 @@
 </head>
 
 <body>
-    <div id='header'>
-        <div id="container">
+    <div class='header'>
+        <div class='container'>
             <img src='img/focus_logo.png'/>
         </div>
         <?php include_once('elements/navigation-bar.php');?>
     </div>
-    <div id='loginForm'>
-        <form id='formLogin'>
+    <div class='login-form'>
+        <form class='form-login'>
             <h1> Alta de Páneles </h1>
             <div id="panelInput">
                 <p>1. Nombre del Panel:</p>

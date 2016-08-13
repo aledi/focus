@@ -11,12 +11,12 @@
 </head>
 
 <body>
-    <div id='header'>
-        <div id='container'>
+    <div class='header'>
+        <div class='container'>
             <?php include_once('elements/navigation-bar.php');?>
         </div>
     </div>
-    <div id='contentContainer'>
+    <div class='content-container'>
 
         <ul class='tabs'>
             <li class='tab-link current' data-tab='tab-agregarPanelista'>Agregar Panelista</li>
