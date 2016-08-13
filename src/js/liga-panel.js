@@ -23,7 +23,7 @@ $(document).on('ready', function () {
         },
         dataType: 'json',
         success: function (obj) {
-            if(flagLoadingPanelist == 0){
+            if (flagLoadingPanelist == 0) {
                 var currentHTML = '<tr>';
                 currentHTML += '<th></th>';
                 currentHTML += '<th>Nombre</th>';

@@ -1,15 +1,4 @@
-function convertData(caso, data){
-    switch(caso){
-        case 'Genero' :
-            return convertGender(data);
-        case 'edoCivil' :
-            return convertedoCivil(data);
-        default :
-            return 'ERROR';
-    }
-}
-
-function convertedoCivil(data){
+function convertEdoCivil(data){
     switch(data){
         case 0 :
             return 'Casado';

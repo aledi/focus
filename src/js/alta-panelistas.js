@@ -247,9 +247,9 @@ $(document).on('ready', function () {
                         currentHTML += '<tr value="' + obj.results[i].id +'">';
                         currentHTML += '<td></td>';
                         currentHTML += '<td>' + obj.results[i].nombre +'</td>';
-                        currentHTML += '<td>' + convertData('Genero', obj.results[i].genero) +'</td>';
+                        currentHTML += '<td>' + convertGenero(obj.results[i].genero) +'</td>';
                         currentHTML += '<td>' + obj.results[i].edad +'</td>';
-                        currentHTML += '<td>' + convertData('edoCivil', obj.results[i].edoCivil) +'</td>';
+                        currentHTML += '<td>' + convertEdoCivil(obj.results[i].edoCivil) +'</td>';
                         currentHTML += '<td>' + obj.results[i].municipio +'</td>';
                         currentHTML += '<td>' + obj.results[i].estado +'</td>';
                         currentHTML += '<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>'

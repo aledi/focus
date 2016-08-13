@@ -2,23 +2,23 @@
 
 <html lang='en'>
 <head>
-  	<meta charset='utf-8'>
+    <meta charset='utf-8'>
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
-	<script src="js/jquery-1.12.3.js"></script>
+    <script src="js/jquery-1.12.3.js"></script>
     <script src='js/nuevo-panel.js' type='text/javascript'></script>
-  	<title> Focus - Alta Panel</title>
+    <title> Focus - Alta Panel</title>
 </head>
 
 <body>
     <div id='header'>
-    	<div id="container">
-    		<img src='img/focus_logo.png'/>
-    	</div>
+        <div id="container">
+            <img src='img/focus_logo.png'/>
+        </div>
         <?php include_once('elements/navigation-bar.php');?>
     </div>
     <div id='loginForm'>
-    	<form id='formLogin'>
-    		<h1> Alta de Páneles </h1>
+        <form id='formLogin'>
+            <h1> Alta de Páneles </h1>
             <div id="panelInput">
                 <p>1. Nombre del Panel:</p>
                 <input id="panelName" type="text"/>
@@ -40,12 +40,12 @@
                 </select>
             </div>
 
-	  		<div>
-            	<button type='submit' id='loginButtonNuevoPanel'>Crear Panel</button>
-        	</div>
+            <div>
+                <button type='submit' id='loginButtonNuevoPanel'>Crear Panel</button>
+            </div>
             <div id='feedback'></div>
-		</form>
+        </form>
     </div>
-	<?php include_once('elements/footer.php');?>
+    <?php include_once('elements/footer.php');?>
 </body>
 </html>

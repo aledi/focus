@@ -2,19 +2,19 @@
 
 <html lang='en'>
 <head>
-  	<meta charset='utf-8'>
+    <meta charset='utf-8'>
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
     <script src="js/jquery-1.12.3.js"></script>
     <script src='js/alta-panelistas.js' type='text/javascript'></script>
     <script src='js/modify-delete.js' type='text/javascript'></script>
-  	<title> Focus - Administradores</title>
+    <title> Focus - Administradores</title>
 </head>
 
 <body>
     <div id='header'>
-    	<div id="container">
-    		<?php include_once('elements/navigation-bar.php');?>
-    	</div>
+        <div id="container">
+            <?php include_once('elements/navigation-bar.php');?>
+        </div>
     </div>
     <div id='contentContainer'>
 
@@ -23,11 +23,11 @@
             <li class="tab-link" data-tab="tab-modificarAdministrador">Modificar Administrador</li>
         </ul>
 
-		<div id="tab-agregarAdministrador" class="tab-content current">
-			<div class="formHeader">
+        <div id="tab-agregarAdministrador" class="tab-content current">
+            <div class="formHeader">
                 <h2 id='headerTitle'>Agregar Administrador</h2>
             </div>
-             <div id="emailInput">
+            <div id="emailInput">
                 <p>1. Cuenta de correo electrónico:</p>
                 <input id="email" type="text"/>
             </div>
@@ -67,17 +67,15 @@
                 <button type='submit' id='sendInfoAdmin'>Registrar Administrador</button>
             </div>
             <div id='feedback'></div>
-		</div>
-	
-		<div id="tab-modificarAdministrador" class="tab-content">
+        </div>
+
+        <div id="tab-modificarAdministrador" class="tab-content">
             <div class="formHeader">
                 <h2>Administradores Disponibles</h2>
             </div>
-			<table id="allAdmin">
-            
-            </table>
-		</div>
+            <table id="allAdmin"></table>
+        </div>
     </div>
-	<?php include_once('elements/footer.php');?>
+    <?php include_once('elements/footer.php');?>
 </body>
 </html>

@@ -2,38 +2,38 @@
 
 <html lang='en'>
 <head>
-  	<meta charset='utf-8'>
+    <meta charset='utf-8'>
     <script src="js/jquery-1.12.3.js"></script>
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
     <!--<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js'></script>-->
     <script src='js/encuestas.js' type='text/javascript'></script>
     <script src='js/modify-delete.js' type='text/javascript'></script>
     <script src='js/header.js' type='text/javascript'></script>
-  	<title> Focus - Encuestas</title>
+    <title> Focus - Encuestas</title>
 </head>
 
 <body>
     <div id='header'>
-    	<div id="container">
-    		<?php include_once('elements/navigation-bar.php');?>
-    	</div>
+        <div id="container">
+            <?php include_once('elements/navigation-bar.php');?>
+        </div>
     </div>
     <div id='contentContainer'>
-    	<ul class="tabs">
-			<li class="tab-link current" data-tab="tab-agregarEncuesta">Agregar Encuesta</li>
-			<li class="tab-link" data-tab="tab-modificarEncuesta">Modificar Encuesta</li>
-		</ul>
-		
-		<div id="tab-agregarEncuesta" class="tab-content current">
-			<div class="formHeader">
-				<h2 id='headerTitle'>Agregar Encuesta</h2>
-			</div>
-			<div id="emailInput">
-	            <p>1. Nombre de Encuesta:</p>
-	            <input id="nombre" type="text"/>
-	        </div>
+        <ul class="tabs">
+            <li class="tab-link current" data-tab="tab-agregarEncuesta">Agregar Encuesta</li>
+            <li class="tab-link" data-tab="tab-modificarEncuesta">Modificar Encuesta</li>
+        </ul>
 
-	        <div id="date_starts">
+        <div id="tab-agregarEncuesta" class="tab-content current">
+            <div class="formHeader">
+                <h2 id='headerTitle'>Agregar Encuesta</h2>
+            </div>
+            <div id="emailInput">
+                <p>1. Nombre de Encuesta:</p>
+                <input id="nombre" type="text"/>
+            </div>
+
+            <div id="date_starts">
                 <p>2. Fecha de Inicio (yyyy-mm-dd):</p>
                 <input id="dateStarts" type="text"/>
             </div>
@@ -43,29 +43,27 @@
                 <input id="dateEnds" type="text"/>
             </div>
 
-	        <div id="panels">
+            <div id="panels">
                 <p>4. Seleccionar Panel: </p>
                 <table id="allPanels">
-                
+
                 </table>
             </div>
 
-	        <div id="enviarInfo">
-	        	<br/>
-	            <button type='submit' id='sendInfoEncuestas'>Confirmar</button>
-	        </div>
-	        <div id='feedback'></div>
-		</div>
-	
-		<div id="tab-modificarEncuesta" class="tab-content">
+            <div id="enviarInfo">
+                <br/>
+                <button type='submit' id='sendInfoEncuestas'>Confirmar</button>
+            </div>
+            <div id='feedback'></div>
+        </div>
+
+        <div id="tab-modificarEncuesta" class="tab-content">
             <div class="formHeader">
                 <h2>Encuestas Disponibles</h2>
             </div>
-			<table id="allSurveys">
-
-			</table>
-		</div>
+            <table id="allSurveys"></table>
+        </div>
     </div>
-	<?php include_once('elements/footer.php');?>
+    <?php include_once('elements/footer.php');?>
 </body>
 </html>
