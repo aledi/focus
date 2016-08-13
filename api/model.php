@@ -7,7 +7,9 @@ function connect() {
     $dbname = "focus";
 
     $connection = new mysqli($servername, $username, $password, $dbname);
-
+    
+    $connection->set_charset("utf8");
+    
     # Check connection
     if ($connection->connect_error) {
         return null;
@@ -24,6 +26,7 @@ function validateWebCredentials ($username, $password) {
     $conn = connect();
 
     if ($conn != null) {
+
         $sql = "SELECT id, username, nombre, apPaterno, apMaterno, email, tipo FROM Usuario WHERE username = '$username' AND password = '$password'";
         $result = $conn->query($sql);
 

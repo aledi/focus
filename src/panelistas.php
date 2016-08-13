@@ -1,8 +1,9 @@
+<?php header('Content-type: text/html; charset=utf-8'); ?>
 <!doctype html>
 
 <html lang='en'>
 <head>
-  	<meta charset='utf-8'>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
 	<script src='js/jquery-1.12.3.js'></script>
 	<script src='js/alta-panelistas.js' type='text/javascript'></script>
@@ -45,7 +46,7 @@
 	        </div>
             <div id='passwordInput'>
 	            <p>Contraseña:</p>
-	            <input id='password' type='text'/>
+	            <input id='password' type='password'/>
 	        </div>
 	        <div id='genero'>
 	            <p>Género:</p>
