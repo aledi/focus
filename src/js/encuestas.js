@@ -116,4 +116,66 @@ $(document).on('ready', function () {
             }
         });
     });
+
+    $('#allSurveys').on('click','.deleteButton', function(){
+        var parameters = {
+            'action': 'DELETE_ENCUESTA',
+            'id': $(this).parent().attr('value')
+        }
+        console.log(parameters);
+        $.ajax({
+            url: '../api/controller.php',
+            type: 'POST',
+            data: parameters,
+            dataType: 'json',
+            success: function (obj) {
+                alert('Encuesta Eliminada!');
+                $(this).parent().find('td.id').remove();
+            },
+            error: function (errorMsg) {
+                alert('Error eliminando cliente');
+            }
+        });
+    });
+
+    $('#allSurveys').on('click','.modifyButton', function(){
+        var idSurvey = $(this).parent().attr('value');
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $('ul.tabs li').first().addClass('current');
+        $("#tab-agregarEncuesta").addClass('current');
+
+        $('#headerTitle').text('Modificar Encuesta');
+
+        var parameters = {
+            'action': 'GET_ENCUESTAS',
+            'id': idSurvey
+        }
+        $.ajax({
+            url: '../api/controller.php',
+            type: 'POST',
+            data: parameters,
+            dataType: 'json',
+            success: function(obj) {
+                console.log(obj);
+                for(var i = 0; i < obj.results.length; i++) {
+                    if(obj.results[i].id == idSurvey){
+                        $('#nombre').val(obj.results[i].nombre);
+                        $('#dateStarts').val(obj.results[i].fechaInicio);
+                        $('#dateEnds').val(obj.results[i].fechaFin);
+                        $('input[name=id][value="' + obj.results[i].id + '"]').prop('checked', true);
+
+                        var myURL = window.location.href.split('?')[0];
+                        myURL = myURL + '?id=' + obj.results[i].id;
+                        history.pushState({}, null, myURL);
+                    }
+                }
+            },
+            error: function (errorMsg) {
+                alert('Error modificando Panelista');
+            }
+        });
+    });
 });

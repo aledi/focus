@@ -1,7 +1,7 @@
 'use strict';
-
 $(document).on('ready', function () {
-    $.ajax({
+
+	$.ajax({
         type: 'POST',
         url: '../api/controller.php',
         data: {'action': 'GET_CLIENTES'},
@@ -118,4 +118,68 @@ $(document).on('ready', function () {
             }
         });
     }, 500);
+	
+	$('#allPanels').on('click','.deleteButton', function(){
+        var parameters = {
+            'action': 'DELETE_PANEL',
+            'id': $(this).parent().attr('value')
+        }
+        console.log(parameters);
+        $.ajax({
+            url: '../api/controller.php',
+            type: 'POST',
+            data: parameters,
+            dataType: 'json',
+            success: function (obj) {
+                alert('Panelista Eliminado!');
+                $(this).parent().find('td.id').remove();
+            },
+            error: function (errorMsg) {
+                alert('Error eliminando Panelista');
+            }
+        });
+    });
+
+    $('#allPanels').on('click','.modifyButton', function(){
+        var idPanel = $(this).parent().attr('value');
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $('ul.tabs li').first().addClass('current');
+        $("#tab-agregarPanel").addClass('current');
+
+        $('#headerTitle').text('Modificar Panel');
+
+
+        var parameters = {
+            'action': 'GET_PANELES',
+            'id': idPanel
+        }
+        $.ajax({
+            url: '../api/controller.php',
+            type: 'POST',
+            data: parameters,
+            dataType: 'json',
+            success: function(obj){
+                console.log(obj);
+                for(var i = 0; i < obj.results.length; i++) {
+                    if(obj.results[i].id == idPanel){
+                        $('#panelName').val(obj.results[i].nombre);
+                        $('#dateStarts').val(obj.results[i].fechaInicio);
+                        $('#dateEnds').val(obj.results[i].fechaFin);
+                        $('input[name="id"][value="' + obj.results[i].id + '"]').prop('checked', true);
+
+                        var myURL = window.location.href.split('?')[0];
+                        myURL = myURL + '?id=' + obj.results[i].id;
+                        history.pushState({}, null, myURL);
+                    }
+                }
+            },
+            error: function (errorMsg) {
+                alert('Error modificando Panelista');
+            }
+        });
+    });
+
 });

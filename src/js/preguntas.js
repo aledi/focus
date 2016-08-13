@@ -21,7 +21,7 @@ $(document).on('ready', function () {
     }
 
     function appendQuestions (lastQuestion) {
-        var currentHTML += '<div id="' + lastQuestion + '" class="questionForm">';
+        var currentHTML = '<div id="' + lastQuestion + '" class="questionForm">';
         currentHTML += '<hr>';
         currentHTML += '<div class="questionInput">' +
             '<p>Pregunta '+ lastQuestion +' :</p>' +
