@@ -1,43 +1,4 @@
 $(document).on('ready', function () {
-    $('#sendInfoPanelistas').on('click', function (event) {
-        var idPanelista = window.location.search.substring(1)
-        idPanelista = idPanelista.substring(3);
-
-        var parameters = {
-            'action': 'ALTA_PANELISTA',
-            'nombre': $('#fName').val(),
-            'apellidos': $('#lName').val(),
-            'email': $('#email').val(),
-            'username': $('#username').val(),
-            'password': $('#password').val(),
-            'genero': $('input[name=gender]:checked').val(),
-            'fechaNacimiento': $('#fechaNacimiento').val(),
-            'educacion': $('input[name=nivel_educativo]:checked').val(),
-            'calleNumero': $('#calleNumero').val(),
-            'colonia': $('#colonia').val(),
-            'municipio': $('#municipio').val(),
-            'estado': $('#estado').val(),
-            'cp': $('#cp').val()
-        };
-
-        if(idPanelista != '') {
-            parameters.id = idPanelista;
-        }
-
-        $.ajax({
-            type: 'POST',
-            url: '../api/controller.php',
-            data: parameters,
-            dataType: 'json',
-            success: function (obj) {
-                alert('Panelista agregado exitosamente.');
-            },
-            error: function (error) {
-                $('#feedback').html('Panelista no añadido, ha ocurrido un error.');
-            }
-        });
-    });
-
 
     $('#sendInfoAdmin').on('click', function (event) {
         var idAdministrador = window.location.search.substring(1)
@@ -215,50 +176,6 @@ $(document).on('ready', function () {
 
                     $('#allUsers').append(currentHTML);
                     currentHTML = '';
-                }
-            },
-            error: function (error) {
-                $('#feedback').html('Error cargando los clientes.');
-            }
-        });
-    }, 500);
-
-    var flagLoadingPanelist = 0;
-    setTimeout(function (event) {
-        $.ajax({
-            type: 'POST',
-            url: '../api/controller.php',
-            data: {'action': 'GET_PANELISTAS'},
-            dataType: 'json',
-            success: function (obj) {
-                if(flagLoadingPanelist == 0){
-                    var currentHTML = '<tr>';
-                    currentHTML += '<th></th>';
-                    currentHTML += '<th>Nombre</th>';
-                    currentHTML += '<th>Género</th>';
-                    currentHTML += '<th>Edad</th>';
-                    currentHTML += '<th>Municipio</th>';
-                    currentHTML += '<th>Estado</th>';
-                    currentHTML += '<th colspan="2">Acción</th>';
-                    currentHTML += '</tr>';
-
-                    for (var i = 0; i < obj.results.length; i++) {
-                        currentHTML += '<tr value="' + obj.results[i].id +'">';
-                        currentHTML += '<td></td>';
-                        currentHTML += '<td>' + obj.results[i].nombre +'</td>';
-                        currentHTML += '<td>' + convertGenero(obj.results[i].genero) +'</td>';
-                        currentHTML += '<td>' + obj.results[i].edad +'</td>';
-                        currentHTML += '<td>' + obj.results[i].municipio +'</td>';
-                        currentHTML += '<td>' + obj.results[i].estado +'</td>';
-                        currentHTML += '<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>'
-                        currentHTML += '<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>';
-                        currentHTML += '</tr>';
-
-                        $('#allPanelists').append(currentHTML);
-                        currentHTML = '';
-                    }
-
-                    flagLoadingPanelist = 1;
                 }
             },
             error: function (error) {

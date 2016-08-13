@@ -2,16 +2,10 @@
 
 <html lang='en'>
 <head>
-<<<<<<< HEAD
-    <meta charset='utf-8'>
-    <script src="js/jquery-1.12.3.js"></script>
-=======
   	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  	<link href='css/template.css' type='text/css' rel='stylesheet'/>
   	<script src="js/jquery-1.12.3.js"></script>
->>>>>>> development
-    <link href='css/template.css' type='text/css' rel='stylesheet'/>
-    <script src='js/alta-panelistas.js' type='text/javascript'></script>
-    <script src='js/modify-delete.js' type='text/javascript'></script>
+    <script src='js/usuarios.js' type='text/javascript'></script>
     <title> Focus - Usuarios</title>
 </head>
 

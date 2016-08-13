@@ -17,7 +17,7 @@ function convertEdoCivil(data){
     }
 }
 
-function convertGender(data){
+function convertGenero(data){
     switch(data){
         case 0 :
             return 'Masculino';
