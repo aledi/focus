@@ -18,19 +18,19 @@ $(document).on('ready', function () {
         //split the current value of searchInput
         var data = this.value.split(" ");
         //create a jquery object of the rows
-        var jo = $("#fbody").find("tr");
+        var jsonObject = $("#fbody").find("tr");
         if (this.value == "") {
-            jo.show();
+            jsonObject.show();
             return;
         }
         //hide all the rows
-        jo.hide();
+        jsonObject.hide();
 
         //Recusively filter the jquery object to get results.
-        jo.filter(function (i, v) {
-            var $t = $(this);
-            for (var d = 0; d < data.length; ++d) {
-                if ($t.is(":contains('" + data[d] + "')")) {
+        jsonObject.filter(function (i, v) {
+            var $table = $(this);
+            for (var x = 0; x < data.length; x++) {
+                if ($table.is(":contains('" + data[x] + "')")) {
                     return true;
                 }
             }
@@ -67,13 +67,13 @@ $(document).on('ready', function () {
             var currentHTML = "";
             if(flagLoadingPanelist == 0){
                 currentHTML += '<thead>';
-                currentHTML += '<tr>';
+                currentHTML += '<tr style="cursor:pointer">';
                     currentHTML += '<th></th>';
                     currentHTML += '<th>Nombre</th>';
                     currentHTML += '<th>Edad</th>';
                     currentHTML += '<th>Municipio</th>';
                     currentHTML += '<th>Estado</th>';
-                    currentHTML += '<th>Selección</th>';
+                    currentHTML += '<th></th>';
                 currentHTML += '</tr>';
                 currentHTML += '</thead>';
                 currentHTML += '<tbody id="fbody">';
