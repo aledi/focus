@@ -6,11 +6,10 @@ function getCheckedCheckboxesFor(checkboxName) {
     return values;
 }
 
-
-function checkAll(bx) {
+function checkAll (bx) {
     var cbs = document.getElementsByTagName('input');
-    for(var i=0; i < cbs.length; i++) {
-        if(cbs[i].type == 'checkbox') {
+    for (var i = 0; i < cbs.length; i++) {
+        if (cbs[i].type == 'checkbox') {
             cbs[i].checked = bx.checked;
         }
     }
@@ -58,7 +57,7 @@ $(document).on('ready', function () {
                         } else {
                             currentHTML += '<td><input type="checkbox" value=' + obj.results[i].id + ' name="panelistas"></td>';
                         }
-                        
+
                     currentHTML += "</tr>";
                     $("#tablaPanelistas").append(currentHTML);
                     currentHTML = "";
