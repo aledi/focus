@@ -268,12 +268,9 @@ function logOut ()  {
 }
 
 function sendPushNotification ($message, $deviceToken) {
-    // Put your private key's passphrase here:
-    $passphrase = '';
-
     $ctx = stream_context_create();
-    stream_context_set_option($ctx, 'ssl', 'local_cert', 'focus-apns.pem');
-    stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+    stream_context_set_option($ctx, 'ssl', 'local_cert', 'FocusPushKey.pem');
+    stream_context_set_option($ctx, 'ssl', 'passphrase', 'Focuscg233');
 
     // Open a connection to the APNS server
     $fp = stream_socket_client(
