@@ -10,10 +10,10 @@ function getCheckedCheckboxesFor (checkboxName) {
 }
 
 function checkAll (checkedBox) {
-    var currentCheckBox = document.getElementsByTagName('input');
-    for (var i = 0; i < currentCheckBox.length; i++) {
-        if (currentCheckBox[i].type == 'checkbox') {
-            currentCheckBox[i].checked = checkedBox.checked;
+    var checkboxes = document.getElementsByTagName('input');
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].type == 'checkbox') {
+            checkboxes[i].checked = checkedBox.checked;
         }
     }
 }
