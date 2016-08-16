@@ -68,8 +68,11 @@ input {
 }
 
 button {
+    height: 30px;
+    width: 150px;
     padding: 0;
     margin: 20px 10px;
+    cursor: pointer;
 }
 
 footer {
@@ -78,10 +81,4 @@ footer {
     position: absolute;
     bottom: 0;
     text-align: center;
-}
-
-.login-button {
-    height: 30px;
-    width: 150px;
-    cursor: pointer;
 }

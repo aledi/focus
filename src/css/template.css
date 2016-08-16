@@ -3,27 +3,22 @@ html {
 }
 
 body {
-    background-color: white;
-    font-family: Segoe UI;
     height: 100%;
     margin: 0;
+    background-color: white;
+    font-family: Segoe UI;
 }
 
-img {
-    padding: 1%;
-    margin: auto;
-}
-
-label {
-    font-weight: bold;
-    font-size: 120%;
+section {
+    position: absolute;
+    top: 70px; right: 0; left: 0;
 }
 
 footer {
+    padding: 10px 0;
+    margin-top: 20px;
     background-color: #F5F5F5;
     text-align: center;
-    margin-top: 20px;
-    padding: 10px 0;
 }
 
 footer p {
@@ -36,22 +31,6 @@ textarea {
     margin-top: 2%;
 }
 
-input[type='text'] {
-    height: 30px;
-}
-
-.container {
-    height: 100%;
-    position: relative;
-    margin-left: 0;
-}
-
-.header {
-    height: 70px;
-    width: 100%;
-    background-color: #11A6D7;
-}
-
 .login-form {
     text-align: center;
     margin-top: 2%;
@@ -61,21 +40,9 @@ input[type='text'] {
     vertical-align: middle;
 }
 
-.logo {
-    position: absolute;
-    top: 0; bottom: 0; left: 0;
-    padding: 0;
-    padding-left: 10px;
-}
-
-/*
-* Contenido tabulado en pestañas.
-*/
-
-.content-container {
-    width: 70%;
-    margin: 0 auto;
-}
+/* -----------------------------------------------------------------------------------------------
+/ Contenido tabulado en pestañas
+/ ----------------------------------------------------------------------------------------------- */
 
 ul.tabs {
     padding: 0;
@@ -92,25 +59,72 @@ ul.tabs li {
 }
 
 ul.tabs li.current {
-    background: #EDEDED;
+    background-color: #EDEDED;
     color: #222;
 }
 
 .tab-content {
     display: none;
-    background: #EDEDED;
-    padding: 15px 15px 15px 30%;
 }
 
 .current{
-    display: inherit;
+    display: block;
+    padding: 20px 30px;
+    background-color: #EDEDED;
 }
 
-/* *********************************** */
+h2 {
+    margin-top: 0;
+}
 
-/*
-Navigation Bar style and dropdown.
-*/
+.input-wrapper {
+    margin-bottom: 20px;
+}
+
+.input-wrapper > label {
+    display: block;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+}
+
+input[type='text'], input[type='password'] {
+    height: 30px;
+    width: 250px;
+    box-sizing: border-box;
+    letter-spacing: 0.5px;
+    font-size: 13px;
+}
+
+button {
+    height: 30px;
+    width: 150px;
+    display: block;
+    margin: auto;
+    cursor: pointer;
+}
+
+/* -----------------------------------------------------------------------------------------------
+/ Header
+/ ----------------------------------------------------------------------------------------------- */
+
+header {
+    height: 70px;
+    position: absolute;
+    top: 0; right: 0; left: 0;
+}
+
+.header-wrapper {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background-color: #11A6D7;
+}
+
+.logo {
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    padding: 10px 0 0 10px;
+}
 
 .navigation-bar {
     height: 100%;
@@ -172,6 +186,7 @@ li.dropdown {
     background-color: #F9F9F9;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
 }
 
 .dropdown-content a {
@@ -189,8 +204,4 @@ li.dropdown {
 
 .dropdown:hover .dropdown-content {
     display: block;
-}
-
-.formHeader {
-    font-size: 120%;
 }

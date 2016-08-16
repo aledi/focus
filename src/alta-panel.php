@@ -10,13 +10,9 @@
 </head>
 
 <body>
-    <div class='header'>
-        <div class='container'>
-            <img src='img/focus_logo.png'/>
-        </div>
-        <?php include_once('elements/navigation-bar.php');?>
-    </div>
-    <div class='login-form'>
+    <?php include_once('elements/header.php');?>
+
+    <section>
         <form class='form-login'>
             <h1> Alta de Páneles </h1>
             <div id="panelInput">
@@ -45,7 +41,7 @@
             </div>
             <div id='feedback'></div>
         </form>
-    </div>
+    </section>
     <?php include_once('elements/footer.php');?>
 </body>
 </html>

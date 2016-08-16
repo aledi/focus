@@ -26,7 +26,7 @@
                     <input type='password' name='Password' placeholder='••••••••' id='password'>
                 </div>
                 <div>
-                    <button type='submit' id='loginButton' class='login-button'>Iniciar Sesión</button>
+                    <button type='submit' id='loginButton'>Iniciar Sesión</button>
                 </div>
                 <div id='feedback'></div>
             </form>
