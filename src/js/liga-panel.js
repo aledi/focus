@@ -9,6 +9,15 @@ function getCheckedCheckboxesFor (checkboxName) {
     return values;
 }
 
+function checkAll (checkedBox) {
+    var checkboxes = document.getElementsByTagName('input');
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].type == 'checkbox') {
+            checkboxes[i].checked = checkedBox.checked;
+        }
+    }
+}
+
 $(document).on('ready', function () {
     var flagLoadingPanelist = 0;
     event.preventDefault();
@@ -32,7 +41,7 @@ $(document).on('ready', function () {
                 currentHTML += '<th>Edad</th>';
                 currentHTML += '<th>Municipio</th>';
                 currentHTML += '<th>Estado</th>';
-                currentHTML += '<th>Selección</th>';
+                currentHTML += '<th><input type="checkbox" onclick="checkAll(this)"/></th>';
                 currentHTML += '</tr>';
 
                 for (var i = 0; i < obj.results.length; i++) {
@@ -49,10 +58,12 @@ $(document).on('ready', function () {
                         currentHTML += '<td><input type="checkbox" value=' + obj.results[i].id + ' name="panelistas"></td>';
                     }
 
-                    currentHTML += '</tr>';
+                    currentHTML += "</tr>";
+
                     $("#tablaPanelistas").append(currentHTML);
                     currentHTML = '';
                 }
+
                 flagLoadingPanelist = 1;
             }
         },
