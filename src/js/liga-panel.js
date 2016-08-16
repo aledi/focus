@@ -19,6 +19,45 @@ function checkAll (checkedBox) {
 }
 
 $(document).on('ready', function () {
+
+    /*
+    *   Función tomada de internet, funciona bien, pero aparentemente
+    *   pueda llegar a tener problemas de ineficiencia dado a que es
+    *   un objeto dependiente de la tabla y la cantidad de panelistas.
+    */
+
+    $("#filteringText").keyup(function () {
+        //split the current value of searchInput
+        var data = this.value.split(" ");
+        //create a jquery object of the rows
+        var jsonObject = $("#fbody").find("tr");
+        if (this.value == "") {
+            jsonObject.show();
+            return;
+        }
+        //hide all the rows
+        jsonObject.hide();
+
+        //Recusively filter the jquery object to get results.
+        jsonObject.filter(function (i, v) {
+            var $table = $(this);
+            for (var x = 0; x < data.length; x++) {
+                if ($table.is(":contains('" + data[x] + "')")) {
+                    return true;
+                }
+            }
+            return false;
+        })
+        //show the rows that match.
+        .show();
+    }).focus(function () {
+        this.value = "";
+        $(this).css({
+            "color": "black"
+        });
+        $(this).unbind('focus');
+    });
+
     var flagLoadingPanelist = 0;
     event.preventDefault();
 
@@ -35,7 +74,8 @@ $(document).on('ready', function () {
         dataType: 'json',
         success: function (obj) {
             if (flagLoadingPanelist == 0) {
-                var currentHTML = '<tr>';
+                var currentHTML = '<thead>';
+                currentHTML += '<tr style="cursor:pointer">';
                 currentHTML += '<th></th>';
                 currentHTML += '<th>Nombre</th>';
                 currentHTML += '<th>Edad</th>';
@@ -43,6 +83,8 @@ $(document).on('ready', function () {
                 currentHTML += '<th>Estado</th>';
                 currentHTML += '<th><input type="checkbox" onclick="checkAll(this)"/></th>';
                 currentHTML += '</tr>';
+                currentHTML += '</thead>';
+                currentHTML += '<tbody id="fbody">';
 
                 for (var i = 0; i < obj.results.length; i++) {
                     currentHTML += '<tr value="' + obj.results[i].id +'">';
@@ -66,6 +108,8 @@ $(document).on('ready', function () {
 
                 flagLoadingPanelist = 1;
             }
+            currentHTML += '</tbody>';
+            $("#tablaPanelistas").tablesorter();
         },
         error: function (error) {
             $('#feedback').html("Error cargando los clientes.");
