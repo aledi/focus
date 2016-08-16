@@ -63,6 +63,7 @@ $(document).on('ready', function () {
                     $("#tablaPanelistas").append(currentHTML);
                     currentHTML = '';
                 }
+
                 flagLoadingPanelist = 1;
             }
         },
