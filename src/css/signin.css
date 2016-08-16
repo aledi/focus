@@ -1,7 +1,47 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    background-color: #F5F5F5;
+    font-family: Segoe UI;
+}
+
+header {
+    padding: 20px 0;
+    position: absolute;
+    top: 0; right: 0; left: 0;
+    background-color: #11a6d7;
+}
+
+img {
+    margin-left: 80px;
+}
+
+section {
+    position: absolute;
+    top: 85px; right: 0; bottom: 50px; left: 0;
+    background-color: white;
+}
+
+.form-wrapper {
+    height: 350px;
+    width: 500px;
+    position: relative;
+    vertical-align: middle;
+    margin: auto;
+    margin-top: 50px;
+    background-color: #D1E0F0;
+    text-align: center;
+    z-index: 1;
+}
+
 form {
-    padding: 20px 10px;
-    margin: 0 auto;
-    border: 1px solid;
+    padding: 20px 140px;
+    border: none;
 }
 
 form .input-wrapper {
@@ -10,6 +50,14 @@ form .input-wrapper {
     vertical-align: top;
     padding: 10px;
     box-sizing: border-box;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+    font-size: 16px;
 }
 
 input {
@@ -24,63 +72,16 @@ button {
     margin: 20px 10px;
 }
 
-body {
-    height: 100%;
-    margin: 0;
-    background-color: white;
-    font-family: Segoe UI;
-}
-
-img {
-    padding: 2%;
-    margin: auto;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-    letter-spacing: 0.5px;
-    font-weight: bold;
-    font-size: 16px;
-}
-
 footer {
-    position: absolute;
-    right: 0; bottom: 0; left: 0;
-    background-color: rgb(245, 245, 245);
-    text-align: center;
-}
-
-.container {
-    margin-left: 20%;
-}
-
-.header {
+    height: 50px;
     width: 100%;
-    background-color: #11a6d7;
-}
-
-.login-form {
-    height: 350px;
-    width: 500px;
-    vertical-align: middle;
-    margin: auto;
-    margin-top: 80px;
-    background-color: #D1E0F0;
+    position: absolute;
+    bottom: 0;
     text-align: center;
-}
-
-.form-login {
-    padding: 20px 150px;
-    border: none;
 }
 
 .login-button {
     height: 30px;
     width: 150px;
     cursor: pointer;
-}
-
-.loginInput {
-    width: 20%;
 }

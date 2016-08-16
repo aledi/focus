@@ -10,28 +10,28 @@
 </head>
 
 <body>
-    <div class='header'>
-        <div class='container'>
-            <img src='img/focus_logo.png'/>
+    <header>
+        <img src='img/focus_logo.png'/>
+    </header>
+    <section>
+        <div class='form-wrapper'>
+            <form>
+                <h1>Login</h1>
+                <div class='input-wrapper'>
+                    <label>Usuario</label>
+                    <input type='text' name='Username' placeholder='Usuario' id='username' required />
+                </div>
+                <div class='input-wrapper'>
+                    <label>Contraseña</label>
+                    <input type='password' name='Password' placeholder='••••••••' id='password'>
+                </div>
+                <div>
+                    <button type='submit' id='loginButton' class='login-button'>Iniciar Sesión</button>
+                </div>
+                <div id='feedback'></div>
+            </form>
         </div>
-    </div>
-    <div class='login-form'>
-        <form class='form-login'>
-            <h1>Login</h1>
-            <div class='input-wrapper'>
-                <label>Usuario</label>
-                <input type='text' name='Username' placeholder='Usuario' id='username' required />
-            </div>
-            <div class='input-wrapper'>
-                <label>Contraseña</label>
-                <input type='password' name='Password' placeholder='••••••••' id='password'>
-            </div>
-            <div>
-                <button type='submit' id='loginButton' class='login-button'>Iniciar Sesión</button>
-            </div>
-            <div id='feedback'></div>
-        </form>
-    </div>
+    </section>
     <?php include_once('elements/footer.php');?>
 </body>
 </html>
