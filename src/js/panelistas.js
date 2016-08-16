@@ -85,7 +85,7 @@ $(document).on('ready', function () {
             'action': 'DELETE_PANELISTA',
             'id': $(this).parent().attr('value')
         }
-        console.log(parameters);
+
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',

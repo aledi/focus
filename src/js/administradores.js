@@ -120,15 +120,13 @@ $(document).on('ready', function () {
 
         $('#headerTitle').text('Modificar Administrador');
 
-        var parameters = {
-            'action': 'GET_ADMINS',
-            'id': idAdministador
-        }
-        console.log(parameters);
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
-            data: parameters,
+            data: {
+                'action': 'GET_ADMINS',
+                'id': idAdministador
+            },
             dataType: 'json',
             success: function(obj){
                 for(var i = 0; i < obj.results.length; i++) {
