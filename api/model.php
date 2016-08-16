@@ -1,15 +1,10 @@
 <?php
 
 function connect() {
-    $servername = "localhost";
-    $username = "root";
-    $password = "root";
-    $dbname = "focus";
-
-    $connection = new mysqli($servername, $username, $password, $dbname);
-    
+    // servername, username, password, dbname
+    $connection = new mysqli("localhost", "root", "root", "focus");
     $connection->set_charset("utf8");
-    
+
     # Check connection
     if ($connection->connect_error) {
         return null;
