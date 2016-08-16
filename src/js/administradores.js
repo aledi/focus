@@ -1,15 +1,13 @@
 'use strict';
+
 $(document).on('ready', function () {
-
     setTimeout(function () {
-        var parameters = {
-            'action': 'GET_ADMINS'
-        };
-
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: parameters,
+            data: {
+                'action': 'GET_ADMINS'
+            },
             dataType: 'json',
             success: function (obj) {
                 var currentHTML = '<tr>';

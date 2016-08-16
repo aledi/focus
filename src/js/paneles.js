@@ -1,6 +1,5 @@
 'use strict';
 $(document).on('ready', function () {
-
 	$.ajax({
         type: 'POST',
         url: '../api/controller.php',
