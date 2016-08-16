@@ -9,11 +9,11 @@ function getCheckedCheckboxesFor (checkboxName) {
     return values;
 }
 
-function checkAll (bx) {
-    var cbs = document.getElementsByTagName('input');
-    for (var i = 0; i < cbs.length; i++) {
-        if (cbs[i].type == 'checkbox') {
-            cbs[i].checked = bx.checked;
+function checkAll (checkedBox) {
+    var currentCheckBox = document.getElementsByTagName('input');
+    for (var i = 0; i < currentCheckBox.length; i++) {
+        if (currentCheckBox[i].type == 'checkbox') {
+            currentCheckBox[i].checked = checkedBox.checked;
         }
     }
 }
