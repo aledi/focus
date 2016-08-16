@@ -1,3 +1,5 @@
+'use strict';
+
 $(document).on('ready', function () {
     $('#loginButton').on('click', function (event) {
         event.preventDefault();
@@ -16,16 +18,14 @@ $(document).on('ready', function () {
             return;
         }
 
-        var parameters = {
-            'action': 'WEB_LOG_IN',
-            'username': username,
-            'password': password
-        };
-
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: parameters,
+            data: {
+                'action': 'WEB_LOG_IN',
+                'username': username,
+                'password': password
+            },
             dataType: 'json',
             success: function (obj) {
                 if (obj.status === 'SUCCESS') {
