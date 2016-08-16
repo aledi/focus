@@ -6,7 +6,7 @@ html {
 body {
     height: 100%;
     margin: 0;
-    background-color: #F5F5F5;
+    background-color: #707070;
     font-family: Segoe UI;
 }
 
@@ -14,7 +14,7 @@ header {
     padding: 20px 0;
     position: absolute;
     top: 0; right: 0; left: 0;
-    background-color: #11a6d7;
+    background-color: #370A8F;
 }
 
 img {

@@ -9,7 +9,6 @@ $(document).on('ready', function () {
             data: {'action': 'GET_PANELISTAS'},
             dataType: 'json',
             success: function (obj) {
-            	console.log(obj);
 	            var currentHTML = '<tr>';
 	            currentHTML += '<th></th>';
 	            currentHTML += '<th>Nombre</th>';
@@ -55,7 +54,7 @@ $(document).on('ready', function () {
             'password': $('#password').val(),
             'genero': $('input[name=gender]:checked').val(),
             'fechaNacimiento': $('#fechaNacimiento').val(),
-            'educacion': $('input[name=nivel_educativo]:checked').val(),
+            'educacion': $('#nivelEducativo').val(),
             'calleNumero': $('#calleNumero').val(),
             'colonia': $('#colonia').val(),
             'municipio': $('#municipio').val(),
@@ -133,7 +132,7 @@ $(document).on('ready', function () {
                         $('#email').val(obj.results[i].email);
                         $('#username').val(obj.results[i].username);
                         $('input[name="gender"][value="' + obj.results[i].genero + '"]').prop('checked', true);
-                        $('input[name="nivel_educativo"][value="' + obj.results[i].educacion + '"]').prop('checked', true);
+                        $('#nivelEducativo').val(obj.results[i].nivelEducativo);
                         $('#calleNumero').val(obj.results[i].calleNumero);
                         $('#colonia').val(obj.results[i].colonia);
                         $('#municipio').val(obj.results[i].municipio);

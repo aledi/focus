@@ -54,12 +54,15 @@
                 </div>
                 <div id='nivel_educacion' class='input-wrapper'>
                     <label>Educación:</label>
-                    <input type='radio' value='1' name='nivel_educativo' checked='true'>Primaria<br></br>
-                    <input type='radio' value='2' name='nivel_educativo'>Secundaria<br></br>
-                    <input type='radio' value='3' name='nivel_educativo'>Preparatoria o Técnica<br></br>
-                    <input type='radio' value='4' name='nivel_educativo'>Profesionista<br></br>
-                    <input type='radio' value='5' name='nivel_educativo'>Posgrado (maestría, doctorado)<br></br>
-                    <input type='radio' value='0' name='nivel_educativo'>Ninguno<br></br>
+                    <select class='form-control' id='nivelEducativo' name='nivelEducativo'>
+                        <option value='0'>Selecciona un nivel de educación</option>
+                        <option value='1'>Primaria</option>
+                        <option value='2'>Secundaria</option>
+                        <option value='3'>Preparatoria</option>
+                        <option value='4'>Profesional</option>
+                        <option value='5'>Posgrado</option>
+                        <option value='6'>Ninguno</option>
+                    </select>
                 </div>
                 <div id='vivienda_calleNumero' class='input-wrapper'>
                     <label>Calle y Número:</label>
