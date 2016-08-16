@@ -129,8 +129,8 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function(obj){
-                for(var i = 0; i < obj.results.length; i++) {
-                    if(obj.results[i].id == idAdministador){
+                for (var i = 0; i < obj.results.length; i++) {
+                    if (obj.results[i].id == idAdministador) {
                         var nombre = obj.results[i].nombre.split(' ');
 
                         $('#email').val(obj.results[i].email);

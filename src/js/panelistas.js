@@ -123,8 +123,8 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function(obj){
-                for(var i = 0; i < obj.results.length; i++) {
-                    if(obj.results[i].id == idPanelista){
+                for (var i = 0; i < obj.results.length; i++) {
+                    if (obj.results[i].id == idPanelista) {
                         var nombre = obj.results[i].nombre.split(' ');
 
                         $('#fName').val(nombre[0]);

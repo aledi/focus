@@ -156,8 +156,8 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function(obj) {
-                for(var i = 0; i < obj.results.length; i++) {
-                    if(obj.results[i].id == idSurvey){
+                for (var i = 0; i < obj.results.length; i++) {
+                    if (obj.results[i].id == idSurvey) {
                         $('#nombre').val(obj.results[i].nombre);
                         $('#dateStarts').val(obj.results[i].fechaInicio);
                         $('#dateEnds').val(obj.results[i].fechaFin);
