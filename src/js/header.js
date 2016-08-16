@@ -1,15 +1,6 @@
-function convertData(caso, data){
-    switch(caso){
-        case 'Genero' :
-            return convertGender(data);
-        case 'edoCivil' :
-            return convertedoCivil(data);
-        default :
-            return 'ERROR';
-    }
-}
+'use strict';
 
-function convertedoCivil(data){
+function convertEdoCivil(data){
     switch(data){
         case 0 :
             return 'Casado';
@@ -28,7 +19,7 @@ function convertedoCivil(data){
     }
 }
 
-function convertGender(data){
+function convertGenero(data){
     switch(data){
         case 0 :
             return 'Masculino';
@@ -38,8 +29,7 @@ function convertGender(data){
 }
 
 $(document).on('ready', function () {
-
-    $('ul.tabs li').click(function(){
+    $('ul.tabs li').click(function() {
         var tab_id = $(this).attr('data-tab');
 
         $('ul.tabs li').removeClass('current');
@@ -49,24 +39,17 @@ $(document).on('ready', function () {
         $("#"+tab_id).addClass('current');
     });
 
-	parameters = {
-        'action' : 'VERIFY_SESSION'
-    };
-
     $.ajax({
         type: 'POST',
         url: '../api/controller.php',
-        data: parameters,
+        data: {'action': 'VERIFY_SESSION'},
         dataType: 'json',
         success: function (obj) {
             if (obj.status == 'SUCCESS') {
-                console.log(obj.username);
                 document.getElementsByTagName("html")[0].style.visibility = "visible";
-            }
-            else {
+            } else {
                 window.location.replace('signin.php');
             }
-
         },
         error: function (error) {
             alert("Please login to continue");
@@ -74,17 +57,13 @@ $(document).on('ready', function () {
         }
     });
 
-    $('.signOutButton').on('click', function (event) {
+    $('#signOutButton').on('click', function (event) {
         event.preventDefault();
-
-        var parameters = {
-            'action': 'LOG_OUT'
-        };
 
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: parameters,
+            data: {'action': 'LOG_OUT'},
             dataType: 'json',
             success: function (obj) {
                 if (obj.status === "SUCCESS") {
@@ -104,5 +83,4 @@ $(document).on('ready', function () {
         $(this).addClass('current');
         $("#"+tab_id).addClass('current');
     });
-
 });

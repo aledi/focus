@@ -46,7 +46,7 @@ switch ($action) {
         getRecords('PREGUNTAS');
         break;
     case 'GET_MOBILE_DATA':
-    getRecords('MOBILE');
+        getRecords('MOBILE');
         break;
     case 'SET_PANELISTAS_PANEL':
         setPanelistasPanel();
@@ -58,8 +58,6 @@ switch ($action) {
         setRespuestas();
         break;
     case 'DELETE_ADMIN':
-        deleteRecord('Usuario');
-        break;
     case 'DELETE_CLIENTE':
         deleteRecord('Usuario');
         break;
