@@ -1,7 +1,6 @@
 'use strict';
 
 $(document).on('ready', function () {
-
     setTimeout(function (event) {
         $.ajax({
             type: 'POST',
@@ -9,7 +8,6 @@ $(document).on('ready', function () {
             data: {'action': 'GET_PANELISTAS'},
             dataType: 'json',
             success: function (obj) {
-            	console.log(obj);
 	            var currentHTML = '<tr>';
 	            currentHTML += '<th></th>';
 	            currentHTML += '<th>Nombre</th>';
@@ -55,7 +53,7 @@ $(document).on('ready', function () {
             'password': $('#password').val(),
             'genero': $('input[name=gender]:checked').val(),
             'fechaNacimiento': $('#fechaNacimiento').val(),
-            'educacion': $('input[name=nivel_educativo]:checked').val(),
+            'educacion': $('#nivelEducativo').val(),
             'calleNumero': $('#calleNumero').val(),
             'colonia': $('#colonia').val(),
             'municipio': $('#municipio').val(),
@@ -86,7 +84,7 @@ $(document).on('ready', function () {
             'action': 'DELETE_PANELISTA',
             'id': $(this).parent().attr('value')
         }
-        console.log(parameters);
+
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
@@ -124,8 +122,8 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function(obj){
-                for(var i = 0; i < obj.results.length; i++) {
-                    if(obj.results[i].id == idPanelista){
+                for (var i = 0; i < obj.results.length; i++) {
+                    if (obj.results[i].id == idPanelista) {
                         var nombre = obj.results[i].nombre.split(' ');
 
                         $('#fName').val(nombre[0]);
@@ -133,7 +131,7 @@ $(document).on('ready', function () {
                         $('#email').val(obj.results[i].email);
                         $('#username').val(obj.results[i].username);
                         $('input[name="gender"][value="' + obj.results[i].genero + '"]').prop('checked', true);
-                        $('input[name="nivel_educativo"][value="' + obj.results[i].educacion + '"]').prop('checked', true);
+                        $('#nivelEducativo').val(obj.results[i].nivelEducativo);
                         $('#calleNumero').val(obj.results[i].calleNumero);
                         $('#colonia').val(obj.results[i].colonia);
                         $('#municipio').val(obj.results[i].municipio);

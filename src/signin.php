@@ -16,7 +16,6 @@
     <section>
         <div class='form-wrapper'>
             <form>
-                <h1>Login</h1>
                 <div class='input-wrapper'>
                     <label>Usuario</label>
                     <input type='text' name='Username' placeholder='Usuario' id='username' required />
@@ -26,7 +25,7 @@
                     <input type='password' name='Password' placeholder='••••••••' id='password'>
                 </div>
                 <div>
-                    <button type='submit' id='loginButton' class='login-button'>Iniciar Sesión</button>
+                    <button type='submit' id='loginButton'>Iniciar Sesión</button>
                 </div>
                 <div id='feedback'></div>
             </form>

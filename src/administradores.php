@@ -10,13 +10,8 @@
 </head>
 
 <body>
-    <div class='header'>
-        <div class='container'>
-            <?php include_once('elements/navigation-bar.php');?>
-        </div>
-    </div>
-    <div class='content-container'>
-
+    <?php include_once('elements/header.php');?>
+    <section>
         <ul class="tabs">
             <li class="tab-link current" data-tab="tab-agregarAdministrador">Agregar Administrador</li>
             <li class="tab-link" data-tab="tab-modificarAdministrador">Modificar Administrador</li>
@@ -74,7 +69,7 @@
             </div>
             <table id="allAdmin"></table>
         </div>
-    </div>
+    </section>
     <?php include_once('elements/footer.php');?>
 </body>
 </html>

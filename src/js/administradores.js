@@ -1,15 +1,13 @@
 'use strict';
+
 $(document).on('ready', function () {
-
     setTimeout(function () {
-        var parameters = {
-            'action': 'GET_ADMINS'
-        };
-
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: parameters,
+            data: {
+                'action': 'GET_ADMINS'
+            },
             dataType: 'json',
             success: function (obj) {
                 var currentHTML = '<tr>';
@@ -120,19 +118,17 @@ $(document).on('ready', function () {
 
         $('#headerTitle').text('Modificar Administrador');
 
-        var parameters = {
-            'action': 'GET_ADMINS',
-            'id': idAdministador
-        }
-        console.log(parameters);
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
-            data: parameters,
+            data: {
+                'action': 'GET_ADMINS',
+                'id': idAdministador
+            },
             dataType: 'json',
             success: function(obj){
-                for(var i = 0; i < obj.results.length; i++) {
-                    if(obj.results[i].id == idAdministador){
+                for (var i = 0; i < obj.results.length; i++) {
+                    if (obj.results[i].id == idAdministador) {
                         var nombre = obj.results[i].nombre.split(' ');
 
                         $('#email').val(obj.results[i].email);

@@ -9,13 +9,9 @@
 </head>
 
 <body>
-    <div class='header'>
-        <div class='container'>
-            <?php include_once('elements/navigation-bar.php');?>
-        </div>
-
+    <?php include_once('elements/header.php');?>
     </div>
-    <div class='login-form'></div>
+    <section></section>
     <?php include_once('elements/footer.php');?>
 </body>
 </html>

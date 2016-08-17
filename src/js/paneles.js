@@ -1,6 +1,5 @@
 'use strict';
 $(document).on('ready', function () {
-
 	$.ajax({
         type: 'POST',
         url: '../api/controller.php',
@@ -118,13 +117,13 @@ $(document).on('ready', function () {
             }
         });
     }, 500);
-	
+
 	$('#allPanels').on('click','.deleteButton', function(){
         var parameters = {
             'action': 'DELETE_PANEL',
             'id': $(this).parent().attr('value')
         }
-        console.log(parameters);
+
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
@@ -151,20 +150,17 @@ $(document).on('ready', function () {
 
         $('#headerTitle').text('Modificar Panel');
 
-
-        var parameters = {
-            'action': 'GET_PANELES',
-            'id': idPanel
-        }
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
-            data: parameters,
+            data: {
+	            'action': 'GET_PANELES',
+	            'id': idPanel
+	        },
             dataType: 'json',
             success: function(obj){
-                console.log(obj);
-                for(var i = 0; i < obj.results.length; i++) {
-                    if(obj.results[i].id == idPanel){
+                for (var i = 0; i < obj.results.length; i++) {
+                    if (obj.results[i].id == idPanel){
                         $('#panelName').val(obj.results[i].nombre);
                         $('#dateStarts').val(obj.results[i].fechaInicio);
                         $('#dateEnds').val(obj.results[i].fechaFin);
