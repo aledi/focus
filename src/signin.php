@@ -16,7 +16,6 @@
     <section>
         <div class='form-wrapper'>
             <form>
-                <h1>Login</h1>
                 <div class='input-wrapper'>
                     <label>Usuario</label>
                     <input type='text' name='Username' placeholder='Usuario' id='username' required />
