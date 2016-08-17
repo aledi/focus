@@ -118,9 +118,10 @@
                     <label>Código Postal:</label>
                     <input id='cp' type='text'/>
                 </div>
-
-                <button type='submit' id='sendInfoPanelistas'>Enviar</button>
-                <div id='feedback'></div>
+                <div>
+                    <button type='submit' id='sendInfoPanelistas'>Enviar</button>
+                </div>
+                <span id='feedback' class='feedback-text'></span>
             </div>
 
             <div id='tab-modificarPanelista' class='tab-content'>
@@ -129,7 +130,7 @@
                 <div id='feedback'></div>
             </div>
         </div>
+        <?php include_once('elements/footer.php');?>
     </section>
-    <?php include_once('elements/footer.php');?>
 </body>
 </html>
