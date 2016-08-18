@@ -104,6 +104,8 @@ $(document).on('ready', function () {
     });
 
     $('#allUsers').on('click','.modifyButton', function () {
+        var parameters;
+        var idUser = $(this).parent().attr('value')
         $('#headerTitle').text('Modificar Cliente');
         $('#saveCliente').text('Modificar');
 
