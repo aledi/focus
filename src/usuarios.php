@@ -72,7 +72,6 @@
                 <table id="allUsers"></table>
             </div>
         </div>
-        <?php include_once('elements/footer.php');?>
     </section>
 </body>
 </html>
