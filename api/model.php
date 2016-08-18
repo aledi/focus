@@ -536,11 +536,30 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
     return array('status' => 'DATABASE_ERROR');
 }
 
-function saveRespuestas ($encuesta, $panelista, $respuestas) {
+function startEncuesta ($encuesta, $panelista) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "INSERT INTO Respuestas (encuesta, panelista, respuestas) VALUES ('$encuesta', '$panelista', '$respuestas')";
+        $sql = "INSERT INTO Respuestas (encuesta, panelista) VALUES ('$encuesta', '$panelista')";
+
+        if ($conn->query($sql) === TRUE) {
+            $lastId = mysqli_insert_id($conn);
+            $conn->close();
+            return array('status' => 'SUCCESS', 'id' => $lastId);
+        }
+
+        $conn->close();
+        return array('status' => 'ERROR');
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function saveRespuestas ($id, $respuestas) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "UPDATE Respuestas SET respuestas = '$respuestas' WHERE id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
             $conn->close();
