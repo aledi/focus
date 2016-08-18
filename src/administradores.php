@@ -31,13 +31,8 @@
             </div>
 
             <div id="apellidos_admin">
-                <p>3. Apellido Paterno:</p>
+                <p>Apellido(s):</p>
                 <input id="lastName" type="text"/>
-            </div>
-
-            <div id="apellidos_admin_materno">
-                <p>4. Apellido Materno:</p>
-                <input id="lastNameMaterno" type="text"/>
             </div>
 
             <div id="usernameInput">

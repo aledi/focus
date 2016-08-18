@@ -21,7 +21,7 @@ $(document).on('ready', function () {
 	            for (var i = 0; i < obj.results.length; i++) {
 	                currentHTML += '<tr value="' + obj.results[i].id +'">';
 	                currentHTML += '<td></td>';
-	                currentHTML += '<td>' + obj.results[i].nombre +'</td>';
+	                currentHTML += '<td>' + obj.results[i].nombre + " " + obj.results[i].apellidos +'</td>';
 	                currentHTML += '<td>' + convertGenero(obj.results[i].genero) +'</td>';
 	                currentHTML += '<td>' + obj.results[i].edad +'</td>';
 	                currentHTML += '<td>' + obj.results[i].municipio +'</td>';
@@ -123,10 +123,9 @@ $(document).on('ready', function () {
             success: function(obj){
                 for (var i = 0; i < obj.results.length; i++) {
                     if (obj.results[i].id == idPanelista) {
-                        var nombre = obj.results[i].nombre.split(' ');
 
-                        $('#firstName').val(nombre[0]);
-                        $('#lastName').val(nombre[1] + ' ' + nombre[2]);
+                        $('#firstName').val(obj.results[i].nombre);
+                        $('#lastName').val(obj.results[i].apellidos);
                         $('#email').val(obj.results[i].email);
                         $('#username').val(obj.results[i].username);
                         $('input[name="gender"][value="' + obj.results[i].genero + '"]').prop('checked', true);
