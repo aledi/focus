@@ -30,7 +30,7 @@ $(document).on('ready', function () {
 	                currentHTML += '<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>';
 	                currentHTML += '</tr>';
 
-	                $('#allPanelists').append(currentHTML);
+	                $('#allPanelistas').append(currentHTML);
 	                currentHTML = '';
 	            }
             },
@@ -46,8 +46,8 @@ $(document).on('ready', function () {
 
         var parameters = {
             'action': 'ALTA_PANELISTA',
-            'nombre': $('#fName').val(),
-            'apellidos': $('#lName').val(),
+            'nombre': $('#firstName').val(),
+            'apellidos': $('#lastName').val(),
             'email': $('#email').val(),
             'username': $('#username').val(),
             'password': $('#password').val(),
@@ -79,7 +79,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allPanelists').on('click','.deleteButton', function(){
+    $('#allPanelistas').on('click','.deleteButton', function(){
         var parameters = {
             'action': 'DELETE_PANELISTA',
             'id': $(this).parent().attr('value')
@@ -100,7 +100,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allPanelists').on('click','.modifyButton', function(){
+    $('#allPanelistas').on('click','.modifyButton', function(){
         var idPanelista = $(this).parent().attr('value');
 
         $('ul.tabs li').removeClass('current');
@@ -126,8 +126,8 @@ $(document).on('ready', function () {
                     if (obj.results[i].id == idPanelista) {
                         var nombre = obj.results[i].nombre.split(' ');
 
-                        $('#fName').val(nombre[0]);
-                        $('#lName').val(nombre[1] + ' ' + nombre[2]);
+                        $('#firstName').val(nombre[0]);
+                        $('#lastName').val(nombre[1] + ' ' + nombre[2]);
                         $('#email').val(obj.results[i].email);
                         $('#username').val(obj.results[i].username);
                         $('input[name="gender"][value="' + obj.results[i].genero + '"]').prop('checked', true);

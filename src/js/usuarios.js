@@ -41,9 +41,9 @@ $(document).on('ready', function () {
         idCliente = idCliente.substring(3);
 
         var email = $('#email').val();
-        var nombre = $('#fName').val();
-        var apPaterno = $('#lName').val();
-        var apMaterno = $('#lName_materno').val();
+        var nombre = $('#firstName').val();
+        var apPaterno = $('#lastName').val();
+        var apMaterno = $('#lastNameMaterno').val();
         var username = $('#username').val();
         var password = $('#password').val();
         var passwordConf = $('#passwordConf').val();
@@ -128,9 +128,9 @@ $(document).on('ready', function () {
                         var nombre = obj.results[i].nombre.split(' ');
 
                         $('#email').val(obj.results[i].email);
-                        $('#fName').val(nombre[0]);
-                        $('#lName').val(nombre[1]);
-                        $('#lName_materno').val(nombre[2]);
+                        $('#firstName').val(nombre[0]);
+                        $('#lastName').val(nombre[1]);
+                        $('#lastNameMaterno').val(nombre[2]);
                         $('#username').val(obj.results[i].username);
 
                         var myURL = window.location.href.split('?')[0];

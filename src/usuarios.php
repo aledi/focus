@@ -22,26 +22,26 @@
             <div id='tab-agregarUsuario' class='tab-content current'>
                 <h2 id='headerTitle'>Agregar Cliente</h2>
 
-                <div id='emailInput' class='input-wrapper'>
-                    <label>Cuenta de correo electrónico:</label>
+                <div class='input-wrapper'>
+                    <label>Correo Electrónico:</label>
                     <input id='email' type='text'/>
                 </div>
-                <div id='nombre_admin' class='input-wrapper'>
+                <div class='input-wrapper'>
                     <label>Nombre(s):</label>
-                    <input id='fName' type='text'/>
+                    <input id='firstName' type='text'/>
                 </div>
 
-                <div id='apellidos_admin' class='input-wrapper'>
+                <div class='input-wrapper'>
                     <label>Apellido Paterno:</label>
-                    <input id='lName' type='text'/>
+                    <input id='lastName' type='text'/>
                 </div>
 
-                <div id='apellidos_admin_materno' class='input-wrapper'>
+                <div class='input-wrapper'>
                     <label>Apellido Materno:</label>
-                    <input id='lName_materno' type='text'/>
+                    <input id='lastNameMaterno' type='text'/>
                 </div>
 
-                <div id='usernameInput' class='input-wrapper'>
+                <div class='input-wrapper'>
                     <label>Nombre de Usuario:</label>
                     <input id='username' type='text'/>
                 </div>
@@ -52,7 +52,7 @@
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Confirmar contraseña:</label>
+                    <label>Confirmar Contraseña:</label>
                     <input type='password' name='Password' placeholder='••••••••' id='passwordConf'>
                 </div>
 

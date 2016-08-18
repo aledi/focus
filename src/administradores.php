@@ -28,17 +28,17 @@
 
             <div id="nombre_admin">
                 <p>2. Nombre(s) de Pila:</p>
-                <input id="fName" type="text"/>
+                <input id="firstName" type="text"/>
             </div>
 
             <div id="apellidos_admin">
                 <p>3. Apellido Paterno:</p>
-                <input id="lName" type="text"/>
+                <input id="lastName" type="text"/>
             </div>
 
             <div id="apellidos_admin_materno">
                 <p>4. Apellido Materno:</p>
-                <input id="lName_materno" type="text"/>
+                <input id="lastNameMaterno" type="text"/>
             </div>
 
             <div id="usernameInput">

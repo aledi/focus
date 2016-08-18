@@ -23,36 +23,36 @@
             <div id='tab-agregarPanelista' class='tab-content current'>
                 <h2 id='headerTitle'>Agregar Panelista</h2>
 
-                <div id='nombre_panelista' class='input-wrapper'>
+                <div class='input-wrapper'>
                     <label>Nombre(s)</label>
-                    <input id='fName' type='text'/>
+                    <input id='firstName' type='text'/>
                 </div>
-                <div id='apellidos_panelista' class='input-wrapper'>
+                <div class='input-wrapper'>
                     <label>Apellido(s):</label>
-                    <input id='lName' type='text'/>
+                    <input id='lastName' type='text'/>
                 </div>
-                <div id='emailInput' class='input-wrapper'>
+                <div class='input-wrapper'>
                     <label>Correo Electrónico:</label>
                     <input id='email' type='text'/>
                 </div>
-                <div id='usernameInput' class='input-wrapper'>
+                <div class='input-wrapper'>
                     <label>Nombre de Usuario:</label>
                     <input id='username' type='text'/>
                 </div>
-                <div id='passwordInput' class='input-wrapper'>
+                <div class='input-wrapper'>
                     <label>Contraseña:</label>
                     <input id='password' type='password'/>
                 </div>
-                <div id='genero' class='input-wrapper'>
+                <div class='input-wrapper'>
                     <label>Género:</label>
                     <input type='radio' value='0' name='gender' checked='true'>Masculino
                     <input type='radio' value='1' name='gender'>Femenino
                 </div>
-                <div id='fechaNacimiento' class='input-wrapper'>
+                <div class='input-wrapper'>
                     <label>Fecha de Nacimiento:</label>
                     <input id='fechaNacimiento' type='text'/>
                 </div>
-                <div id='nivel_educacion' class='input-wrapper'>
+                <div class='input-wrapper'>
                     <label>Educación:</label>
                     <select class='form-control' id='nivelEducativo' name='nivelEducativo'>
                         <option value='0'>Selecciona un nivel de educación</option>
@@ -64,19 +64,19 @@
                         <option value='6'>Ninguno</option>
                     </select>
                 </div>
-                <div id='vivienda_calleNumero' class='input-wrapper'>
+                <div class='input-wrapper'>
                     <label>Calle y Número:</label>
                     <input id='calleNumero' type='text'/>
                 </div>
-                <div id='vivienda_colonia' class='input-wrapper'>
+                <div class='input-wrapper'>
                     <label>Colonia:</label>
                     <input id='colonia' type='text'/>
                 </div>
-                <div id='vivienda_municipio' class='input-wrapper'>
+                <div class='input-wrapper'>
                     <label>Municipio:</label>
                     <input id='municipio' type='text'/>
                 </div>
-                <div id='vivienda_Estado' class='input-wrapper'>
+                <div class='input-wrapper'>
                     <label>Estado:</label>
                     <select class='form-control' id='estado' name='estado'>
                         <option value='0'>Selecciona un estado...</option>
@@ -114,7 +114,7 @@
                         <option value='ZAC'>Zacatecas</option>
                     </select>
                 </div>
-                <div id='vivienda_cp' class='input-wrapper'>
+                <div class='input-wrapper'>
                     <label>Código Postal:</label>
                     <input id='cp' type='text'/>
                 </div>
@@ -125,7 +125,7 @@
 
             <div id='tab-modificarPanelista' class='tab-content'>
                 <h2>Panelistas Disponibles</h2>
-                <table id='allPanelists'></table>
+                <table id='allPanelistas'></table>
                 <div id='feedback'></div>
             </div>
         </div>
