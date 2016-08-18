@@ -245,7 +245,7 @@ function fetchUsers ($tipo) {
     if ($conn != null) {
         $sql = "SELECT id, username, nombre, apellidos, email FROM Usuario WHERE tipo = '$tipo'";
         $result = $conn->query($sql);
-        
+
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
@@ -271,11 +271,11 @@ function fetchPaneles () {
 
         while ($row = $result->fetch_assoc()) {
             $cliente = $row['cliente'];
-            $sql2 = "SELECT nombre, apPaterno, apMaterno FROM Usuario WHERE id = '$cliente'";
+            $sql2 = "SELECT nombre, apellidos FROM Usuario WHERE id = '$cliente'";
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => $row2['nombre'].' '.$row2['apPaterno'].' '.$row2['apMaterno'], 'creador' => (int)$row['creador']);
+            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
             $response[] = $client;
         }
 

@@ -20,7 +20,7 @@ $(document).on('ready', function () {
                     currentHTML += '<tr value="'+ obj.results[i].id + '">';
                     currentHTML += '<td></td>';
                     currentHTML += '<td>' + obj.results[i].username+'</td>';
-                    currentHTML += '<td>' + obj.results[i].nombre+'</td>';
+                    currentHTML += '<td>' + obj.results[i].nombre + " " + obj.results[i].apellidos+'</td>';
                     currentHTML += '<td>' + obj.results[i].email+'</td>';
                     currentHTML += '<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>';
                     currentHTML += '<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>';
@@ -36,24 +36,23 @@ $(document).on('ready', function () {
         });
     }, 500);
 
-    $('#sendInfoCliente').on('click', function (event) {
+    $('#saveCliente').on('click', function (event) {
         var idCliente = window.location.search.substring(1)
         idCliente = idCliente.substring(3);
 
         var email = $('#email').val();
         var nombre = $('#firstName').val();
-        var apPaterno = $('#lastName').val();
-        var apMaterno = $('#lastNameMaterno').val();
+        var apellidos = $('#lastName').val();
         var username = $('#username').val();
         var password = $('#password').val();
-        var passwordConf = $('#passwordConf').val();
+        var passwordConfirm = $('#passwordConfirm').val();
 
-        if (username === '' || password === '' || email === '' || nombre === '' || apPaterno === '' || apMaterno === '') {
+        if (username === '' || password === '' || email === '' || nombre === '' || apellidos === '') {
             $('#feedback').html('Favor de llenar todos los campos');
             return;
         }
 
-        if (password != passwordConf) {
+        if (password != passwordConfirm) {
             $('#feedback').html('Las contraseñas no coinciden.');
             return;
         }
@@ -61,8 +60,7 @@ $(document).on('ready', function () {
         var parameters = {
             'action': 'ALTA_CLIENTE',
             'nombre': nombre,
-            'apPaterno': apPaterno,
-            'apMaterno': apMaterno,
+            'apellidos': apellidos,
             'email': email,
             'username': username,
             'password': password
@@ -106,13 +104,14 @@ $(document).on('ready', function () {
     });
 
     $('#allUsers').on('click','.modifyButton', function () {
-        $('#headerTitle').text('Modificar Usuario');
+        $('#headerTitle').text('Modificar Cliente');
+        $('#saveCliente').text('Modificar');
 
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').first().addClass('current');
-        $("#tab-agregarUsuario").addClass('current');
+        $("#tab-agregarCliente").addClass('current');
 
         $.ajax({
             url: '../api/controller.php',
@@ -125,12 +124,9 @@ $(document).on('ready', function () {
             success: function (obj) {
                 for (var i = 0; i < obj.results.length; i++) {
                     if (obj.results[i].id == idUser) {
-                        var nombre = obj.results[i].nombre.split(' ');
-
                         $('#email').val(obj.results[i].email);
-                        $('#firstName').val(nombre[0]);
-                        $('#lastName').val(nombre[1]);
-                        $('#lastNameMaterno').val(nombre[2]);
+                        $('#firstName').val(obj.results[i].nombre);
+                        $('#lastName').val(obj.results[i].apellidos);
                         $('#username').val(obj.results[i].username);
 
                         var myURL = window.location.href.split('?')[0];

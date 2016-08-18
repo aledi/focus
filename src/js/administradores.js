@@ -44,18 +44,17 @@ $(document).on('ready', function () {
 
         var email = $('#email').val();
         var nombre = $('#firstName').val();
-        var apPaterno = $('#lastName').val();
-        var apMaterno = $('#lastNameMaterno').val();
+        var apellidos = $('#lastName').val();
         var username = $('#username').val();
         var password = $('#password').val();
-        var passwordConf = $('#passwordConf').val();
+        var passwordConfirm = $('#passwordConfirm').val();
 
-        if (username === '' || password === '' || email === '' || nombre === '' || apPaterno === '' || apMaterno === '') {
+        if (username === '' || password === '' || email === '' || nombre === '' || apellidos === '') {
             $('#feedback').html('Favor de llenar todos los campos');
             return;
         }
 
-        if (password != passwordConf) {
+        if (password != passwordConfirm) {
             $('#feedback').html('Las contraseñas no coinciden.');
             return;
         }
@@ -129,12 +128,9 @@ $(document).on('ready', function () {
             success: function(obj){
                 for (var i = 0; i < obj.results.length; i++) {
                     if (obj.results[i].id == idAdministador) {
-                        var nombre = obj.results[i].nombre.split(' ');
-
                         $('#email').val(obj.results[i].email);
-                        $('#firstName').val(nombre[0]);
-                        $('#lastName').val(nombre[1]);
-                        $('#lastNameMaterno').val(nombre[2]);
+                        $('#firstName').val(obj.results[i].nombre);
+                        $('#lastName').val(obj.results[i].apellidos);
                         $('#username').val(obj.results[i].username);
 
                         var myURL = window.location.href.split('?')[0];

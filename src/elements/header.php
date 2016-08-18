@@ -9,7 +9,7 @@
                 <li class='dropdown'>
                     <a class='dropbtn'>Usuarios</a>
                     <div class='dropdown-content'>
-                        <a href='usuarios.php'>Clientes</a>
+                        <a href='clientes.php'>Clientes</a>
                         <a href='administradores.php'>Administradores</a>
                     </div>
                 </li>
