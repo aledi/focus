@@ -46,14 +46,14 @@ $(document).on('ready', function () {
         var apMaterno = $('#lastNameMaterno').val();
         var username = $('#username').val();
         var password = $('#password').val();
-        var passwordConf = $('#passwordConf').val();
+        var passwordConfirm = $('#passwordConfirm').val();
 
         if (username === '' || password === '' || email === '' || nombre === '' || apPaterno === '' || apMaterno === '') {
             $('#feedback').html('Favor de llenar todos los campos');
             return;
         }
 
-        if (password != passwordConf) {
+        if (password != passwordConfirm) {
             $('#feedback').html('Las contraseñas no coinciden.');
             return;
         }
@@ -106,13 +106,14 @@ $(document).on('ready', function () {
     });
 
     $('#allUsers').on('click','.modifyButton', function () {
-        $('#headerTitle').text('Modificar Usuario');
+        $('#headerTitle').text('Modificar Cliente');
+        $('#sendInfoCliente').text('Modificar');
 
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').first().addClass('current');
-        $("#tab-agregarUsuario").addClass('current');
+        $("#tab-agregarCliente").addClass('current');
 
         $.ajax({
             url: '../api/controller.php',

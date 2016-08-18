@@ -48,14 +48,14 @@ $(document).on('ready', function () {
         var apMaterno = $('#lastNameMaterno').val();
         var username = $('#username').val();
         var password = $('#password').val();
-        var passwordConf = $('#passwordConf').val();
+        var passwordConfirm = $('#passwordConfirm').val();
 
         if (username === '' || password === '' || email === '' || nombre === '' || apPaterno === '' || apMaterno === '') {
             $('#feedback').html('Favor de llenar todos los campos');
             return;
         }
 
-        if (password != passwordConf) {
+        if (password != passwordConfirm) {
             $('#feedback').html('Las contraseñas no coinciden.');
             return;
         }

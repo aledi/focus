@@ -4,22 +4,22 @@
 <head>
   	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   	<link href='css/template.css' type='text/css' rel='stylesheet'/>
-    <link href='css/usuarios.css' type='text/css' rel='stylesheet'/>
+    <link href='css/clientes.css' type='text/css' rel='stylesheet'/>
   	<script src="js/jquery-1.12.3.js"></script>
-    <script src='js/usuarios.js' type='text/javascript'></script>
-    <title> Focus - Usuarios</title>
+    <script src='js/clientes.js' type='text/javascript'></script>
+    <title> Focus - Clientes</title>
 </head>
 
 <body>
     <?php include_once('elements/header.php');?>
     <section>
-        <div class='usuarios-wrapper'>
+        <div class='clientes-wrapper'>
             <ul class="tabs">
-                <li class="tab-link current" data-tab="tab-agregarUsuario">Agregar Usuario</li>
-                <li class="tab-link" data-tab="tab-modificarUsuario">Modificar Usuario</li>
+                <li class="tab-link current" data-tab="tab-agregarCliente">Agregar Cliente</li>
+                <li class="tab-link" data-tab="tab-modificarCliente">Modificar Cliente</li>
             </ul>
 
-            <div id='tab-agregarUsuario' class='tab-content current'>
+            <div id='tab-agregarCliente' class='tab-content current'>
                 <h2 id='headerTitle'>Agregar Cliente</h2>
 
                 <div class='input-wrapper'>
@@ -42,7 +42,7 @@
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Nombre de Usuario:</label>
+                    <label>Usuario:</label>
                     <input id='username' type='text'/>
                 </div>
 
@@ -53,15 +53,15 @@
 
                 <div class='input-wrapper'>
                     <label>Confirmar Contraseña:</label>
-                    <input type='password' name='Password' placeholder='••••••••' id='passwordConf'>
+                    <input type='password' name='Password' placeholder='••••••••' id='passwordConfirm'>
                 </div>
 
-                <button type='submit' id='sendInfoCliente'>Confirmar</button>
+                <button type='submit' id='sendInfoCliente'>Agregar</button>
                 <span id='feedback'></span>
             </div>
 
-            <div id="tab-modificarUsuario" class="tab-content">
-                <h2>Usuarios Disponibles</h2>
+            <div id="tab-modificarCliente" class="tab-content">
+                <h2>Clientes Disponibles</h2>
 
                 <table id="allUsers"></table>
             </div>
