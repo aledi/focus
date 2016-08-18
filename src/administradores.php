@@ -18,9 +18,8 @@
         </ul>
 
         <div id="tab-agregarAdministrador" class="tab-content current">
-            <div class="formHeader">
-                <h2 id='headerTitle'>Agregar Administrador</h2>
-            </div>
+            <h2 id='headerTitle'>Agregar Administrador</h2>
+
             <div id="emailInput">
                 <p>1. Cuenta de correo electrónico:</p>
                 <input id="email" type="text"/>
@@ -64,9 +63,8 @@
         </div>
 
         <div id="tab-modificarAdministrador" class="tab-content">
-            <div class="formHeader">
-                <h2>Administradores Disponibles</h2>
-            </div>
+            <h2>Administradores Disponibles</h2>
+
             <table id="allAdmin"></table>
         </div>
     </section>

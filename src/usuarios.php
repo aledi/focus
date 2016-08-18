@@ -61,9 +61,8 @@
             </div>
 
             <div id="tab-modificarUsuario" class="tab-content">
-                <div class="formHeader">
-                    <h2>Usuarios Disponibles</h2>
-                </div>
+                <h2>Usuarios Disponibles</h2>
+
                 <table id="allUsers"></table>
             </div>
         </div>

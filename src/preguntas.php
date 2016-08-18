@@ -19,9 +19,8 @@
         </ul>
 
         <div id="tab-agregarEncuesta" class="tab-content current">
-            <div class="formHeader">
-                <h2 id='headerTitle'>Ligar Pregunta</h2>
-            </div>
+            <h2 id='headerTitle'>Ligar Pregunta</h2>
+
             <div id="questions">
                 <div id="1" class="questionForm">
                     <div class="questionInput">
