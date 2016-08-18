@@ -134,7 +134,7 @@ function signinToDatabase ($tipo) {
 
 function newPanelista () {
     if (isset($_POST['id'])) {
-        $registrationResult = updatePanelista($_POST['id'], $_POST['username'], $_POST['password'], $_POST['nombre'], $_POST['apellidos'], $_POST['email'], $_POST['genero'], $_POST['fechaNacimiento'], $_POST['educacion'], $_POST['calleNumero'], $_POST['colonia'], $_POST['municipio'], $_POST['estado'], $_POST['cp']);
+        $registrationResult = updatePanelista($_POST['id'], $_POST['username'], $_POST['nombre'], $_POST['apellidos'], $_POST['email'], $_POST['genero'], $_POST['fechaNacimiento'], $_POST['educacion'], $_POST['calleNumero'], $_POST['colonia'], $_POST['municipio'], $_POST['estado'], $_POST['cp']);
     } else {
         $registrationResult = registerPanelista($_POST['username'], $_POST['password'], $_POST['nombre'], $_POST['apellidos'], $_POST['email'], $_POST['genero'], $_POST['fechaNacimiento'], $_POST['educacion'], $_POST['calleNumero'], $_POST['colonia'], $_POST['municipio'], $_POST['estado'], $_POST['cp']);
     }
@@ -144,9 +144,9 @@ function newPanelista () {
 
 function newUser ($tipo) {
     if (isset($_POST['id'])) {
-        $registrationResult = updateUser($_POST['id'], $_POST['username'], $_POST['password'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['email']);
+        $registrationResult = updateUser($_POST['id'], $_POST['username'], $_POST['nombre'], $_POST['apellidos'], $_POST['email']);
     } else {
-        $registrationResult = registerUser($tipo, $_POST['username'], $_POST['password'], $_POST['nombre'], $_POST['apPaterno'], $_POST['apMaterno'], $_POST['email']);
+        $registrationResult = registerUser($tipo, $_POST['username'], $_POST['password'], $_POST['nombre'], $_POST['apellidos'], $_POST['email']);
     }
 
     echo json_encode($registrationResult);
