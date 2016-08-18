@@ -32,13 +32,8 @@
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Apellido Paterno:</label>
+                    <label>Apellido(s):</label>
                     <input id='lastName' type='text'/>
-                </div>
-
-                <div class='input-wrapper'>
-                    <label>Apellido Materno:</label>
-                    <input id='lastNameMaterno' type='text'/>
                 </div>
 
                 <div class='input-wrapper'>
