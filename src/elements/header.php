@@ -2,7 +2,7 @@
 
 <header>
     <div class='header-wrapper'>
-        <img id='logo' class='logo' src='img/focus_logo.png' href='home.php' />
+        <img id='logo' class='logo' src='img/focus_logo.png' />
         <div class='navigation-bar-wrapper'>
             <ul class='navigation-bar'>
                 <li><a href='panelistas.php'>Panelistas</a></li>
