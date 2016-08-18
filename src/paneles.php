@@ -56,6 +56,5 @@
             <table id='allPanels'></table>
         </div>
     </section>
-    <?php include_once('elements/footer.php');?>
 </body>
 </html>
