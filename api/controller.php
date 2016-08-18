@@ -57,7 +57,6 @@ switch ($action) {
     case 'SAVE_RESPUESTAS':
         setRespuestas();
         break;
-    case 'DELETE_ADMIN':
     case 'DELETE_CLIENTE':
         deleteRecord('Usuario');
         break;
