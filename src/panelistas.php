@@ -36,7 +36,7 @@
                     <input id='email' type='text'/>
                 </div>
                 <div class='input-wrapper'>
-                    <label>Nombre de Usuario:</label>
+                    <label>Usuario:</label>
                     <input id='username' type='text'/>
                 </div>
                 <div class='input-wrapper'>
@@ -118,7 +118,7 @@
                     <input id='cp' type='text'/>
                 </div>
 
-                <button type='submit' id='sendInfoPanelistas'>Enviar</button>
+                <button type='submit' id='savePanelista'>Enviar</button>
                 <span id='feedback' class='feedback-text'></span>
             </div>
 

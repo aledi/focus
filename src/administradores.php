@@ -52,7 +52,7 @@
 
             <div class='paswordConfirmInput'>
                 <p> Password Confirmation: </p>
-                <input type='password' name='Password' placeholder='••••••••' id='passwordConf'>
+                <input type='password' name='Password' placeholder='••••••••' id='passwordConfirm'>
             </div>
 
             <div id="enviarInfo">

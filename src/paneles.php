@@ -43,7 +43,7 @@
                 </table>
             </div>
             <div>
-                <button type='submit' id='loginButtonNuevoPanel'>Confirmar</button>
+                <button type='submit' id='savePanel'>Confirmar</button>
             </div>
             <div id='feedback'></div>
         </div>

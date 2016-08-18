@@ -32,7 +32,7 @@ $(document).on('ready', function () {
         }
     });
 
-    $('#loginButtonNuevoPanel').on('click', function (event) {
+    $('#savePanel').on('click', function (event) {
         event.preventDefault();
 
         var idPanel = window.location.search.substring(1)
