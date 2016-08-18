@@ -12,6 +12,5 @@
     <?php include_once('elements/header.php');?>
     </div>
     <section></section>
-    <?php include_once('elements/footer.php');?>
 </body>
 </html>

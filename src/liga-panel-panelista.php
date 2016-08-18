@@ -28,6 +28,5 @@
             <div id='feedback'></div>
         </form>
     </div>
-    <?php include_once('elements/footer.php');?>
 </body>
 </html>
