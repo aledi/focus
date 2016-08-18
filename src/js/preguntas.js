@@ -9,7 +9,7 @@ $(document).on('ready', function () {
         if (typeQuestion != 1) {
             var currentHTML = '';
 
-            for (x = 1; x <= 10; x++) {
+            for (var x = 1; x <= 10; x++) {
                 currentHTML += '<div class="answer">';
                 currentHTML += '<p>Opción ' + x + '</p>';
                 currentHTML += '<input class="respuesta' + x + '" name="respuesta' + questionID + '" type="text"/>';
