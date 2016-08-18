@@ -111,15 +111,13 @@ $(document).on('ready', function () {
 
         $('#headerTitle').text('Modificar Panelista');
 
-
-        var parameters = {
-            'action': 'GET_PANELISTAS',
-            'id': idPanelista
-        }
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
-            data: parameters,
+            data: {
+                'action': 'GET_PANELISTAS',
+                'id': idPanelista
+            },
             dataType: 'json',
             success: function(obj){
                 for (var i = 0; i < obj.results.length; i++) {
