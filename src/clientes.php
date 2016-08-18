@@ -56,7 +56,7 @@
                     <input type='password' name='Password' placeholder='••••••••' id='passwordConfirm'>
                 </div>
 
-                <button type='submit' id='sendInfoCliente'>Agregar</button>
+                <button type='submit' id='saveCliente'>Agregar</button>
                 <span id='feedback'></span>
             </div>
 

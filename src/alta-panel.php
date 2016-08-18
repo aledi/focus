@@ -37,7 +37,7 @@
             </div>
 
             <div>
-                <button type='submit' id='loginButtonNuevoPanel'>Crear Panel</button>
+                <button type='submit' id='savePanel'>Crear Panel</button>
             </div>
             <div id='feedback'></div>
         </form>

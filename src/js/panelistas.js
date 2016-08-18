@@ -40,7 +40,7 @@ $(document).on('ready', function () {
         });
     }, 500);
 
-	$('#sendInfoPanelistas').on('click', function (event) {
+	$('#savePanelista').on('click', function (event) {
         var idPanelista = window.location.search.substring(1)
         idPanelista = idPanelista.substring(3);
 
@@ -110,6 +110,7 @@ $(document).on('ready', function () {
         $("#tab-agregarPanelista").addClass('current');
 
         $('#headerTitle').text('Modificar Panelista');
+        $('#savePanelista').text('Modificar');
 
         $.ajax({
             url: '../api/controller.php',

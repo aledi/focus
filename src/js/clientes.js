@@ -36,7 +36,7 @@ $(document).on('ready', function () {
         });
     }, 500);
 
-    $('#sendInfoCliente').on('click', function (event) {
+    $('#saveCliente').on('click', function (event) {
         var idCliente = window.location.search.substring(1)
         idCliente = idCliente.substring(3);
 
@@ -107,7 +107,7 @@ $(document).on('ready', function () {
 
     $('#allUsers').on('click','.modifyButton', function () {
         $('#headerTitle').text('Modificar Cliente');
-        $('#sendInfoCliente').text('Modificar');
+        $('#saveCliente').text('Modificar');
 
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
