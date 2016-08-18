@@ -19,50 +19,45 @@
                 <li class="tab-link" data-tab="tab-modificarUsuario">Modificar Usuario</li>
             </ul>
 
-            <div id="tab-agregarUsuario" class="tab-content current">
-                <div class="formHeader">
-                    <h2 id='headerTitle'>Agregar Cliente</h2>
+            <div id='tab-agregarUsuario' class='tab-content current'>
+                <h2 id='headerTitle'>Agregar Cliente</h2>
+
+                <div id='emailInput' class='input-wrapper'>
+                    <label>Cuenta de correo electrónico:</label>
+                    <input id='email' type='text'/>
                 </div>
-                <div id="emailInput">
-                    <p>1. Cuenta de correo electrónico:</p>
-                    <input id="email" type="text"/>
+                <div id='nombre_admin' class='input-wrapper'>
+                    <label>Nombre(s):</label>
+                    <input id='fName' type='text'/>
                 </div>
 
-                <div id="nombre_admin">
-                    <p>2. Nombre(s) de Pila:</p>
-                    <input id="fName" type="text"/>
+                <div id='apellidos_admin' class='input-wrapper'>
+                    <label>Apellido Paterno:</label>
+                    <input id='lName' type='text'/>
                 </div>
 
-                <div id="apellidos_admin">
-                    <p>3. Apellido Paterno:</p>
-                    <input id="lName" type="text"/>
+                <div id='apellidos_admin_materno' class='input-wrapper'>
+                    <label>Apellido Materno:</label>
+                    <input id='lName_materno' type='text'/>
                 </div>
 
-                <div id="apellidos_admin_materno">
-                    <p>4. Apellido Materno:</p>
-                    <input id="lName_materno" type="text"/>
+                <div id='usernameInput' class='input-wrapper'>
+                    <label>Nombre de Usuario:</label>
+                    <input id='username' type='text'/>
                 </div>
 
-                <div id="usernameInput">
-                    <p>5. Nombre de Usuario:</p>
-                    <input id="username" type="text"/>
-                </div>
-
-                <div class='paswordInput'>
-                    <p> Password: </p>
+                <div class='input-wrapper'>
+                    <label>Contraseña:</label>
                     <input type='password' name='Password' placeholder='••••••••' id='password'>
                 </div>
 
-                <div class='paswordConfirmInput'>
-                    <p> Password Confirmation: </p>
+                <div class='input-wrapper'>
+                    <label>Confirmar contraseña:</label>
                     <input type='password' name='Password' placeholder='••••••••' id='passwordConf'>
                 </div>
 
-                <div id="enviarInfo">
-                    <br/>
-                    <button type='submit' id='sendInfoCliente'>Confirmar</button>
-                </div>
-                <div id='feedback'></div>
+                <button type='submit' id='sendInfoCliente'>Confirmar</button>
+                <span id='feedback'></span>
             </div>
 
             <div id="tab-modificarUsuario" class="tab-content">

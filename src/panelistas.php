@@ -118,9 +118,8 @@
                     <label>Código Postal:</label>
                     <input id='cp' type='text'/>
                 </div>
-                <div>
-                    <button type='submit' id='sendInfoPanelistas'>Enviar</button>
-                </div>
+
+                <button type='submit' id='sendInfoPanelistas'>Enviar</button>
                 <span id='feedback' class='feedback-text'></span>
             </div>
 
