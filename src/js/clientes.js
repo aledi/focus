@@ -20,7 +20,7 @@ $(document).on('ready', function () {
                     currentHTML += '<tr value="'+ obj.results[i].id + '">';
                     currentHTML += '<td></td>';
                     currentHTML += '<td>' + obj.results[i].username+'</td>';
-                    currentHTML += '<td>' + obj.results[i].nombre + " " + obj.results[i].apellidos'</td>';
+                    currentHTML += '<td>' + obj.results[i].nombre + " " + obj.results[i].apellidos+'</td>';
                     currentHTML += '<td>' + obj.results[i].email+'</td>';
                     currentHTML += '<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>';
                     currentHTML += '<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>';
