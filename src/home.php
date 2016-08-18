@@ -2,22 +2,15 @@
 
 <html lang='en'>
 <head>
-  	<meta charset='utf-8'>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
-	<script src="js/jquery-1.12.3.js"></script>
-  	<title> Focus - Home</title>
+    <script src="js/jquery-1.12.3.js"></script>
+    <title> Focus - Home</title>
 </head>
 
 <body>
-    <div id='header'>
-    	<div id="container">
-            <?php include_once('elements/navigation-bar.php');?>
-    	</div>
-        
+    <?php include_once('elements/header.php');?>
     </div>
-    <div id='loginForm'>
-
-    </div>
-	<?php include_once('elements/footer.php');?>
+    <section></section>
 </body>
 </html>

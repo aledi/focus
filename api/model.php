@@ -1,12 +1,9 @@
 <?php
 
 function connect() {
-    $servername = "localhost";
-    $username = "root";
-    $password = "root";
-    $dbname = "focus";
-
-    $connection = new mysqli($servername, $username, $password, $dbname);
+    // servername, username, password, dbname
+    $connection = new mysqli("localhost", "root", "root", "focus");
+    $connection->set_charset("utf8");
 
     # Check connection
     if ($connection->connect_error) {
@@ -24,6 +21,7 @@ function validateWebCredentials ($username, $password) {
     $conn = connect();
 
     if ($conn != null) {
+
         $sql = "SELECT id, username, nombre, apPaterno, apMaterno, email, tipo FROM Usuario WHERE username = '$username' AND password = '$password'";
         $result = $conn->query($sql);
 
@@ -45,14 +43,59 @@ function validatePanelistaCredentials ($username, $password) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, username, email, nombre, apellidos FROM Panelista WHERE username = '$username' AND password = '$password'";
-        $result = $conn->query($sql);
+        $sql0 = "SELECT id, username, email, nombre, apellidos FROM Panelista WHERE username = '$username' AND password = '$password'";
+        $result0 = $conn->query($sql0);
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
+        if ($result0->num_rows > 0) {
+            $row0 = $result0->fetch_assoc();
+            $panelista = $row0['id'];
+
+            $sql = "SELECT Panel.id, nombre, fechaInicio, fechaFin FROM Panel INNER JOIN PanelistaEnPanel ON Panel.id = PanelistaEnPanel.panel WHERE Panel.fechaInicio <= CURDATE() AND Panel.fechaFin >= CURDATE() AND PanelistaEnPanel.panelista = '$panelista'";
+            $result = $conn->query($sql);
+
+            $paneles = array();
+
+            while ($row = $result->fetch_assoc()) {
+                $panelId = $row['id'];
+                $sql2 = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE panel = '$panelId' AND fechaInicio <= CURDATE() AND fechaFin >= CURDATE()";
+                $result2 = $conn->query($sql2);
+
+                $encuestas = array();
+
+                while ($row2 = $result2->fetch_assoc()) {
+                    $encuestaId = $row2['id'];
+                    $sql3 = "SELECT id, tipo, numPregunta, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Preguntas WHERE encuesta = '$encuestaId'";
+                    $result3 = $conn->query($sql3);
+
+                    $preguntas = array();
+
+                    while ($row3 = $result3->fetch_assoc()) {
+                        $opciones = array($row3['op1'], $row3['op2'], $row3['op3'], $row3['op4'], $row3['op5'], $row3['op6'], $row3['op7'], $row3['op8'], $row3['op9'], $row3['op10']);
+                        $opciones = array_filter($opciones, 'emptyString');
+                        $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'opciones' => $opciones);
+                        $preguntas[] = $pregunta;
+                    }
+
+                    $contestada = FALSE;
+
+                    $sql4 = "SELECT id FROM Respuestas WHERE encuesta = '$encuestaId' AND panelista = '$panelista'";
+                    $result4 = $conn->query($sql4);
+
+                    if ($result4->num_rows > 0) {
+                        $contestada = TRUE;
+                    }
+
+                    $encuesta = array('id' => (int)$row2['id'], 'nombre' => $row2['nombre'], 'fechaInicio' => $row2['fechaInicio'], 'fechaFin' => $row2['fechaFin'], 'contestada' => $contestada, 'preguntas' => $preguntas);
+                    $encuestas[] = $encuesta;
+                }
+
+                $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'encuestas' => $encuestas);
+                $paneles[] = $panel;
+            }
 
             $conn->close();
-            return array('status' => 'SUCCESS', 'id' => (int)$row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre']." ".$row['apellidos']);
+            return array('status' => 'SUCCESS', 'id' => (int)$row0['id'], 'username' => $row0['username'], 'email' => $row0['email'], 'nombre' => $row0['nombre']." ".$row0['apellidos'], 'paneles' => $paneles);
+
         }
 
         $conn->close();
@@ -171,8 +214,18 @@ function registerEncuesta ($nombre, $fechaInicio, $fechaFin, $panel) {
 
         if ($conn->query($sql) === TRUE) {
             $lastId = mysqli_insert_id($conn);
+
+            $tokens = array();
+
+            $sql2 = "SELECT deviceToken FROM Panelista INNER JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = '$panel' AND Panelista.deviceToken != ''";
+
+            $result = $conn->query($sql2);
+            while ($row = $result->fetch_assoc()) {
+                array_push($tokens, $row['deviceToken']);
+            }
+
             $conn->close();
-            return array('status' => 'SUCCESS', 'id' => $lastId);
+            return array('status' => 'SUCCESS', 'id' => $lastId, 'deviceTokens' => $tokens);
         }
 
         $conn->close();
@@ -335,14 +388,14 @@ function fetchMobileData ($panelista) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT Panel.id, nombre, fechaInicio, fechaFin FROM Panel INNER JOIN PanelistaEnPanel ON Panel.id = PanelistaEnPanel.panel WHERE PanelistaEnPanel.panelista = '$panelista'";
+        $sql = "SELECT Panel.id, nombre, fechaInicio, fechaFin FROM Panel INNER JOIN PanelistaEnPanel ON Panel.id = PanelistaEnPanel.panel WHERE Panel.fechaInicio <= CURDATE() AND Panel.fechaFin >= CURDATE() AND PanelistaEnPanel.panelista = '$panelista'";
         $result = $conn->query($sql);
 
         $paneles = array();
 
         while ($row = $result->fetch_assoc()) {
             $panelId = $row['id'];
-            $sql2 = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE panel = '$panelId'";
+            $sql2 = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE panel = '$panelId' AND fechaInicio <= CURDATE() AND fechaFin >= CURDATE()";
             $result2 = $conn->query($sql2);
 
             $encuestas = array();
@@ -407,20 +460,28 @@ function savePanelistasPanel ($panel, $panelistas) {
         $sql = "DELETE FROM PanelistaEnPanel WHERE panel = '$panel'";
         $result = $conn->query($sql);
 
+        $tokens = array();
+
         foreach ($panelistas as &$panelista) {
             $sql = "INSERT INTO PanelistaEnPanel (panelista, panel) VALUES ('$panelista', '$panel')";
+            $sql2 = "SELECT deviceToken FROM Panelista WHERE id = '$panelista' AND deviceToken != ''";
 
             if ($conn->query($sql) === TRUE) {
                 $inserts = $inserts + 1;
             } else {
                 $errors = $errors + 1;
             }
+
+            $result = $conn->query($sql2);
+            if ($row = $result->fetch_assoc()) {
+                array_push($tokens, $row['deviceToken']);
+            }
         }
 
         $deletes = $deletes - $errors - $inserts;
 
         $conn->close();
-        return array('status' => 'SUCCESS', 'inserts' => $inserts, 'errors' => $errors, 'deletes' => $deletes);
+        return array('status' => 'SUCCESS', 'inserts' => $inserts, 'errors' => $errors, 'deletes' => $deletes, 'deviceTokens' => $tokens);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -626,6 +687,46 @@ function removeRecord ($id, $table) {
 
     if ($conn != null) {
         $sql = "DELETE FROM $table WHERE id = '$id'";
+
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
+        }
+
+        $conn->close();
+        return array('status' => 'ERROR');
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+// -------------------------------
+// Devices
+// -------------------------------
+
+function registerDeviceToken ($id, $token, $type) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "UPDATE Panelista SET deviceToken = '$token', deviceType = '$type' WHERE id = '$id'";
+
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
+        }
+
+        $conn->close();
+        return array('status' => 'ERROR');
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function unregisterDeviceToken ($id) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "UPDATE Panelista SET deviceToken = '', deviceType = '' WHERE id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
             $conn->close();

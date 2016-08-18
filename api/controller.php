@@ -25,7 +25,7 @@ switch ($action) {
         newPanel();
         break;
     case 'ALTA_ENCUESTA':
-        newEnuesta();
+        newEncuesta();
         break;
     case 'GET_ADMINS':
         getRecords('ADMINS');
@@ -46,7 +46,7 @@ switch ($action) {
         getRecords('PREGUNTAS');
         break;
     case 'GET_MOBILE_DATA':
-    getRecords('MOBILE');
+        getRecords('MOBILE');
         break;
     case 'SET_PANELISTAS_PANEL':
         setPanelistasPanel();
@@ -58,8 +58,6 @@ switch ($action) {
         setRespuestas();
         break;
     case 'DELETE_ADMIN':
-        deleteRecord('Usuario');
-        break;
     case 'DELETE_CLIENTE':
         deleteRecord('Usuario');
         break;
@@ -74,6 +72,12 @@ switch ($action) {
         break;
     case 'VERIFY_SESSION':
         verifyActiveSession();
+        break;
+    case 'REGISTER_DEVICE':
+        registerDevice();
+        break;
+    case 'UNREGISTER_DEVICE':
+        unregisterDevice();
         break;
     case 'LOG_OUT':
         logOut();
@@ -159,11 +163,17 @@ function newPanel () {
     echo json_encode($registrationResult);
 }
 
-function newEnuesta () {
+function newEncuesta () {
     if (isset($_POST['id'])) {
         $registrationResult = updateEncuesta($_POST['id'], $_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['panel']);
     } else {
         $registrationResult = registerEncuesta($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['panel']);
+
+        if ($registrationResult['status'] === 'SUCCESS') {
+            foreach ($registrationResult['deviceTokens'] as $deviceToken) {
+                sendPushNotification('Nueva Encuesta', $deviceToken);
+            }
+        }
     }
 
     echo json_encode($registrationResult);
@@ -196,8 +206,6 @@ function getRecords ($type) {
                 echo json_encode(fetchPreguntasEncuesta($_POST['encuesta']));
                 return;
             }
-
-            // echo json_encode(fetchPreguntas());
             break;
         case 'MOBILE':
             echo json_encode(fetchMobileData($_POST['panelista']));
@@ -207,6 +215,12 @@ function getRecords ($type) {
 
 function setPanelistasPanel () {
     $saveResult = savePanelistasPanel($_POST['panel'], $_POST['panelistas']);
+
+    if ($saveResult['status'] === 'SUCCESS') {
+        foreach ($saveResult['deviceTokens'] as $deviceToken) {
+            sendPushNotification('Nuevo Panel', $deviceToken);
+        }
+    }
 
     echo json_encode($saveResult);
 }
@@ -235,10 +249,66 @@ function verifyActiveSession () {
     echo json_encode($validationResult);
 }
 
+function registerDevice () {
+    $registrationResult = registerDeviceToken($_POST['id'], $_POST['deviceToken'], $_POST['deviceType']);
+
+    echo json_encode($registrationResult);
+}
+
+function unregisterDevice () {
+    $registrationResult = unregisterDeviceToken($_POST['id']);
+
+    echo json_encode($registrationResult);
+}
+
 function logOut ()  {
     destroySession();
 
     echo json_encode(array('status' => 'SUCCESS'));
+}
+
+function sendPushNotification ($message, $deviceToken) {
+    $ctx = stream_context_create();
+    stream_context_set_option($ctx, 'ssl', 'local_cert', 'FocusPushKey.pem');
+    stream_context_set_option($ctx, 'ssl', 'passphrase', 'Focuscg233');
+
+    // Open a connection to the APNS server
+    $fp = stream_socket_client(
+        'ssl://gateway.sandbox.push.apple.com:2195',
+        $err,
+        $errstr,
+        60,
+        STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT,
+        $ctx
+    );
+
+    if (!$fp)
+      exit("Failed to connect: $err $errstr" . PHP_EOL);
+
+    // echo 'Connected to APNS' . PHP_EOL;
+
+    // Create the payload body
+    $body['aps'] = array(
+      'alert' => $message,
+      'sound' => 'default'
+    );
+
+    // Encode the payload as JSON
+    $payload = json_encode($body);
+
+    // Build the binary notification
+    $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
+
+    // Send it to the server
+    $result = fwrite($fp, $msg, strlen($msg));
+
+    // if (!$result)
+    //   echo 'Message not delivered' . PHP_EOL;
+    // else
+    //   echo 'Message successfully delivered' . PHP_EOL;
+
+    // Close the connection to the server
+    fclose($fp);
 }
 
 ?>

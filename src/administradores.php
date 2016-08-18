@@ -2,49 +2,42 @@
 
 <html lang='en'>
 <head>
-  	<meta charset='utf-8'>
-    <link href='css/template.css' type='text/css' rel='stylesheet'/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link href='css/template.css' type='text/css' rel='stylesheet' />
     <script src="js/jquery-1.12.3.js"></script>
-    <script src='js/alta-panelistas.js' type='text/javascript'></script>
-    <script src='js/modify-delete.js' type='text/javascript'></script>
-  	<title> Focus - Administradores</title>
+    <script src='js/administradores.js' type='text/javascript'></script>
+    <title> Focus - Administradores</title>
 </head>
 
 <body>
-    <div id='header'>
-    	<div id="container">
-    		<?php include_once('elements/navigation-bar.php');?>
-    	</div>
-    </div>
-    <div id='contentContainer'>
-
+    <?php include_once('elements/header.php');?>
+    <section>
         <ul class="tabs">
             <li class="tab-link current" data-tab="tab-agregarAdministrador">Agregar Administrador</li>
             <li class="tab-link" data-tab="tab-modificarAdministrador">Modificar Administrador</li>
         </ul>
 
-		<div id="tab-agregarAdministrador" class="tab-content current">
-			<div class="formHeader">
-                <h2>Agregar Administrador</h2>
-            </div>
-             <div id="emailInput">
+        <div id="tab-agregarAdministrador" class="tab-content current">
+            <h2 id='headerTitle'>Agregar Administrador</h2>
+
+            <div id="emailInput">
                 <p>1. Cuenta de correo electrónico:</p>
                 <input id="email" type="text"/>
             </div>
 
             <div id="nombre_admin">
                 <p>2. Nombre(s) de Pila:</p>
-                <input id="fName" type="text"/>
+                <input id="firstName" type="text"/>
             </div>
 
             <div id="apellidos_admin">
                 <p>3. Apellido Paterno:</p>
-                <input id="lName" type="text"/>
+                <input id="lastName" type="text"/>
             </div>
 
             <div id="apellidos_admin_materno">
                 <p>4. Apellido Materno:</p>
-                <input id="lName_materno" type="text"/>
+                <input id="lastNameMaterno" type="text"/>
             </div>
 
             <div id="usernameInput">
@@ -54,12 +47,12 @@
 
             <div class='paswordInput'>
                 <p> Password: </p>
-                <input type='password' name='Password' placeholder='***************' id='password'>
+                <input type='password' name='Password' placeholder='••••••••' id='password'>
             </div>
 
             <div class='paswordConfirmInput'>
                 <p> Password Confirmation: </p>
-                <input type='password' name='Password' placeholder='***************' id='passwordConf'>
+                <input type='password' name='Password' placeholder='••••••••' id='passwordConf'>
             </div>
 
             <div id="enviarInfo">
@@ -67,17 +60,13 @@
                 <button type='submit' id='sendInfoAdmin'>Registrar Administrador</button>
             </div>
             <div id='feedback'></div>
-		</div>
-	
-		<div id="tab-modificarAdministrador" class="tab-content">
-            <div class="formHeader">
-                <h2>Administradores Disponibles</h2>
-            </div>
-			<table id="allAdmin">
-            
-            </table>
-		</div>
-    </div>
-	<?php include_once('elements/footer.php');?>
+        </div>
+
+        <div id="tab-modificarAdministrador" class="tab-content">
+            <h2>Administradores Disponibles</h2>
+
+            <table id="allAdmin"></table>
+        </div>
+    </section>
 </body>
 </html>
