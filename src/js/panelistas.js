@@ -53,7 +53,7 @@ $(document).on('ready', function () {
             'password': $('#password').val(),
             'genero': $('input[name=gender]:checked').val(),
             'fechaNacimiento': $('#fechaNacimiento').val(),
-            'educacion': $('#nivelEducativo').val(),
+            'educacion': $('#educacion').val(),
             'calleNumero': $('#calleNumero').val(),
             'colonia': $('#colonia').val(),
             'municipio': $('#municipio').val(),
@@ -129,7 +129,7 @@ $(document).on('ready', function () {
                         $('#email').val(obj.results[i].email);
                         $('#username').val(obj.results[i].username);
                         $('input[name="gender"][value="' + obj.results[i].genero + '"]').prop('checked', true);
-                        $('#nivelEducativo').val(obj.results[i].nivelEducativo);
+                        $('#educacion').val(obj.results[i].educacion + '');
                         $('#calleNumero').val(obj.results[i].calleNumero);
                         $('#colonia').val(obj.results[i].colonia);
                         $('#municipio').val(obj.results[i].municipio);

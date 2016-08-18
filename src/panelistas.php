@@ -54,7 +54,7 @@
                 </div>
                 <div class='input-wrapper'>
                     <label>Educación:</label>
-                    <select class='form-control' id='nivelEducativo' name='nivelEducativo'>
+                    <select class='form-control' id='educacion' name='educacion'>
                         <option value='0'>Selecciona un nivel de educación</option>
                         <option value='1'>Primaria</option>
                         <option value='2'>Secundaria</option>
