@@ -18,9 +18,8 @@
         </ul>
 
         <div id='tab-agregarPanel' class='tab-content current'>
-            <div class='formHeader'>
-                <h2 id='headerTitle'>Agregar Panel</h2>
-            </div>
+            <h2 id='headerTitle'>Agregar Panel</h2>
+
             <div id='panelInput'>
                 <p>Nombre del Panel:</p>
                 <input id='panelName' type='text'/>
@@ -50,9 +49,8 @@
         </div>
 
         <div id='tab-modificarPanel' class='tab-content'>
-            <div class='formHeader'>
-                <h2>Paneles Disponibles</h2>
-            </div>
+            <h2>Paneles Disponibles</h2>
+
             <table id='allPanels'></table>
         </div>
     </section>
