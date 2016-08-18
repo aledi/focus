@@ -84,10 +84,9 @@
                         <option value='BC'>Baja California</option>
                         <option value='BCS'>Baja California Sur</option>
                         <option value='CAMP'>Campeche</option>
-                        <option value='CHIS'>Coahuila</option>
+                        <option value='COAH'>Coahuila</option>
                         <option value='CHIH'>Colima</option>
-                        <option value='COAH'>Chiapas</option>
-                        <option value='COL'>Colima</option>
+                        <option value='CHIS'>Chiapas</option>
                         <option value='CDMX'>Ciudad de México</option>
                         <option value='DGO'>Durango</option>
                         <option value='GTO'>Guanajuato</option>
