@@ -48,6 +48,7 @@ $(document).on('ready', function () {
         currentHTML += '<div id="Answers'+lastQuestion+'">' +
             '</div>' +
             '<div class="feedback"></div>' +
+            '<div class="button"><button type="submit">Remover Pregunta</button></div>' +
             '</div>';
 
         $("#questions").append(currentHTML);
