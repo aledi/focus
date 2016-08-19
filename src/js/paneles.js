@@ -149,6 +149,7 @@ $(document).on('ready', function () {
         $("#tab-agregarPanel").addClass('current');
 
         $('#headerTitle').text('Modificar Panel');
+		$('#savePanel').text('Modificar');
 
         $.ajax({
             url: '../api/controller.php',
