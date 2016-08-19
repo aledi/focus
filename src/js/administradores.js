@@ -28,7 +28,7 @@ $(document).on('ready', function () {
                     currentHTML += '<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>';
                     currentHTML += '</tr>';
 
-                    $('#allAdmin').append(currentHTML);
+                    $('#allAdmins').append(currentHTML);
                     currentHTML = '';
                 }
             },
@@ -38,7 +38,7 @@ $(document).on('ready', function () {
         });
     });
 
-	$('#sendInfoAdmin').on('click', function (event) {
+	$('#saveAdmin').on('click', function (event) {
         var idAdministrador = window.location.search.substring(1)
         idAdministrador = idAdministrador.substring(3);
 
@@ -87,7 +87,7 @@ $(document).on('ready', function () {
         });
     });
 
-	$('#allAdmin').on('click','.deleteButton', function(){
+	$('#allAdmins').on('click','.deleteButton', function(){
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
@@ -106,7 +106,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allAdmin').on('click','.modifyButton', function(){
+    $('#allAdmins').on('click','.modifyButton', function(){
         var idAdministador = $(this).parent().attr('value')
 
         $('ul.tabs li').removeClass('current');
@@ -116,6 +116,7 @@ $(document).on('ready', function () {
         $("#tab-agregarAdministrador").addClass('current');
 
         $('#headerTitle').text('Modificar Administrador');
+        $('#saveAdmin').text('Modificar');
 
         $.ajax({
             url: '../api/controller.php',
