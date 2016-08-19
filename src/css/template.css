@@ -119,14 +119,13 @@ section {
     top: 70px; right: 0; left: 0;
 }
 
-.panelistas-wrapper, .clientes-wrapper, .admins-wrapper, .paneles-wrapper {
+.panelistas-wrapper, .clientes-wrapper, .admins-wrapper, .paneles-wrapper, .encuestas-wrapper {
     height: 100%;
-    width: 600px;
     margin: 50px auto;
     box-sizing: border-box;
 }
 
-.panelistas-wrapper, .paneles-wrapper {
+.panelistas-wrapper, .paneles-wrapper, .encuestas-wrapper {
     width: 800px;
 }
 

@@ -14,47 +14,46 @@
 <body>
     <?php include_once('elements/header.php');?>
     <section>
-        <ul class="tabs">
-            <li class="tab-link current" data-tab="tab-agregarEncuesta">Agregar Encuesta</li>
-            <li class="tab-link" data-tab="tab-modificarEncuesta">Modificar Encuesta</li>
-        </ul>
+        <div class='encuestas-wrapper'>
+            <ul class='tabs'>
+                <li class='tab-link current' data-tab='tab-agregarEncuesta'>Agregar Encuesta</li>
+                <li class='tab-link' data-tab='tab-modificarEncuesta'>Modificar Encuesta</li>
+            </ul>
 
-        <div id="tab-agregarEncuesta" class="tab-content current">
-            <h2 id='headerTitle'>Agregar Encuesta</h2>
+            <div id='tab-agregarEncuesta' class='tab-content current'>
+                <h2 id='headerTitle'>Agregar Encuesta</h2>
 
-            <div id="emailInput">
-                <p>1. Nombre de Encuesta:</p>
-                <input id="nombre" type="text"/>
+                <div class='input-wrapper'>
+                    <label>Nombre de Encuesta:</label>
+                    <input id='nombre' type='text'/>
+                </div>
+
+                <div class='input-wrapper'>
+                    <label>Fecha de Inicio (yyyy-mm-dd):</label>
+                    <input id='dateStarts' type='text'/>
+                </div>
+
+                <div class='input-wrapper'>
+                    <label>Fecha Final (yyyy-mm-dd):</label>
+                    <input id='dateEnds' type='text'/>
+                </div>
+
+                <div class='input-wrapper'>
+                    <label>Seleccionar Panel: </label>
+                    <table id='allPanels'>
+
+                    </table>
+                </div>
+
+                <button type='submit' id='saveEncuesta'>Agregar</button>
+                <span id='feedback'></span>
             </div>
 
-            <div id="date_starts">
-                <p>2. Fecha de Inicio (yyyy-mm-dd):</p>
-                <input id="dateStarts" type="text"/>
+            <div id='tab-modificarEncuesta' class='tab-content'>
+                <h2>Encuestas Disponibles</h2>
+
+                <table id='allSurveys'></table>
             </div>
-
-            <div id="date_ends">
-                <p>3. Fecha Final (yyyy-mm-dd):</p>
-                <input id="dateEnds" type="text"/>
-            </div>
-
-            <div id="panels">
-                <p>4. Seleccionar Panel: </p>
-                <table id="allPanels">
-
-                </table>
-            </div>
-
-            <div id="enviarInfo">
-                <br/>
-                <button type='submit' id='sendInfoEncuestas'>Confirmar</button>
-            </div>
-            <div id='feedback'></div>
-        </div>
-
-        <div id="tab-modificarEncuesta" class="tab-content">
-            <h2>Encuestas Disponibles</h2>
-
-            <table id="allSurveys"></table>
         </div>
     </section>
 </body>
