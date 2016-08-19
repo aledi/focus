@@ -104,7 +104,6 @@ $(document).on('ready', function () {
     });
 
     $('#allUsers').on('click','.modifyButton', function () {
-        var parameters;
         var idUser = $(this).parent().attr('value')
         $('#headerTitle').text('Modificar Cliente');
         $('#saveCliente').text('Modificar');
@@ -118,9 +117,9 @@ $(document).on('ready', function () {
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
-            data: parameters = {
+            data: {
                 'action': 'GET_CLIENTES',
-                'id': $(this).parent().attr('value')
+                'id': idUser
             },
             dataType: 'json',
             success: function (obj) {
