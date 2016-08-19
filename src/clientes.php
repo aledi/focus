@@ -4,7 +4,6 @@
 <head>
   	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   	<link href='css/template.css' type='text/css' rel='stylesheet'/>
-    <link href='css/clientes.css' type='text/css' rel='stylesheet'/>
   	<script src="js/jquery-1.12.3.js"></script>
     <script src='js/clientes.js' type='text/javascript'></script>
     <title> Focus - Clientes</title>
