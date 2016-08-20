@@ -29,7 +29,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 if (obj.status === 'SUCCESS') {
-                    location.replace('home.php');
+                    location.replace('reportes.php');
                 } else {
                     $('#feedback').html('Usuario o contraseña incorrectos.');
                 }

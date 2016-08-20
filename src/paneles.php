@@ -12,46 +12,47 @@
 <body>
     <?php include_once('elements/header.php');?>
     <section>
-        <ul class='tabs'>
-            <li class='tab-link current' data-tab='tab-agregarPanel'>Agregar Panel</li>
-            <li class='tab-link' data-tab='tab-modificarPanel'>Modificar Panel</li>
-        </ul>
+        <div class='paneles-wrapper'>
+            <ul class='tabs'>
+                <li class='tab-link current' data-tab='tab-agregarPanel'>Agregar Panel</li>
+                <li class='tab-link' data-tab='tab-modificarPanel'>Modificar Panel</li>
+            </ul>
 
-        <div id='tab-agregarPanel' class='tab-content current'>
-            <h2 id='headerTitle'>Agregar Panel</h2>
+            <div id='tab-agregarPanel' class='tab-content current'>
+                <h2 id='headerTitle'>Agregar Panel</h2>
 
-            <div id='panelInput'>
-                <p>Nombre del Panel:</p>
-                <input id='panelName' type='text'/>
-            </div>
-            <div id='descripcionInput'>
-                <p>Descripción:</p>
-                <textarea id='descripcion' type='text'/></textarea>
-            </div>
-            <div id='date_starts'>
-                <p>Fecha de Inicio (yyyy-mm-dd):</p>
-                <input id='dateStarts' type='text'/>
-            </div>
-            <div id='date_ends'>
-                <p>Fecha Final (yyyy-mm-dd):</p>
-                <input id='dateEnds' type='text'/>
-            </div>
-            <div id='clients'>
-                <p>Seleccionar Cliente: </p>
-                <table id='tableClientes'>
+                <div class='input-wrapper'>
+                    <label>Nombre del Panel:</label>
+                    <input id='panelName' type='text'/>
+                </div>
+                <div class='input-wrapper'>
+                    <label>Descripción:</label>
+                    <textarea id='descripcion' type='text'/></textarea>
+                </div>
+                <div class='input-wrapper'>
+                    <label>Fecha de Inicio (yyyy-mm-dd):</label>
+                    <input id='dateStarts' type='text'/>
+                </div>
+                <div class='input-wrapper'>
+                    <label>Fecha Final (yyyy-mm-dd):</label>
+                    <input id='dateEnds' type='text'/>
+                </div>
+                <div>
+                    <p>Seleccionar Cliente: </p>
+                    <table id='tableClientes'>
 
-                </table>
-            </div>
-            <div>
-                <button type='submit' id='savePanel'>Confirmar</button>
-            </div>
-            <div id='feedback'></div>
-        </div>
+                    </table>
+                </div>
 
-        <div id='tab-modificarPanel' class='tab-content'>
-            <h2>Paneles Disponibles</h2>
+                <button type='submit' id='savePanel'>Agregar</button>
+                <span id='feedback'></span>
+            </div>
 
-            <table id='allPanels'></table>
+            <div id='tab-modificarPanel' class='tab-content'>
+                <h2>Paneles Disponibles</h2>
+
+                <table id='allPanels'></table>
+            </div>
         </div>
     </section>
 </body>
