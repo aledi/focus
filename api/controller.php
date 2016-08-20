@@ -187,9 +187,19 @@ function newEncuesta () {
 function getRecords ($type) {
     switch ($type) {
         case 'ADMINS':
+            if (isset($_POST['id'])) {
+                echo json_encode(fetchUser(0, $_POST['id']));
+                return;
+            }
+
             echo json_encode(fetchUsers(0));
             break;
         case 'CLIENTES':
+            if (isset($_POST['id'])) {
+                echo json_encode(fetchUser(1, $_POST['id']));
+                return;
+            }
+
             echo json_encode(fetchUsers(1));
             break;
         case 'PANELISTAS':
@@ -201,9 +211,19 @@ function getRecords ($type) {
             echo json_encode(fetchPanelistas());
             break;
         case 'PANELES':
+            if (isset($_POST['id'])) {
+                echo json_encode(fetchPanel($_POST['id']));
+                return;
+            }
+
             echo json_encode(fetchPaneles());
             break;
         case 'ENCUESTAS':
+            if (isset($_POST['id'])) {
+                echo json_encode(fetchEncuesta($_POST['id']));
+                return;
+            }
+
             echo json_encode(fetchEncuestas());
             break;
         case 'PREGUNTAS':
