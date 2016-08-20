@@ -74,7 +74,7 @@ $(document).on('ready', function () {
         });
     }, 500);
 
-    $('#sendInfoEncuestas').on('click', function (event) {
+    $('#saveEncuesta').on('click', function (event) {
         event.preventDefault();
 
         var idSurvey = window.location.search.substring(1)
@@ -146,6 +146,7 @@ $(document).on('ready', function () {
         $("#tab-agregarEncuesta").addClass('current');
 
         $('#headerTitle').text('Modificar Encuesta');
+        $('#saveEncuesta').text('Modificar');
 
         $.ajax({
             url: '../api/controller.php',

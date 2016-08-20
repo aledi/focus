@@ -119,19 +119,18 @@ section {
     top: 70px; right: 0; left: 0;
 }
 
-textarea {
-    height: 60px;
-    width: 400px;
-    margin-top: 2%;
+.panelistas-wrapper, .clientes-wrapper, .admins-wrapper, .paneles-wrapper, .encuestas-wrapper {
+    height: 100%;
+    margin: 50px auto;
+    box-sizing: border-box;
 }
 
-.login-form {
-    text-align: center;
-    margin-top: 2%;
-    background-color: rgb(209, 224, 240);
-    margin: auto;
-    width: 60%;
-    vertical-align: middle;
+.panelistas-wrapper, .paneles-wrapper, .encuestas-wrapper {
+    width: 800px;
+}
+
+.clientes-wrapper, .admins-wrapper {
+    width: 600px;
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -188,13 +187,24 @@ h2 {
     letter-spacing: 0.5px;
 }
 
+input[type='text'], input[type='password'], textarea {
+    box-sizing: border-box;
+    letter-spacing: 0.5px;
+    font-size: 13px;
+    border: 1px solid #E4E4E4;
+}
+
 input[type='text'], input[type='password'] {
     height: 30px;
     width: 250px;
     padding: 0 5px;
-    box-sizing: border-box;
-    letter-spacing: 0.5px;
-    font-size: 13px;
+}
+
+textarea {
+    height: 100px;
+    width: 100%;
+    padding: 5px;
+    resize: none;
 }
 
 button {
