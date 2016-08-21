@@ -24,7 +24,7 @@ header {
     height: 100%;
     width: 100%;
     position: relative;
-    background-color: #370A8F;
+    background-color: #202382;
 }
 
 .logo {
@@ -75,7 +75,7 @@ li a {
 }
 
 li a:hover{
-    background-color: #D7CEE9;
+    background-color: #D2D3E6;
 }
 
 li a, .dropbtn {
@@ -107,7 +107,7 @@ li.dropdown {
 }
 
 .dropdown-content a:hover {
-    background-color: #D7CEE9;
+    background-color: #D2D3E6;
 }
 
 .dropdown:hover .dropdown-content {
@@ -143,7 +143,7 @@ ul.tabs {
     padding: 0;
     margin: 0;
     list-style: none;
-    background-color: #7353B0;
+    background-color: #6265A7;
     color: white;
 }
 
@@ -156,7 +156,7 @@ ul.tabs li {
 }
 
 ul.tabs li.current {
-    background-color: #4B229A;
+    background-color: #36398E;
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -175,7 +175,7 @@ ul.tabs li.current {
 
 h2 {
     margin-top: 0;
-    color: #7353B0;
+    color: #6265A7;
     letter-spacing: 1px;
 }
 
@@ -220,7 +220,7 @@ button {
     width: 200px;
     display: block;
     margin: auto;
-    background-color: #370A8F;
+    background-color: #202382;
     border: none;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -232,8 +232,8 @@ button {
 button.no-background {
     height: 30px;
     background-color: transparent;
-    border: 1px solid #370A8F;
-    color: #370A8F;
+    border: 1px solid #202382;
+    color: #202382;
     margin-bottom: 30px;
 }
 
@@ -264,7 +264,7 @@ table tbody tr td {
 }
 
 table tbody tr:nth-child(odd) {
-    background-color: #EBE6F3;
+    background-color: #E8E9F2;
 }
 
 table tbody tr td button {
@@ -273,5 +273,5 @@ table tbody tr td button {
     border: none;
     background-color: transparent;
     font-size: 11px;
-    color: #5F3BA5;
+    color: #4D4F9B;
 }

@@ -14,7 +14,7 @@ header {
     padding: 20px 0;
     position: absolute;
     top: 0; right: 0; left: 0;
-    background-color: #370A8F;
+    background-color: #202382;
 }
 
 img {
@@ -73,7 +73,7 @@ button {
     height: 40px;
     width: 200px;
     margin: 20px 10px;
-    background-color: #370A8F;
+    background-color: #202382;
     border: 0;
     letter-spacing: 0.5px;
     text-transform: uppercase;
