@@ -242,3 +242,36 @@ button.no-background {
     margin-top: 10px;
     text-align: center;
 }
+
+/* -----------------------------------------------------------------------------------------------
+/ Table
+/ ----------------------------------------------------------------------------------------------- */
+
+table {
+    width: 100%;
+}
+
+table thead tr th.left {
+    text-align: left;
+}
+
+table tbody tr td.centered {
+    text-align: center;
+}
+
+table tbody tr td {
+    padding: 10px 5px;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: #EBE6F3;
+}
+
+table tbody tr td button {
+    height: auto;
+    width: auto;
+    border: none;
+    background-color: transparent;
+    font-size: 11px;
+    color: #5F3BA5;
+}
