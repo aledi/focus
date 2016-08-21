@@ -51,7 +51,7 @@
                     </div>
                     <div class='feedback'></div>
                     <div class="button">
-                        <button type="submit">Remover Pregunta</button>
+                        <button type="submit" class="removerPregunta">Remover Pregunta</button>
                     </div>
                 </div>
             </div>

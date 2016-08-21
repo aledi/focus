@@ -48,7 +48,7 @@ $(document).on('ready', function () {
         currentHTML += '<div id="Answers'+lastQuestion+'">' +
             '</div>' +
             '<div class="feedback"></div>' +
-            '<div class="button"><button type="submit">Remover Pregunta</button></div>' +
+            '<div class="button"><button type="submit" class="removerPregunta">Remover Pregunta</button></div>' +
             '</div>';
 
         $("#questions").append(currentHTML);
@@ -124,6 +124,10 @@ $(document).on('ready', function () {
         lastQuestion = parseInt(lastQuestion) + 1;
 
         appendQuestions(lastQuestion);
+    });
+
+    $('#questions').on('click','.removerPregunta', function(){
+        console.log('Entra');
     });
 
     $('#submitQuestions').on('click', function(){
@@ -211,7 +215,6 @@ $(document).on('ready', function () {
                 $('#feedback').html("Preguntas no añadidas, ha ocurrido un error.");
             }
         });
-    })
-
+    });
 
 });
