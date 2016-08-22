@@ -8,7 +8,6 @@ $(document).on('ready', function () {
         success: function (obj) {
             var currentHTML = '<thead>';
             currentHTML += '<tr>';
-            currentHTML += '<th>Username</th>';
             currentHTML += '<th>Nombre</th>';
             currentHTML += '<th>Correo</th>';
             currentHTML += '<th class="centered">Seleccionar</th>';
@@ -18,8 +17,7 @@ $(document).on('ready', function () {
 
             for (var i = 0; i < obj.results.length; i++) {
                 currentHTML += '<tr value="' + obj.results[i].id + '">';
-                currentHTML += "<td>" + obj.results[i].username+"</td>";
-                currentHTML += "<td>" + obj.results[i].nombre+"</td>";
+                currentHTML += "<td>" + obj.results[i].nombre + " " + obj.results[i].apellidos +"</td>";
                 currentHTML += "<td>" + obj.results[i].email+"</td>";
                 currentHTML += '<td class="centered"><input type="radio" value=' + obj.results[i].id + ' name="id"></td>';
                 currentHTML += "</tr>";
