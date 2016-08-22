@@ -146,6 +146,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 alert("Panel ligado exitosamente.");
+                location.replace('paneles.php');
             },
             error: function (error) {
                 alert("error");
