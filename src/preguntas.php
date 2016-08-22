@@ -24,7 +24,7 @@
                 <div id='questions'>
                     <div id="1" class='questionForm'>
                         <div class='input-wrapper'>
-                            <label>Pregunta 1:</label>
+                            <label>Pregunta: </label>
                             <input class='pregunta' name='respuesta1' type='text'/>
                         </div>
                         <div class='input-wrapper'>

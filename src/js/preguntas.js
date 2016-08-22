@@ -24,7 +24,7 @@ $(document).on('ready', function () {
         var currentHTML = '<div id="' + lastQuestion + '" class="questionForm">';
         currentHTML += '<hr>';
         currentHTML += '<div class="input-wrapper">' +
-            '<p>Pregunta '+ lastQuestion +' :</p>' +
+            '<p>Pregunta:</p>' +
             '<input class="pregunta" name="respuesta'+lastQuestion+'" type="text"/>' +
             '</div>';
         currentHTML += '<div class="input-wrapper">' +
@@ -127,7 +127,7 @@ $(document).on('ready', function () {
     });
 
     $('#questions').on('click','.removerPregunta', function(){
-        console.log('Entra');
+        $(this).parent().parent().remove();
     });
 
     $('#submitQuestions').on('click', function(){
