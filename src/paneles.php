@@ -23,11 +23,11 @@
 
                 <div class='input-wrapper'>
                     <label>Nombre del Panel:</label>
-                    <input id='panelName' type='text'/>
+                    <input id='panelName' type='text' placeholder='Panel Electoral 2018' />
                 </div>
                 <div class='input-wrapper'>
                     <label>Descripción:</label>
-                    <textarea id='descripcion' type='text'/></textarea>
+                    <textarea id='descripcion' type='text' placeholder='Escriba su descripción aquí...'></textarea>
                 </div>
                 <div class='input-wrapper'>
                     <label>Fecha de Inicio (yyyy-mm-dd):</label>

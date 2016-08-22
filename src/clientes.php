@@ -22,22 +22,23 @@
                 <h2 id='headerTitle'>Agregar Cliente</h2>
 
                 <div class='input-wrapper'>
-                    <label>Correo Electrónico:</label>
-                    <input id='email' type='text'/>
-                </div>
-                <div class='input-wrapper'>
                     <label>Nombre(s):</label>
-                    <input id='firstName' type='text'/>
+                    <input id='firstName' type='text' placeholder='José' />
                 </div>
 
                 <div class='input-wrapper'>
                     <label>Apellido(s):</label>
-                    <input id='lastName' type='text'/>
+                    <input id='lastName' type='text' placeholder='Pérez García' />
+                </div>
+
+                <div class='input-wrapper'>
+                    <label>Correo Electrónico:</label>
+                    <input id='email' type='text' placeholder='email@email.com' />
                 </div>
 
                 <div class='input-wrapper'>
                     <label>Usuario:</label>
-                    <input id='username' type='text'/>
+                    <input id='username' type='text' placeholder='jperez' />
                 </div>
 
                 <div class='input-wrapper'>
