@@ -23,11 +23,11 @@ $(document).on('ready', function () {
     function appendQuestions (lastQuestion) {
         var currentHTML = '<div id="' + lastQuestion + '" class="questionForm">';
         currentHTML += '<hr>';
-        currentHTML += '<div class="questionInput">' +
+        currentHTML += '<div class="input-wrapper">' +
             '<p>Pregunta '+ lastQuestion +' :</p>' +
             '<input class="pregunta" name="respuesta'+lastQuestion+'" type="text"/>' +
             '</div>';
-        currentHTML += '<div class="questionType">' +
+        currentHTML += '<div class="input-wrapper">' +
             '<p>Tipo de pregunta: </p>' +
             '<select class="tipoPregunta" name="respuesta'+lastQuestion+'" required>' +
             '<option value="1">Abiertas</option>' +
@@ -37,11 +37,11 @@ $(document).on('ready', function () {
             '</select>' +
             '<p class="feedTypeQuestion"></p>' +
             '</div>';
-        currentHTML += '<div class="imagen_content">' +
+        currentHTML += '<div class="input-wrapper">' +
             '<p>Imagen URL:</p>' +
             '<input class="imagen" name="respuesta'+lastQuestion+'" type="text"/>' +
             '</div>';
-        currentHTML += '<div class="videoContent">' +
+        currentHTML += '<div class="input-wrapper">' +
             '<p>Video URL:</p>' +
             '<input class="video" name="respuesta'+lastQuestion+'" type="text"/>' +
             '</div>';

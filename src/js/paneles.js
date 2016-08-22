@@ -88,29 +88,32 @@ $(document).on('ready', function () {
             data: {'action': 'GET_PANELES'},
             dataType: 'json',
             success: function (obj) {
-                var currentHTML = '<tr>';
-                currentHTML += '<th></th>';
+				var currentHTML = '<thead>';
+                currentHTML += '<tr>';
                 currentHTML += '<th>Nombre</th>';
                 currentHTML += '<th>Fecha Inicio</th>';
                 currentHTML += '<th>Fecha Fin</th>';
                 currentHTML += '<th>Cliente</th>';
                 currentHTML += '<th colspan="2">Acción</th>';
                 currentHTML += '</tr>';
+				currentHTML += '</thead>';
+                currentHTML += '<tbody>';
 
                 for (var i = 0; i < obj.results.length; i++) {
                     currentHTML += '<tr value="'+ obj.results[i].id +'">';
-                    currentHTML += "<td></td>";
                     currentHTML += '<td><a href="liga-panel-panelista.php?id=' + obj.results[i].id +'">' + obj.results[i].nombre +"</a></td>";
                     currentHTML += "<td>" + obj.results[i].fechaInicio + "</td>";
                     currentHTML += "<td>" + obj.results[i].fechaFin + "</td>";
                     currentHTML += "<td>" + obj.results[i].cliente + "</td>";
-                    currentHTML += "<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>"
-                    currentHTML += "<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>";
+					currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
+	                currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += "</tr>";
 
                     $("#allPanels").append(currentHTML);
                     currentHTML = '';
                 }
+
+				currentHTML += '</tbody>';
             },
             error: function (error) {
                 $('#feedback').html("Error cargando los clientes.");

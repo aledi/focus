@@ -24,7 +24,7 @@ header {
     height: 100%;
     width: 100%;
     position: relative;
-    background-color: #370A8F;
+    background-color: #202382;
 }
 
 .logo {
@@ -75,7 +75,7 @@ li a {
 }
 
 li a:hover{
-    background-color: #D7CEE9;
+    background-color: #D2D3E6;
 }
 
 li a, .dropbtn {
@@ -98,7 +98,7 @@ li.dropdown {
 }
 
 .dropdown-content a {
-    color: black;
+    color: #666;
     padding: 0 16px;
     text-decoration: none;
     display: block;
@@ -107,7 +107,7 @@ li.dropdown {
 }
 
 .dropdown-content a:hover {
-    background-color: #D7CEE9;
+    background-color: #D2D3E6;
 }
 
 .dropdown:hover .dropdown-content {
@@ -119,7 +119,9 @@ section {
     top: 70px; right: 0; left: 0;
 }
 
-.panelistas-wrapper, .clientes-wrapper, .admins-wrapper, .paneles-wrapper, .encuestas-wrapper {
+.panelistas-wrapper, .clientes-wrapper,
+.admins-wrapper, .paneles-wrapper,
+.encuestas-wrapper, .preguntas-wrapper {
     height: 100%;
     margin: 50px auto;
     box-sizing: border-box;
@@ -129,7 +131,7 @@ section {
     width: 800px;
 }
 
-.clientes-wrapper, .admins-wrapper {
+.clientes-wrapper, .admins-wrapper, .preguntas-wrapper {
     width: 600px;
 }
 
@@ -141,7 +143,7 @@ ul.tabs {
     padding: 0;
     margin: 0;
     list-style: none;
-    background-color: #7353B0;
+    background-color: #6265A7;
     color: white;
 }
 
@@ -154,7 +156,7 @@ ul.tabs li {
 }
 
 ul.tabs li.current {
-    background-color: #4B229A;
+    background-color: #36398E;
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -173,7 +175,7 @@ ul.tabs li.current {
 
 h2 {
     margin-top: 0;
-    color: #7353B0;
+    color: #6265A7;
     letter-spacing: 1px;
 }
 
@@ -207,12 +209,18 @@ textarea {
     resize: none;
 }
 
+hr {
+    margin: 30px 0;
+    border: none;
+    border-bottom: 2px solid #E4E4E4;
+}
+
 button {
     height: 40px;
     width: 200px;
     display: block;
     margin: auto;
-    background-color: #370A8F;
+    background-color: #202382;
     border: none;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -221,8 +229,49 @@ button {
     cursor: pointer;
 }
 
+button.no-background {
+    height: 30px;
+    background-color: transparent;
+    border: 1px solid #202382;
+    color: #202382;
+    margin-bottom: 30px;
+}
+
 .feedback-text {
     display: block;
     margin-top: 10px;
     text-align: center;
+}
+
+/* -----------------------------------------------------------------------------------------------
+/ Table
+/ ----------------------------------------------------------------------------------------------- */
+
+table {
+    width: 100%;
+}
+
+table thead tr th.left {
+    text-align: left;
+}
+
+table tbody tr td.centered {
+    text-align: center;
+}
+
+table tbody tr td {
+    padding: 10px 5px;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: #E8E9F2;
+}
+
+table tbody tr td button {
+    height: auto;
+    width: auto;
+    border: none;
+    background-color: transparent;
+    font-size: 11px;
+    color: #4D4F9B;
 }
