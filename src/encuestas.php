@@ -25,7 +25,7 @@
 
                 <div class='input-wrapper'>
                     <label>Nombre de Encuesta:</label>
-                    <input id='nombre' type='text'/>
+                    <input id='nombre' type='text' placeholder='Encuesta de Candidatos' />
                 </div>
 
                 <div class='input-wrapper'>
