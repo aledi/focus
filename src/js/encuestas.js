@@ -115,7 +115,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 alert('Encuesta creada exitosamente.');
-                location.replace('preguntas.php?id=' + obj.id);
+                location.replace('preguntas.php?id=' + parameters.id);
             },
             error: function (error) {
                 $('#feedback').html('Encuesta no añadida, ha ocurrido un error.');
@@ -165,6 +165,7 @@ $(document).on('ready', function () {
             success: function(obj) {
                 for (var i = 0; i < obj.results.length; i++) {
                     if (obj.results[i].id == idSurvey) {
+                        console.log(obj.results[i].id)
                         $('#nombre').val(obj.results[i].nombre);
                         $('#dateStarts').val(obj.results[i].fechaInicio);
                         $('#dateEnds').val(obj.results[i].fechaFin);
