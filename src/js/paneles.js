@@ -6,26 +6,29 @@ $(document).on('ready', function () {
         data: {'action': 'GET_CLIENTES'},
         dataType: 'json',
         success: function (obj) {
-            var currentHTML = '<tr>';
-            currentHTML += '<th></th>';
+			var currentHTML = '<thead>';
+			currentHTML += '<tr>';
             currentHTML += '<th>Username</th>';
             currentHTML += '<th>Nombre</th>';
             currentHTML += '<th>Correo</th>';
-            currentHTML += '<th>Seleccionar</th>';
+            currentHTML += '<th class="centered">Seleccionar</th>';
             currentHTML += '</tr>';
+			currentHTML += '</thead>';
+			currentHTML += '<tbody>';
 
             for (var i = 0; i < obj.results.length; i++) {
                 currentHTML += '<tr value="' + obj.results[i].id + '">';
-                currentHTML += "<td></td>";
                 currentHTML += "<td>" + obj.results[i].username+"</td>";
                 currentHTML += "<td>" + obj.results[i].nombre+"</td>";
                 currentHTML += "<td>" + obj.results[i].email+"</td>";
-                currentHTML += '<td><input type="radio" value=' + obj.results[i].id + ' name="id"></td>';
+                currentHTML += '<td class="centered"><input type="radio" value=' + obj.results[i].id + ' name="id"></td>';
                 currentHTML += "</tr>";
 
                 $("#tableClientes").append(currentHTML);
                 currentHTML = '';
             }
+
+			currentHTML += '</tbody>';
         },
         error: function (error) {
             $('#feedback').html("Error cargando los clientes.");
