@@ -127,7 +127,11 @@ $(document).on('ready', function () {
     });
 
     $('#questions').on('click','.removerPregunta', function(){
-        $(this).parent().parent().remove();
+        console.log($(this).parent().parent().find('.pregunta').val());
+        
+        if ($(this).parent().parent().attr('id') != 'questions')
+            $(this).parent().parent().remove();
+        
     });
 
     $('#submitQuestions').on('click', function(){
