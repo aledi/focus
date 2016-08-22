@@ -1,20 +1,20 @@
 'use strict';
 $(document).on('ready', function () {
-	$.ajax({
+    $.ajax({
         type: 'POST',
         url: '../api/controller.php',
         data: {'action': 'GET_CLIENTES'},
         dataType: 'json',
         success: function (obj) {
-			var currentHTML = '<thead>';
-			currentHTML += '<tr>';
+            var currentHTML = '<thead>';
+            currentHTML += '<tr>';
             currentHTML += '<th>Username</th>';
             currentHTML += '<th>Nombre</th>';
             currentHTML += '<th>Correo</th>';
             currentHTML += '<th class="centered">Seleccionar</th>';
             currentHTML += '</tr>';
-			currentHTML += '</thead>';
-			currentHTML += '<tbody>';
+            currentHTML += '</thead>';
+            currentHTML += '<tbody>';
 
             for (var i = 0; i < obj.results.length; i++) {
                 currentHTML += '<tr value="' + obj.results[i].id + '">';
@@ -28,7 +28,7 @@ $(document).on('ready', function () {
                 currentHTML = '';
             }
 
-			currentHTML += '</tbody>';
+            currentHTML += '</tbody>';
         },
         error: function (error) {
             $('#feedback').html("Error cargando los clientes.");
@@ -91,7 +91,7 @@ $(document).on('ready', function () {
             data: {'action': 'GET_PANELES'},
             dataType: 'json',
             success: function (obj) {
-				var currentHTML = '<thead>';
+                var currentHTML = '<thead>';
                 currentHTML += '<tr>';
                 currentHTML += '<th>Nombre</th>';
                 currentHTML += '<th>Fecha Inicio</th>';
@@ -99,7 +99,7 @@ $(document).on('ready', function () {
                 currentHTML += '<th>Cliente</th>';
                 currentHTML += '<th colspan="2">Acción</th>';
                 currentHTML += '</tr>';
-				currentHTML += '</thead>';
+                currentHTML += '</thead>';
                 currentHTML += '<tbody>';
 
                 for (var i = 0; i < obj.results.length; i++) {
@@ -108,15 +108,15 @@ $(document).on('ready', function () {
                     currentHTML += "<td>" + obj.results[i].fechaInicio + "</td>";
                     currentHTML += "<td>" + obj.results[i].fechaFin + "</td>";
                     currentHTML += "<td>" + obj.results[i].cliente + "</td>";
-					currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
-	                currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
+                    currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
+                    currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += "</tr>";
 
                     $("#allPanels").append(currentHTML);
                     currentHTML = '';
                 }
 
-				currentHTML += '</tbody>';
+                currentHTML += '</tbody>';
             },
             error: function (error) {
                 $('#feedback').html("Error cargando los clientes.");
@@ -124,7 +124,7 @@ $(document).on('ready', function () {
         });
     }, 500);
 
-	$('#allPanels').on('click','.deleteButton', function(){
+    $('#allPanels').on('click','.deleteButton', function(){
         var parameters = {
             'action': 'DELETE_PANEL',
             'id': $(this).parent().attr('value')
@@ -155,15 +155,15 @@ $(document).on('ready', function () {
         $("#tab-agregarPanel").addClass('current');
 
         $('#headerTitle').text('Modificar Panel');
-		$('#savePanel').text('Modificar');
+        $('#savePanel').text('Modificar');
 
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
             data: {
-	            'action': 'GET_PANELES',
-	            'id': idPanel
-	        },
+                'action': 'GET_PANELES',
+                'id': idPanel
+            },
             dataType: 'json',
             success: function(obj){
                 for (var i = 0; i < obj.results.length; i++) {
