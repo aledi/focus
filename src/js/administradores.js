@@ -65,8 +65,7 @@ $(document).on('ready', function () {
         var parameters = {
             'action': 'ALTA_ADMIN',
             'nombre': nombre,
-            'apPaterno': apPaterno,
-            'apMaterno': apMaterno,
+            'apellidos': apellidos,
             'email': email,
             'username': username,
             'password': password
