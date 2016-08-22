@@ -32,8 +32,8 @@ $(document).on('ready', function () {
             '<select class="tipoPregunta" name="respuesta'+lastQuestion+'" required>' +
             '<option value="1">Abiertas</option>' +
             '<option value="2">Selección Única</option>' +
-            '<option value="3">Ordenamiento</option>' +
-            '<option value="4">Selección Múltiple</option>' +
+            '<option value="3">Selección Múltiple</option>' +
+            '<option value="4">Ordenamiento</option>' +
             '</select>' +
             '<p class="feedTypeQuestion"></p>' +
             '</div>';
