@@ -205,6 +205,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 alert("Preguntas ligadas exitosamente.");
+                location.replace('encuestas.php');
             },
             error: function (error) {
                 $('#feedback').html("Preguntas no añadidas, ha ocurrido un error.");
