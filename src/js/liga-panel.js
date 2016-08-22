@@ -10,6 +10,7 @@ function getCheckedCheckboxesFor (checkboxName) {
 }
 
 function checkAll (checkedBox) {
+    console.log('Entrada')
     var checkboxes = document.getElementsByTagName('input');
     for (var i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].type == 'checkbox') {
@@ -109,7 +110,17 @@ $(document).on('ready', function () {
                 flagLoadingPanelist = 1;
             }
             currentHTML += '</tbody>';
-            $("#tablaPanelistas").tablesorter();
+            $("tablaPanelistas").tablesorter({ 
+                // pass the headers argument and assing a object 
+                headers: { 
+                    // assign the secound column (we start counting zero) 
+                    4: { 
+                        // disable it by setting the property sorter to false 
+                        sorter: false 
+                    }, 
+                    // assign the third column (we start counting zero) 
+                } 
+            }); 
         },
         error: function (error) {
             $('#feedback').html("Error cargando los clientes.");
