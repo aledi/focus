@@ -114,7 +114,6 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                console.log(obj)
                 alert('Encuesta creada exitosamente.');
                 location.replace('preguntas.php?id=' + parameters.id);
             },
