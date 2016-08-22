@@ -151,4 +151,10 @@ $(document).on('ready', function () {
             }
         });
     });
+
+    $('#cp').keypress(function (event) {
+        if (!event.metaKey && event.charCode !== 13 && (event.charCode < 48 || event.charCode > 57)) {
+            event.preventDefault();
+        }
+    });
 });
