@@ -164,6 +164,7 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function(obj) {
+                var cancelButton = "<button type='submit' id='cancelModify'>Cancelar Cambios</button>";
                 for (var i = 0; i < obj.results.length; i++) {
                     if (obj.results[i].id == idSurvey) {
                         console.log(obj.results[i].id)
@@ -177,6 +178,7 @@ $(document).on('ready', function () {
                         history.pushState({}, null, myURL);
                     }
                 }
+                $('#feedback').append(cancelButton);
             },
             error: function (errorMsg) {
                 alert('Error modificando Panelista');
