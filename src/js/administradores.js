@@ -122,6 +122,9 @@ $(document).on('ready', function () {
         $('#headerTitle').text('Modificar Administrador');
         $('#saveAdmin').text('Modificar');
 
+        $('#admin-password').hide();
+        $('#admin-password-confirm').hide();
+
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',

@@ -119,6 +119,9 @@ $(document).on('ready', function () {
         $('ul.tabs li').first().addClass('current');
         $("#tab-agregarCliente").addClass('current');
 
+        $('#cliente-password').hide();
+        $('#cliente-password-confirm').hide();
+
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',

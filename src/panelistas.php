@@ -38,7 +38,7 @@
                     <label>Usuario:</label>
                     <input id='username' type='text' />
                 </div>
-                <div class='input-wrapper'>
+                <div id='panelista-password' class='input-wrapper'>
                     <label>Contraseña:</label>
                     <input id='password' type='password' placeholder='••••••••' />
                 </div>
