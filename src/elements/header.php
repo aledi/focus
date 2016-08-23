@@ -15,7 +15,6 @@
                 </li>
                 <li><a href='paneles.php'>Paneles</a></li>
                 <li><a href='encuestas.php'>Encuestas</a></li>
-                <li><a href='preguntas.php'>Preguntas</a></li>
                 <li><a href='reportes.php'>Reportes</a></li>
                 <li class='signout-item'><a id='signOutButton' href=''>Cerrar Sesión</a></li>
             </ul>

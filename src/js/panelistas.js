@@ -8,33 +8,33 @@ $(document).on('ready', function () {
             data: {'action': 'GET_PANELISTAS'},
             dataType: 'json',
             success: function (obj) {
-	            var currentHTML = '<thead>';
+                var currentHTML = '<thead>';
                 currentHTML += '<tr>';
-	            currentHTML += '<th class="left">Nombre</th>';
-	            currentHTML += '<th>Género</th>';
-	            currentHTML += '<th>Edad</th>';
-	            currentHTML += '<th>Municipio</th>';
-	            currentHTML += '<th>Estado</th>';
-	            currentHTML += '<th colspan="2">Acción</th>';
+                currentHTML += '<th class="left">Nombre</th>';
+                currentHTML += '<th>Género</th>';
+                currentHTML += '<th>Edad</th>';
+                currentHTML += '<th>Municipio</th>';
+                currentHTML += '<th>Estado</th>';
+                currentHTML += '<th colspan="2">Acción</th>';
                 currentHTML += '</tr>';
-	            currentHTML += '</thead>';
+                currentHTML += '</thead>';
                 currentHTML += '<tbody>';
 
-	            for (var i = 0; i < obj.results.length; i++) {
-	                currentHTML += '<tr value="' + obj.results[i].id +'">';
-	                currentHTML += '<td>' + obj.results[i].nombre + " " + obj.results[i].apellidos +'</td>';
-	                currentHTML += '<td>' + convertGenero(obj.results[i].genero) +'</td>';
-	                currentHTML += '<td>' + obj.results[i].edad +'</td>';
-	                currentHTML += '<td>' + obj.results[i].municipio +'</td>';
-	                currentHTML += '<td>' + obj.results[i].estado +'</td>';
-	                currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
-	                currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
-	                currentHTML += '</tr>';
+                for (var i = 0; i < obj.results.length; i++) {
+                    currentHTML += '<tr value="' + obj.results[i].id +'">';
+                    currentHTML += '<td>' + obj.results[i].nombre + " " + obj.results[i].apellidos +'</td>';
+                    currentHTML += '<td>' + convertGenero(obj.results[i].genero) +'</td>';
+                    currentHTML += '<td>' + obj.results[i].edad +'</td>';
+                    currentHTML += '<td>' + obj.results[i].municipio +'</td>';
+                    currentHTML += '<td>' + obj.results[i].estado +'</td>';
+                    currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
+                    currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
+                    currentHTML += '</tr>';
 
 
-	                $('#allPanelistas').append(currentHTML);
-	                currentHTML = '';
-	            }
+                    $('#allPanelistas').append(currentHTML);
+                    currentHTML = '';
+                }
 
                 currentHTML += '</tbody>';
             },
@@ -44,7 +44,7 @@ $(document).on('ready', function () {
         });
     }, 500);
 
-	$('#savePanelista').on('click', function (event) {
+    $('#savePanelista').on('click', function (event) {
         var idPanelista = window.location.search.substring(1)
         idPanelista = idPanelista.substring(3);
 
@@ -65,7 +65,7 @@ $(document).on('ready', function () {
             'cp': $('#cp').val()
         };
 
-        if(idPanelista != '') {
+        if (idPanelista != '') {
             parameters.id = idPanelista;
         }
 
@@ -150,5 +150,11 @@ $(document).on('ready', function () {
                 alert('Error modificando Panelista');
             }
         });
+    });
+
+    $('#cp').keypress(function (event) {
+        if (!event.metaKey && event.charCode !== 13 && (event.charCode < 48 || event.charCode > 57)) {
+            event.preventDefault();
+        }
     });
 });

@@ -65,7 +65,7 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + obj.results[i].fechaFin +'</td>';
                     currentHTML += '<td>' + obj.results[i].panel +'</td>';
                     currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
-	                currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
+                    currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
 
                     $('#allSurveys').append(currentHTML);
@@ -115,7 +115,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 alert('Encuesta creada exitosamente.');
-                location.replace('preguntas.php?id=' + parameters.id);
+                location.replace('preguntas.php?id=' + obj.id);
             },
             error: function (error) {
                 $('#feedback').html('Encuesta no añadida, ha ocurrido un error.');

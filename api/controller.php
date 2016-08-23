@@ -241,13 +241,13 @@ function getRecords ($type) {
 function setPanelistasPanel () {
     $saveResult = savePanelistasPanel($_POST['panel'], $_POST['panelistas']);
 
+    echo json_encode($saveResult);
+
     if ($saveResult['status'] === 'SUCCESS') {
         foreach ($saveResult['deviceTokens'] as $deviceToken) {
             sendPushNotification('Nuevo Panel', $deviceToken);
         }
     }
-
-    echo json_encode($saveResult);
 }
 
 function setPreguntasEncuesta () {
