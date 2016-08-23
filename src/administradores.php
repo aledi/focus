@@ -23,22 +23,22 @@
 
                 <div class='input-wrapper'>
                     <label>Nombre(s):</label>
-                    <input id="firstName" type="text" placeholder='José' />
+                    <input id="firstName" type="text" />
                 </div>
 
                 <div class='input-wrapper'>
                     <label>Apellido(s):</label>
-                    <input id="lastName" type="text" placeholder='Pérez García' />
+                    <input id="lastName" type="text" />
                 </div>
 
                 <div class='input-wrapper'>
                     <label>Correo Electrónico:</label>
-                    <input id="email" type="text" placeholder='email@email.com' />
+                    <input id="email" type="text" />
                 </div>
 
                 <div class='input-wrapper'>
                     <label>Usuario:</label>
-                    <input id="username" type="text" placeholder='jperez' />
+                    <input id="username" type="text" />
                 </div>
 
                 <div class='input-wrapper'>
