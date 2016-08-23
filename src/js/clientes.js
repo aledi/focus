@@ -73,16 +73,18 @@ $(document).on('ready', function () {
             parameters.id = idCliente;
         }
 
+        var actionText = idCliente !== '' ? 'modificado' : 'agregado';
+
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                alert('Cliente añadido exitosamente.');
+                alert('Cliente ' + actionText + ' exitosamente.');
             },
             error: function (error) {
-                $('#feedback').html('Cliente no añadido, ha ocurrido un error.');
+                $('#feedback').html('Cliente no ' + actionText + '. Ha ocurrido un error.');
             }
         });
     });
@@ -97,11 +99,11 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (obj) {
-                alert('Cliente Eliminado!');
+                alert('Cliente eliminado exitosamente.');
                 $(this).parent().find('td.id').remove();
             },
             error: function (errorMsg) {
-                alert('Error eliminando cliente');
+                alert('Error eliminando cliente.');
             }
         });
     });
@@ -140,7 +142,7 @@ $(document).on('ready', function () {
                 }
             },
             error: function (errorMsg) {
-                alert('Error modificando administrador');
+                alert('Error modificando cliente.');
             }
         });
     });

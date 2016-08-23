@@ -63,6 +63,8 @@ $(document).on('ready', function () {
             parameters.id = idPanel;
         }
 
+        var actionText = idPanel !== '' ? 'modificado' : 'agregado';
+
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -70,14 +72,14 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 if (obj.status == 'SUCCESS') {
-                    alert("Panel creado exitosamente.");
+                    alert('Panel ' + actionText + ' exitosamente.');
                     location.replace("liga-panel-panelista.php?id=" + obj.id);
                 } else {
-                    $('#feedback').html("Panel no añadido, ha ocurrido un errorrr.");
+                    $('#feedback').html('Panel no ' + actionText + '. Ha ocurrido un error.');
                 }
             },
             error: function (error) {
-                $('#feedback').html("Panel no añadido, ha ocurrido un error.");
+                $('#feedback').html('Panel no ' + actionText + '. Ha ocurrido un error.');
             }
         });
     });
@@ -134,11 +136,11 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                alert('Panelista Eliminado!');
+                alert('Panelista eliminado exitosamente.');
                 $(this).parent().find('td.id').remove();
             },
             error: function (errorMsg) {
-                alert('Error eliminando Panelista');
+                alert('Error eliminando panelista.');
             }
         });
     });
@@ -178,7 +180,7 @@ $(document).on('ready', function () {
                 }
             },
             error: function (errorMsg) {
-                alert('Error modificando Panelista');
+                alert('Error modificando panelista.');
             }
         });
     });
