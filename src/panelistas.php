@@ -24,23 +24,23 @@
 
                 <div class='input-wrapper'>
                     <label>Nombre(s)</label>
-                    <input id='firstName' type='text'/>
+                    <input id='firstName' type='text' />
                 </div>
                 <div class='input-wrapper'>
                     <label>Apellido(s):</label>
-                    <input id='lastName' type='text'/>
+                    <input id='lastName' type='text' />
                 </div>
                 <div class='input-wrapper'>
                     <label>Correo Electrónico:</label>
-                    <input id='email' type='text'/>
+                    <input id='email' type='text' />
                 </div>
                 <div class='input-wrapper'>
                     <label>Usuario:</label>
-                    <input id='username' type='text'/>
+                    <input id='username' type='text' />
                 </div>
                 <div class='input-wrapper'>
                     <label>Contraseña:</label>
-                    <input id='password' type='password'/>
+                    <input id='password' type='password' placeholder='••••••••' />
                 </div>
                 <div class='input-wrapper'>
                     <label>Género:</label>
@@ -49,7 +49,7 @@
                 </div>
                 <div class='input-wrapper'>
                     <label>Fecha de Nacimiento:</label>
-                    <input id='fechaNacimiento' type='text'/>
+                    <input id='fechaNacimiento' type='text' />
                 </div>
                 <div class='input-wrapper'>
                     <label>Educación:</label>
@@ -65,15 +65,15 @@
                 </div>
                 <div class='input-wrapper'>
                     <label>Calle y Número:</label>
-                    <input id='calleNumero' type='text'/>
+                    <input id='calleNumero' type='text' />
                 </div>
                 <div class='input-wrapper'>
                     <label>Colonia:</label>
-                    <input id='colonia' type='text'/>
+                    <input id='colonia' type='text' />
                 </div>
                 <div class='input-wrapper'>
                     <label>Municipio:</label>
-                    <input id='municipio' type='text'/>
+                    <input id='municipio' type='text' />
                 </div>
                 <div class='input-wrapper'>
                     <label>Estado:</label>
@@ -114,7 +114,7 @@
                 </div>
                 <div class='input-wrapper'>
                     <label>Código Postal:</label>
-                    <input id='cp' type='text'/>
+                    <input id='cp' type='text' />
                 </div>
 
                 <button type='submit' id='savePanelista'>Enviar</button>

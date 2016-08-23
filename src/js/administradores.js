@@ -10,27 +10,30 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (obj) {
-                var currentHTML = '<tr>';
-                currentHTML += '<th></th>';
+                var currentHTML = '<thead>';
+                currentHTML += '<tr>';
                 currentHTML += '<th>Username</th>';
                 currentHTML += '<th>Nombre</th>';
                 currentHTML += '<th>Correo</th>';
                 currentHTML += '<th colspan="2">Acción</th>';
                 currentHTML += '</tr>';
+                currentHTML += '</thead>';
+                currentHTML += '<tbody>';
 
                 for (var i = 0; i < obj.results.length; i++) {
                     currentHTML += '<tr value="'+ obj.results[i].id +'">';
-                    currentHTML += '<td></td>';
                     currentHTML += '<td>' + obj.results[i].username+'</td>';
                     currentHTML += '<td>' + obj.results[i].nombre+'</td>';
                     currentHTML += '<td>' + obj.results[i].email+'</td>';
-                    currentHTML += '<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>'
-                    currentHTML += '<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>';
+                    currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
+                    currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
 
                     $('#allAdmins').append(currentHTML);
                     currentHTML = '';
                 }
+
+                currentHTML += '</tbody>';
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los administradores.');
@@ -38,7 +41,7 @@ $(document).on('ready', function () {
         });
     });
 
-	$('#saveAdmin').on('click', function (event) {
+    $('#saveAdmin').on('click', function (event) {
         var idAdministrador = window.location.search.substring(1)
         idAdministrador = idAdministrador.substring(3);
 
@@ -62,8 +65,7 @@ $(document).on('ready', function () {
         var parameters = {
             'action': 'ALTA_ADMIN',
             'nombre': nombre,
-            'apPaterno': apPaterno,
-            'apMaterno': apMaterno,
+            'apellidos': apellidos,
             'email': email,
             'username': username,
             'password': password
@@ -87,7 +89,7 @@ $(document).on('ready', function () {
         });
     });
 
-	$('#allAdmins').on('click','.deleteButton', function(){
+    $('#allAdmins').on('click','.deleteButton', function(){
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',

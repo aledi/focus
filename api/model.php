@@ -683,7 +683,7 @@ function updatePanelista ($id, $username, $nombre, $apellidos, $email, $genero, 
     return array('status' => 'DATABASE_ERROR');
 }
 
-function updateUser ($id, $username, $nombre, $apPaterno, $apMaterno, $email) {
+function updateUser ($id, $username, $nombre, $apellidos, $email) {
     $conn = connect();
 
     if ($conn != null) {
@@ -699,7 +699,7 @@ function updateUser ($id, $username, $nombre, $apPaterno, $apMaterno, $email) {
             }
         }
 
-        $sql = "UPDATE Usuario SET username = '$username', nombre = '$nombre', apPaterno = '$apPaterno', apMaterno = '$apMaterno', email = '$email' WHERE id = '$id'";
+        $sql = "UPDATE Usuario SET username = '$username', nombre = '$nombre', apellidos = '$apellidos', email = '$email' WHERE id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
             $conn->close();
