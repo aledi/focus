@@ -118,6 +118,8 @@ $(document).on('ready', function () {
         $('#headerTitle').text('Modificar Panelista');
         $('#savePanelista').text('Modificar');
 
+        $('#panelista-password').hide();
+
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
