@@ -85,6 +85,7 @@ $(document).on('ready', function () {
 
         var idSurvey = window.location.search.substring(1)
         idSurvey = idSurvey.substring(3);
+        console.log(idSurvey);
 
         var nombre = $('#nombre').val();
         var fechaInicio = $('#dateStarts').val();
@@ -115,7 +116,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 alert('Encuesta creada exitosamente.');
-                location.replace('preguntas.php?id=' + obj.id);
+                location.replace('preguntas.php?id=' + parameters.id);
             },
             error: function (error) {
                 $('#feedback').html('Encuesta no añadida, ha ocurrido un error.');

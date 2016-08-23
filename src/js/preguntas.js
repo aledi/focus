@@ -25,11 +25,11 @@ $(document).on('ready', function () {
         currentHTML += '<hr>';
         currentHTML += '<div class="input-wrapper">' +
             '<p>Pregunta:</p>' +
-            '<input class="pregunta" name="respuesta'+lastQuestion+'" type="text"/>' +
+            '<input class="pregunta" name="respuesta" type="text"/>' +
             '</div>';
         currentHTML += '<div class="input-wrapper">' +
             '<p>Tipo de pregunta: </p>' +
-            '<select class="tipoPregunta" name="respuesta'+lastQuestion+'" required>' +
+            '<select class="tipoPregunta" name="respuesta" required>' +
             '<option value="1">Abiertas</option>' +
             '<option value="2">Selección Única</option>' +
             '<option value="3">Selección Múltiple</option>' +
@@ -39,11 +39,11 @@ $(document).on('ready', function () {
             '</div>';
         currentHTML += '<div class="input-wrapper">' +
             '<p>Imagen URL:</p>' +
-            '<input class="imagen" name="respuesta'+lastQuestion+'" type="text"/>' +
+            '<input class="imagen" name="respuesta" type="text"/>' +
             '</div>';
         currentHTML += '<div class="input-wrapper">' +
             '<p>Video URL:</p>' +
-            '<input class="video" name="respuesta'+lastQuestion+'" type="text"/>' +
+            '<input class="video" name="respuesta" type="text"/>' +
             '</div>';
         currentHTML += '<div id="Answers'+lastQuestion+'">' +
             '</div>' +
@@ -69,33 +69,33 @@ $(document).on('ready', function () {
                     appendQuestions(x);
                 }
 
-                $('div#Answers1').empty();
+                $('div#Answers').empty();
 
                 for (var x = 0; x < obj.results.length; x++) {
                     var typeQuestion = obj.results[x].tipo;
                     var questionID = obj.results[x].numPregunta;
 
-                    $('input.pregunta[name=respuesta' + questionID + ']').val(obj.results[x].pregunta);
-                    $('select.tipoPregunta[name=respuesta' + questionID + ']').val(obj.results[x].tipo);
+                    $('input.pregunta[name=respuesta]').val(obj.results[x].pregunta);
+                    $('select.tipoPregunta[name=respuesta]').val(obj.results[x].tipo);
 
                     appendAnswers(typeQuestion, questionID);
 
-                    $('input.imagen[name=respuesta' + questionID + ']').val(obj.results[x].imagen);
-                    $('input.video[name=respuesta' + questionID + ']').val(obj.results[x].video);
+                    $('input.imagen[name=respuesta]').val(obj.results[x].imagen);
+                    $('input.video[name=respuesta]').val(obj.results[x].video);
 
                     if (typeQuestion == 1) {
-                        $('textarea.respuesta' + questionID + '[name=respuesta' + questionID + ']').val(obj.results[x].op1);
+                        $('textarea.respuesta' + questionID + '[name=respuesta]').val(obj.results[x].op1);
                     } else {
-                        $('input.respuesta1[name=respuesta' + questionID +']').val(obj.results[x].op1);
-                        $('input.respuesta2[name=respuesta' + questionID +']').val(obj.results[x].op2);
-                        $('input.respuesta3[name=respuesta' + questionID +']').val(obj.results[x].op3);
-                        $('input.respuesta4[name=respuesta' + questionID +']').val(obj.results[x].op4);
-                        $('input.respuesta5[name=respuesta' + questionID +']').val(obj.results[x].op5);
-                        $('input.respuesta6[name=respuesta' + questionID +']').val(obj.results[x].op6);
-                        $('input.respuesta7[name=respuesta' + questionID +']').val(obj.results[x].op7);
-                        $('input.respuesta8[name=respuesta' + questionID +']').val(obj.results[x].op8);
-                        $('input.respuesta9[name=respuesta' + questionID +']').val(obj.results[x].op9);
-                        $('input.respuesta10[name=respuesta' + questionID +']').val(obj.results[x].op10);
+                        $('input.respuesta1[name=respuesta]').val(obj.results[x].op1);
+                        $('input.respuesta2[name=respuesta]').val(obj.results[x].op2);
+                        $('input.respuesta3[name=respuesta]').val(obj.results[x].op3);
+                        $('input.respuesta4[name=respuesta]').val(obj.results[x].op4);
+                        $('input.respuesta5[name=respuesta]').val(obj.results[x].op5);
+                        $('input.respuesta6[name=respuesta]').val(obj.results[x].op6);
+                        $('input.respuesta7[name=respuesta]').val(obj.results[x].op7);
+                        $('input.respuesta8[name=respuesta]').val(obj.results[x].op8);
+                        $('input.respuesta9[name=respuesta]').val(obj.results[x].op9);
+                        $('input.respuesta10[name=respuesta]').val(obj.results[x].op10);
                     }
                 }
             },
@@ -147,7 +147,7 @@ $(document).on('ready', function () {
 
         $('#questions').children().each(function () {
             // "this" is the current element in the loop
-            $('[name=respuesta'+numeroPregunta+']').each(function() {
+            $('[name=respuesta]').each(function() {
                 if (iteration === 1) {
                     questionObject.numPregunta = numeroPregunta;
                     questionObject.pregunta = $(this).val();

@@ -25,11 +25,11 @@
                     <div id="1" class='questionForm'>
                         <div class='input-wrapper'>
                             <label>Pregunta: </label>
-                            <input class='pregunta' name='respuesta1' type='text'/>
+                            <input class='pregunta' name='respuesta' type='text'/>
                         </div>
                         <div class='input-wrapper'>
                             <label>Tipo de pregunta: </label>
-                            <select class="tipoPregunta" name="respuesta1" required>
+                            <select class="tipoPregunta" name="respuesta" required>
                                 <option value="1">Abiertas</option>
                                 <option value="2">Selección Única</option>
                                 <option value="3">Selección Múltiple</option>
@@ -39,12 +39,12 @@
                         </div>
                         <div class='input-wrapper'>
                             <label>Imagen URL:</label>
-                            <input class="imagen" name="respuesta1" type="text"/>
+                            <input class="imagen" name="respuesta" type="text"/>
                         </div>
 
                         <div class='input-wrapper'>
                             <label>Video URL:</label>
-                            <input class="video" name="respuesta1" type="text"/>
+                            <input class="video" name="respuesta" type="text"/>
                         </div>
                         <div id="Answers1">
 
