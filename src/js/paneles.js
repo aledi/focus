@@ -1,31 +1,32 @@
 'use strict';
 $(document).on('ready', function () {
-	$.ajax({
+    $.ajax({
         type: 'POST',
         url: '../api/controller.php',
         data: {'action': 'GET_CLIENTES'},
         dataType: 'json',
         success: function (obj) {
-            var currentHTML = '<tr>';
-            currentHTML += '<th></th>';
-            currentHTML += '<th>Username</th>';
+            var currentHTML = '<thead>';
+            currentHTML += '<tr>';
             currentHTML += '<th>Nombre</th>';
             currentHTML += '<th>Correo</th>';
-            currentHTML += '<th>Seleccionar</th>';
+            currentHTML += '<th class="centered">Seleccionar</th>';
             currentHTML += '</tr>';
+            currentHTML += '</thead>';
+            currentHTML += '<tbody>';
 
             for (var i = 0; i < obj.results.length; i++) {
                 currentHTML += '<tr value="' + obj.results[i].id + '">';
-                currentHTML += "<td></td>";
-                currentHTML += "<td>" + obj.results[i].username+"</td>";
-                currentHTML += "<td>" + obj.results[i].nombre+"</td>";
+                currentHTML += "<td>" + obj.results[i].nombre + " " + obj.results[i].apellidos +"</td>";
                 currentHTML += "<td>" + obj.results[i].email+"</td>";
-                currentHTML += '<td><input type="radio" value=' + obj.results[i].id + ' name="id"></td>';
+                currentHTML += '<td class="centered"><input type="radio" value=' + obj.results[i].id + ' name="id"></td>';
                 currentHTML += "</tr>";
 
                 $("#tableClientes").append(currentHTML);
                 currentHTML = '';
             }
+
+            currentHTML += '</tbody>';
         },
         error: function (error) {
             $('#feedback').html("Error cargando los clientes.");
@@ -88,29 +89,32 @@ $(document).on('ready', function () {
             data: {'action': 'GET_PANELES'},
             dataType: 'json',
             success: function (obj) {
-                var currentHTML = '<tr>';
-                currentHTML += '<th></th>';
+                var currentHTML = '<thead>';
+                currentHTML += '<tr>';
                 currentHTML += '<th>Nombre</th>';
                 currentHTML += '<th>Fecha Inicio</th>';
                 currentHTML += '<th>Fecha Fin</th>';
                 currentHTML += '<th>Cliente</th>';
                 currentHTML += '<th colspan="2">Acción</th>';
                 currentHTML += '</tr>';
+                currentHTML += '</thead>';
+                currentHTML += '<tbody>';
 
                 for (var i = 0; i < obj.results.length; i++) {
                     currentHTML += '<tr value="'+ obj.results[i].id +'">';
-                    currentHTML += "<td></td>";
                     currentHTML += '<td><a href="liga-panel-panelista.php?id=' + obj.results[i].id +'">' + obj.results[i].nombre +"</a></td>";
                     currentHTML += "<td>" + obj.results[i].fechaInicio + "</td>";
                     currentHTML += "<td>" + obj.results[i].fechaFin + "</td>";
                     currentHTML += "<td>" + obj.results[i].cliente + "</td>";
-                    currentHTML += "<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>"
-                    currentHTML += "<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>";
+                    currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
+                    currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += "</tr>";
 
                     $("#allPanels").append(currentHTML);
                     currentHTML = '';
                 }
+
+                currentHTML += '</tbody>';
             },
             error: function (error) {
                 $('#feedback').html("Error cargando los clientes.");
@@ -118,7 +122,7 @@ $(document).on('ready', function () {
         });
     }, 500);
 
-	$('#allPanels').on('click','.deleteButton', function(){
+    $('#allPanels').on('click','.deleteButton', function(){
         var parameters = {
             'action': 'DELETE_PANEL',
             'id': $(this).parent().attr('value')
@@ -149,15 +153,15 @@ $(document).on('ready', function () {
         $("#tab-agregarPanel").addClass('current');
 
         $('#headerTitle').text('Modificar Panel');
-		$('#savePanel').text('Modificar');
+        $('#savePanel').text('Modificar');
 
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
             data: {
-	            'action': 'GET_PANELES',
-	            'id': idPanel
-	        },
+                'action': 'GET_PANELES',
+                'id': idPanel
+            },
             dataType: 'json',
             success: function(obj){
                 for (var i = 0; i < obj.results.length; i++) {

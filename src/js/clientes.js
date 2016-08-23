@@ -8,27 +8,30 @@ $(document).on('ready', function () {
             data: {'action': 'GET_CLIENTES'},
             dataType: 'json',
             success: function (obj) {
-                var currentHTML = '<tr>';
-                currentHTML += '<th></th>';
+                var currentHTML = '<thead>';
+                currentHTML += '<tr>';
                 currentHTML += '<th>Username</th>';
                 currentHTML += '<th>Nombre</th>';
                 currentHTML += '<th>Correo</th>';
                 currentHTML += '<th colspan="2">Acción</th>';
                 currentHTML += '</tr>';
+                currentHTML += '</thead>';
+                currentHTML += '<tbody>';
 
                 for (var i = 0; i < obj.results.length; i++) {
                     currentHTML += '<tr value="'+ obj.results[i].id + '">';
-                    currentHTML += '<td></td>';
                     currentHTML += '<td>' + obj.results[i].username+'</td>';
                     currentHTML += '<td>' + obj.results[i].nombre + " " + obj.results[i].apellidos+'</td>';
                     currentHTML += '<td>' + obj.results[i].email+'</td>';
-                    currentHTML += '<td class=modifyButton><input id= modify type=  submit  value= Modificar ></td>';
-                    currentHTML += '<td class=deleteButton><input id= delete type=  submit  value= Eliminar ></td>';
+                    currentHTML += '<td class=modifyButton><button id= modify type=button>Modificar</button></td>';
+                    currentHTML += '<td class=deleteButton><button id= delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
 
                     $('#allUsers').append(currentHTML);
                     currentHTML = '';
                 }
+
+                currentHTML += '</tbody>';
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los clientes.');
