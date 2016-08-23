@@ -108,17 +108,19 @@ $(document).on('ready', function () {
             parameters.id = idSurvey;
         }
 
+        var actionText = idSurvey !== '' ? 'modificada' : 'agregada';
+
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                alert('Encuesta creada exitosamente.');
+                alert('Encuesta ' + actionText + ' exitosamente.');
                 location.replace('preguntas.php?id=' + obj.id);
             },
             error: function (error) {
-                $('#feedback').html('Encuesta no añadida, ha ocurrido un error.');
+                $('#feedback').html('Encuesta no ' + actionText + '. Ha ocurrido un error.');
             }
         });
     });
@@ -133,11 +135,11 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (obj) {
-                alert('Encuesta Eliminada!');
+                alert('Encuesta eliminada exitosamente.');
                 $(this).parent().find('td.id').remove();
             },
             error: function (errorMsg) {
-                alert('Error eliminando cliente');
+                alert('Error eliminando encuesta.');
             }
         });
     });
@@ -178,7 +180,7 @@ $(document).on('ready', function () {
                 }
             },
             error: function (errorMsg) {
-                alert('Error modificando Panelista');
+                alert('Error modificando encuesta.');
             }
         });
     });

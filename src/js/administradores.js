@@ -75,16 +75,18 @@ $(document).on('ready', function () {
             parameters.id = idAdministrador;
         }
 
+        var actionText = idAdministrador !== '' ? 'modificado' : 'agregado';
+
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                alert('Adminsitrador añadido exitosamente.');
+                alert('Adminsitrador ' + actionText + ' exitosamente.');
             },
             error: function (error) {
-                $('#feedback').html('Administrador no añadido, ha ocurrido un error.');
+                $('#feedback').html('Administrador no ' + actionText + '. Ha ocurrido un error.');
             }
         });
     });
@@ -99,11 +101,11 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function(obj){
-                alert('¡Administrador Eliminado!');
+                alert('Administrador eliminado exitosamente.');
                 $(this).parent().find('td.id').remove();
             },
             error: function (errorMsg) {
-                alert('Error eliminando administrador');
+                alert('Error eliminando administrador.');
             }
         });
     });
@@ -143,10 +145,8 @@ $(document).on('ready', function () {
                 }
             },
             error: function (errorMsg) {
-                alert('Error modificando administrador');
+                alert('Error modificando administrador.');
             }
         });
     });
-
-
 });

@@ -97,11 +97,11 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                alert('Panelista Eliminado!');
+                alert('Panelista eliminado exitosamente.');
                 $(this).parent().find('td.id').remove();
             },
             error: function (errorMsg) {
-                alert('Error eliminando Panelista');
+                alert('Error eliminando panelista.');
             }
         });
     });
@@ -149,7 +149,7 @@ $(document).on('ready', function () {
                 }
             },
             error: function (errorMsg) {
-                alert('Error modificando Panelista');
+                alert('Error modificando panelista.');
             }
         });
     });
