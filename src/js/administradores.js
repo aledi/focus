@@ -26,7 +26,7 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + obj.results[i].nombre+'</td>';
                     currentHTML += '<td>' + obj.results[i].email+'</td>';
                     currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
-	                currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
+                    currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
 
                     $('#allAdmins').append(currentHTML);
@@ -41,7 +41,7 @@ $(document).on('ready', function () {
         });
     });
 
-	$('#saveAdmin').on('click', function (event) {
+    $('#saveAdmin').on('click', function (event) {
         var idAdministrador = window.location.search.substring(1)
         idAdministrador = idAdministrador.substring(3);
 
@@ -89,7 +89,7 @@ $(document).on('ready', function () {
         });
     });
 
-	$('#allAdmins').on('click','.deleteButton', function(){
+    $('#allAdmins').on('click','.deleteButton', function(){
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
