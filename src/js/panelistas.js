@@ -69,16 +69,18 @@ $(document).on('ready', function () {
             parameters.id = idPanelista;
         }
 
+        var actionText = idPanelista !== '' ? 'modificado' : 'agregado';
+
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                alert('Panelista agregado exitosamente.');
+                alert('Panelista '+ actionText + ' exitosamente.');
             },
             error: function (error) {
-                $('#feedback').html('Panelista no añadido, ha ocurrido un error.');
+                $('#feedback').html('Panelista no ' + actionText + '. Ha ocurrido un error.');
             }
         });
     });
