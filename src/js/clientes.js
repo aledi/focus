@@ -57,7 +57,7 @@ $(document).on('ready', function () {
             return;
         }
 
-        if (password != passwordConfirm) {
+        if (!modifying && (password != passwordConfirm)) {
             $('#feedback').html('Las contraseñas no coinciden.');
             return;
         }
@@ -67,18 +67,19 @@ $(document).on('ready', function () {
             'nombre': nombre,
             'apellidos': apellidos,
             'email': email,
-            'username': username,
-            'password': password
+            'username': username
         };
 
         if (modifying) {
             parameters.id = idCliente;
+        } else {
+            parameters.password = password;
         }
 
         // Clear feedback <span>
         $('#feedback').empty();
 
-        var actionText = idCliente !== '' ? 'modificado' : 'agregado';
+        var actionText = modifying ? 'modificado' : 'agregado';
 
         $.ajax({
             type: 'POST',
