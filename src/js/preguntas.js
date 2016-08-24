@@ -142,31 +142,31 @@ $(document).on('ready', function () {
                 if (iteration === 1) {
                     questionObject.numPregunta = numeroPregunta;
                     questionObject.pregunta = $(this).val();
-                } else if(iteration === 2) {
+                } else if (iteration === 2) {
                     questionObject.tipo = $(this).val();
-                } else if(iteration === 3) {
+                } else if (iteration === 3) {
                     questionObject.imagen = $(this).val();
-                } else if(iteration === 4) {
+                } else if (iteration === 4) {
                     questionObject.video = $(this).val();
-                } else if(iteration === 5) {
+                } else if (iteration === 5) {
                     questionObject.op1 = $(this).val();
-                } else if(iteration === 6) {
+                } else if (iteration === 6) {
                     questionObject.op2 = $(this).val();
-                } else if(iteration === 7) {
+                } else if (iteration === 7) {
                     questionObject.op3 = $(this).val();
-                } else if(iteration === 8) {
+                } else if (iteration === 8) {
                     questionObject.op4 = $(this).val();
-                } else if(iteration === 9) {
+                } else if (iteration === 9) {
                     questionObject.op5 = $(this).val();
-                } else if(iteration === 10) {
+                } else if (iteration === 10) {
                     questionObject.op6 = $(this).val();
-                } else if(iteration === 11) {
+                } else if (iteration === 11) {
                     questionObject.op7 = $(this).val();
-                } else if(iteration === 12) {
+                } else if (iteration === 12) {
                     questionObject.op8 = $(this).val();
-                } else if(iteration === 13) {
+                } else if (iteration === 13) {
                     questionObject.op9 = $(this).val();
-                } else if(iteration === 14) {
+                } else if (iteration === 14) {
                     questionObject.op10 = $(this).val();
                 }
 
@@ -204,11 +204,11 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (obj) {
-                alert("Preguntas ligadas exitosamente.");
+                alert('Preguntas ligadas exitosamente.');
                 location.replace('encuestas.php');
             },
             error: function (error) {
-                $('#feedback').html("Preguntas no añadidas, ha ocurrido un error.");
+                $('#feedback').html('Preguntas no añadidas, ha ocurrido un error.');
             }
         });
     })

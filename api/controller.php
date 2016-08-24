@@ -55,7 +55,7 @@ switch ($action) {
         setPreguntasEncuesta();
         break;
     case 'START_ENCUESTA':
-        initSurvey();
+        initEncuesta();
         break;
     case 'SAVE_RESPUESTAS':
         setRespuestas();
@@ -259,7 +259,7 @@ function setPreguntasEncuesta () {
     echo json_encode($saveResult);
 }
 
-function initSurvey () {
+function initEncuesta () {
     $saveResult = startEncuesta($_POST['encuesta'], $_POST['panelista']);
 
     echo json_encode($saveResult);

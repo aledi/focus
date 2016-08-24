@@ -42,8 +42,10 @@ $(document).on('ready', function () {
     });
 
     $('#saveAdmin').on('click', function (event) {
-        var idAdministrador = window.location.search.substring(1)
-        idAdministrador = idAdministrador.substring(3);
+        var idAdmin = window.location.search.substring(1)
+        idAdmin = idAdmin.substring(3);
+
+        var modifying = idAdmin != '';
 
         var email = $('#email').val();
         var nombre = $('#firstName').val();
@@ -52,12 +54,12 @@ $(document).on('ready', function () {
         var password = $('#password').val();
         var passwordConfirm = $('#passwordConfirm').val();
 
-        if (username === '' || password === '' || email === '' || nombre === '' || apellidos === '') {
+        if (nombre === '' || apellidos === '' || email === '' || username === '' || (!modifying && (password === '' || passwordConfirm === ''))) {
             $('#feedback').html('Favor de llenar todos los campos');
             return;
         }
 
-        if (password != passwordConfirm) {
+        if (!modifying && (password != passwordConfirm)) {
             $('#feedback').html('Las contraseñas no coinciden.');
             return;
         }
@@ -67,13 +69,16 @@ $(document).on('ready', function () {
             'nombre': nombre,
             'apellidos': apellidos,
             'email': email,
-            'username': username,
-            'password': password
+            'username': username
         };
 
-        if (idAdministrador != '') {
-            parameters.id = idAdministrador;
+        if (modifying) {
+            parameters.id = idAdmin;
+        } else {
+            parameters.password = password
         }
+
+        var actionText = modifying ? 'modificado' : 'agregado';
 
         $.ajax({
             type: 'POST',
@@ -81,10 +86,10 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                alert('Adminsitrador añadido exitosamente.');
+                alert('Adminsitrador ' + actionText + ' exitosamente.');
             },
             error: function (error) {
-                $('#feedback').html('Administrador no añadido, ha ocurrido un error.');
+                $('#feedback').html('Administrador no ' + actionText + '. Ha ocurrido un error.');
             }
         });
     });
@@ -99,11 +104,11 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function(obj){
-                alert('¡Administrador Eliminado!');
+                alert('Administrador eliminado exitosamente.');
                 $(this).parent().find('td.id').remove();
             },
             error: function (errorMsg) {
-                alert('Error eliminando administrador');
+                alert('Error eliminando administrador.');
             }
         });
     });
@@ -119,6 +124,9 @@ $(document).on('ready', function () {
 
         $('#headerTitle').text('Modificar Administrador');
         $('#saveAdmin').text('Modificar');
+
+        $('#admin-password').hide();
+        $('#admin-password-confirm').hide();
 
         $.ajax({
             url: '../api/controller.php',
@@ -143,10 +151,8 @@ $(document).on('ready', function () {
                 }
             },
             error: function (errorMsg) {
-                alert('Error modificando administrador');
+                alert('Error modificando administrador.');
             }
         });
     });
-
-
 });

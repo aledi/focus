@@ -43,6 +43,8 @@ $(document).on('ready', function () {
         var idCliente = window.location.search.substring(1)
         idCliente = idCliente.substring(3);
 
+        var modifying = idCliente != '';
+
         var email = $('#email').val();
         var nombre = $('#firstName').val();
         var apellidos = $('#lastName').val();
@@ -50,12 +52,12 @@ $(document).on('ready', function () {
         var password = $('#password').val();
         var passwordConfirm = $('#passwordConfirm').val();
 
-        if (username === '' || password === '' || email === '' || nombre === '' || apellidos === '') {
-            $('#feedback').html('Favor de llenar todos los campos');
+        if (nombre === '' || apellidos === '' || email === '' || username === '' || (!modifying && (password === '' || passwordConfirm === ''))) {
+            $('#feedback').html('Favor de llenar todos los campos.');
             return;
         }
 
-        if (password != passwordConfirm) {
+        if (!modifying && (password != passwordConfirm)) {
             $('#feedback').html('Las contraseñas no coinciden.');
             return;
         }
@@ -65,13 +67,19 @@ $(document).on('ready', function () {
             'nombre': nombre,
             'apellidos': apellidos,
             'email': email,
-            'username': username,
-            'password': password
+            'username': username
         };
 
-        if (idCliente != '') {
+        if (modifying) {
             parameters.id = idCliente;
+        } else {
+            parameters.password = password;
         }
+
+        // Clear feedback <span>
+        $('#feedback').empty();
+
+        var actionText = modifying ? 'modificado' : 'agregado';
 
         $.ajax({
             type: 'POST',
@@ -79,10 +87,10 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                alert('Cliente añadido exitosamente.');
+                alert('Cliente ' + actionText + ' exitosamente.');
             },
             error: function (error) {
-                $('#feedback').html('Cliente no añadido, ha ocurrido un error.');
+                $('#feedback').html('Cliente no ' + actionText + '. Ha ocurrido un error.');
             }
         });
     });
@@ -97,11 +105,11 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (obj) {
-                alert('Cliente Eliminado!');
+                alert('Cliente eliminado exitosamente.');
                 $(this).parent().find('td.id').remove();
             },
             error: function (errorMsg) {
-                alert('Error eliminando cliente');
+                alert('Error eliminando cliente.');
             }
         });
     });
@@ -116,6 +124,9 @@ $(document).on('ready', function () {
 
         $('ul.tabs li').first().addClass('current');
         $("#tab-agregarCliente").addClass('current');
+
+        $('#cliente-password').hide();
+        $('#cliente-password-confirm').hide();
 
         $.ajax({
             url: '../api/controller.php',
@@ -140,7 +151,7 @@ $(document).on('ready', function () {
                 }
             },
             error: function (errorMsg) {
-                alert('Error modificando administrador');
+                alert('Error modificando cliente.');
             }
         });
     });
