@@ -44,9 +44,11 @@
 
                     </table>
                 </div>
-
-                <button type='submit' id='saveEncuesta'>Agregar</button>
-                <span id='feedback'></span>
+                <div id="buttons">
+                    <button type='submit' id='saveEncuesta'>Agregar</button>
+                    <button type='submit' id='cancelModify'>Cancelar Cambios</button>
+                    <span id='feedback'></span>
+                </div>
             </div>
 
             <div id='tab-modificarEncuesta' class='tab-content'>

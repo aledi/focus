@@ -164,8 +164,7 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function(obj) {
-                var cancelButton = "<button type='submit' id='cancelModify'>Cancelar Cambios</button>";
-                for (var i = 0; i < obj.results.length; i++) {
+               for (var i = 0; i < obj.results.length; i++) {
                     if (obj.results[i].id == idSurvey) {
                         console.log(obj.results[i].id)
                         $('#nombre').val(obj.results[i].nombre);
@@ -178,11 +177,16 @@ $(document).on('ready', function () {
                         history.pushState({}, null, myURL);
                     }
                 }
-                $('#feedback').append(cancelButton);
             },
             error: function (errorMsg) {
                 alert('Error modificando Panelista');
             }
         });
     });
+
+    $('#cancelModify').on('click', function (event) {
+        $('#tab-agregarEncuesta').find('input').val('');
+        $('#allPanels input').removeAttr('checked');
+    });
+
 });
