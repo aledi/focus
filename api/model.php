@@ -926,7 +926,7 @@ function generalReportByAge ($encuesta, $total, $default) {
         $response = array();
         $count = 0;
 
-        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Panelista.fechaNacimiento BETWEEN '$date18' AND '$dateNow'";
+        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Panelista.fechaNacimiento >= '$date18' AND Panelista.fechaNacimiento < '$dateNow'";
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
@@ -934,7 +934,7 @@ function generalReportByAge ($encuesta, $total, $default) {
             $count = $count + (int)$row['count'];
         }
 
-        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Panelista.fechaNacimiento BETWEEN '$date25' AND '$date18'";
+        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Panelista.fechaNacimiento >= '$date25' AND Panelista.fechaNacimiento < '$date18'";
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
@@ -942,7 +942,7 @@ function generalReportByAge ($encuesta, $total, $default) {
             $count = $count + (int)$row['count'];
         }
 
-        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Panelista.fechaNacimiento BETWEEN '$date35' AND '$date25'";
+        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Panelista.fechaNacimiento >= '$date35' AND Panelista.fechaNacimiento < '$date25'";
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
@@ -950,7 +950,7 @@ function generalReportByAge ($encuesta, $total, $default) {
             $count = $count + (int)$row['count'];
         }
 
-        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Panelista.fechaNacimiento BETWEEN '$date50' AND '$date35'";
+        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Panelista.fechaNacimiento >= '$date50' AND Panelista.fechaNacimiento < '$date35'";
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
@@ -958,7 +958,7 @@ function generalReportByAge ($encuesta, $total, $default) {
             $count = $count + (int)$row['count'];
         }
 
-        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Panelista.fechaNacimiento BETWEEN '$date65' AND '$date50'";
+        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Panelista.fechaNacimiento >= '$date65' AND Panelista.fechaNacimiento < '$date50'";
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
