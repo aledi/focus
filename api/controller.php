@@ -84,6 +84,9 @@ switch ($action) {
     case 'UNREGISTER_DEVICE':
         unregisterDevice();
         break;
+    case 'GENERAL_REPORT':
+        getGeneralReportData();
+        break;
     case 'LOG_OUT':
         logOut();
         break;
@@ -278,6 +281,12 @@ function verifyActiveSession () {
     $validationResult = hasActiveSession();
 
     echo json_encode($validationResult);
+}
+
+function getGeneralReportData () {
+    $reportData = generalReportData($_POST['encuesta']);
+
+    echo json_encode($reportData);
 }
 
 function registerDevice () {
