@@ -43,6 +43,8 @@ $(document).on('ready', function () {
         var idCliente = window.location.search.substring(1)
         idCliente = idCliente.substring(3);
 
+        var modifying = idCliente != '';
+
         var email = $('#email').val();
         var nombre = $('#firstName').val();
         var apellidos = $('#lastName').val();
@@ -50,8 +52,8 @@ $(document).on('ready', function () {
         var password = $('#password').val();
         var passwordConfirm = $('#passwordConfirm').val();
 
-        if (username === '' || password === '' || email === '' || nombre === '' || apellidos === '') {
-            $('#feedback').html('Favor de llenar todos los campos');
+        if (nombre === '' || apellidos === '' || email === '' || username === '' || (!modifying && (password === '' || passwordConfirm === ''))) {
+            $('#feedback').html('Favor de llenar todos los campos.');
             return;
         }
 
@@ -69,9 +71,12 @@ $(document).on('ready', function () {
             'password': password
         };
 
-        if (idCliente != '') {
+        if (modifying) {
             parameters.id = idCliente;
         }
+
+        // Clear feedback <span>
+        $('#feedback').empty();
 
         var actionText = idCliente !== '' ? 'modificado' : 'agregado';
 
