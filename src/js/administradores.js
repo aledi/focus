@@ -21,10 +21,12 @@ $(document).on('ready', function () {
                 currentHTML += '<tbody>';
 
                 for (var i = 0; i < obj.results.length; i++) {
-                    currentHTML += '<tr value="'+ obj.results[i].id +'">';
-                    currentHTML += '<td>' + obj.results[i].username+'</td>';
-                    currentHTML += '<td>' + obj.results[i].nombre+'</td>';
-                    currentHTML += '<td>' + obj.results[i].email+'</td>';
+                    var result = obj.results[i];
+
+                    currentHTML += '<tr value="'+ result.id +'">';
+                    currentHTML += '<td>' + result.username+'</td>';
+                    currentHTML += '<td>' + result.nombre+'</td>';
+                    currentHTML += '<td>' + result.email+'</td>';
                     currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
@@ -42,7 +44,7 @@ $(document).on('ready', function () {
     });
 
     $('#saveAdmin').on('click', function (event) {
-        var idAdmin = window.location.search.substring(1)
+        var idAdmin = window.location.search.substring(1);
         idAdmin = idAdmin.substring(3);
 
         var modifying = idAdmin != '';
@@ -79,7 +81,6 @@ $(document).on('ready', function () {
         }
 
         var actionText = modifying ? 'modificado' : 'agregado';
-
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -94,7 +95,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allAdmins').on('click','.deleteButton', function(){
+    $('#allAdmins').on('click', '.deleteButton', function () {
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
@@ -103,7 +104,7 @@ $(document).on('ready', function () {
                 'id': $(this).parent().attr('value')
             },
             dataType: 'json',
-            success: function(obj){
+            success: function (obj) {
                 alert('Administrador eliminado exitosamente.');
                 $(this).parent().find('td.id').remove();
             },
@@ -113,7 +114,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allAdmins').on('click','.modifyButton', function(){
+    $('#allAdmins').on('click', '.modifyButton', function ()  {
         var idAdministador = $(this).parent().attr('value')
 
         $('ul.tabs li').removeClass('current');
@@ -136,13 +137,15 @@ $(document).on('ready', function () {
                 'id': idAdministador
             },
             dataType: 'json',
-            success: function(obj){
+            success: function (obj) {
                 for (var i = 0; i < obj.results.length; i++) {
+                    var result = obj.results[i];
+
                     if (obj.results[i].id == idAdministador) {
-                        $('#email').val(obj.results[i].email);
-                        $('#firstName').val(obj.results[i].nombre);
-                        $('#lastName').val(obj.results[i].apellidos);
-                        $('#username').val(obj.results[i].username);
+                        $('#email').val(result.email);
+                        $('#firstName').val(result.nombre);
+                        $('#lastName').val(result.apellidos);
+                        $('#username').val(result.username);
 
                         var myURL = window.location.href.split('?')[0];
                         myURL = myURL + '?id=' + obj.results[i].id;

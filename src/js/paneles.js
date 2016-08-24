@@ -1,4 +1,5 @@
 'use strict';
+
 $(document).on('ready', function () {
     $.ajax({
         type: 'POST',
@@ -16,10 +17,12 @@ $(document).on('ready', function () {
             currentHTML += '<tbody>';
 
             for (var i = 0; i < obj.results.length; i++) {
-                currentHTML += '<tr value="' + obj.results[i].id + '">';
-                currentHTML += "<td>" + obj.results[i].nombre + " " + obj.results[i].apellidos +"</td>";
-                currentHTML += "<td>" + obj.results[i].email+"</td>";
-                currentHTML += '<td class="centered"><input type="radio" value=' + obj.results[i].id + ' name="id"></td>';
+                var result = obj.results[i];
+
+                currentHTML += '<tr value="' + result.id + '">';
+                currentHTML += "<td>" + result.nombre + " " + result.apellidos + "</td>";
+                currentHTML += "<td>" + result.email + "</td>";
+                currentHTML += '<td class="centered"><input type="radio" value=' + result.id + ' name="id"></td>';
                 currentHTML += "</tr>";
 
                 $("#tableClientes").append(currentHTML);
@@ -36,7 +39,7 @@ $(document).on('ready', function () {
     $('#savePanel').on('click', function (event) {
         event.preventDefault();
 
-        var idPanel = window.location.search.substring(1)
+        var idPanel = window.location.search.substring(1);
         idPanel = idPanel.substring(3);
 
         var nombre = $('#panelName').val();
@@ -64,7 +67,6 @@ $(document).on('ready', function () {
         }
 
         var actionText = idPanel !== '' ? 'modificado' : 'agregado';
-
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -103,11 +105,13 @@ $(document).on('ready', function () {
                 currentHTML += '<tbody>';
 
                 for (var i = 0; i < obj.results.length; i++) {
-                    currentHTML += '<tr value="'+ obj.results[i].id +'">';
-                    currentHTML += '<td><a href="liga-panel-panelista.php?id=' + obj.results[i].id +'">' + obj.results[i].nombre +"</a></td>";
-                    currentHTML += "<td>" + obj.results[i].fechaInicio + "</td>";
-                    currentHTML += "<td>" + obj.results[i].fechaFin + "</td>";
-                    currentHTML += "<td>" + obj.results[i].cliente + "</td>";
+                    var result = obj.results[i];
+
+                    currentHTML += '<tr value="'+ result.id +'">';
+                    currentHTML += '<td><a href="liga-panel-panelista.php?id=' + result.id +'">' + result.nombre +"</a></td>";
+                    currentHTML += "<td>" + result.fechaInicio + "</td>";
+                    currentHTML += "<td>" + result.fechaFin + "</td>";
+                    currentHTML += "<td>" + result.cliente + "</td>";
                     currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += "</tr>";
@@ -119,12 +123,12 @@ $(document).on('ready', function () {
                 currentHTML += '</tbody>';
             },
             error: function (error) {
-                $('#feedback').html("Error cargando los clientes.");
+                $('#feedback').html('Error cargando los clientes.');
             }
         });
     }, 500);
 
-    $('#allPanels').on('click','.deleteButton', function(){
+    $('#allPanels').on('click', '.deleteButton', function () {
         var parameters = {
             'action': 'DELETE_PANEL',
             'id': $(this).parent().attr('value')
@@ -145,7 +149,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allPanels').on('click','.modifyButton', function(){
+    $('#allPanels').on('click', '.modifyButton', function () {
         var idPanel = $(this).parent().attr('value');
 
         $('ul.tabs li').removeClass('current');
@@ -167,14 +171,16 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function(obj){
                 for (var i = 0; i < obj.results.length; i++) {
-                    if (obj.results[i].id == idPanel){
-                        $('#panelName').val(obj.results[i].nombre);
-                        $('#dateStarts').val(obj.results[i].fechaInicio);
-                        $('#dateEnds').val(obj.results[i].fechaFin);
-                        $('input[name="id"][value="' + obj.results[i].id + '"]').prop('checked', true);
+                    var result = obj.results[i];
+
+                    if (result.id == idPanel){
+                        $('#panelName').val(result.nombre);
+                        $('#dateStarts').val(result.fechaInicio);
+                        $('#dateEnds').val(result.fechaFin);
+                        $('input[name="id"][value="' + result.id + '"]').prop('checked', true);
 
                         var myURL = window.location.href.split('?')[0];
-                        myURL = myURL + '?id=' + obj.results[i].id;
+                        myURL = myURL + '?id=' + result.id;
                         history.pushState({}, null, myURL);
                     }
                 }

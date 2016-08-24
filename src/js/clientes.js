@@ -19,10 +19,12 @@ $(document).on('ready', function () {
                 currentHTML += '<tbody>';
 
                 for (var i = 0; i < obj.results.length; i++) {
-                    currentHTML += '<tr value="'+ obj.results[i].id + '">';
-                    currentHTML += '<td>' + obj.results[i].username+'</td>';
-                    currentHTML += '<td>' + obj.results[i].nombre + " " + obj.results[i].apellidos+'</td>';
-                    currentHTML += '<td>' + obj.results[i].email+'</td>';
+                    var result = obj.results[i];
+
+                    currentHTML += '<tr value="'+ result.id + '">';
+                    currentHTML += '<td>' + result.username+'</td>';
+                    currentHTML += '<td>' + result.nombre + " " + result.apellidos+'</td>';
+                    currentHTML += '<td>' + result.email+'</td>';
                     currentHTML += '<td class=modifyButton><button id= modify type=button>Modificar</button></td>';
                     currentHTML += '<td class=deleteButton><button id= delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
@@ -40,7 +42,7 @@ $(document).on('ready', function () {
     }, 500);
 
     $('#saveCliente').on('click', function (event) {
-        var idCliente = window.location.search.substring(1)
+        var idCliente = window.location.search.substring(1);
         idCliente = idCliente.substring(3);
 
         var modifying = idCliente != '';
@@ -80,7 +82,6 @@ $(document).on('ready', function () {
         $('#feedback').empty();
 
         var actionText = modifying ? 'modificado' : 'agregado';
-
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -95,7 +96,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allUsers').on('click','.deleteButton', function () {
+    $('#allUsers').on('click', '.deleteButton', function () {
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
@@ -114,7 +115,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allUsers').on('click','.modifyButton', function () {
+    $('#allUsers').on('click', '.modifyButton', function () {
         var idUser = $(this).parent().attr('value')
         $('#headerTitle').text('Modificar Cliente');
         $('#saveCliente').text('Modificar');
@@ -138,14 +139,16 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 for (var i = 0; i < obj.results.length; i++) {
-                    if (obj.results[i].id == idUser) {
-                        $('#email').val(obj.results[i].email);
-                        $('#firstName').val(obj.results[i].nombre);
-                        $('#lastName').val(obj.results[i].apellidos);
-                        $('#username').val(obj.results[i].username);
+                    var result = obj.results[i];
+
+                    if (result.id == idUser) {
+                        $('#email').val(result.email);
+                        $('#firstName').val(result.nombre);
+                        $('#lastName').val(result.apellidos);
+                        $('#username').val(result.username);
 
                         var myURL = window.location.href.split('?')[0];
-                        myURL = myURL + '?id=' + obj.results[i].id;
+                        myURL = myURL + '?id=' + result.id;
                         history.pushState({}, null, myURL);
                     }
                 }
