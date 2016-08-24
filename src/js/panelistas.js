@@ -48,21 +48,41 @@ $(document).on('ready', function () {
         var idPanelista = window.location.search.substring(1)
         idPanelista = idPanelista.substring(3);
 
+        var firstName = $('#firstName').val();
+        var lastName = $('#lastName').val();
+        var email = $('#email').val();
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var fechaNacimiento = $('#fechaNacimiento').val();
+        var educacion = $('#educacion').val();
+        var calleNumero = $('#calleNumero').val();
+        var colonia = $('#colonia').val();
+        var municipio = $('#municipio').val();
+        var estado = $('#estado').val();
+        var cp = $('#cp').val();
+
+        if (firstName === '' || lastName === '' || email === '' || username === '' || password === '' ||
+            fechaNacimiento === '' || educacion === '0' || calleNumero === '' || colonia === '' || municipio === '' ||
+            estado === '0' || cp === '') {
+                $('#feedback').html('Favor de llenar todos los campos.');
+                return;
+        }
+
         var parameters = {
             'action': 'ALTA_PANELISTA',
-            'nombre': $('#firstName').val(),
-            'apellidos': $('#lastName').val(),
-            'email': $('#email').val(),
-            'username': $('#username').val(),
-            'password': $('#password').val(),
+            'nombre': firstName,
+            'apellidos': lastName,
+            'email': email,
+            'username': username,
+            'password': password,
             'genero': $('input[name=gender]:checked').val(),
-            'fechaNacimiento': $('#fechaNacimiento').val(),
-            'educacion': $('#educacion').val(),
-            'calleNumero': $('#calleNumero').val(),
-            'colonia': $('#colonia').val(),
-            'municipio': $('#municipio').val(),
-            'estado': $('#estado').val(),
-            'cp': $('#cp').val()
+            'fechaNacimiento': fechaNacimiento,
+            'educacion': educacion,
+            'calleNumero': calleNumero,
+            'colonia': colonia,
+            'municipio': municipio,
+            'estado': estado,
+            'cp': cp
         };
 
         if (idPanelista != '') {
@@ -70,6 +90,9 @@ $(document).on('ready', function () {
         }
 
         var actionText = idPanelista !== '' ? 'modificado' : 'agregado';
+
+        // Clear feedback <span>
+        $('#feedback').empty();
 
         $.ajax({
             type: 'POST',
