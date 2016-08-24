@@ -42,8 +42,10 @@ $(document).on('ready', function () {
     });
 
     $('#saveAdmin').on('click', function (event) {
-        var idAdministrador = window.location.search.substring(1)
-        idAdministrador = idAdministrador.substring(3);
+        var idAdmin = window.location.search.substring(1)
+        idAdmin = idAdmin.substring(3);
+
+        var modifying = idAdmin != '';
 
         var email = $('#email').val();
         var nombre = $('#firstName').val();
@@ -52,12 +54,12 @@ $(document).on('ready', function () {
         var password = $('#password').val();
         var passwordConfirm = $('#passwordConfirm').val();
 
-        if (username === '' || password === '' || email === '' || nombre === '' || apellidos === '') {
+        if (nombre === '' || apellidos === '' || email === '' || username === '' || (!modifying && (password === '' || passwordConfirm === ''))) {
             $('#feedback').html('Favor de llenar todos los campos');
             return;
         }
 
-        if (password != passwordConfirm) {
+        if (!modifying && (password != passwordConfirm)) {
             $('#feedback').html('Las contraseñas no coinciden.');
             return;
         }
@@ -67,15 +69,16 @@ $(document).on('ready', function () {
             'nombre': nombre,
             'apellidos': apellidos,
             'email': email,
-            'username': username,
-            'password': password
+            'username': username
         };
 
-        if (idAdministrador != '') {
-            parameters.id = idAdministrador;
+        if (modifying) {
+            parameters.id = idAdmin;
+        } else {
+            parameters.password = password
         }
 
-        var actionText = idAdministrador !== '' ? 'modificado' : 'agregado';
+        var actionText = modifying ? 'modificado' : 'agregado';
 
         $.ajax({
             type: 'POST',
