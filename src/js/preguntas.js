@@ -48,7 +48,7 @@ $(document).on('ready', function () {
         currentHTML += '<div id="Answers'+lastQuestion+'">' +
             '</div>' +
             '<div class="feedback"></div>' +
-            '<div class="button"><button type="submit" class="removerPregunta">Remover Pregunta</button></div>' +
+            '<div class="button"><button type="button" id="removeQuestion" class="no-background">Remover Pregunta</button></div>' +
             '</div>';
 
         $("#questions").append(currentHTML);
@@ -126,12 +126,12 @@ $(document).on('ready', function () {
         appendQuestions(lastQuestion);
     });
 
-    $('#questions').on('click','.removerPregunta', function(){
+    $('#questions').on('click','#removeQuestion', function(){
         console.log($(this).parent().parent().find('.pregunta').val());
-        
+
         if ($(this).parent().parent().attr('id') != 'questions')
             $(this).parent().parent().remove();
-        
+
     });
 
     $('#submitQuestions').on('click', function(){
@@ -221,5 +221,4 @@ $(document).on('ready', function () {
             }
         });
     });
-
 });

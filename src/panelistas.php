@@ -117,8 +117,8 @@
                     <input id='cp' type='text' />
                 </div>
 
+                <button type='button' id='cancelModify' class='no-background'>Cancelar</button>
                 <button type='submit' id='savePanelista'>Agregar</button>
-                <button type='submit' id='cancelModify'>Cancelar Cambios</button>
                 <span id='feedback' class='feedback-text'></span>
             </div>
 

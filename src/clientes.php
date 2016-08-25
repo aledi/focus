@@ -51,8 +51,8 @@
                     <input type='password' name='Password' placeholder='••••••••' id='passwordConfirm'>
                 </div>
 
+                <button type='button' id='cancelModify' class='no-background'>Cancelar</button>
                 <button type='submit' id='saveCliente'>Agregar</button>
-                <button type='submit' id='cancelModify'>Cancelar Cambios</button>
                 <span id='feedback'></span>
             </div>
 

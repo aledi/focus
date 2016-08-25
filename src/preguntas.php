@@ -50,13 +50,11 @@
 
                         </div>
                         <span class='feedback'></span>
-                        <div class="button">
-                            <button type="submit" class="removerPregunta">Remover Pregunta</button>
-                        </div>
-                    </div> 
+                        <button type="button" id='removeQuestion' class='no-background'>Eliminar Pregunta</button>
+                    </div>
                 </div>
 
-                <button type='submit' id='addQuestion' class='no-background'>Agregar Nueva Pregunta</button>
+                <button type='button' id='addQuestion' class='no-background'>Agregar Nueva Pregunta</button>
                 <button type='submit' id='submitQuestions'>Confimar Preguntas</button>
             </div>
         </div>

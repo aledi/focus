@@ -44,8 +44,8 @@
                     </table>
                 </div>
 
+                <button type='button' id='cancelModify' class='no-background'>Cancelar</button>
                 <button type='submit' id='savePanel'>Agregar</button>
-                <button type='submit' id='cancelModify'>Cancelar Cambios</button>
                 <span id='feedback'></span>
             </div>
 
