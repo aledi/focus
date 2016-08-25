@@ -117,7 +117,8 @@
                     <input id='cp' type='text' />
                 </div>
 
-                <button type='submit' id='savePanelista'>Enviar</button>
+                <button type='submit' id='savePanelista'>Agregar</button>
+                <button type='submit' id='cancelModify'>Cancelar Cambios</button>
                 <span id='feedback' class='feedback-text'></span>
             </div>
 

@@ -45,6 +45,7 @@
                 </div>
 
                 <button type='submit' id='savePanel'>Agregar</button>
+                <button type='submit' id='cancelModify'>Cancelar Cambios</button>
                 <span id='feedback'></span>
             </div>
 
