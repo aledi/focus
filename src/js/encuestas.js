@@ -65,10 +65,10 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + obj.results[i].fechaFin +'</td>';
                     currentHTML += '<td>' + obj.results[i].panel +'</td>';
                     currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
-	                currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
+                    currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
 
-                    $('#allSurveys').append(currentHTML);
+                    $('#allEncuestas').append(currentHTML);
                     currentHTML = '';
                 }
 
@@ -83,8 +83,8 @@ $(document).on('ready', function () {
     $('#saveEncuesta').on('click', function (event) {
         event.preventDefault();
 
-        var idSurvey = window.location.search.substring(1)
-        idSurvey = idSurvey.substring(3);
+        var idEncuesta = window.location.search.substring(1)
+        idEncuesta = idEncuesta.substring(3);
 
         var nombre = $('#nombre').val();
         var fechaInicio = $('#dateStarts').val();
@@ -104,9 +104,11 @@ $(document).on('ready', function () {
             'panel' : panel
         };
 
-        if (idSurvey != '') {
-            parameters.id = idSurvey;
+        if (idEncuesta != '') {
+            parameters.id = idEncuesta;
         }
+
+        var actionText = idEncuesta !== '' ? 'modificada' : 'agregada';
 
         $.ajax({
             type: 'POST',
@@ -114,16 +116,16 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                alert('Encuesta creada exitosamente.');
+                alert('Encuesta ' + actionText + ' exitosamente.');
                 location.replace('preguntas.php?id=' + obj.id);
             },
             error: function (error) {
-                $('#feedback').html('Encuesta no añadida, ha ocurrido un error.');
+                $('#feedback').html('Encuesta no ' + actionText + '. Ha ocurrido un error.');
             }
         });
     });
 
-    $('#allSurveys').on('click','.deleteButton', function(){
+    $('#allEncuestas').on('click','.deleteButton', function(){
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
@@ -133,17 +135,17 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (obj) {
-                alert('Encuesta Eliminada!');
+                alert('Encuesta eliminada exitosamente.');
                 $(this).parent().find('td.id').remove();
             },
             error: function (errorMsg) {
-                alert('Error eliminando cliente');
+                alert('Error eliminando encuesta.');
             }
         });
     });
 
-    $('#allSurveys').on('click','.modifyButton', function(){
-        var idSurvey = $(this).parent().attr('value');
+    $('#allEncuestas').on('click','.modifyButton', function(){
+        var idEncuesta = $(this).parent().attr('value');
 
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
@@ -159,12 +161,12 @@ $(document).on('ready', function () {
             type: 'POST',
             data: {
                 'action': 'GET_ENCUESTAS',
-                'id': idSurvey
+                'id': idEncuesta
             },
             dataType: 'json',
             success: function(obj) {
                 for (var i = 0; i < obj.results.length; i++) {
-                    if (obj.results[i].id == idSurvey) {
+                    if (obj.results[i].id == idEncuesta) {
                         console.log(obj.results[i].id)
                         $('#nombre').val(obj.results[i].nombre);
                         $('#dateStarts').val(obj.results[i].fechaInicio);
@@ -178,7 +180,7 @@ $(document).on('ready', function () {
                 }
             },
             error: function (errorMsg) {
-                alert('Error modificando Panelista');
+                alert('Error modificando encuesta.');
             }
         });
     });

@@ -8,33 +8,33 @@ $(document).on('ready', function () {
             data: {'action': 'GET_PANELISTAS'},
             dataType: 'json',
             success: function (obj) {
-	            var currentHTML = '<thead>';
+                var currentHTML = '<thead>';
                 currentHTML += '<tr>';
-	            currentHTML += '<th class="left">Nombre</th>';
-	            currentHTML += '<th>Género</th>';
-	            currentHTML += '<th>Edad</th>';
-	            currentHTML += '<th>Municipio</th>';
-	            currentHTML += '<th>Estado</th>';
-	            currentHTML += '<th colspan="2">Acción</th>';
+                currentHTML += '<th class="left">Nombre</th>';
+                currentHTML += '<th>Género</th>';
+                currentHTML += '<th>Edad</th>';
+                currentHTML += '<th>Municipio</th>';
+                currentHTML += '<th>Estado</th>';
+                currentHTML += '<th colspan="2">Acción</th>';
                 currentHTML += '</tr>';
-	            currentHTML += '</thead>';
+                currentHTML += '</thead>';
                 currentHTML += '<tbody>';
 
-	            for (var i = 0; i < obj.results.length; i++) {
-	                currentHTML += '<tr value="' + obj.results[i].id +'">';
-	                currentHTML += '<td>' + obj.results[i].nombre + " " + obj.results[i].apellidos +'</td>';
-	                currentHTML += '<td>' + convertGenero(obj.results[i].genero) +'</td>';
-	                currentHTML += '<td>' + obj.results[i].edad +'</td>';
-	                currentHTML += '<td>' + obj.results[i].municipio +'</td>';
-	                currentHTML += '<td>' + obj.results[i].estado +'</td>';
-	                currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
-	                currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
-	                currentHTML += '</tr>';
+                for (var i = 0; i < obj.results.length; i++) {
+                    currentHTML += '<tr value="' + obj.results[i].id +'">';
+                    currentHTML += '<td>' + obj.results[i].nombre + " " + obj.results[i].apellidos +'</td>';
+                    currentHTML += '<td>' + convertGenero(obj.results[i].genero) +'</td>';
+                    currentHTML += '<td>' + obj.results[i].edad +'</td>';
+                    currentHTML += '<td>' + obj.results[i].municipio +'</td>';
+                    currentHTML += '<td>' + obj.results[i].estado +'</td>';
+                    currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
+                    currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
+                    currentHTML += '</tr>';
 
 
-	                $('#allPanelistas').append(currentHTML);
-	                currentHTML = '';
-	            }
+                    $('#allPanelistas').append(currentHTML);
+                    currentHTML = '';
+                }
 
                 currentHTML += '</tbody>';
             },
@@ -44,30 +44,55 @@ $(document).on('ready', function () {
         });
     }, 500);
 
-	$('#savePanelista').on('click', function (event) {
+    $('#savePanelista').on('click', function (event) {
         var idPanelista = window.location.search.substring(1)
         idPanelista = idPanelista.substring(3);
 
+        var firstName = $('#firstName').val();
+        var lastName = $('#lastName').val();
+        var email = $('#email').val();
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var fechaNacimiento = $('#fechaNacimiento').val();
+        var educacion = $('#educacion').val();
+        var calleNumero = $('#calleNumero').val();
+        var colonia = $('#colonia').val();
+        var municipio = $('#municipio').val();
+        var estado = $('#estado').val();
+        var cp = $('#cp').val();
+
+        if (firstName === '' || lastName === '' || email === '' || username === '' || password === '' ||
+            fechaNacimiento === '' || educacion === '0' || calleNumero === '' || colonia === '' || municipio === '' ||
+            estado === '0' || cp === '') {
+                $('#feedback').html('Favor de llenar todos los campos.');
+                return;
+        }
+
         var parameters = {
             'action': 'ALTA_PANELISTA',
-            'nombre': $('#firstName').val(),
-            'apellidos': $('#lastName').val(),
-            'email': $('#email').val(),
-            'username': $('#username').val(),
-            'password': $('#password').val(),
+            'nombre': firstName,
+            'apellidos': lastName,
+            'email': email,
+            'username': username,
+            'password': password,
             'genero': $('input[name=gender]:checked').val(),
-            'fechaNacimiento': $('#fechaNacimiento').val(),
-            'educacion': $('#educacion').val(),
-            'calleNumero': $('#calleNumero').val(),
-            'colonia': $('#colonia').val(),
-            'municipio': $('#municipio').val(),
-            'estado': $('#estado').val(),
-            'cp': $('#cp').val()
+            'fechaNacimiento': fechaNacimiento,
+            'educacion': educacion,
+            'calleNumero': calleNumero,
+            'colonia': colonia,
+            'municipio': municipio,
+            'estado': estado,
+            'cp': cp
         };
 
-        if(idPanelista != '') {
+        if (idPanelista != '') {
             parameters.id = idPanelista;
         }
+
+        var actionText = idPanelista !== '' ? 'modificado' : 'agregado';
+
+        // Clear feedback <span>
+        $('#feedback').empty();
 
         $.ajax({
             type: 'POST',
@@ -75,10 +100,10 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                alert('Panelista agregado exitosamente.');
+                alert('Panelista '+ actionText + ' exitosamente.');
             },
             error: function (error) {
-                $('#feedback').html('Panelista no añadido, ha ocurrido un error.');
+                $('#feedback').html('Panelista no ' + actionText + '. Ha ocurrido un error.');
             }
         });
     });
@@ -95,11 +120,11 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (obj) {
-                alert('Panelista Eliminado!');
+                alert('Panelista eliminado exitosamente.');
                 $(this).parent().find('td.id').remove();
             },
             error: function (errorMsg) {
-                alert('Error eliminando Panelista');
+                alert('Error eliminando panelista.');
             }
         });
     });
@@ -115,6 +140,8 @@ $(document).on('ready', function () {
 
         $('#headerTitle').text('Modificar Panelista');
         $('#savePanelista').text('Modificar');
+
+        $('#panelista-password').hide();
 
         $.ajax({
             url: '../api/controller.php',
@@ -147,7 +174,7 @@ $(document).on('ready', function () {
                 }
             },
             error: function (errorMsg) {
-                alert('Error modificando Panelista');
+                alert('Error modificando panelista.');
             }
         });
     });

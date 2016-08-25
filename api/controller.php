@@ -55,7 +55,7 @@ switch ($action) {
         setPreguntasEncuesta();
         break;
     case 'START_ENCUESTA':
-        initSurvey();
+        initEncuesta();
         break;
     case 'SAVE_RESPUESTAS':
         setRespuestas();
@@ -83,6 +83,9 @@ switch ($action) {
         break;
     case 'UNREGISTER_DEVICE':
         unregisterDevice();
+        break;
+    case 'GENERAL_REPORT':
+        getGeneralReportData();
         break;
     case 'LOG_OUT':
         logOut();
@@ -256,7 +259,7 @@ function setPreguntasEncuesta () {
     echo json_encode($saveResult);
 }
 
-function initSurvey () {
+function initEncuesta () {
     $saveResult = startEncuesta($_POST['encuesta'], $_POST['panelista']);
 
     echo json_encode($saveResult);
@@ -278,6 +281,12 @@ function verifyActiveSession () {
     $validationResult = hasActiveSession();
 
     echo json_encode($validationResult);
+}
+
+function getGeneralReportData () {
+    $reportData = generalReportData($_POST['encuesta']);
+
+    echo json_encode($reportData);
 }
 
 function registerDevice () {

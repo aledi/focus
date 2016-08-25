@@ -24,21 +24,21 @@
 
                 <div class='input-wrapper'>
                     <label>Nombre(s)</label>
-                    <input id='firstName' type='text' placeholder='José' />
+                    <input id='firstName' type='text' />
                 </div>
                 <div class='input-wrapper'>
                     <label>Apellido(s):</label>
-                    <input id='lastName' type='text' placeholder='Pérez García' />
+                    <input id='lastName' type='text' />
                 </div>
                 <div class='input-wrapper'>
                     <label>Correo Electrónico:</label>
-                    <input id='email' type='text' placeholder='email@email.com' />
+                    <input id='email' type='text' />
                 </div>
                 <div class='input-wrapper'>
                     <label>Usuario:</label>
-                    <input id='username' type='text' placeholder='jperez' />
+                    <input id='username' type='text' />
                 </div>
-                <div class='input-wrapper'>
+                <div id='panelista-password' class='input-wrapper'>
                     <label>Contraseña:</label>
                     <input id='password' type='password' placeholder='••••••••' />
                 </div>
@@ -65,15 +65,15 @@
                 </div>
                 <div class='input-wrapper'>
                     <label>Calle y Número:</label>
-                    <input id='calleNumero' type='text' placeholder='Hidalgo 100' />
+                    <input id='calleNumero' type='text' />
                 </div>
                 <div class='input-wrapper'>
                     <label>Colonia:</label>
-                    <input id='colonia' type='text' placeholder='Insurgentes' />
+                    <input id='colonia' type='text' />
                 </div>
                 <div class='input-wrapper'>
                     <label>Municipio:</label>
-                    <input id='municipio' type='text' placeholder='Monterrey' />
+                    <input id='municipio' type='text' />
                 </div>
                 <div class='input-wrapper'>
                     <label>Estado:</label>
@@ -114,7 +114,7 @@
                 </div>
                 <div class='input-wrapper'>
                     <label>Código Postal:</label>
-                    <input id='cp' type='text' placeholder='64000' />
+                    <input id='cp' type='text' />
                 </div>
 
                 <button type='submit' id='savePanelista'>Enviar</button>

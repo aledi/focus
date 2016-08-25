@@ -25,7 +25,7 @@
 
                 <div class='input-wrapper'>
                     <label>Nombre de Encuesta:</label>
-                    <input id='nombre' type='text' placeholder='Encuesta de Candidatos' />
+                    <input id='nombre' type='text' />
                 </div>
 
                 <div class='input-wrapper'>
@@ -52,7 +52,7 @@
             <div id='tab-modificarEncuesta' class='tab-content'>
                 <h2>Encuestas Disponibles</h2>
 
-                <table id='allSurveys'></table>
+                <table id='allEncuestas'></table>
             </div>
         </div>
     </section>
