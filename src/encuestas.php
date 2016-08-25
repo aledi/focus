@@ -54,7 +54,7 @@
             <div id='tab-modificarEncuesta' class='tab-content'>
                 <h2>Encuestas Disponibles</h2>
 
-                <table id='allSurveys'></table>
+                <table id='allEncuestas'></table>
             </div>
         </div>
     </section>

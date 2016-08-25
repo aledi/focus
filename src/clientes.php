@@ -41,12 +41,12 @@
                     <input id='username' type='text' />
                 </div>
 
-                <div class='input-wrapper'>
+                <div id='cliente-password' class='input-wrapper'>
                     <label>Contraseña:</label>
                     <input type='password' name='Password' placeholder='••••••••' id='password'>
                 </div>
 
-                <div class='input-wrapper'>
+                <div id='cliente-password-confirm' class='input-wrapper'>
                     <label>Confirmar Contraseña:</label>
                     <input type='password' name='Password' placeholder='••••••••' id='passwordConfirm'>
                 </div>
