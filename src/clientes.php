@@ -52,6 +52,7 @@
                 </div>
 
                 <button type='submit' id='saveCliente'>Agregar</button>
+                <button type='submit' id='cancelModify'>Cancelar Cambios</button>
                 <span id='feedback'></span>
             </div>
 
