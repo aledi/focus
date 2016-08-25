@@ -41,7 +41,7 @@ $(document).on('ready', function () {
                 currentHTML += '</tbody>';
             },
             error: function (error) {
-                $('#feedback').html('Error cargando los clientes.');
+                $('#feedback').html('Error cargando los clientes');
             }
         });
     }, 500);
@@ -68,7 +68,7 @@ $(document).on('ready', function () {
         if (firstName === '' || lastName === '' || email === '' || username === '' || (!modifying && password === '') ||
             fechaNacimiento === '' || educacion === '0' || calleNumero === '' || colonia === '' || municipio === '' ||
             estado === '0' || cp === '') {
-                $('#feedback').html('Favor de llenar todos los campos.');
+                $('#feedback').html('Favor de llenar todos los campos');
                 return;
         }
 

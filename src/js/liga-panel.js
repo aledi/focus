@@ -127,7 +127,7 @@ $(document).on('ready', function () {
             });
         },
         error: function (error) {
-            $('#feedback').html("Error cargando los clientes.");
+            $('#feedback').html('Error cargando los clientes');
         }
     });
 

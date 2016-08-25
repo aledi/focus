@@ -38,7 +38,7 @@ $(document).on('ready', function () {
                 currentHTML += '</tbody>';
             },
             error: function (error) {
-                $('#feedback').html('Error cargando los administradores.');
+                $('#feedback').html('Error cargando los administradores');
             }
         });
     });
@@ -62,7 +62,7 @@ $(document).on('ready', function () {
         }
 
         if (!modifying && (password != passwordConfirm)) {
-            $('#feedback').html('Las contraseñas no coinciden.');
+            $('#feedback').html('Las contraseñas no coinciden');
             return;
         }
 

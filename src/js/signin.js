@@ -31,7 +31,7 @@ $(document).on('ready', function () {
                 if (obj.status === 'SUCCESS') {
                     location.replace('panelistas.php');
                 } else {
-                    $('#feedback').html('Usuario o contraseña incorrectos.');
+                    $('#feedback').html('Usuario o contraseña incorrectos');
                 }
             },
             error: function (error) {

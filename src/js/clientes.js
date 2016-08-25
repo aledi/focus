@@ -36,7 +36,7 @@ $(document).on('ready', function () {
                 currentHTML += '</tbody>';
             },
             error: function (error) {
-                $('#feedback').html('Error cargando los clientes.');
+                $('#feedback').html('Error cargando los clientes');
             }
         });
     }, 500);
@@ -55,12 +55,12 @@ $(document).on('ready', function () {
         var passwordConfirm = $('#passwordConfirm').val();
 
         if (nombre === '' || apellidos === '' || email === '' || username === '' || (!modifying && (password === '' || passwordConfirm === ''))) {
-            $('#feedback').html('Favor de llenar todos los campos.');
+            $('#feedback').html('Favor de llenar todos los campos');
             return;
         }
 
         if (!modifying && (password != passwordConfirm)) {
-            $('#feedback').html('Las contraseñas no coinciden.');
+            $('#feedback').html('Las contraseñas no coinciden');
             return;
         }
 

@@ -37,7 +37,7 @@ $(document).on('ready', function () {
                 currentHTML += '</tbody>';
             },
             error: function (error) {
-                $('#feedback').html('Error cargando los clientes.');
+                $('#feedback').html('Error cargando los clientes');
             }
         });
     }, 500);
@@ -79,7 +79,7 @@ $(document).on('ready', function () {
                 currentHTML += '</tbody>';
             },
             error: function (error) {
-                $('#feedback').html('Error cargando los clientes.');
+                $('#feedback').html('Error cargando los clientes');
             }
         });
     }, 500);
