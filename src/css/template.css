@@ -239,8 +239,12 @@ button.no-background {
 
 .feedback-text {
     display: block;
-    margin-top: 10px;
+    margin-top: 20px;
     text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: #E05858;
 }
 
 /* -----------------------------------------------------------------------------------------------
