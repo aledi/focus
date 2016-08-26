@@ -125,6 +125,7 @@ section {
     height: 100%;
     margin: 50px auto;
     box-sizing: border-box;
+    box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.2);
 }
 
 .panelistas-wrapper, .paneles-wrapper, .encuestas-wrapper {
@@ -255,11 +256,11 @@ table {
     width: 100%;
 }
 
-table thead tr th.left {
+.left {
     text-align: left;
 }
 
-table tbody tr td.centered {
+.centered {
     text-align: center;
 }
 
