@@ -2,8 +2,8 @@
 
 function connect() {
     // servername, username, password, dbname
-    $connection = new mysqli("localhost", "root", "root", "focus");
-    $connection->set_charset("utf8");
+    $connection = new mysqli('localhost', 'root', 'root', 'focus');
+    $connection->set_charset('utf8');
 
     # Check connection
     if ($connection->connect_error) {
@@ -583,18 +583,63 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
             $preguntaText = $pregunta['pregunta'];
             $video = $pregunta['video'];
             $imagen = $pregunta['imagen'];
-            $op1 = $pregunta['op1'];
-            $op2 = $pregunta['op2'];
-            $op3 = $pregunta['op3'];
-            $op4 = $pregunta['op4'];
-            $op5 = $pregunta['op5'];
-            $op6 = $pregunta['op6'];
-            $op7 = $pregunta['op7'];
-            $op8 = $pregunta['op8'];
-            $op9 = $pregunta['op9'];
-            $op10 = $pregunta['op10'];
 
-            $sql = "INSERT INTO Preguntas (encuesta, tipo, numPregunta, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$op1', '$op2', '$op3', '$op4', '$op5', '$op6', '$op7', '$op8', '$op9', '$op10')";
+            $opciones = $pregunta['opciones'];
+
+            $op1 = '';
+            $op2 = '';
+            $op3 = '';
+            $op4 = '';
+            $op5 = '';
+            $op6 = '';
+            $op7 = '';
+            $op8 = '';
+            $op9 = '';
+            $op10 = '';
+
+            $count = count($opciones);
+
+            if ($count > 0) {
+                $op1 = $opciones[0];
+            }
+
+            if ($count > 1) {
+                $op2 = $opciones[1];
+            }
+
+            if ($count > 2) {
+                $op3 = $opciones[2];
+            }
+
+            if ($count > 3) {
+                $op4 = $opciones[3];
+            }
+
+            if ($count > 4) {
+                $op5 = $opciones[4];
+            }
+
+            if ($count > 5) {
+                $op6 = $opciones[5];
+            }
+
+            if ($count > 6) {
+                $op7 = $opciones[6];
+            }
+
+            if ($count > 7) {
+                $op8 = $opciones[7];
+            }
+
+            if ($count > 8) {
+                $op9 = $opciones[8];
+            }
+
+            if ($count > 9) {
+                $op10 = $opciones[9];
+            }
+
+            $sql = "INSERT INTO Preguntas (encuesta, tipo, numPregunta, pregunta, video, imagen, numOpciones, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$count', '$op1', '$op2', '$op3', '$op4', '$op5', '$op6', '$op7', '$op8', '$op9', '$op10')";
 
             if ($conn->query($sql) === TRUE) {
                 $inserts = $inserts + 1;
@@ -833,6 +878,169 @@ function unregisterDeviceToken ($id) {
     }
 
     return array('status' => 'DATABASE_ERROR');
+}
+
+// -------------------------------
+// Reports
+// -------------------------------
+
+function generalReportData ($encuesta) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT panel FROM Encuesta WHERE id = '$encuesta'";
+        $result = $conn->query($sql);
+        $panel = 0;
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $panel = (int)$row['panel'];
+        }
+
+        $sql = "SELECT COUNT(*) as total FROM PanelistaEnPanel WHERE panel = '$panel'";
+        $result = $conn->query($sql);
+        $total = 0;
+        $answers = 0;
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $total = (int)$row['total'];
+        }
+
+        if ($total === 0) {
+            return array('status' => 'NO_DATA');
+        }
+
+        $sql = "SELECT COUNT(*) as answers FROM Respuestas WHERE encuesta = '$encuesta'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $answers = (int)$row['answers'];
+        }
+
+        $byGender = array();
+        $byAge = array();
+        $byState = array();
+
+        if ($answers === 0) {
+            $byGender = generalReportByGender($encuesta, $answers, TRUE);
+            $byAge = generalReportByAge($encuesta, $answers, TRUE);
+            $byState = generalReportByState($encuesta, $answers, TRUE);
+        }
+
+        $byGender = generalReportByGender($encuesta, $answers, FALSE);
+        $byAge = generalReportByAge($encuesta, $answers, FALSE);
+        $byState = generalReportByState($encuesta, $answers, FALSE);
+
+        return array('respuestas' => $answers, 'porcentaje' => $answers / $total, 'genero' => $byGender, 'edad' => $byAge, 'estado' => $byState);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function generalReportByGender ($encuesta, $total, $default) {
+    $conn = connect();
+
+    if ($conn != null && !$default) {
+        $sql = "SELECT COUNT(*) as h FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Panelista.genero = 0 AND Respuestas.encuesta = '$encuesta'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $conn->close();
+            return array('H' => (int)$row['h'] / $total, 'M' => ($total - (int)$row['h']) / $total);
+        }
+    }
+
+    $conn->close();
+    return array('H' => 0, 'M' => 0);
+}
+
+function generalReportByAge ($encuesta, $total, $default) {
+    $conn = connect();
+
+    if ($conn != null && !$default) {
+        $dateNow = date('Y-m-d');
+        $date18 = date('Y-m-d', strtotime("-18 year", time()));
+        $date25 = date('Y-m-d', strtotime("-25 year", time()));
+        $date35 = date('Y-m-d', strtotime("-35 year", time()));
+        $date50 = date('Y-m-d', strtotime("-50 year", time()));
+        $date65 = date('Y-m-d', strtotime("-65 year", time()));
+
+        $response = array();
+        $count = 0;
+
+        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Panelista.fechaNacimiento >= '$date18' AND Panelista.fechaNacimiento < '$dateNow'";
+        $result = $conn->query($sql);
+
+        if ($row = $result->fetch_assoc()) {
+            $response['18'] = (int)$row['count'] / $total;
+            $count = $count + (int)$row['count'];
+        }
+
+        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Panelista.fechaNacimiento >= '$date25' AND Panelista.fechaNacimiento < '$date18'";
+        $result = $conn->query($sql);
+
+        if ($row = $result->fetch_assoc()) {
+            $response['25'] = (int)$row['count'] / $total;
+            $count = $count + (int)$row['count'];
+        }
+
+        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Panelista.fechaNacimiento >= '$date35' AND Panelista.fechaNacimiento < '$date25'";
+        $result = $conn->query($sql);
+
+        if ($row = $result->fetch_assoc()) {
+            $response['35'] = (int)$row['count'] / $total;
+            $count = $count + (int)$row['count'];
+        }
+
+        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Panelista.fechaNacimiento >= '$date50' AND Panelista.fechaNacimiento < '$date35'";
+        $result = $conn->query($sql);
+
+        if ($row = $result->fetch_assoc()) {
+            $response['50'] = (int)$row['count'] / $total;
+            $count = $count + (int)$row['count'];
+        }
+
+        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Panelista.fechaNacimiento >= '$date65' AND Panelista.fechaNacimiento < '$date50'";
+        $result = $conn->query($sql);
+
+        if ($row = $result->fetch_assoc()) {
+            $response['65'] = (int)$row['count'] / $total;
+            $count = $count + (int)$row['count'];
+        }
+
+        $response['100'] = $total - $count;
+
+        $conn->close();
+        return $response;
+    }
+
+    $conn->close();
+    return array('18' => 0, '25' => 0, '35' => 0, '50' => 0, '65' => 0, '100' => 0);
+}
+
+function generalReportByState ($encuesta, $total, $default) {
+    $conn = connect();
+
+    if ($conn != null && !$default) {
+        $sql = "SELECT estado, COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = '$encuesta' GROUP BY estado";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $response[$row['estado']] = (int)$row['count'];
+            $response[$row['estado']."%"] = (int)$row['count'] / $total;
+        }
+
+        $conn->close();
+        return $response;
+    }
+
+    $conn->close();
+    return array();
 }
 
 ?>
