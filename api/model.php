@@ -583,18 +583,63 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
             $preguntaText = $pregunta['pregunta'];
             $video = $pregunta['video'];
             $imagen = $pregunta['imagen'];
-            $op1 = $pregunta['op1'];
-            $op2 = $pregunta['op2'];
-            $op3 = $pregunta['op3'];
-            $op4 = $pregunta['op4'];
-            $op5 = $pregunta['op5'];
-            $op6 = $pregunta['op6'];
-            $op7 = $pregunta['op7'];
-            $op8 = $pregunta['op8'];
-            $op9 = $pregunta['op9'];
-            $op10 = $pregunta['op10'];
 
-            $sql = "INSERT INTO Preguntas (encuesta, tipo, numPregunta, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$op1', '$op2', '$op3', '$op4', '$op5', '$op6', '$op7', '$op8', '$op9', '$op10')";
+            $opciones = $pregunta['opciones'];
+
+            $op1 = '';
+            $op2 = '';
+            $op3 = '';
+            $op4 = '';
+            $op5 = '';
+            $op6 = '';
+            $op7 = '';
+            $op8 = '';
+            $op9 = '';
+            $op10 = '';
+
+            $count = count($opciones);
+
+            if ($count > 0) {
+                $op1 = $opciones[0];
+            }
+
+            if ($count > 1) {
+                $op2 = $opciones[1];
+            }
+
+            if ($count > 2) {
+                $op3 = $opciones[2];
+            }
+
+            if ($count > 3) {
+                $op4 = $opciones[3];
+            }
+
+            if ($count > 4) {
+                $op5 = $opciones[4];
+            }
+
+            if ($count > 5) {
+                $op6 = $opciones[5];
+            }
+
+            if ($count > 6) {
+                $op7 = $opciones[6];
+            }
+
+            if ($count > 7) {
+                $op8 = $opciones[7];
+            }
+
+            if ($count > 8) {
+                $op9 = $opciones[8];
+            }
+
+            if ($count > 9) {
+                $op10 = $opciones[9];
+            }
+
+            $sql = "INSERT INTO Preguntas (encuesta, tipo, numPregunta, pregunta, video, imagen, numOpciones, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$count', '$op1', '$op2', '$op3', '$op4', '$op5', '$op6', '$op7', '$op8', '$op9', '$op10')";
 
             if ($conn->query($sql) === TRUE) {
                 $inserts = $inserts + 1;
