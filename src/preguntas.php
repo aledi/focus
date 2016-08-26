@@ -24,38 +24,38 @@
                 <div id='questions'>
                     <div id="1" class='questionForm'>
                         <div class='input-wrapper'>
-                            <label>Pregunta: </label>
-                            <input class='pregunta' name='respuesta' type='text'/>
+                            <label>Pregunta:</label>
+                            <input id='pregunta' class='pregunta' name='respuesta' type='text' />
                         </div>
                         <div class='input-wrapper'>
-                            <label>Tipo de pregunta: </label>
-                            <select class="tipoPregunta" name="respuesta" required>
-                                <option value="1">Abiertas</option>
-                                <option value="2">Selección Única</option>
-                                <option value="3">Selección Múltiple</option>
-                                <option value="4">Ordenamiento</option>
+                            <label>Tipo de pregunta:</label>
+                            <select id='tipo' class='tipoPregunta' name='respuesta' required>
+                                <option value='1'>Abiertas</option>
+                                <option value='2'>Selección Única</option>
+                                <option value='3'>Selección Múltiple</option>
+                                <option value='4'>Ordenamiento</option>
                             </select>
-                            <p class="feedTypeQuestion"></p>
                         </div>
                         <div class='input-wrapper'>
                             <label>Imagen URL:</label>
-                            <input class="imagen" name="respuesta" type="text"/>
+                            <input id='imagen' class='imagen' name='respuesta' type='text' />
                         </div>
 
                         <div class='input-wrapper'>
                             <label>Video URL:</label>
-                            <input class="video" name="respuesta" type="text"/>
+                            <input id='video' class='video' name='respuesta' type='text' />
                         </div>
-                        <div id="Answers1">
+                        <div id='Answers1'>
 
                         </div>
-                        <span class='feedback'></span>
                         <button type="button" id='removeQuestion' class='no-background'>Eliminar Pregunta</button>
                     </div>
                 </div>
 
                 <button type='button' id='addQuestion' class='no-background'>Agregar Nueva Pregunta</button>
                 <button type='submit' id='submitQuestions'>Confimar Preguntas</button>
+
+                <span class='feedback'></span>
             </div>
         </div>
     </section>

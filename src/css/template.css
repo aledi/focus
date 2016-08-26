@@ -125,6 +125,7 @@ section {
     height: 100%;
     margin: 50px auto;
     box-sizing: border-box;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
 }
 
 .panelistas-wrapper, .paneles-wrapper, .encuestas-wrapper {
@@ -239,8 +240,12 @@ button.no-background {
 
 .feedback-text {
     display: block;
-    margin-top: 10px;
+    margin-top: 20px;
     text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: #E05858;
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -251,11 +256,11 @@ table {
     width: 100%;
 }
 
-table thead tr th.left {
+.left {
     text-align: left;
 }
 
-table tbody tr td.centered {
+.centered {
     text-align: center;
 }
 

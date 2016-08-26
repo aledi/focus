@@ -6,13 +6,13 @@ $(document).on('ready', function () {
     idEncuesta = idEncuesta.substring(3);
 
     function appendAnswers(typeQuestion, questionID){
-        if (typeQuestion != 1) {
+        if (typeQuestion !== 1) {
             var currentHTML = '';
 
             for (var x = 1; x <= 10; x++) {
                 currentHTML += '<div class="answer">';
                 currentHTML += '<p>Opción ' + x + '</p>';
-                currentHTML += '<input class="respuesta' + x + '" name="respuesta' + questionID + '" type="text"/>';
+                currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + '" name="respuesta' + questionID + '" type="text"/>';
                 currentHTML += "</div>";
              }
         }
@@ -25,30 +25,26 @@ $(document).on('ready', function () {
         currentHTML += '<hr>';
         currentHTML += '<div class="input-wrapper">' +
             '<p>Pregunta:</p>' +
-            '<input class="pregunta" name="respuesta" type="text"/>' +
+            '<input id="pregunta" class="pregunta" name="respuesta" type="text" />' +
             '</div>';
         currentHTML += '<div class="input-wrapper">' +
-            '<p>Tipo de pregunta: </p>' +
-            '<select class="tipoPregunta" name="respuesta" required>' +
+            '<p>Tipo de pregunta:</p>' +
+            '<select id="tipo" class="tipoPregunta" name="respuesta" required>' +
             '<option value="1">Abiertas</option>' +
             '<option value="2">Selección Única</option>' +
             '<option value="3">Selección Múltiple</option>' +
             '<option value="4">Ordenamiento</option>' +
             '</select>' +
-            '<p class="feedTypeQuestion"></p>' +
             '</div>';
         currentHTML += '<div class="input-wrapper">' +
             '<p>Imagen URL:</p>' +
-            '<input class="imagen" name="respuesta" type="text"/>' +
+            '<input id="imagen" class="imagen" name="respuesta" type="text" />' +
             '</div>';
         currentHTML += '<div class="input-wrapper">' +
             '<p>Video URL:</p>' +
-            '<input class="video" name="respuesta" type="text"/>' +
+            '<input id="video" class="video" name="respuesta" type="text"/>' +
             '</div>';
-        currentHTML += '<div id="Answers'+lastQuestion+'">' +
-            '</div>' +
-            '<div class="feedback"></div>' +
-            '<div class="button"><button type="button" id="removeQuestion" class="no-background">Remover Pregunta</button></div>' +
+        currentHTML += '<div id="Answers'+lastQuestion+'"></div>' +
             '</div>';
 
         $("#questions").append(currentHTML);
@@ -83,9 +79,7 @@ $(document).on('ready', function () {
                     $('input.imagen[name=respuesta]').val(obj.results[x].imagen);
                     $('input.video[name=respuesta]').val(obj.results[x].video);
 
-                    if (typeQuestion == 1) {
-                        $('textarea.respuesta' + questionID + '[name=respuesta]').val(obj.results[x].op1);
-                    } else {
+                    if (typeQuestion !== 1) {
                         $('input.respuesta1[name=respuesta]').val(obj.results[x].op1);
                         $('input.respuesta2[name=respuesta]').val(obj.results[x].op2);
                         $('input.respuesta3[name=respuesta]').val(obj.results[x].op3);
@@ -144,63 +138,30 @@ $(document).on('ready', function () {
         var respuesta = 0;
         var questionsArray = [];
         var questionObject = {};
+        questionObject.opciones = [];
 
         $('#questions').children().each(function () {
-            // "this" is the current element in the loop
-            $('[name=respuesta]').each(function() {
-                if (iteration === 1) {
-                    questionObject.numPregunta = numeroPregunta;
-                    questionObject.pregunta = $(this).val();
-                } else if (iteration === 2) {
-                    questionObject.tipo = $(this).val();
-                } else if (iteration === 3) {
-                    questionObject.imagen = $(this).val();
-                } else if (iteration === 4) {
-                    questionObject.video = $(this).val();
-                } else if (iteration === 5) {
-                    questionObject.op1 = $(this).val();
-                } else if (iteration === 6) {
-                    questionObject.op2 = $(this).val();
-                } else if (iteration === 7) {
-                    questionObject.op3 = $(this).val();
-                } else if (iteration === 8) {
-                    questionObject.op4 = $(this).val();
-                } else if (iteration === 9) {
-                    questionObject.op5 = $(this).val();
-                } else if (iteration === 10) {
-                    questionObject.op6 = $(this).val();
-                } else if (iteration === 11) {
-                    questionObject.op7 = $(this).val();
-                } else if (iteration === 12) {
-                    questionObject.op8 = $(this).val();
-                } else if (iteration === 13) {
-                    questionObject.op9 = $(this).val();
-                } else if (iteration === 14) {
-                    questionObject.op10 = $(this).val();
+            questionObject.numPregunta = numeroPregunta;
+            questionObject.pregunta = $(this).find('#pregunta').val();
+            questionObject.tipo = $(this).find('#tipo').val();
+            questionObject.imagen = $(this).find('#imagen').val();
+            questionObject.video = $(this).find('#video').val();
+
+            if (questionObject.tipo !== 1) {
+                var opcion = 1;
+                while ($(this).find('#opcion' + opcion).val()) {
+                    questionObject.opciones.push($(this).find('#opcion' + opcion).val());
+                    opcion++;
                 }
-
-                iteration++;
-            });
-
-            if (questionObject.tipo == 1) {
-                questionObject.op2 = '';
-                questionObject.op3 = '';
-                questionObject.op4 = '';
-                questionObject.op5 = '';
-                questionObject.op6 = '';
-                questionObject.op7 = '';
-                questionObject.op8 = '';
-                questionObject.op9 = '';
-                questionObject.op10 = '';
             }
 
-            iteration = 1;
             questionsArray.push(questionObject);
             numeroPregunta++;
             questionObject = {};
+            questionObject.opciones = [];
         });
 
-        var idEncuesta = window.location.search.substring(1)
+        var idEncuesta = window.location.search.substring(1);
         idEncuesta = idEncuesta.substring(3);
 
         $.ajax({
