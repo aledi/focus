@@ -45,6 +45,7 @@ $(document).on('ready', function () {
             '<input id="video" class="video" name="respuesta" type="text"/>' +
             '</div>';
         currentHTML += '<div id="Answers'+lastQuestion+'"></div>' +
+            '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
             '</div>';
 
         $("#questions").append(currentHTML);
