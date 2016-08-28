@@ -6,11 +6,9 @@ $(document).on('ready', function () {
     idEncuesta = idEncuesta.substring(3);
 
     function appendAnswers(typeQuestion, questionID){
-        console.log("Answers" + questionID);
-        $('#Answers1').empty();
-        if (typeQuestion !== 1) {
+        $("#Answers" + questionID).empty();
+        if (typeQuestion != 1) {
             var currentHTML = '';
-
             for (var x = 1; x <= 10; x++) {
                 currentHTML += '<div class="answer">';
                 currentHTML += '<p>Opción ' + x + '</p>';
@@ -18,8 +16,9 @@ $(document).on('ready', function () {
                 currentHTML += "</div>";
              }
         }
-
+        
         $("#Answers" + questionID).append(currentHTML);
+        currentHTML = '';
     }
 
     function appendQuestions (lastQuestion) {
@@ -104,19 +103,13 @@ $(document).on('ready', function () {
 
     $(document).on("change", ".tipoPregunta", function(){
         var typeQuestion = $(this).val();
-        var currentHTML = ''; // ??????????
         var questionID = $(this).parent().parent().attr('id');
         var answersClass = "div#Answers" + questionID;
-
-        $(this).parent().parent().find(answersClass).empty();
-
+        
         appendAnswers(typeQuestion, questionID);
-
-        currentHTML = ''; // ????????
     });
 
     $("#addQuestion").on("click", function(){
-        var currentHTML = ''; // ?????????????
         var lastQuestion = $("#questions").children().length;
         lastQuestion = parseInt(lastQuestion) + 1;
 
