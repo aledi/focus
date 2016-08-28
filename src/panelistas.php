@@ -49,7 +49,15 @@
                 </div>
                 <div class='input-wrapper'>
                     <label>Fecha de Nacimiento:</label>
-                    <input id='fechaNacimiento' type='text' />
+                    <select id='dia'>
+                        
+                    </select>
+                    <select id='mes'>
+                        
+                    </select>
+                    <select id='anio'>
+                        
+                    </select>
                 </div>
                 <div class='input-wrapper'>
                     <label>Educación:</label>

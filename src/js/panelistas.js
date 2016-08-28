@@ -1,5 +1,70 @@
 'use strict';
 
+function getCompleteDate(){
+    var dia = '';
+    var mes = '';
+    var anio = '';
+    var fecha = '';
+
+    dia = $('select#dia_fin').val();
+    mes = $('select#mes_fin').val();
+    anio = $('select#anio_fin').val();
+
+    fecha = anio + '-' + mes + '-' + dia;
+
+    return fecha;
+}
+
+function fillDay(days, option){
+    var currentHTML = '';
+    for(var x = 1; x < days + 1; x++){
+        currentHTML += '<option value="' + x + '">' + x + '</option>';
+    }
+
+    if(option == 0){
+        $('#dia').append(currentHTML);
+    }
+    else if(option == 1){    
+        $('#dia').empty();
+        $('#dia').append(currentHTML);
+    }
+}
+
+function fillMonth(){
+    var currentHTML = '';
+    for(var x = 1; x < 13; x++){
+        currentHTML += '<option value="' + x + '">' + convertMonth(x) + '</option>';
+    }
+    $('#mes').append(currentHTML);
+}
+
+function fillYear(){
+    var currentTime = new Date();
+    var currentYear = currentTime.getFullYear() - 18;
+    var currentHTML = '';
+
+    for(var x = currentYear; x > currentYear - 100; x--){
+        currentHTML += '<option value="' + x + '">' + x + '</option>';
+    }
+    $('#anio').append(currentHTML);
+}
+
+function fillSelects(option){
+    switch (option) {
+        case 1 : 
+                fillDay(31, 0);
+            break;
+        case 2 :
+                fillMonth();
+            break;
+        case 3 : 
+                fillYear();
+            break;
+        default :
+            break;
+    }
+}
+
 $(document).on('ready', function () {
     setTimeout(function (event) {
         $.ajax({
@@ -8,6 +73,9 @@ $(document).on('ready', function () {
             data: {'action': 'GET_PANELISTAS'},
             dataType: 'json',
             success: function (obj) {
+                fillSelects(1);
+                fillSelects(2);
+                fillSelects(3);
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
                 currentHTML += '<th class="left">Nombre</th>';
@@ -53,7 +121,7 @@ $(document).on('ready', function () {
         var email = $('#email').val();
         var username = $('#username').val();
         var password = $('#password').val();
-        var fechaNacimiento = $('#fechaNacimiento').val();
+        var fechaNacimiento = getCompleteDate();
         var educacion = $('#educacion').val();
         var calleNumero = $('#calleNumero').val();
         var colonia = $('#colonia').val();

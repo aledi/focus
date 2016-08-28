@@ -1,4 +1,86 @@
 'use strict';
+
+function getCompleteDate(option){
+    var dia = '';
+    var mes = '';
+    var anio = '';
+    var fecha = '';
+
+    if(option == 1){
+        dia = $('select#dia_fin').val();
+        mes = $('select#mes_fin').val();
+        anio = $('select#anio_fin').val();
+
+        fecha = anio + '-' + mes + '-' + dia;
+    }
+    else{
+        dia = $('select#dia_fin').val();
+        mes = $('select#mes_fin').val();
+        anio = $('select#anio_fin').val();
+
+        fecha = anio + '-' + mes + '-' + dia;
+    }
+    console.log(fecha);
+    return fecha;
+}
+
+function fillDay(days, option){
+    var currentHTML = '';
+    for(var x = 1; x < days + 1; x++){
+        currentHTML += '<option value="' + x + '">' + x + '</option>';
+    }
+
+    if(option == 0){
+        $('#dia').append(currentHTML);
+        $('#dia_fin').append(currentHTML);
+    }
+    else if(option == 1){    
+        $('#dia').empty();
+        $('#dia').append(currentHTML);
+    }
+    else{      
+        $('#dia_fin').empty();
+        $('#dia_fin').append(currentHTML);
+    }
+}
+
+function fillMonth(){
+    var currentHTML = '';
+    for(var x = 1; x < 13; x++){
+        currentHTML += '<option value="' + x + '">' + convertMonth(x) + '</option>';
+    }
+    $('#mes').append(currentHTML);
+    $('#mes_fin').append(currentHTML);
+}
+
+function fillYear(){
+    var currentTime = new Date();
+    var currentYear = currentTime.getFullYear();
+    var currentHTML = '';
+
+    for(var x = currentYear; x < currentYear + 10; x++){
+        currentHTML += '<option value="' + x + '">' + x + '</option>';
+    }
+    $('#anio').append(currentHTML);
+    $('#anio_fin').append(currentHTML);
+}
+
+function fillSelects(option){
+    switch (option) {
+        case 1 : 
+                fillDay(31, 0);
+            break;
+        case 2 :
+                fillMonth();
+            break;
+        case 3 : 
+                fillYear();
+            break;
+        default :
+            break;
+    }
+}
+
 $(document).on('ready', function () {
     $.ajax({
         type: 'POST',
@@ -41,8 +123,8 @@ $(document).on('ready', function () {
 
         var nombre = $('#panelName').val();
         var descripcion = $('#descripcion').val();
-        var fechaInicio = $('#dateStarts').val();
-        var fechaFin = $('#dateEnds').val();
+        var fechaInicio = getCompleteDate(1);
+        var fechaFin = getCompleteDate(2);
         var cliente = $("input[name=id]:checked").val();
 
         if (nombre === '' || fechaInicio === '' || fechaFin === '' || typeof cliente === 'undefined') {
@@ -91,6 +173,9 @@ $(document).on('ready', function () {
             data: {'action': 'GET_PANELES'},
             dataType: 'json',
             success: function (obj) {
+                fillSelects(1);
+                fillSelects(2);
+                fillSelects(3);
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
                 currentHTML += '<th>Nombre</th>';
@@ -183,6 +268,20 @@ $(document).on('ready', function () {
                 alert('Error modificando panelista.');
             }
         });
+    });
+
+    $(document).on("change", "#mes", function(){
+        var mes = parseInt($('select#mes').val());
+        var anio = parseInt($('select#anio').val());
+        var dias = getMonthDays(mes, anio);
+        fillDay(dias, 1);
+    });
+
+    $(document).on("change", "#mes_fin", function(){
+        var mes = parseInt($('select#mes_fin').val());
+        var anio = parseInt($('select#anio_fin').val());
+        var dias = getMonthDays(mes, anio);
+        fillDay(dias, 2);
     });
 
 });
