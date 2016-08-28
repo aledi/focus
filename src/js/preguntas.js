@@ -6,6 +6,8 @@ $(document).on('ready', function () {
     idEncuesta = idEncuesta.substring(3);
 
     function appendAnswers(typeQuestion, questionID){
+        console.log("Answers" + questionID);
+        $('#Answers1').empty();
         if (typeQuestion !== 1) {
             var currentHTML = '';
 
@@ -66,7 +68,7 @@ $(document).on('ready', function () {
                     appendQuestions(x);
                 }
 
-                $('div#Answers').empty();
+                $('div#Answers1').empty();
 
                 for (var x = 0; x < obj.results.length; x++) {
                     var typeQuestion = obj.results[x].tipo;
@@ -122,11 +124,8 @@ $(document).on('ready', function () {
     });
 
     $('#questions').on('click','#removeQuestion', function(){
-        console.log($(this).parent().parent().find('.pregunta').val());
-
-        if ($(this).parent().parent().attr('id') != 'questions')
-            $(this).parent().parent().remove();
-
+        if ($(this).parent().attr('id') != 'questions')
+            $(this).parent().remove();
     });
 
     $('#submitQuestions').on('click', function(){
