@@ -1,80 +1,5 @@
 'use strict';
 
-function getDatefromString(stringDate){
-    var arrayDate;
-
-    arrayDate = stringDate.split('-');
-    $('#anio').val(arrayDate[0]);
-    $('#mes').val(parseInt(arrayDate[1]));
-    $('#dia').val(parseInt(arrayDate[2]));
-
-    return;
-}
-
-function getCompleteDate(){
-    var dia = '';
-    var mes = '';
-    var anio = '';
-    var fecha = '';
-
-    dia = $('select#dia').val();
-    mes = $('select#mes').val();
-    anio = $('select#anio').val();
-
-    fecha = anio + '-' + mes + '-' + dia;
-    return fecha;
-}
-
-function fillDay(days, option){
-    var currentHTML = '';
-    for(var x = 1; x < days + 1; x++){
-        currentHTML += '<option value="' + x + '">' + x + '</option>';
-    }
-
-    if(option == 0){
-        $('#dia').append(currentHTML);
-    }
-    else if(option == 1){    
-        $('#dia').empty();
-        $('#dia').append(currentHTML);
-    }
-}
-
-function fillMonth(){
-    var currentHTML = '';
-    for(var x = 1; x < 13; x++){
-        currentHTML += '<option value="' + x + '">' + convertMonth(x) + '</option>';
-    }
-    $('#mes').append(currentHTML);
-}
-
-function fillYear(){
-    var currentTime = new Date();
-    var currentYear = currentTime.getFullYear() - 18;
-    var currentHTML = '';
-
-    for(var x = currentYear; x > currentYear - 100; x--){
-        currentHTML += '<option value="' + x + '">' + x + '</option>';
-    }
-    $('#anio').append(currentHTML);
-}
-
-function fillSelects(option){
-    switch (option) {
-        case 1 : 
-                fillDay(31, 0);
-            break;
-        case 2 :
-                fillMonth();
-            break;
-        case 3 : 
-                fillYear();
-            break;
-        default :
-            break;
-    }
-}
-
 $(document).on('ready', function () {
     setTimeout(function (event) {
         $.ajax({
@@ -83,9 +8,9 @@ $(document).on('ready', function () {
             data: {'action': 'GET_PANELISTAS'},
             dataType: 'json',
             success: function (obj) {
-                fillSelects(1);
-                fillSelects(2);
-                fillSelects(3);
+                fillSelects(1, 1);
+                fillSelects(2, 1);
+                fillSelects(3, 1);
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
                 currentHTML += '<th class="left">Nombre</th>';
@@ -130,7 +55,7 @@ $(document).on('ready', function () {
         var lastName = $('#lastName').val();
         var email = $('#email').val();
         var username = $('#username').val();
-        var fechaNacimiento = getCompleteDate();
+        var fechaNacimiento = getCompleteDate(1);
         var educacion = $('#educacion').val();
         var calleNumero = $('#calleNumero').val();
         var colonia = $('#colonia').val();
@@ -235,7 +160,7 @@ $(document).on('ready', function () {
                         $('#email').val(obj.results[i].email);
                         $('#username').val(obj.results[i].username);
                         $('input[name="gender"][value="' + obj.results[i].genero + '"]').prop('checked', true);
-                        getDatefromString(obj.results[i].fechaNacimiento);
+                        getDatefromString(obj.results[i].fechaNacimiento, 0);
                         $('#educacion').val(obj.results[i].educacion + '');
                         $('#calleNumero').val(obj.results[i].calleNumero);
                         $('#colonia').val(obj.results[i].colonia);
