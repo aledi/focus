@@ -1,5 +1,23 @@
 'use strict';
 
+function getDatefromString(stringDate, option){
+    var arrayDate;
+    if(option == 0){
+        arrayDate = stringDate.split('-');
+        $('#anio').val(arrayDate[0]);
+        $('#mes').val(parseInt(arrayDate[1]));
+        $('#dia').val(parseInt(arrayDate[2]));
+    }
+    else{
+         arrayDate = stringDate.split('-');
+        $('#anio_fin').val(arrayDate[0]);
+        $('#mes_fin').val(parseInt(arrayDate[1]));
+        $('#dia_fin').val(parseInt(arrayDate[2]));
+    }
+
+    return;
+}
+
 function getCompleteDate(option){
     var dia = '';
     var mes = '';
@@ -254,8 +272,8 @@ $(document).on('ready', function () {
                 for (var i = 0; i < obj.results.length; i++) {
                     if (obj.results[i].id == idPanel){
                         $('#panelName').val(obj.results[i].nombre);
-                        $('#dateStarts').val(obj.results[i].fechaInicio);
-                        $('#dateEnds').val(obj.results[i].fechaFin);
+                        getDatefromString(obj.results[i].fechaInicio, 0)
+                        getDatefromString(obj.results[i].fechaFin, 1)
                         $('input[name="id"][value="' + obj.results[i].id + '"]').prop('checked', true);
 
                         var myURL = window.location.href.split('?')[0];

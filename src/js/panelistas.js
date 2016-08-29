@@ -6,7 +6,7 @@ function getDatefromString(stringDate){
     arrayDate = stringDate.split('-');
     $('#anio').val(arrayDate[0]);
     $('#mes').val(parseInt(arrayDate[1]));
-    $('#dia').val(arrayDate[2]);
+    $('#dia').val(parseInt(arrayDate[2]));
 
     return;
 }
