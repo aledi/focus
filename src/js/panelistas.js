@@ -203,4 +203,18 @@ $(document).on('ready', function () {
         $("#tab-modificarPanelista").addClass('current');
     });
 
+    $(document).on("change", "#mes", function(){
+        var mes = parseInt($('select#mes').val());
+        var anio = parseInt($('select#anio').val());
+        var dias = getMonthDays(mes, anio);
+        fillDay(dias, 1);
+    });
+
+    $(document).on("change", "#anio", function(){
+        var mes = parseInt($('select#mes').val());
+        var anio = parseInt($('select#anio').val());
+        var dias = getMonthDays(mes, anio);
+        fillDay(dias, 1);
+    });
+
 });

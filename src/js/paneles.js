@@ -203,6 +203,20 @@ $(document).on('ready', function () {
         fillDay(dias, 2);
     });
 
+    $(document).on("change", "#anio", function(){
+        var mes = parseInt($('select#mes').val());
+        var anio = parseInt($('select#anio').val());
+        var dias = getMonthDays(mes, anio);
+        fillDay(dias, 1);
+    });
+
+    $(document).on("change", "#anio_fin", function(){
+        var mes = parseInt($('select#mes_fin').val());
+        var anio = parseInt($('select#anio_fin').val());
+        var dias = getMonthDays(mes, anio);
+        fillDay(dias, 2);
+    });
+
     $('#cancelModify').on('click', function (event) {
         $('#tab-agregarPanel').find('input').val('');
         $('#tableClientes input').removeAttr('checked');

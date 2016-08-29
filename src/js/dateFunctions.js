@@ -43,7 +43,7 @@ function getCompleteDate(option){
 
 function fillDay(days, option){
     var currentHTML = '';
-    for(var x = 1; x < days + 1; x++){
+    for(var x = 1; x <= days; x++){
         currentHTML += '<option value="' + x + '">' + x + '</option>';
     }
 
@@ -63,7 +63,7 @@ function fillDay(days, option){
 
 function fillMonth(){
     var currentHTML = '';
-    for(var x = 1; x < 13; x++){
+    for(var x = 1; x <= 12; x++){
         currentHTML += '<option value="' + x + '">' + convertMonth(x) + '</option>';
     }
     $('#mes').append(currentHTML);
@@ -83,8 +83,7 @@ function fillYear(option){
         $('#anio_fin').append(currentHTML);
     }
     else {
-        currentYear = currentYear - 18;
-        for(var x = currentYear; x > currentYear - 100 ; x--){
+        for(var x = currentYear - 18; x > currentYear - 100 ; x--){
             currentHTML += '<option value="' + x + '">' + x + '</option>';
         }
         $('#anio').append(currentHTML);
