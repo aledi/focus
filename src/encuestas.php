@@ -45,6 +45,7 @@
                     </table>
                 </div>
 
+                <button type='button' id='cancelModify' class='no-background'>Cancelar</button>
                 <button type='submit' id='saveEncuesta'>Agregar</button>
                 <span id='feedback'></span>
             </div>
