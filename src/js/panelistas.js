@@ -184,4 +184,22 @@ $(document).on('ready', function () {
             event.preventDefault();
         }
     });
+
+    $('#cancelModify').on('click', function (event) {
+        $('#tab-agregarPanelista').find('input').val('');
+        $('#tab-agregarPanelista').find('select').val('0');
+        $('#tab-agregarPanelista').find('input').removeAttr('checked');
+        $('#headerTitle').text('Agregar Panelista');
+        $('#savePanel').text('Agregar');
+
+        var myURL = window.location.href.split('?')[0];
+        history.pushState({}, null, myURL);
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $('ul.tabs li').last().addClass('current');
+        $("#tab-modificarPanelista").addClass('current');
+    });
+
 });
