@@ -24,9 +24,9 @@ function getCompleteDate(option){
     var fecha = '';
 
     if(option == 1){
-        dia = $('select#dia_fin').val();
-        mes = $('select#mes_fin').val();
-        anio = $('select#anio_fin').val();
+        dia = $('select#dia').val();
+        mes = $('select#mes').val();
+        anio = $('select#anio').val();
 
         fecha = anio + '-' + mes + '-' + dia;
     }
@@ -37,7 +37,6 @@ function getCompleteDate(option){
 
         fecha = anio + '-' + mes + '-' + dia;
     }
-    console.log(fecha);
     return fecha;
 }
 

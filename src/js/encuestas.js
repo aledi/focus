@@ -91,8 +91,8 @@ $(document).on('ready', function () {
         idEncuesta = idEncuesta.substring(3);
 
         var nombre = $('#nombre').val();
-        var fechaInicio = $('#dateStarts').val();
-        var fechaFin = $('#dateEnds').val();
+        var fechaInicio = getCompleteDate(1);
+        var fechaFin = getCompleteDate(2);
         var panel = $('input[name=id]:checked').val();
 
         if (nombre === '' || fechaInicio === '' || fechaFin === '' || panel === '') {
@@ -121,7 +121,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 alert('Encuesta ' + actionText + ' exitosamente.');
-                location.replace('preguntas.php?id=' + obj.id);
+                //location.replace('preguntas.php?id=' + obj.id);
             },
             error: function (error) {
                 $('#feedback').html('Encuesta no ' + actionText + '. Ha ocurrido un error.');
