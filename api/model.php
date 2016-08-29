@@ -339,13 +339,13 @@ function fetchPanelistas () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, username, nombre, apellidos, email, genero, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, fechaNacimiento, educacion, calleNumero, colonia, municipio, estado, cp FROM Panelista";
+        $sql = "SELECT id, username, nombre, apellidos, email, genero, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, educacion, calleNumero, colonia, municipio, estado, cp FROM Panelista";
         $result = $conn->query($sql);
 
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $panelista = array('id' => (int)$row['id'], 'username' => $row['username'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos'], 'email' => $row['email'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'fechaNacimiento' => $row['fechaNacimiento'], 'educacion' => (int)$row['educacion'], 'calleNumero' => $row['calleNumero'], 'colonia' => $row['colonia'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cp' => (int)$row['cp']);
+            $panelista = array('id' => (int)$row['id'], 'username' => $row['username'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos'], 'email' => $row['email'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'calleNumero' => $row['calleNumero'], 'colonia' => $row['colonia'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cp' => (int)$row['cp']);
             $response[] = $panelista;
         }
 
