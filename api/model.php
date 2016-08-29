@@ -1043,4 +1043,26 @@ function generalReportByState ($encuesta, $total, $default) {
     return array();
 }
 
+function currentAnswers ($encuesta) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT Panelista.id FROM Panelista INNER JOIN PanelistaEnPanel ON PanelistaEnPanel.id = Panelista.id";
+        $sql = "SELECT Panelista.nombre, Panelista.apellidos, Panelista.genero, TIMESTAMPDIFF(YEAR, Panelista.fechaNacimiento, CURDATE()) AS edad, Panelista.educacion, Panelista.municipio,  Panelista.estado, fecha FROM Panelista INNER JOIN Respuestas ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = '$encuesta'";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $panelista = array('nombre' => $row['nombre'].' '.$row['apellidos'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'fecha' => $row['fecha']);
+            $response[] = $panelista;
+        }
+
+        $conn->close();
+        return array('panelistas' => $response);
+    }
+
+    return array();
+}
+
 ?>
