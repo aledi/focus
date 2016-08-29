@@ -155,4 +155,20 @@ $(document).on('ready', function () {
             }
         });
     });
+
+    $('#cancelModify').on('click', function (event) {
+        $('#tab-agregarAdministrador').find('input').val('');
+        $('#headerTitle').text('Agregar Administrador');
+        $('#saveAdmin').text('Agregar');
+
+        var myURL = window.location.href.split('?')[0];
+        history.pushState({}, null, myURL);
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $('ul.tabs li').last().addClass('current');
+        $("#tab-modificarAdministrador").addClass('current');
+    });
+
 });

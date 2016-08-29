@@ -188,7 +188,7 @@ $(document).on('ready', function () {
             }
         });
     });
-
+    
     $(document).on("change", "#mes", function(){
         var mes = parseInt($('select#mes').val());
         var anio = parseInt($('select#anio').val());
@@ -201,6 +201,22 @@ $(document).on('ready', function () {
         var anio = parseInt($('select#anio_fin').val());
         var dias = getMonthDays(mes, anio);
         fillDay(dias, 2);
+    });
+
+    $('#cancelModify').on('click', function (event) {
+        $('#tab-agregarPanel').find('input').val('');
+        $('#tableClientes input').removeAttr('checked');
+        $('#headerTitle').text('Agregar Panel');
+        $('#savePanel').text('Agregar');
+
+        var myURL = window.location.href.split('?')[0];
+        history.pushState({}, null, myURL);
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $('ul.tabs li').last().addClass('current');
+        $("#tab-modificarPanel").addClass('current');
     });
 
 });
