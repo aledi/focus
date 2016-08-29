@@ -1,17 +1,27 @@
 'use strict';
 
+function getDatefromString(stringDate){
+    var arrayDate;
+
+    arrayDate = stringDate.split('-');
+    $('#anio').val(arrayDate[0]);
+    $('#mes').val(parseInt(arrayDate[1]));
+    $('#dia').val(arrayDate[2]);
+
+    return;
+}
+
 function getCompleteDate(){
     var dia = '';
     var mes = '';
     var anio = '';
     var fecha = '';
 
-    dia = $('select#dia_fin').val();
-    mes = $('select#mes_fin').val();
-    anio = $('select#anio_fin').val();
+    dia = $('select#dia').val();
+    mes = $('select#mes').val();
+    anio = $('select#anio').val();
 
     fecha = anio + '-' + mes + '-' + dia;
-
     return fecha;
 }
 
@@ -120,7 +130,6 @@ $(document).on('ready', function () {
         var lastName = $('#lastName').val();
         var email = $('#email').val();
         var username = $('#username').val();
-        var password = $('#password').val();
         var fechaNacimiento = getCompleteDate();
         var educacion = $('#educacion').val();
         var calleNumero = $('#calleNumero').val();
@@ -129,9 +138,9 @@ $(document).on('ready', function () {
         var estado = $('#estado').val();
         var cp = $('#cp').val();
 
-        if (firstName === '' || lastName === '' || email === '' || username === '' || password === '' ||
-            fechaNacimiento === '' || educacion === '0' || calleNumero === '' || colonia === '' || municipio === '' ||
-            estado === '0' || cp === '') {
+        if (firstName == '' || lastName == '' || email == '' || username == '' ||
+            fechaNacimiento == '' || educacion == '0' || calleNumero == '' || colonia == '' || municipio == '' ||
+            estado == '0' || cp == '') {
                 $('#feedback').html('Favor de llenar todos los campos.');
                 return;
         }
@@ -142,7 +151,6 @@ $(document).on('ready', function () {
             'apellidos': lastName,
             'email': email,
             'username': username,
-            'password': password,
             'genero': $('input[name=gender]:checked').val(),
             'fechaNacimiento': fechaNacimiento,
             'educacion': educacion,
@@ -222,12 +230,12 @@ $(document).on('ready', function () {
             success: function(obj){
                 for (var i = 0; i < obj.results.length; i++) {
                     if (obj.results[i].id == idPanelista) {
-
                         $('#firstName').val(obj.results[i].nombre);
                         $('#lastName').val(obj.results[i].apellidos);
                         $('#email').val(obj.results[i].email);
                         $('#username').val(obj.results[i].username);
                         $('input[name="gender"][value="' + obj.results[i].genero + '"]').prop('checked', true);
+                        getDatefromString(obj.results[i].fechaNacimiento);
                         $('#educacion').val(obj.results[i].educacion + '');
                         $('#calleNumero').val(obj.results[i].calleNumero);
                         $('#colonia').val(obj.results[i].colonia);
