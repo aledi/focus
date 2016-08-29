@@ -8,6 +8,9 @@ $(document).on('ready', function () {
             data: {'action': 'GET_PANELES'},
             dataType: 'json',
             success: function (obj) {
+                fillSelects(1, 0);
+                fillSelects(2, 0);
+                fillSelects(3, 0);
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
                 currentHTML += '<th class="left">Nombre</th>';
@@ -171,8 +174,8 @@ $(document).on('ready', function () {
                     if (obj.results[i].id == idEncuesta) {
                         console.log(obj.results[i].id)
                         $('#nombre').val(obj.results[i].nombre);
-                        $('#dateStarts').val(obj.results[i].fechaInicio);
-                        $('#dateEnds').val(obj.results[i].fechaFin);
+                        getDatefromString(obj.results[i].fechaInicio, 0)
+                        getDatefromString(obj.results[i].fechaFin, 1)
                         $('input[name=id][value="' + obj.results[i].id + '"]').prop('checked', true);
 
                         var myURL = window.location.href.split('?')[0];
@@ -203,4 +206,17 @@ $(document).on('ready', function () {
         $("#tab-modificarEncuesta").addClass('current');
     });
 
+     $(document).on("change", "#mes", function(){
+        var mes = parseInt($('select#mes').val());
+        var anio = parseInt($('select#anio').val());
+        var dias = getMonthDays(mes, anio);
+        fillDay(dias, 1);
+    });
+
+    $(document).on("change", "#anio", function(){
+        var mes = parseInt($('select#mes').val());
+        var anio = parseInt($('select#anio').val());
+        var dias = getMonthDays(mes, anio);
+        fillDay(dias, 1);
+    });
 });

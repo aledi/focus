@@ -31,7 +31,7 @@
                     <textarea id='descripcion'></textarea>
                 </div>
                 <div class='input-wrapper'>
-                    <label>Fecha de Inicio (yyyy-mm-dd):</label>
+                    <label>Fecha de Inicio:</label>
                     <select id='dia'>
                         
                     </select>
@@ -43,7 +43,7 @@
                     </select>
                 </div>
                 <div class='input-wrapper'>
-                    <label>Fecha Final (yyyy-mm-dd):</label>
+                    <label>Fecha Final:</label>
                     <select id='dia_fin'>
                         
                     </select>
