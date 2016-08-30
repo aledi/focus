@@ -1,5 +1,7 @@
 'use strict';
 
 $(document).on('ready', function () {
-    return;
+    setTimeout(function (event) {
+        getEncuestas('avances');
+    }, 500);
 });
