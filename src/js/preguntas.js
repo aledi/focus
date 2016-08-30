@@ -1,8 +1,7 @@
 'use strict';
 
 $(document).on('ready', function () {
-    var idEncuesta = -1;
-    idEncuesta = window.location.search.substring(1);
+    var idEncuesta = window.location.search.substring(1);
     idEncuesta = idEncuesta.substring(3);
 
     function appendAnswers (typeQuestion, questionID) {
