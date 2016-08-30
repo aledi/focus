@@ -10,8 +10,6 @@ function getEncuestas (route) {
             var currentHTML = '';
 
             if (route === 'avances') {
-                currentHTML += '<option></option>'
-
                 for (var i = 0; i < obj.results.length; i++) {
                     var result = obj.results[i];
                     currentHTML += '<option value="' + result.id + '">' + result.nombre + '</option>';

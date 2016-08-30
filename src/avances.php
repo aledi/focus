@@ -15,7 +15,9 @@
     </div>
     <section>
         <h1>Avances</h1>
-        <select id='encuestas-select'></select>
+        <select id='encuestas-select'>
+            <option value='0'>Selecciona una encuesta</option>
+        </select>
         <table id='avances-table'></table>
     </section>
 </body>
