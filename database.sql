@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 30-08-2016 a las 01:24:31
+-- Tiempo de generación: 30-08-2016 a las 02:35:58
 -- Versión del servidor: 5.5.42
 -- Versión de PHP: 7.0.0
 
@@ -500,7 +500,7 @@ CREATE TABLE `PanelistaEnPanel` (
   `id` int(11) NOT NULL,
   `panelista` int(11) NOT NULL,
   `panel` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `PanelistaEnPanel`
@@ -509,7 +509,7 @@ CREATE TABLE `PanelistaEnPanel` (
 INSERT INTO `PanelistaEnPanel` (`id`, `panelista`, `panel`) VALUES
 (23, 1, 1),
 (24, 2, 1),
-(25, 3, 1);
+(26, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -560,17 +560,19 @@ CREATE TABLE `Respuestas` (
   `id` int(11) NOT NULL,
   `encuesta` int(11) NOT NULL,
   `panelista` int(11) NOT NULL,
-  `respuestas` longtext COLLATE utf8_spanish_ci NOT NULL
+  `respuestas` longtext COLLATE utf8_spanish_ci NOT NULL,
+  `fecha` date NOT NULL,
+  `hora` time NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Respuestas`
 --
 
-INSERT INTO `Respuestas` (`id`, `encuesta`, `panelista`, `respuestas`) VALUES
-(1, 1, 1, 'res'),
-(2, 1, 2, 'res'),
-(3, 1, 3, 'res');
+INSERT INTO `Respuestas` (`id`, `encuesta`, `panelista`, `respuestas`, `fecha`, `hora`) VALUES
+(1, 1, 1, 'res', '2016-08-16', '03:00:00'),
+(2, 1, 2, 'res', '2016-08-01', '00:26:43'),
+(3, 1, 3, 'res', '2016-08-25', '13:12:49');
 
 -- --------------------------------------------------------
 
@@ -674,7 +676,7 @@ ALTER TABLE `Panelista`
 -- AUTO_INCREMENT de la tabla `PanelistaEnPanel`
 --
 ALTER TABLE `PanelistaEnPanel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT de la tabla `Preguntas`
 --
