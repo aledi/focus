@@ -131,7 +131,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allEncuestas').on('click', '.deleteButton', function(){
+    $('#allEncuestas').on('click', '.deleteButton', function() {
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
@@ -150,7 +150,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allEncuestas').on('click', '.modifyButton', function(){
+    $('#allEncuestas').on('click', '.modifyButton', function() {
         var idEncuesta = $(this).parent().attr('value');
 
         $('ul.tabs li').removeClass('current');
@@ -208,17 +208,11 @@ $(document).on('ready', function () {
         $("#tab-modificarEncuesta").addClass('current');
     });
 
-     $(document).on('change', '#mes', function(){
-        var mes = parseInt($('select#mes').val());
-        var anio = parseInt($('select#anio').val());
-        var dias = getMonthDays(mes, anio);
-        fillDay(dias, 1);
+    $('#mes, #anio').on('change', function() {
+        changeSelect('Inicio'); 
     });
 
-    $(document).on('change', '#anio', function(){
-        var mes = parseInt($('select#mes').val());
-        var anio = parseInt($('select#anio').val());
-        var dias = getMonthDays(mes, anio);
-        fillDay(dias, 1);
+    $('#mes_fin, #anio_fin').on('change', function() {
+        changeSelect('Fin'); 
     });
 });

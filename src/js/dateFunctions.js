@@ -108,3 +108,18 @@ function fillSelects(option, option_form){
             break;
     }
 }
+
+function changeSelect(option) {
+    if (option == 'Inicio') {
+        var mes = parseInt($('select#mes').val());
+        var anio = parseInt($('select#anio').val());
+        var dias = getMonthDays(mes, anio);
+        fillDay(dias, 1);
+    }
+    else if (option == 'Fin'){
+        var mes = parseInt($('select#mes_fin').val());
+        var anio = parseInt($('select#anio_fin').val());
+        var dias = getMonthDays(mes, anio);
+        fillDay(dias, 2);
+    }
+}
