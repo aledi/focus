@@ -24,12 +24,14 @@ $(document).on('ready', function () {
                 currentHTML += '<tbody>';
 
                 for (var i = 0; i < obj.results.length; i++) {
-                    currentHTML += '<tr value="' + obj.results[i].id +'">';
-                    currentHTML += '<td>' + obj.results[i].nombre + " " + obj.results[i].apellidos +'</td>';
-                    currentHTML += '<td>' + convertGenero(obj.results[i].genero) +'</td>';
-                    currentHTML += '<td>' + obj.results[i].edad +'</td>';
-                    currentHTML += '<td>' + obj.results[i].municipio +'</td>';
-                    currentHTML += '<td>' + obj.results[i].estado +'</td>';
+                    var result = obj.results[i];
+
+                    currentHTML += '<tr value="' + result.id +'">';
+                    currentHTML += '<td>' + result.nombre + " " + result.apellidos +'</td>';
+                    currentHTML += '<td>' + convertGenero(result.genero) +'</td>';
+                    currentHTML += '<td>' + result.edad +'</td>';
+                    currentHTML += '<td>' + result.municipio +'</td>';
+                    currentHTML += '<td>' + result.estado +'</td>';
                     currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
@@ -42,14 +44,16 @@ $(document).on('ready', function () {
                 currentHTML += '</tbody>';
             },
             error: function (error) {
-                $('#feedback').html('Error cargando los clientes.');
+                $('#feedback').html('Error cargando los clientes');
             }
         });
     }, 500);
 
     $('#savePanelista').on('click', function (event) {
-        var idPanelista = window.location.search.substring(1)
+        var idPanelista = window.location.search.substring(1);
         idPanelista = idPanelista.substring(3);
+
+        var modifying = idPanelista != '';
 
         var firstName = $('#firstName').val();
         var lastName = $('#lastName').val();
@@ -63,10 +67,10 @@ $(document).on('ready', function () {
         var estado = $('#estado').val();
         var cp = $('#cp').val();
 
-        if (firstName == '' || lastName == '' || email == '' || username == '' ||
-            fechaNacimiento == '' || educacion == '0' || calleNumero == '' || colonia == '' || municipio == '' ||
-            estado == '0' || cp == '') {
-                $('#feedback').html('Favor de llenar todos los campos.');
+        if (firstName === '' || lastName === '' || email === '' || username === '' || (!modifying && password === '') ||
+            fechaNacimiento === '' || educacion === '0' || calleNumero === '' || colonia === '' || municipio === '' ||
+            estado === '0' || cp === '') {
+                $('#feedback').html('Favor de llenar todos los campos');
                 return;
         }
 
@@ -86,15 +90,14 @@ $(document).on('ready', function () {
             'cp': cp
         };
 
-        if (idPanelista != '') {
+        if (modifying) {
             parameters.id = idPanelista;
         }
-
-        var actionText = idPanelista !== '' ? 'modificado' : 'agregado';
 
         // Clear feedback <span>
         $('#feedback').empty();
 
+        var actionText = modifying ? 'modificado' : 'agregado';
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -109,7 +112,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allPanelistas').on('click','.deleteButton', function(){
+    $('#allPanelistas').on('click', '.deleteButton', function () {
         var parameters = {
             'action': 'DELETE_PANELISTA',
             'id': $(this).parent().attr('value')
@@ -130,7 +133,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allPanelistas').on('click','.modifyButton', function(){
+    $('#allPanelistas').on('click', '.modifyButton', function () {
         var idPanelista = $(this).parent().attr('value');
 
         $('ul.tabs li').removeClass('current');
@@ -152,24 +155,26 @@ $(document).on('ready', function () {
                 'id': idPanelista
             },
             dataType: 'json',
-            success: function(obj){
+            success: function (obj) {
                 for (var i = 0; i < obj.results.length; i++) {
-                    if (obj.results[i].id == idPanelista) {
-                        $('#firstName').val(obj.results[i].nombre);
-                        $('#lastName').val(obj.results[i].apellidos);
-                        $('#email').val(obj.results[i].email);
-                        $('#username').val(obj.results[i].username);
-                        $('input[name="gender"][value="' + obj.results[i].genero + '"]').prop('checked', true);
+                    var result = obj.results[i];
+
+                    if (result.id == idPanelista) {
+                        $('#firstName').val(result.nombre);
+                        $('#lastName').val(result.apellidos);
+                        $('#email').val(result.email);
+                        $('#username').val(result.username);
+                        $('input[name="gender"][value="' + result.genero + '"]').prop('checked', true);
                         getDatefromString(obj.results[i].fechaNacimiento, 0);
-                        $('#educacion').val(obj.results[i].educacion + '');
-                        $('#calleNumero').val(obj.results[i].calleNumero);
-                        $('#colonia').val(obj.results[i].colonia);
-                        $('#municipio').val(obj.results[i].municipio);
-                        $('#estado').val(obj.results[i].estado);
-                        $('#cp').val(obj.results[i].cp);
+                        $('#educacion').val(result.educacion + '');
+                        $('#calleNumero').val(result.calleNumero);
+                        $('#colonia').val(result.colonia);
+                        $('#municipio').val(result.municipio);
+                        $('#estado').val(result.estado);
+                        $('#cp').val(result.cp);
 
                         var myURL = window.location.href.split('?')[0];
-                        myURL = myURL + '?id=' + obj.results[i].id;
+                        myURL = myURL + '?id=' + result.id;
                         history.pushState({}, null, myURL);
                     }
                 }
@@ -180,6 +185,8 @@ $(document).on('ready', function () {
         });
     });
 
+
+    // Listen to keypress & restrict input to numeric value
     $('#cp').keypress(function (event) {
         if (!event.metaKey && event.charCode !== 13 && (event.charCode < 48 || event.charCode > 57)) {
             event.preventDefault();
@@ -203,18 +210,17 @@ $(document).on('ready', function () {
         $("#tab-modificarPanelista").addClass('current');
     });
 
-    $(document).on("change", "#mes", function(){
+    $(document).on('change', '#mes', function () {
         var mes = parseInt($('select#mes').val());
         var anio = parseInt($('select#anio').val());
         var dias = getMonthDays(mes, anio);
         fillDay(dias, 1);
     });
 
-    $(document).on("change", "#anio", function(){
+    $(document).on('change', '#anio', function () {
         var mes = parseInt($('select#mes').val());
         var anio = parseInt($('select#anio').val());
         var dias = getMonthDays(mes, anio);
         fillDay(dias, 1);
     });
-
 });

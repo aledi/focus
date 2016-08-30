@@ -1,12 +1,12 @@
 'use strict';
 
 $(document).on('ready', function () {
-    var idEncuesta = -1;
-    idEncuesta = window.location.search.substring(1)
+    var idEncuesta = window.location.search.substring(1);
     idEncuesta = idEncuesta.substring(3);
 
-    function appendAnswers(typeQuestion, questionID){
+    function appendAnswers (typeQuestion, questionID) {
         $('#Answers' + questionID).empty();
+
         if (typeQuestion != 1) {
             var currentHTML = '';
             for (var x = 1; x <= 10; x++) {
@@ -61,8 +61,8 @@ $(document).on('ready', function () {
                 action : 'GET_PREGUNTAS',
                 encuesta : idEncuesta
             },
-            dataType: "json",
-            success: function(obj){
+            dataType: 'json',
+            success: function (obj) {
                 for (var x = 2; x <= obj.results.length; x++) {
                     appendQuestions(x);
                 }
@@ -70,28 +70,27 @@ $(document).on('ready', function () {
                 $('div#Answers1').empty();
 
                 for (var x = 0; x < obj.results.length; x++) {
-                    var typeQuestion = obj.results[x].tipo;
-                    var questionID = obj.results[x].numPregunta;
+                    var result = obj.results[x];
 
-                    $('input.pregunta[name=respuesta]').val(obj.results[x].pregunta);
-                    $('select.tipoPregunta[name=respuesta]').val(obj.results[x].tipo);
+                    $('input.pregunta[name=respuesta]').val(result.pregunta);
+                    $('select.tipoPregunta[name=respuesta]').val(result.tipo);
 
                     appendAnswers(typeQuestion, questionID);
 
-                    $('input.imagen[name=respuesta]').val(obj.results[x].imagen);
-                    $('input.video[name=respuesta]').val(obj.results[x].video);
+                    $('input.imagen[name=respuesta]').val(result.imagen);
+                    $('input.video[name=respuesta]').val(result.video);
 
                     if (typeQuestion !== 1) {
-                        $('input.respuesta1[name=respuesta]').val(obj.results[x].op1);
-                        $('input.respuesta2[name=respuesta]').val(obj.results[x].op2);
-                        $('input.respuesta3[name=respuesta]').val(obj.results[x].op3);
-                        $('input.respuesta4[name=respuesta]').val(obj.results[x].op4);
-                        $('input.respuesta5[name=respuesta]').val(obj.results[x].op5);
-                        $('input.respuesta6[name=respuesta]').val(obj.results[x].op6);
-                        $('input.respuesta7[name=respuesta]').val(obj.results[x].op7);
-                        $('input.respuesta8[name=respuesta]').val(obj.results[x].op8);
-                        $('input.respuesta9[name=respuesta]').val(obj.results[x].op9);
-                        $('input.respuesta10[name=respuesta]').val(obj.results[x].op10);
+                        $('input.respuesta1[name=respuesta]').val(result.op1);
+                        $('input.respuesta2[name=respuesta]').val(result.op2);
+                        $('input.respuesta3[name=respuesta]').val(result.op3);
+                        $('input.respuesta4[name=respuesta]').val(result.op4);
+                        $('input.respuesta5[name=respuesta]').val(result.op5);
+                        $('input.respuesta6[name=respuesta]').val(result.op6);
+                        $('input.respuesta7[name=respuesta]').val(result.op7);
+                        $('input.respuesta8[name=respuesta]').val(result.op8);
+                        $('input.respuesta9[name=respuesta]').val(result.op9);
+                        $('input.respuesta10[name=respuesta]').val(result.op10);
                     }
                 }
             },
@@ -101,7 +100,7 @@ $(document).on('ready', function () {
         });
     }
 
-    $(document).on("change", ".tipoPregunta", function(){
+    $(document).on('change', '.tipoPregunta', function(){
         var typeQuestion = $(this).val();
         var questionID = $(this).parent().parent().attr('id');
         var answersClass = "div#Answers" + questionID;
@@ -109,8 +108,8 @@ $(document).on('ready', function () {
         appendAnswers(typeQuestion, questionID);
     });
 
-    $("#addQuestion").on("click", function(){
-        var lastQuestion = $("#questions").children().length;
+    $('#addQuestion').on('click', function(){
+        var lastQuestion = $('#questions').children().length;
         lastQuestion = parseInt(lastQuestion) + 1;
 
         appendQuestions(lastQuestion);
@@ -168,7 +167,7 @@ $(document).on('ready', function () {
                 location.replace('encuestas.php');
             },
             error: function (error) {
-                $('#feedback').html('Preguntas no añadidas, ha ocurrido un error.');
+                $('#feedback').html('Preguntas no añadidas. Ha ocurrido un error.');
             }
         });
     });

@@ -28,13 +28,15 @@ $(document).on('ready', function () {
 
     $("#filteringText").keyup(function () {
         //split the current value of searchInput
-        var data = this.value.split(" ");
+        var data = this.value.split(' ');
+
         //create a jquery object of the rows
         var jsonObject = $("#fbody").find("tr");
-        if (this.value == "") {
+        if (this.value == '') {
             jsonObject.show();
             return;
         }
+
         //hide all the rows
         jsonObject.hide();
 
@@ -51,17 +53,16 @@ $(document).on('ready', function () {
         //show the rows that match.
         .show();
     }).focus(function () {
-        this.value = "";
-        $(this).css({
-            "color": "black"
-        });
+        this.value = '';
+
+        $(this).css({"color": "black"});
         $(this).unbind('focus');
     });
 
     var flagLoadingPanelist = 0;
     event.preventDefault();
 
-    var id = window.location.search.substring(1)
+    var id = window.location.search.substring(1);
     id = id.substring(3);
 
     $.ajax({
@@ -87,17 +88,19 @@ $(document).on('ready', function () {
                 currentHTML += '<tbody id="fbody">';
 
                 for (var i = 0; i < obj.results.length; i++) {
-                    currentHTML += '<tr value="' + obj.results[i].id +'">';
-                    currentHTML += '<td></td>';
-                    currentHTML += '<td>' + obj.results[i].nombre +'</td>';
-                    currentHTML += '<td>' + obj.results[i].edad +'</td>';
-                    currentHTML += '<td>' + obj.results[i].municipio +'</td>';
-                    currentHTML += '<td>' + obj.results[i].estado +'</td>';
+                    var result = obj.results[i];
 
-                    if (obj.results[i].checked) {
-                        currentHTML += '<td><input type="checkbox" value=' + obj.results[i].id + ' name="panelistas"' + ' checked></td>';
+                    currentHTML += '<tr value="' + result.id +'">';
+                    currentHTML += '<td></td>';
+                    currentHTML += '<td>' + result.nombre + '</td>';
+                    currentHTML += '<td>' + result.edad + '</td>';
+                    currentHTML += '<td>' + result.municipio + '</td>';
+                    currentHTML += '<td>' + result.estado + '</td>';
+
+                    if (result.checked) {
+                        currentHTML += '<td><input type="checkbox" value=' + result.id + ' name="panelistas"' + ' checked></td>';
                     } else {
-                        currentHTML += '<td><input type="checkbox" value=' + obj.results[i].id + ' name="panelistas"></td>';
+                        currentHTML += '<td><input type="checkbox" value=' + result.id + ' name="panelistas"></td>';
                     }
 
                     currentHTML += "</tr>";
@@ -108,21 +111,23 @@ $(document).on('ready', function () {
 
                 flagLoadingPanelist = 1;
             }
+
             currentHTML += '</tbody>';
-            $("tablaPanelistas").tablesorter({ 
-                // pass the headers argument and assing a object 
-                headers: { 
-                    // assign the secound column (we start counting zero) 
-                    4: { 
-                        // disable it by setting the property sorter to false 
-                        sorter: false 
-                    }, 
-                    // assign the third column (we start counting zero) 
-                } 
-            }); 
+
+            $("tablaPanelistas").tablesorter({
+                // pass the headers argument and assing an object
+                headers: {
+                    // assign the secound column (we start counting zero)
+                    4: {
+                        // disable it by setting the property sorter to false
+                        sorter: false
+                    },
+                    // assign the third column (we start counting zero)
+                }
+            });
         },
         error: function (error) {
-            $('#feedback').html("Error cargando los clientes.");
+            $('#feedback').html('Error cargando los clientes');
         }
     });
 
@@ -145,12 +150,12 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (obj) {
-                alert("Panel ligado exitosamente.");
+                alert('Panel ligado exitosamente.');
                 location.replace('paneles.php');
             },
             error: function (error) {
                 alert("error");
-                $('#feedback').html("Panel no ligado, ha ocurrido un error.");
+                $('#feedback').html('Panel no ligado, ha ocurrido un error.');
             }
         });
     });
