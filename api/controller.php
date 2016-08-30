@@ -217,6 +217,11 @@ function getRecords ($type) {
                 return;
             }
 
+            if (isset($_POST['id'])) {
+                echo json_encode(fetchPanelista($_POST['id']));
+                return;
+            }
+
             echo json_encode(fetchPanelistas());
             break;
         case 'PANELES':

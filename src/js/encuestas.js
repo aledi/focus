@@ -8,6 +8,9 @@ $(document).on('ready', function () {
             data: {'action': 'GET_PANELES'},
             dataType: 'json',
             success: function (obj) {
+                fillSelects(1, 0);
+                fillSelects(2, 0);
+                fillSelects(3, 0);
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
                 currentHTML += '<th class="left">Nombre</th>';
@@ -91,8 +94,8 @@ $(document).on('ready', function () {
         idEncuesta = idEncuesta.substring(3);
 
         var nombre = $('#nombre').val();
-        var fechaInicio = $('#dateStarts').val();
-        var fechaFin = $('#dateEnds').val();
+        var fechaInicio = getCompleteDate(1);
+        var fechaFin = getCompleteDate(2);
         var panel = $('input[name=id]:checked').val();
 
         if (nombre === '' || fechaInicio === '' || fechaFin === '' || panel === '') {
@@ -128,7 +131,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allEncuestas').on('click', '.deleteButton', function(){
+    $('#allEncuestas').on('click', '.deleteButton', function() {
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
@@ -147,7 +150,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allEncuestas').on('click', '.modifyButton', function(){
+    $('#allEncuestas').on('click', '.modifyButton', function() {
         var idEncuesta = $(this).parent().attr('value');
 
         $('ul.tabs li').removeClass('current');
@@ -167,15 +170,14 @@ $(document).on('ready', function () {
                 'id': idEncuesta
             },
             dataType: 'json',
-            success: function(obj) {
-
+            success: function (obj) {
                 for (var i = 0; i < obj.results.length; i++) {
                     var result = obj.results[i];
 
-                    if (result.id == idEncuesta) {
+                    if (result.id === idEncuesta) {
                         $('#nombre').val(result.nombre);
-                        $('#dateStarts').val(result.fechaInicio);
-                        $('#dateEnds').val(result.fechaFin);
+                        getDatefromString(obj.results[i].fechaInicio, 0);
+                        getDatefromString(obj.results[i].fechaFin, 1);
                         $('input[name=id][value="' + result.id + '"]').prop('checked', true);
 
                         var myURL = window.location.href.split('?')[0];
@@ -206,4 +208,11 @@ $(document).on('ready', function () {
         $("#tab-modificarEncuesta").addClass('current');
     });
 
+    $('#mes, #anio').on('change', function() {
+        changeSelect('Inicio'); 
+    });
+
+    $('#mes_fin, #anio_fin').on('change', function() {
+        changeSelect('Fin'); 
+    });
 });
