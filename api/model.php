@@ -1124,7 +1124,8 @@ function currentAnswers ($encuesta) {
         }
 
         $conn->close();
-        return array('panelistas' => $response);
+        $panelistas = array('panelistas' => $response);
+        return array_merge(getSummary($encuesta), $panelistas);
     }
 
     return array();
