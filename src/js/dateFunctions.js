@@ -1,9 +1,27 @@
+'use strict';
+
+var monthArray = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+function convertMonth (mes) {
+    return monthArray[mes - 1];
+}
+
+function getMonthDays (mes, anio) {
+    if (mes === 1 || mes === 3 || mes === 5 || mes === 7 || mes === 8 || mes === 10 || mes === 12) {
+        return 31;
+    } else if (mes === 2) {
+        return (((anio % 4 === 0) && (anio % 100 !== 0)) || (anio % 400 === 0)) ? 29 : 28;
+    }
+
+    return 30;
+}
+
 function getDatefromString(stringDate, option){
     var arrayDate;
+
     if(option == 0){
         arrayDate = stringDate.split('-');
         $('#anio').val(parseInt(arrayDate[0]));
-        console.log(arrayDate[0]);
         $('#mes').val(parseInt(arrayDate[1]));
         $('#dia').val(parseInt(arrayDate[2]));
     }
@@ -18,25 +36,11 @@ function getDatefromString(stringDate, option){
 }
 
 function getCompleteDate(option){
-    var dia = '';
-    var mes = '';
-    var anio = '';
-    var fecha = '';
-
-    if(option == 1){
-        dia = $('select#dia').val();
-        mes = $('select#mes').val();
-        anio = $('select#anio').val();
-
-        fecha = anio + '-' + mes + '-' + dia;
-    }
-    else{
-        dia = $('select#dia_fin').val();
-        mes = $('select#mes_fin').val();
-        anio = $('select#anio_fin').val();
-
-        fecha = anio + '-' + mes + '-' + dia;
-    }
+    var dia = (option == 1) ? $('select#dia').val() : $('select#dia_fin').val();
+    var mes = (option == 1) ? $('select#mes').val(); : $('select#mes_fin').val();
+    var anio = (option == 1) ? $('select#anio').val(); : $('select#anio_fin').val();
+    
+    fecha = anio + '-' + mes + '-' + dia;
     return fecha;
 }
 

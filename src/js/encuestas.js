@@ -172,7 +172,6 @@ $(document).on('ready', function () {
 
                 for (var i = 0; i < obj.results.length; i++) {
                     if (obj.results[i].id == idEncuesta) {
-                        console.log(obj.results[i].id)
                         $('#nombre').val(obj.results[i].nombre);
                         getDatefromString(obj.results[i].fechaInicio, 0)
                         getDatefromString(obj.results[i].fechaFin, 1)
