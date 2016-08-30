@@ -1047,14 +1047,25 @@ function currentAnswers ($encuesta) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT Panelista.id FROM Panelista INNER JOIN PanelistaEnPanel ON PanelistaEnPanel.id = Panelista.id";
-        $sql = "SELECT Panelista.nombre, Panelista.apellidos, Panelista.genero, TIMESTAMPDIFF(YEAR, Panelista.fechaNacimiento, CURDATE()) AS edad, Panelista.educacion, Panelista.municipio,  Panelista.estado, fecha FROM Panelista INNER JOIN Respuestas ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = '$encuesta'";
+        $sql = "SELECT Panelista.id, nombre, apellidos, genero, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, educacion, municipio, estado FROM Panelista LEFT JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = (SELECT panel FROM Encuesta WHERE id = '$encuesta')";
         $result = $conn->query($sql);
 
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $panelista = array('nombre' => $row['nombre'].' '.$row['apellidos'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'fecha' => $row['fecha']);
+            $panelistaId = $row['id'];
+            $fecha = '';
+            $hora = '';
+            $sql2 = "SELECT fecha, hora, respuestas FROM Respuestas WHERE panelista = '$panelistaId' AND respuestas != ''";
+            $result2 = $conn->query($sql2);
+
+            if ($result2->num_rows > 0) {
+                $row2 = $result2->fetch_assoc();
+                $fecha = $row2['fecha'];
+                $hora = $row2['hora'];
+            }
+
+            $panelista = array('nombre' => $row['nombre'].' '.$row['apellidos'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'fecha' => $fecha, 'hora' => $hora);
             $response[] = $panelista;
         }
 
