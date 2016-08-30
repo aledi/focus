@@ -123,7 +123,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (obj) {
                 alert('Encuesta ' + actionText + ' exitosamente.');
-                //location.replace('preguntas.php?id=' + obj.id);
+                location.replace('preguntas.php?id=' + obj.id);
             },
             error: function (error) {
                 $('#feedback').html('Encuesta no ' + actionText + '. Ha ocurrido un error.');

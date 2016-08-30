@@ -37,8 +37,8 @@ function getDatefromString(stringDate, option){
 
 function getCompleteDate(option){
     var dia = (option == 1) ? $('select#dia').val() : $('select#dia_fin').val();
-    var mes = (option == 1) ? $('select#mes').val(); : $('select#mes_fin').val();
-    var anio = (option == 1) ? $('select#anio').val(); : $('select#anio_fin').val();
+    var mes = (option == 1) ? $('select#mes').val() : $('select#mes_fin').val();
+    var anio = (option == 1) ? $('select#anio').val() : $('select#anio_fin').val();
     
     fecha = anio + '-' + mes + '-' + dia;
     return fecha;
