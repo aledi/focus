@@ -6,7 +6,7 @@ $(document).on('ready', function () {
     idEncuesta = idEncuesta.substring(3);
 
     function appendAnswers(typeQuestion, questionID){
-        $("#Answers" + questionID).empty();
+        $('#Answers' + questionID).empty();
         if (typeQuestion != 1) {
             var currentHTML = '';
             for (var x = 1; x <= 10; x++) {
@@ -16,8 +16,8 @@ $(document).on('ready', function () {
                 currentHTML += "</div>";
              }
         }
-        
-        $("#Answers" + questionID).append(currentHTML);
+
+        $('#Answers' + questionID).append(currentHTML);
         currentHTML = '';
     }
 
@@ -55,8 +55,8 @@ $(document).on('ready', function () {
 
     if (idEncuesta != '') {
         $.ajax({
-            url: "../api/controller.php",
-            type: "POST",
+            url: '../api/controller.php',
+            type: 'POST',
             data: {
                 action : 'GET_PREGUNTAS',
                 encuesta : idEncuesta
@@ -96,7 +96,7 @@ $(document).on('ready', function () {
                 }
             },
             error: function (errorMsg) {
-                alert("Error llenando preguntas");
+                alert('Error llenando preguntas');
             }
         });
     }
@@ -105,7 +105,7 @@ $(document).on('ready', function () {
         var typeQuestion = $(this).val();
         var questionID = $(this).parent().parent().attr('id');
         var answersClass = "div#Answers" + questionID;
-        
+
         appendAnswers(typeQuestion, questionID);
     });
 
@@ -116,19 +116,16 @@ $(document).on('ready', function () {
         appendQuestions(lastQuestion);
     });
 
-    $('#questions').on('click','#removeQuestion', function(){
-        if ($(this).parent().attr('id') != 'questions')
-            $(this).parent().remove();
+    $('#questions').on('click', '#removeQuestion', function () {
+        if ($(this).parent().attr('id') === 'questions') {
+            return;
+        }
+
+        $(this).parent().remove();
     });
 
     $('#submitQuestions').on('click', function(){
-        var iteration = 1;
         var numeroPregunta = 1;
-        var nombrePregunta;
-        var tipoPregunta;
-        var imagenPregunta;
-        var videoPregunta;
-        var respuesta = 0;
         var questionsArray = [];
         var questionObject = {};
         questionObject.opciones = [];
