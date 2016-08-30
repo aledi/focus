@@ -8,6 +8,9 @@ $(document).on('ready', function () {
             data: {'action': 'GET_PANELISTAS'},
             dataType: 'json',
             success: function (obj) {
+                fillSelects(1, 1);
+                fillSelects(2, 1);
+                fillSelects(3, 1);
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
                 currentHTML += '<th class="left">Nombre</th>';
@@ -56,8 +59,7 @@ $(document).on('ready', function () {
         var lastName = $('#lastName').val();
         var email = $('#email').val();
         var username = $('#username').val();
-        var password = $('#password').val();
-        var fechaNacimiento = $('#fechaNacimiento').val();
+        var fechaNacimiento = getCompleteDate(1);
         var educacion = $('#educacion').val();
         var calleNumero = $('#calleNumero').val();
         var colonia = $('#colonia').val();
@@ -78,7 +80,6 @@ $(document).on('ready', function () {
             'apellidos': lastName,
             'email': email,
             'username': username,
-            'password': password,
             'genero': $('input[name=gender]:checked').val(),
             'fechaNacimiento': fechaNacimiento,
             'educacion': educacion,
@@ -164,6 +165,7 @@ $(document).on('ready', function () {
                         $('#email').val(result.email);
                         $('#username').val(result.username);
                         $('input[name="gender"][value="' + result.genero + '"]').prop('checked', true);
+                        getDatefromString(obj.results[i].fechaNacimiento, 0);
                         $('#educacion').val(result.educacion + '');
                         $('#calleNumero').val(result.calleNumero);
                         $('#colonia').val(result.colonia);
@@ -208,4 +210,7 @@ $(document).on('ready', function () {
         $("#tab-modificarPanelista").addClass('current');
     });
 
+    $('#mes, #anio').on('change', function() {
+        changeSelect('Inicio'); 
+    });
 });

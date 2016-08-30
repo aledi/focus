@@ -6,6 +6,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
     <script src='js/jquery-1.12.3.js'></script>
+    <script src='js/dateFunctions.js' type='text/javascript'></script>
     <script src='js/panelistas.js' type='text/javascript'></script>
     <title> Focus - Panelistas</title>
 </head>
@@ -49,7 +50,15 @@
                 </div>
                 <div class='input-wrapper'>
                     <label>Fecha de Nacimiento:</label>
-                    <input id='fechaNacimiento' type='text' />
+                    <select id='dia'>
+                        
+                    </select>
+                    <select id='mes'>
+                        
+                    </select>
+                    <select id='anio'>
+                        
+                    </select>
                 </div>
                 <div class='input-wrapper'>
                     <label>Educación:</label>

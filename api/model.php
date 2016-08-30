@@ -356,6 +356,27 @@ function fetchPanelistas () {
     return array('status' => 'DATABASE_ERROR');
 }
 
+function fetchPanelista ($id) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, username, nombre, apellidos, email, genero, fechaNacimiento, educacion, calleNumero, colonia, municipio, estado, cp FROM Panelista WHERE id = '$id'";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $panelista = array('id' => (int)$row['id'], 'username' => $row['username'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos'], 'email' => $row['email'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'fechaNacimiento' => $row['fechaNacimiento'], 'educacion' => (int)$row['educacion'], 'calleNumero' => $row['calleNumero'], 'colonia' => $row['colonia'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cp' => (int)$row['cp']);
+            $response[] = $panelista;
+        }
+
+        $conn->close();
+        return array('results' => $response);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 function fetchEncuestas () {
     $conn = connect();
 
@@ -884,6 +905,39 @@ function unregisterDeviceToken ($id) {
 // Reports
 // -------------------------------
 
+function getSummary ($encuesta) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT COUNT(*) as total FROM Panelista INNER JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = (SELECT panel FROM Encuesta WHERE id = '$encuesta')";
+        $result = $conn->query($sql);
+        $total = 0;
+        $answers = 0;
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $total = (int)$row['total'];
+        }
+
+        if ($total === 0) {
+            $conn->close();
+            return array('status' => 'NO_DATA');
+        }
+
+        $sql = "SELECT COUNT(*) as answers FROM Respuestas WHERE encuesta = '$encuesta' AND respuestas != ''";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $answers = (int)$row['answers'];
+        }
+
+        return array('status' => 'SUCCESS', 'respuestas' => $total, 'porcentaje' => $answers / $total);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 function generalReportData ($encuesta) {
     $conn = connect();
 
@@ -1070,7 +1124,8 @@ function currentAnswers ($encuesta) {
         }
 
         $conn->close();
-        return array('panelistas' => $response);
+        $panelistas = array('panelistas' => $response);
+        return array_merge(getSummary($encuesta), $panelistas);
     }
 
     return array();

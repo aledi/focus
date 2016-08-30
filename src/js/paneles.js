@@ -44,8 +44,8 @@ $(document).on('ready', function () {
 
         var nombre = $('#panelName').val();
         var descripcion = $('#descripcion').val();
-        var fechaInicio = $('#dateStarts').val();
-        var fechaFin = $('#dateEnds').val();
+        var fechaInicio = getCompleteDate(1);
+        var fechaFin = getCompleteDate(2);
         var cliente = $("input[name=id]:checked").val();
 
         if (nombre === '' || fechaInicio === '' || fechaFin === '' || typeof cliente === 'undefined') {
@@ -93,6 +93,9 @@ $(document).on('ready', function () {
             data: {'action': 'GET_PANELES'},
             dataType: 'json',
             success: function (obj) {
+                fillSelects(1, 0);
+                fillSelects(2, 0);
+                fillSelects(3, 0);
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
                 currentHTML += '<th>Nombre</th>';
@@ -169,14 +172,14 @@ $(document).on('ready', function () {
                 'id': idPanel
             },
             dataType: 'json',
-            success: function(obj){
+            success: function (obj) {
                 for (var i = 0; i < obj.results.length; i++) {
                     var result = obj.results[i];
 
-                    if (result.id == idPanel){
+                    if (result.id === idPanel){
                         $('#panelName').val(result.nombre);
-                        $('#dateStarts').val(result.fechaInicio);
-                        $('#dateEnds').val(result.fechaFin);
+                        getDatefromString(obj.results[i].fechaInicio, 0);
+                        getDatefromString(obj.results[i].fechaFin, 1);
                         $('input[name="id"][value="' + result.id + '"]').prop('checked', true);
 
                         var myURL = window.location.href.split('?')[0];
@@ -189,6 +192,14 @@ $(document).on('ready', function () {
                 alert('Error modificando panelista.');
             }
         });
+    });
+
+    $('#mes, #anio').on('change', function() {
+        changeSelect('Inicio'); 
+    });
+
+    $('#mes_fin, #anio_fin').on('change', function() {
+        changeSelect('Fin'); 
     });
 
     $('#cancelModify').on('click', function (event) {

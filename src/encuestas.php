@@ -6,6 +6,7 @@
     <script src="js/jquery-1.12.3.js"></script>
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
     <!--<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js'></script>-->
+    <script src='js/dateFunctions.js' type='text/javascript'></script>
     <script src='js/encuestas.js' type='text/javascript'></script>
     <script src='js/encuestas-shared.js' type='text/javascript'></script>
     <script src='js/header.js' type='text/javascript'></script>
@@ -30,13 +31,28 @@
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Fecha de Inicio (yyyy-mm-dd):</label>
-                    <input id='dateStarts' type='text'/>
+                    <label>Fecha de Inicio:</label>
+                    <select id='dia'>
+                        
+                    </select>
+                    <select id='mes'>
+                        
+                    </select>
+                    <select id='anio'>
+                        
+                    </select>
                 </div>
-
                 <div class='input-wrapper'>
-                    <label>Fecha Final (yyyy-mm-dd):</label>
-                    <input id='dateEnds' type='text'/>
+                    <label>Fecha Final:</label>
+                    <select id='dia_fin'>
+                        
+                    </select>
+                    <select id='mes_fin'>
+                        
+                    </select>
+                    <select id='anio_fin'>
+                        
+                    </select>
                 </div>
 
                 <div class='input-wrapper'>
