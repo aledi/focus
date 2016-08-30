@@ -168,6 +168,7 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function(obj) {
+
                 for (var i = 0; i < obj.results.length; i++) {
                     var result = obj.results[i];
 
@@ -188,4 +189,21 @@ $(document).on('ready', function () {
             }
         });
     });
+
+    $('#cancelModify').on('click', function (event) {
+        $('#tab-agregarEncuesta').find('input').val('');
+        $('#allPanels input').removeAttr('checked');
+        $('#headerTitle').text('Agregar Encuesta');
+        $('#saveEncuesta').text('Agregar');
+
+        var myURL = window.location.href.split('?')[0];
+        history.pushState({}, null, myURL);
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $('ul.tabs li').last().addClass('current');
+        $("#tab-modificarEncuesta").addClass('current');
+    });
+
 });
