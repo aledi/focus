@@ -5,9 +5,9 @@ $(document).on('ready', function () {
     idEncuesta = idEncuesta.substring(3);
 
     function appendAnswers (typeQuestion, questionID) {
-        $("#Answers" + questionID).empty();
+        $('#Answers' + questionID).empty();
 
-        if (typeQuestion !== 1) {
+        if (typeQuestion != 1) {
             var currentHTML = '';
             for (var x = 1; x <= 10; x++) {
                 currentHTML += '<div class="answer">';
@@ -17,7 +17,7 @@ $(document).on('ready', function () {
              }
         }
 
-        $("#Answers" + questionID).append(currentHTML);
+        $('#Answers' + questionID).append(currentHTML);
         currentHTML = '';
     }
 
@@ -72,50 +72,25 @@ $(document).on('ready', function () {
                 for (var x = 0; x < obj.results.length; x++) {
                     var result = obj.results[x];
 
-<<<<<<< HEAD
-                    var typeQuestion = result.tipo;
-                    var questionID = result.numPregunta;
-
-                    $('input.pregunta[name=respuesta' + questionID + ']').val(result.pregunta);
-                    $('select.tipoPregunta[name=respuesta' + questionID + ']').val(result.tipo);
+                    $('input.pregunta[name=respuesta]').val(result.pregunta);
+                    $('select.tipoPregunta[name=respuesta]').val(result.tipo);
 
                     appendAnswers(typeQuestion, questionID);
 
-                    $('input.imagen[name=respuesta' + questionID + ']').val(result.imagen);
-                    $('input.video[name=respuesta' + questionID + ']').val(result.video);
+                    $('input.imagen[name=respuesta]').val(result.imagen);
+                    $('input.video[name=respuesta]').val(result.video);
 
                     if (typeQuestion !== 1) {
-                        $('input.respuesta1[name=respuesta' + questionID + ']').val(result.op1);
-                        $('input.respuesta2[name=respuesta' + questionID + ']').val(result.op2);
-                        $('input.respuesta3[name=respuesta' + questionID + ']').val(result.op3);
-                        $('input.respuesta4[name=respuesta' + questionID + ']').val(result.op4);
-                        $('input.respuesta5[name=respuesta' + questionID + ']').val(result.op5);
-                        $('input.respuesta6[name=respuesta' + questionID + ']').val(result.op6);
-                        $('input.respuesta7[name=respuesta' + questionID + ']').val(result.op7);
-                        $('input.respuesta8[name=respuesta' + questionID + ']').val(result.op8);
-                        $('input.respuesta9[name=respuesta' + questionID + ']').val(result.op9);
-                        $('input.respuesta10[name=respuesta' + questionID + ']').val(result.op10);
-=======
-                    $('input.pregunta[name=respuesta]').val(obj.results[x].pregunta);
-                    $('select.tipoPregunta[name=respuesta]').val(obj.results[x].tipo);
-
-                    appendAnswers(typeQuestion, questionID);
-
-                    $('input.imagen[name=respuesta]').val(obj.results[x].imagen);
-                    $('input.video[name=respuesta]').val(obj.results[x].video);
-
-                    if (typeQuestion !== 1) {
-                        $('input.respuesta1[name=respuesta]').val(obj.results[x].op1);
-                        $('input.respuesta2[name=respuesta]').val(obj.results[x].op2);
-                        $('input.respuesta3[name=respuesta]').val(obj.results[x].op3);
-                        $('input.respuesta4[name=respuesta]').val(obj.results[x].op4);
-                        $('input.respuesta5[name=respuesta]').val(obj.results[x].op5);
-                        $('input.respuesta6[name=respuesta]').val(obj.results[x].op6);
-                        $('input.respuesta7[name=respuesta]').val(obj.results[x].op7);
-                        $('input.respuesta8[name=respuesta]').val(obj.results[x].op8);
-                        $('input.respuesta9[name=respuesta]').val(obj.results[x].op9);
-                        $('input.respuesta10[name=respuesta]').val(obj.results[x].op10);
->>>>>>> development
+                        $('input.respuesta1[name=respuesta]').val(result.op1);
+                        $('input.respuesta2[name=respuesta]').val(result.op2);
+                        $('input.respuesta3[name=respuesta]').val(result.op3);
+                        $('input.respuesta4[name=respuesta]').val(result.op4);
+                        $('input.respuesta5[name=respuesta]').val(result.op5);
+                        $('input.respuesta6[name=respuesta]').val(result.op6);
+                        $('input.respuesta7[name=respuesta]').val(result.op7);
+                        $('input.respuesta8[name=respuesta]').val(result.op8);
+                        $('input.respuesta9[name=respuesta]').val(result.op9);
+                        $('input.respuesta10[name=respuesta]').val(result.op10);
                     }
                 }
             },
@@ -133,30 +108,22 @@ $(document).on('ready', function () {
         appendAnswers(typeQuestion, questionID);
     });
 
-<<<<<<< HEAD
-    $('#addQuestion').on('click', function () {
-        var currentHTML = ''; // ?????????????
+    $('#addQuestion').on('click', function(){
         var lastQuestion = $('#questions').children().length;
-=======
-    $("#addQuestion").on("click", function(){
-        var lastQuestion = $("#questions").children().length;
->>>>>>> development
         lastQuestion = parseInt(lastQuestion) + 1;
 
         appendQuestions(lastQuestion);
     });
 
-<<<<<<< HEAD
-    $('#submitQuestions').on('click', function () {
-        var iteration = 1;
-=======
-    $('#questions').on('click','#removeQuestion', function(){
-        if ($(this).parent().attr('id') != 'questions')
-            $(this).parent().remove();
+    $('#questions').on('click', '#removeQuestion', function () {
+        if ($(this).parent().attr('id') === 'questions') {
+            return;
+        }
+
+        $(this).parent().remove();
     });
 
     $('#submitQuestions').on('click', function(){
->>>>>>> development
         var numeroPregunta = 1;
         var questionsArray = [];
         var questionObject = {};
@@ -203,9 +170,5 @@ $(document).on('ready', function () {
                 $('#feedback').html('Preguntas no añadidas. Ha ocurrido un error.');
             }
         });
-<<<<<<< HEAD
-    })
-=======
     });
->>>>>>> development
 });
