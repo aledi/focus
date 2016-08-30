@@ -20,12 +20,14 @@ $(document).on('ready', function () {
                 currentHTML += '<tbody>';
 
                 for (var i = 0; i < obj.results.length; i++) {
-                    currentHTML += '<tr value="' + obj.results[i].id +'">';
-                    currentHTML += '<td>' + obj.results[i].nombre +'</td>';
-                    currentHTML += '<td>' + obj.results[i].fechaInicio +'</td>';
-                    currentHTML += '<td>' + obj.results[i].fechaFin +'</td>';
-                    currentHTML += '<td>' + obj.results[i].cliente +'</td>';
-                    currentHTML += '<td class="centered"><input type="radio" value=' + obj.results[i].id + ' name="id"></td>';
+                    var result = obj.results[i];
+
+                    currentHTML += '<tr value="' + result.id +'">';
+                    currentHTML += '<td>' + result.nombre +'</td>';
+                    currentHTML += '<td>' + result.fechaInicio +'</td>';
+                    currentHTML += '<td>' + result.fechaFin +'</td>';
+                    currentHTML += '<td>' + result.cliente +'</td>';
+                    currentHTML += '<td class="centered"><input type="radio" value=' + result.id + ' name="id"></td>';
                     currentHTML += '</tr>';
 
                     $('#allPanels').append(currentHTML);
@@ -35,7 +37,7 @@ $(document).on('ready', function () {
                 currentHTML += '</tbody>';
             },
             error: function (error) {
-                $('#feedback').html('Error cargando los clientes.');
+                $('#feedback').html('Error cargando los clientes');
             }
         });
     }, 500);
@@ -59,11 +61,13 @@ $(document).on('ready', function () {
                 currentHTML += '<tbody>';
 
                 for (var i = 0; i < obj.results.length; i++) {
-                    currentHTML += '<tr value="' + obj.results[i].id +'">';
-                    currentHTML += '<td><a href="preguntas.php?id='+ obj.results[i].id +'">' + obj.results[i].nombre +'</a></td>';
-                    currentHTML += '<td>' + obj.results[i].fechaInicio +'</td>';
-                    currentHTML += '<td>' + obj.results[i].fechaFin +'</td>';
-                    currentHTML += '<td>' + obj.results[i].panel +'</td>';
+                    var result = obj.results[i];
+
+                    currentHTML += '<tr value="' + result.id +'">';
+                    currentHTML += '<td><a href="preguntas.php?id='+ result.id +'">' + result.nombre +'</a></td>';
+                    currentHTML += '<td>' + result.fechaInicio +'</td>';
+                    currentHTML += '<td>' + result.fechaFin +'</td>';
+                    currentHTML += '<td>' + result.panel +'</td>';
                     currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
@@ -75,7 +79,7 @@ $(document).on('ready', function () {
                 currentHTML += '</tbody>';
             },
             error: function (error) {
-                $('#feedback').html('Error cargando los clientes.');
+                $('#feedback').html('Error cargando los clientes');
             }
         });
     }, 500);
@@ -83,8 +87,7 @@ $(document).on('ready', function () {
     $('#saveEncuesta').on('click', function (event) {
         event.preventDefault();
 
-
-        var idEncuesta = window.location.search.substring(1)
+        var idEncuesta = window.location.search.substring(1);
         idEncuesta = idEncuesta.substring(3);
 
         var nombre = $('#nombre').val();
@@ -110,7 +113,6 @@ $(document).on('ready', function () {
         }
 
         var actionText = idEncuesta !== '' ? 'modificada' : 'agregada';
-
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -126,7 +128,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allEncuestas').on('click','.deleteButton', function(){
+    $('#allEncuestas').on('click', '.deleteButton', function(){
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
@@ -145,7 +147,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allEncuestas').on('click','.modifyButton', function(){
+    $('#allEncuestas').on('click', '.modifyButton', function(){
         var idEncuesta = $(this).parent().attr('value');
 
         $('ul.tabs li').removeClass('current');
@@ -168,15 +170,16 @@ $(document).on('ready', function () {
             success: function(obj) {
 
                 for (var i = 0; i < obj.results.length; i++) {
-                    if (obj.results[i].id == idEncuesta) {
-                        console.log(obj.results[i].id)
-                        $('#nombre').val(obj.results[i].nombre);
-                        $('#dateStarts').val(obj.results[i].fechaInicio);
-                        $('#dateEnds').val(obj.results[i].fechaFin);
-                        $('input[name=id][value="' + obj.results[i].id + '"]').prop('checked', true);
+                    var result = obj.results[i];
+
+                    if (result.id == idEncuesta) {
+                        $('#nombre').val(result.nombre);
+                        $('#dateStarts').val(result.fechaInicio);
+                        $('#dateEnds').val(result.fechaFin);
+                        $('input[name=id][value="' + result.id + '"]').prop('checked', true);
 
                         var myURL = window.location.href.split('?')[0];
-                        myURL = myURL + '?id=' + obj.results[i].id;
+                        myURL = myURL + '?id=' + result.id;
                         history.pushState({}, null, myURL);
                     }
                 }
