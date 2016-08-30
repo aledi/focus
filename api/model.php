@@ -884,6 +884,39 @@ function unregisterDeviceToken ($id) {
 // Reports
 // -------------------------------
 
+function getSummary ($encuesta) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT COUNT(*) as total FROM Panelista INNER JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = (SELECT panel FROM Encuesta WHERE id = '$encuesta')";
+        $result = $conn->query($sql);
+        $total = 0;
+        $answers = 0;
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $total = (int)$row['total'];
+        }
+
+        if ($total === 0) {
+            $conn->close();
+            return array('status' => 'NO_DATA');
+        }
+
+        $sql = "SELECT COUNT(*) as answers FROM Respuestas WHERE encuesta = '$encuesta' AND respuestas != ''";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $answers = (int)$row['answers'];
+        }
+
+        return array('respuestas' => $total, 'porcentaje' => $answers / $total);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 function generalReportData ($encuesta) {
     $conn = connect();
 

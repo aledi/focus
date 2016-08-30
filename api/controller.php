@@ -84,6 +84,9 @@ switch ($action) {
     case 'UNREGISTER_DEVICE':
         unregisterDevice();
         break;
+    case 'ANSWERS_SUMMARY':
+        echo json_encode(getSummary($_POST['encuesta']));
+        break;
     case 'GENERAL_REPORT':
         getGeneralReportData();
         break;
