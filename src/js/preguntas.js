@@ -6,7 +6,7 @@ $(document).on('ready', function () {
     idEncuesta = idEncuesta.substring(3);
 
     function appendAnswers(typeQuestion, questionID){
-        $("#Answers" + questionID).empty();
+        $('#Answers' + questionID).empty();
         if (typeQuestion != 1) {
             var currentHTML = '';
             for (var x = 1; x <= 10; x++) {
@@ -17,7 +17,7 @@ $(document).on('ready', function () {
              }
         }
 
-        $("#Answers" + questionID).append(currentHTML);
+        $('#Answers' + questionID).append(currentHTML);
         currentHTML = '';
     }
 
@@ -96,7 +96,7 @@ $(document).on('ready', function () {
                 }
             },
             error: function (errorMsg) {
-                alert("Error llenando preguntas");
+                alert('Error llenando preguntas');
             }
         });
     }
@@ -116,9 +116,12 @@ $(document).on('ready', function () {
         appendQuestions(lastQuestion);
     });
 
-    $('#questions').on('click','#removeQuestion', function(){
-        if ($(this).parent().attr('id') != 'questions')
-            $(this).parent().remove();
+    $('#questions').on('click', '#removeQuestion', function () {
+        if ($(this).parent().attr('id') === 'questions') {
+            return;
+        }
+
+        $(this).parent().remove();
     });
 
     $('#submitQuestions').on('click', function(){
