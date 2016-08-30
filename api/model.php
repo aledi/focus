@@ -932,7 +932,7 @@ function getSummary ($encuesta) {
             $answers = (int)$row['answers'];
         }
 
-        return array('respuestas' => $total, 'porcentaje' => $answers / $total);
+        return array('status' => 'SUCCESS', 'respuestas' => $total, 'porcentaje' => $answers / $total);
     }
 
     return array('status' => 'DATABASE_ERROR');
