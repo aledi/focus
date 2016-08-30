@@ -16,7 +16,7 @@ $(document).on('ready', function () {
                 currentHTML += "</div>";
              }
         }
-        
+
         $("#Answers" + questionID).append(currentHTML);
         currentHTML = '';
     }
@@ -55,8 +55,8 @@ $(document).on('ready', function () {
 
     if (idEncuesta != '') {
         $.ajax({
-            url: "../api/controller.php",
-            type: "POST",
+            url: '../api/controller.php',
+            type: 'POST',
             data: {
                 action : 'GET_PREGUNTAS',
                 encuesta : idEncuesta
@@ -105,7 +105,7 @@ $(document).on('ready', function () {
         var typeQuestion = $(this).val();
         var questionID = $(this).parent().parent().attr('id');
         var answersClass = "div#Answers" + questionID;
-        
+
         appendAnswers(typeQuestion, questionID);
     });
 
@@ -122,13 +122,7 @@ $(document).on('ready', function () {
     });
 
     $('#submitQuestions').on('click', function(){
-        var iteration = 1;
         var numeroPregunta = 1;
-        var nombrePregunta;
-        var tipoPregunta;
-        var imagenPregunta;
-        var videoPregunta;
-        var respuesta = 0;
         var questionsArray = [];
         var questionObject = {};
         questionObject.opciones = [];
