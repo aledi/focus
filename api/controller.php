@@ -87,6 +87,9 @@ switch ($action) {
     case 'GENERAL_REPORT':
         getGeneralReportData();
         break;
+    case 'CURRENT_ANSWERS':
+        getCurrentAnswers();
+        break;
     case 'LOG_OUT':
         logOut();
         break;
@@ -290,6 +293,12 @@ function verifyActiveSession () {
 
 function getGeneralReportData () {
     $reportData = generalReportData($_POST['encuesta']);
+
+    echo json_encode($reportData);
+}
+
+function getCurrentAnswers () {
+    $reportData = currentAnswers($_POST['encuesta']);
 
     echo json_encode($reportData);
 }
