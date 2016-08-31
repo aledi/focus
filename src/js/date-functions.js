@@ -10,7 +10,7 @@ function getMonthDays (mes, anio) {
     if (mes === 1 || mes === 3 || mes === 5 || mes === 7 || mes === 8 || mes === 10 || mes === 12) {
         return 31;
     } else if (mes === 2) {
-        return (((anio % 4 == 0) && (anio % 100 !== 0)) || (anio % 400 == 0)) ? 29 : 28;
+        return (((anio % 4 === 0) && (anio % 100 !== 0)) || (anio % 400 === 0)) ? 29 : 28;
     }
 
     return 30;
