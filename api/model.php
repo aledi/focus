@@ -932,7 +932,7 @@ function getSummary ($encuesta) {
             $answers = (int)$row['answers'];
         }
 
-        return array('status' => 'SUCCESS', 'respuestas' => $total, 'porcentaje' => $answers / $total);
+        return array('status' => 'SUCCESS', 'respuestas' => $answers, 'porcentaje' => $answers / $total);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -1110,7 +1110,7 @@ function currentAnswers ($encuesta) {
             $panelistaId = $row['id'];
             $fecha = '';
             $hora = '';
-            $sql2 = "SELECT fecha, hora, respuestas FROM Respuestas WHERE panelista = '$panelistaId' AND respuestas != ''";
+            $sql2 = "SELECT fecha, hora, respuestas FROM Respuestas WHERE panelista = '$panelistaId' AND encuesta = '$encuesta' AND respuestas != ''";
             $result2 = $conn->query($sql2);
 
             if ($result2->num_rows > 0) {

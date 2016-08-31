@@ -25,11 +25,11 @@ $(document).on('ready', function () {
                 for (var i = 0; i < obj.results.length; i++) {
                     var result = obj.results[i];
 
-                    currentHTML += '<tr value="' + result.id +'">';
-                    currentHTML += '<td>' + result.nombre +'</td>';
-                    currentHTML += '<td>' + result.fechaInicio +'</td>';
-                    currentHTML += '<td>' + result.fechaFin +'</td>';
-                    currentHTML += '<td>' + result.cliente +'</td>';
+                    currentHTML += '<tr value="' + result.id + '">';
+                    currentHTML += '<td>' + result.nombre + '</td>';
+                    currentHTML += '<td>' + result.fechaInicio + '</td>';
+                    currentHTML += '<td>' + result.fechaFin + '</td>';
+                    currentHTML += '<td>' + result.cliente + '</td>';
                     currentHTML += '<td class="centered"><input type="radio" value=' + result.id + ' name="id"></td>';
                     currentHTML += '</tr>';
 
@@ -136,16 +136,18 @@ $(document).on('ready', function () {
                 for (var i = 0; i < obj.results.length; i++) {
                     var result = obj.results[i];
 
-                    if (result.id === idEncuesta) {
-                        $('#nombre').val(result.nombre);
-                        getDatefromString(obj.results[i].fechaInicio, 0);
-                        getDatefromString(obj.results[i].fechaFin, 1);
-                        $('input[name=id][value="' + result.id + '"]').prop('checked', true);
-
-                        var myURL = window.location.href.split('?')[0];
-                        myURL = myURL + '?id=' + result.id;
-                        history.pushState({}, null, myURL);
+                    if (result.id !== idEncuesta) {
+                        continue;
                     }
+
+                    $('#nombre').val(result.nombre);
+                    getDatefromString(obj.results[i].fechaInicio, 0);
+                    getDatefromString(obj.results[i].fechaFin, 1);
+                    $('input[name=id][value="' + result.id + '"]').prop('checked', true);
+
+                    var myURL = window.location.href.split('?')[0];
+                    myURL = myURL + '?id=' + result.id;
+                    history.pushState({}, null, myURL);
                 }
             },
             error: function (errorMsg) {
@@ -171,10 +173,10 @@ $(document).on('ready', function () {
     });
 
     $('#mes, #anio').on('change', function() {
-        changeSelect('Inicio'); 
+        changeSelect('Inicio');
     });
 
     $('#mes_fin, #anio_fin').on('change', function() {
-        changeSelect('Fin'); 
+        changeSelect('Fin');
     });
 });

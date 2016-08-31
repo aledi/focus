@@ -26,12 +26,12 @@ $(document).on('ready', function () {
                 for (var i = 0; i < obj.results.length; i++) {
                     var result = obj.results[i];
 
-                    currentHTML += '<tr value="' + result.id +'">';
-                    currentHTML += '<td>' + result.nombre + " " + result.apellidos +'</td>';
-                    currentHTML += '<td>' + convertGenero(result.genero) +'</td>';
-                    currentHTML += '<td>' + result.edad +'</td>';
-                    currentHTML += '<td>' + result.municipio +'</td>';
-                    currentHTML += '<td>' + result.estado +'</td>';
+                    currentHTML += '<tr value="' + result.id + '">';
+                    currentHTML += '<td>' + result.nombre + " " + result.apellidos + '</td>';
+                    currentHTML += '<td>' + convertGenero(result.genero) + '</td>';
+                    currentHTML += '<td>' + result.edad + '</td>';
+                    currentHTML += '<td>' + result.municipio + '</td>';
+                    currentHTML += '<td>' + result.estado + '</td>';
                     currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
@@ -211,6 +211,6 @@ $(document).on('ready', function () {
     });
 
     $('#mes, #anio').on('change', function() {
-        changeSelect('Inicio'); 
+        changeSelect('Inicio');
     });
 });
