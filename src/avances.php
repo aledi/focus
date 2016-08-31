@@ -22,22 +22,7 @@
         </select>
         <p id='avance-percentage'></p>
         <p id='avance-panelistas'></p>
-        <table id='avances-table'>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Género</th>
-                    <th>Edad</th>
-                    <th>Educación</th>
-                    <th>Municipio</th>
-                    <th>Estado</th>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                </tr>
-            </thead>
-            <tbody id='avances-table-body'>
-            </tbody>
-        </table>
+        <table id='avances-table'></table>
     </section>
 </body>
 </html>

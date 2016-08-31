@@ -7,7 +7,9 @@ $(document).on('ready', function () {
 
     $('#encuestas-select').on('change', function () {
         var idEncuesta = parseInt($(this).val(), 10);
-        $('#avances-table-body').empty();
+        $('#avance-percentage').empty();
+        $('#avance-panelistas').empty();
+        $('#avances-table').empty();
 
         if (idEncuesta < 1) {
             return;
@@ -25,7 +27,20 @@ $(document).on('ready', function () {
                 $('#avance-percentage').html('Avance: ' + (response.porcentaje * 100) + '%');
                 $('#avance-panelistas').html('Respuestas: ' + response.respuestas);
 
-                var currentHTML = '';
+                var currentHTML = '<thead>';
+                currentHTML += '<tr>';
+                currentHTML += '<th>Nombre</th>';
+                currentHTML += '<th>Género</th>';
+                currentHTML += '<th>Edad</th>';
+                currentHTML += '<th>Educación</th>';
+                currentHTML += '<th>Municipio</th>';
+                currentHTML += '<th>Estado</th>';
+                currentHTML += '<th>Fecha</th>';
+                currentHTML += '<th>Hora</th>';
+                currentHTML += '</tr>';
+                currentHTML += '</thead>';
+                currentHTML += '<tbody>';
+
                 for (var i = 0; i < response.panelistas.length; i++) {
                     var panelista = response.panelistas[i];
                     if (panelista.fecha) {
@@ -45,7 +60,8 @@ $(document).on('ready', function () {
                     currentHTML += '</tr>';
                 }
 
-                $('#avances-table-body').append(currentHTML);
+                currentHTML += '</tbody>';
+                $('#avances-table').append(currentHTML);
             },
             error: function (errorMsg) {
                 alert('Error obteniendo panelistas.');
