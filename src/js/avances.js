@@ -24,7 +24,7 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                $('#avance-percentage').html('Avance: ' + (response.porcentaje * 100) + '%');
+                $('#avance-percentage').html('Avance: ' + ((response.porcentaje * 100).toFixed(2)) + '%');
                 $('#avance-panelistas').html('Respuestas: ' + response.respuestas);
 
                 var currentHTML = '<thead>';
