@@ -3,9 +3,7 @@
 header('Content-type: application/json');
 require_once 'model.php';
 
-$action = $_POST['action'];
-
-switch ($action) {
+switch ($_POST['action']) {
     case 'WEB_LOG_IN':
         signinToDatabase(0);
         break;
@@ -87,8 +85,8 @@ switch ($action) {
     case 'ANSWERS_SUMMARY':
         echo json_encode(getSummary($_POST['encuesta']));
         break;
-    case 'GENERAL_REPORT':
-        getGeneralReportData();
+    case 'REPORT_DATA':
+        getReportData();
         break;
     case 'CURRENT_ANSWERS':
         getCurrentAnswers();
@@ -97,7 +95,7 @@ switch ($action) {
         logOut();
         break;
     default:
-        echo json_encode(array('status' => 'INVALID_ACTION', 'action' => $action));
+        echo json_encode(array('status' => 'INVALID_ACTION', 'action' => $_POST['action']));
         break;
 }
 
@@ -294,8 +292,12 @@ function verifyActiveSession () {
     echo json_encode($validationResult);
 }
 
-function getGeneralReportData () {
-    $reportData = generalReportData($_POST['encuesta']);
+function getReportData () {
+    if ($_POST['numPregunta'] == 0) {
+        $reportData = generalReportData($_POST['encuesta']);
+    } else {
+        $reportData = reportData($_POST['encuesta'], $_POST['numPregunta']);
+    }
 
     echo json_encode($reportData);
 }
