@@ -173,5 +173,4 @@ $(document).on('ready', function () {
         $('ul.tabs li').last().addClass('current');
         $("#tab-modificarCliente").addClass('current');
     });
-
 });
