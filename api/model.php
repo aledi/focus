@@ -1218,11 +1218,21 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
                     }
                 }
             } else if ($tipo == 4) {
+                $multipleAnswers = explode('&', $answers[$numPregunta - 1]);
 
+                for ($x = 0; $x < count($options); $x++) {
+                    for ($y = 0; $y < count($multipleAnswers); $y++) {
+                        if ($multipleAnswers[$y] == $options[$x]) {
+                            $votes[$x] = $votes[$x] + $y + 1;
+                            break;
+                        }
+                    }
+                }
             }
         }
 
         if ($total == 0) {
+            $conn->close();
             return array('status' => 'NO_DATA');
         }
 
@@ -1230,6 +1240,7 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
             $values[] = $votes[$x] / $total;
         }
 
+        $conn->close();
         return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'valores' => $values, 'votos' => $votes);
     }
 
