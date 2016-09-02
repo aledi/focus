@@ -121,11 +121,25 @@ section {
 
 .panelistas-wrapper, .clientes-wrapper,
 .admins-wrapper, .paneles-wrapper,
-.encuestas-wrapper, .preguntas-wrapper {
+.encuestas-wrapper, .preguntas-wrapper, .avances-wrapper {
     height: 100%;
     margin: 50px auto;
     box-sizing: border-box;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.avances-wrapper {
+    width: 1000px;
+    padding: 30px 20px;
+}
+
+.encuestas-select {
+    display: block;
+}
+
+.avance-info {
+    display: inline-block;
+    margin-right: 20px;
 }
 
 .panelistas-wrapper, .paneles-wrapper, .encuestas-wrapper {
@@ -266,6 +280,10 @@ table {
 
 table tbody tr td {
     padding: 10px 5px;
+}
+
+.red td {
+    color: #E05858;
 }
 
 table tbody tr:nth-child(odd) {

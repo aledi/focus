@@ -10,6 +10,10 @@ function getEncuestas (route) {
             var currentHTML = '';
 
             if (route === 'avances') {
+                if (!obj.results.length) {
+                    $('#avances-feedback').html('Por el momento no hay encuestas disponibles');
+                }
+
                 for (var i = 0; i < obj.results.length; i++) {
                     var result = obj.results[i];
                     currentHTML += '<option value="' + result.id + '">' + result.nombre + '</option>';
