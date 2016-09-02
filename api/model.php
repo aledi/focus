@@ -464,7 +464,7 @@ function fetchPreguntasEncuesta ($encuesta) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, numPregunta, pregunta, tipo, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Preguntas WHERE encuesta = '$encuesta'";
+        $sql = "SELECT * FROM Preguntas WHERE encuesta = '$encuesta'";
         $result = $conn->query($sql);
 
         $response = array();
@@ -1007,12 +1007,12 @@ function generalReportByGender ($encuesta, $total, $default) {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $conn->close();
-            return array('H' => (int)$row['h'], 'H%' => (int)$row['h'] / $total, 'M' => ($total - (int)$row['h']), 'M%' => ($total - (int)$row['h']) / $total);
+            return array('H#' => (int)$row['h'], 'H' => (int)$row['h'] / $total, 'M#' => ($total - (int)$row['h']), 'M' => ($total - (int)$row['h']) / $total);
         }
     }
 
     $conn->close();
-    return array('H' => 0, 'H%' => 0, 'M' => 0, 'M%' => 0);
+    return array('H#' => 0, 'H' => 0, 'M#' => 0, 'M' => 0);
 }
 
 function generalReportByAge ($encuesta, $total, $default) {
@@ -1032,8 +1032,8 @@ function generalReportByAge ($encuesta, $total, $default) {
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
-            $response['25'] = (int)$row['count'];
-            $response['25'.'%'] = (int)$row['count'] / $total;
+            $response['25#'] = (int)$row['count'];
+            $response['25'] = (int)$row['count'] / $total;
             $count = $count + (int)$row['count'];
         }
 
@@ -1041,8 +1041,8 @@ function generalReportByAge ($encuesta, $total, $default) {
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
-            $response['35'] = (int)$row['count'];
-            $response['35'.'%'] = (int)$row['count'] / $total;
+            $response['35#'] = (int)$row['count'];
+            $response['35'] = (int)$row['count'] / $total;
             $count = $count + (int)$row['count'];
         }
 
@@ -1050,8 +1050,8 @@ function generalReportByAge ($encuesta, $total, $default) {
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
-            $response['45'] = (int)$row['count'];
-            $response['45'.'%'] = (int)$row['count'] / $total;
+            $response['45#'] = (int)$row['count'];
+            $response['45'] = (int)$row['count'] / $total;
             $count = $count + (int)$row['count'];
         }
 
@@ -1059,20 +1059,20 @@ function generalReportByAge ($encuesta, $total, $default) {
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
-            $response['55'] = (int)$row['count'];
-            $response['55'.'%'] = (int)$row['count'] / $total;
+            $response['55#'] = (int)$row['count'];
+            $response['55'] = (int)$row['count'] / $total;
             $count = $count + (int)$row['count'];
         }
 
-        $response['100'] = $total - $count;
-        $response['100'.'%'] = ($total - $count) / $total;
+        $response['100#'] = $total - $count;
+        $response['100'] = ($total - $count) / $total;
 
         $conn->close();
         return $response;
     }
 
     $conn->close();
-    return array('25' => 0, '25%' => 0, '35' => 0, '35%' => 0, '45' => 0, '45%' => 0, '55' => 0, '55%' => 0, '100' => 0, '100%' => 0);
+    return array('25#' => 0, '25' => 0, '35#' => 0, '35' => 0, '45#' => 0, '45' => 0, '55#' => 0, '55' => 0, '100#' => 0, '100' => 0);
 }
 
 function generalReportByState ($encuesta, $total, $default) {
@@ -1085,8 +1085,8 @@ function generalReportByState ($encuesta, $total, $default) {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $response[$row['estado']] = (int)$row['count'];
-            $response[$row['estado']."%"] = (int)$row['count'] / $total;
+            $response[$row['estado'].'#'] = (int)$row['count'];
+            $response[$row['estado']] = (int)$row['count'] / $total;
         }
 
         $conn->close();
@@ -1129,6 +1129,122 @@ function currentAnswers ($encuesta) {
     }
 
     return array();
+}
+
+function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacion) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT tipo, numOpciones, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Preguntas WHERE encuesta = '$encuesta' AND numPregunta = '$numPregunta'";
+        $result = $conn->query($sql);
+        $tipo = 0;
+        $options = array();
+        $votes = array();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $tipo = $row['tipo'];
+
+            for ($x = 1; $x <= $row['numOpciones']; $x++) {
+                $options[] = $row['op'.$x];
+                $votes[] = 0;
+            }
+        }
+
+        if ($genero === null && $edad === null && $estado === null && $educacion === null) {
+            $sql = "SELECT respuestas FROM Respuestas WHERE encuesta = '$encuesta' AND respuestas != ''";
+        } else {
+            $sql = "SELECT respuestas FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = '$encuesta' AND Respuestas.respuestas != ''";
+
+            if ($genero !== null) {
+                $sql = $sql." AND Panelista.genero = '$genero'";
+            }
+
+            if ($edad !== null) {
+                $dateNow = date('Y-m-d');
+                $date25 = date('Y-m-d', strtotime("-25 year", time()));
+                $date35 = date('Y-m-d', strtotime("-35 year", time()));
+                $date45 = date('Y-m-d', strtotime("-45 year", time()));
+                $date55 = date('Y-m-d', strtotime("-55 year", time()));
+
+                if ($edad == 25) {
+                    $sql = $sql." AND Panelista.fechaNacimiento >= '$date25'";
+                } else if ($edad == 35) {
+                    $sql = $sql." AND Panelista.fechaNacimiento >= '$date35' AND Panelista.fechaNacimiento < '$date25'";
+                } else if ($edad == 45) {
+                    $sql = $sql." AND Panelista.fechaNacimiento >= '$date45' AND Panelista.fechaNacimiento < '$date35'";
+                } else if ($edad == 55) {
+                    $sql = $sql." AND Panelista.fechaNacimiento >= '$date55' AND Panelista.fechaNacimiento < '$date45'";
+                } else if ($edad == 100) {
+                    $sql = $sql." AND Panelista.fechaNacimiento < '$date55'";
+                }
+            }
+
+            if ($estado !== null) {
+                $sql = $sql." AND Panelista.estado = '$estado'";
+            }
+
+            if ($educacion !== null) {
+                $sql = $sql." AND Panelista.educacion = '$educacion'";
+            }
+        }
+
+        $result = $conn->query($sql);
+        $values = array();
+        $total = 0;
+
+        while ($row = $result->fetch_assoc()) {
+            $total = $total + 1;
+            $answers = explode('|', $row['respuestas']);
+
+            if ($tipo == 1) {
+                $values[] = $answers[$numPregunta - 1];
+            } if ($tipo == 2) {
+                for ($x = 0; $x < count($options); $x++) {
+                    if ($answers[$numPregunta - 1] == $options[$x]) {
+                        $votes[$x] = $votes[$x] + 1;
+                        break;
+                    }
+                }
+            } else if ($tipo == 3) {
+                $multipleAnswers = explode('&', $answers[$numPregunta - 1]);
+
+                for ($x = 0; $x < count($options); $x++) {
+                    for ($y = 0; $y < count($multipleAnswers); $y++) {
+                        if ($multipleAnswers[$y] == $options[$x]) {
+                            $votes[$x] = $votes[$x] + 1;
+                            break;
+                        }
+                    }
+                }
+            } else if ($tipo == 4) {
+                $multipleAnswers = explode('&', $answers[$numPregunta - 1]);
+
+                for ($x = 0; $x < count($options); $x++) {
+                    for ($y = 0; $y < count($multipleAnswers); $y++) {
+                        if ($multipleAnswers[$y] == $options[$x]) {
+                            $votes[$x] = $votes[$x] + $y + 1;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        if ($total == 0) {
+            $conn->close();
+            return array('status' => 'NO_DATA');
+        }
+
+        for ($x = 0; $x < count($options); $x++) {
+            $values[] = $votes[$x] / $total;
+        }
+
+        $conn->close();
+        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'valores' => $values, 'votos' => $votes);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
 }
 
 ?>
