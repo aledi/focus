@@ -1152,9 +1152,9 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
         }
 
         if ($genero === null && $edad === null && $estado === null && $educacion === null) {
-            $sql = "SELECT respuestas FROM Respuestas WHERE encuesta = '$encuesta'";
+            $sql = "SELECT respuestas FROM Respuestas WHERE encuesta = '$encuesta' AND respuestas != ''";
         } else {
-            $sql = "SELECT respuestas FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = '$encuesta'";
+            $sql = "SELECT respuestas FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = '$encuesta' AND Respuestas.respuestas != ''";
 
             if ($genero !== null) {
                 $sql = $sql." AND Panelista.genero = '$genero'";
