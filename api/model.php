@@ -1131,7 +1131,7 @@ function currentAnswers ($encuesta) {
     return array();
 }
 
-function reportData ($encuesta, $numPregunta) {
+function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacion) {
     $conn = connect();
 
     if ($conn != null) {
@@ -1151,7 +1151,44 @@ function reportData ($encuesta, $numPregunta) {
             }
         }
 
-        $sql = "SELECT respuestas FROM Respuestas WHERE encuesta = '$encuesta'";
+        if ($genero === null && $edad === null && $estado === null && $educacion === null) {
+            $sql = "SELECT respuestas FROM Respuestas WHERE encuesta = '$encuesta'";
+        } else {
+            $sql = "SELECT respuestas FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = '$encuesta'";
+
+            if ($genero !== null) {
+                $sql = $sql." AND Panelista.genero = '$genero'";
+            }
+
+            if ($edad !== null) {
+                $dateNow = date('Y-m-d');
+                $date25 = date('Y-m-d', strtotime("-25 year", time()));
+                $date35 = date('Y-m-d', strtotime("-35 year", time()));
+                $date45 = date('Y-m-d', strtotime("-45 year", time()));
+                $date55 = date('Y-m-d', strtotime("-55 year", time()));
+
+                if ($edad == 25) {
+                    $sql = $sql." AND Panelista.fechaNacimiento >= '$date25'";
+                } else if ($edad == 35) {
+                    $sql = $sql." AND Panelista.fechaNacimiento >= '$date35' AND Panelista.fechaNacimiento < '$date25'";
+                } else if ($edad == 45) {
+                    $sql = $sql." AND Panelista.fechaNacimiento >= '$date45' AND Panelista.fechaNacimiento < '$date35'";
+                } else if ($edad == 55) {
+                    $sql = $sql." AND Panelista.fechaNacimiento >= '$date55' AND Panelista.fechaNacimiento < '$date45'";
+                } else if ($edad == 100) {
+                    $sql = $sql." AND Panelista.fechaNacimiento < '$date55'";
+                }
+            }
+
+            if ($estado !== null) {
+                $sql = $sql." AND Panelista.estado = '$estado'";
+            }
+
+            if ($educacion !== null) {
+                $sql = $sql." AND Panelista.educacion = '$educacion'";
+            }
+        }
+
         $result = $conn->query($sql);
         $values = array();
         $total = 0;
@@ -1170,9 +1207,9 @@ function reportData ($encuesta, $numPregunta) {
                     }
                 }
             } else if ($tipo == 3) {
-                for ($x = 0; $x < count($options); $x++) {
-                    $multipleAnswers = explode('&', $answers[$numPregunta - 1]);
+                $multipleAnswers = explode('&', $answers[$numPregunta - 1]);
 
+                for ($x = 0; $x < count($options); $x++) {
                     for ($y = 0; $y < count($multipleAnswers); $y++) {
                         if ($multipleAnswers[$y] == $options[$x]) {
                             $votes[$x] = $votes[$x] + 1;
@@ -1193,7 +1230,7 @@ function reportData ($encuesta, $numPregunta) {
             $values[] = $votes[$x] / $total;
         }
 
-        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'valores' => $values, 'votes' => $votes);
+        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'valores' => $values, 'votos' => $votes);
     }
 
     return array('status' => 'DATABASE_ERROR');

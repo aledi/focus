@@ -296,7 +296,7 @@ function getReportData () {
     if ($_POST['numPregunta'] == 0) {
         $reportData = generalReportData($_POST['encuesta']);
     } else {
-        $reportData = reportData($_POST['encuesta'], $_POST['numPregunta']);
+        $reportData = reportData($_POST['encuesta'], $_POST['numPregunta'], $_POST['genero'], $_POST['edad'], $_POST['estado'], $_POST['educacion']);
     }
 
     echo json_encode($reportData);
