@@ -177,7 +177,7 @@ $(document).on('ready', function () {
                 for (var i = 0; i < response.results.length; i++) {
                     var result = response.results[i];
 
-                    if (result.id === idPanel){
+                    if (result.id === idPanel) {
                         $('#panelName').val(result.nombre);
                         getDatefromString(result.fechaInicio, 0);
                         getDatefromString(result.fechaFin, 1);
