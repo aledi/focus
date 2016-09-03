@@ -64,7 +64,7 @@ $(document).on('ready', function () {
             return;
         }
 
-        var parameters = {
+        var data = {
             'action': 'ALTA_CLIENTE',
             'nombre': nombre,
             'apellidos': apellidos,
@@ -73,9 +73,9 @@ $(document).on('ready', function () {
         };
 
         if (modifying) {
-            parameters.id = idCliente;
+            data.id = idCliente;
         } else {
-            parameters.password = password;
+            data.password = password;
         }
 
         // Clear feedback <span>
@@ -85,7 +85,7 @@ $(document).on('ready', function () {
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: parameters,
+            data: data,
             dataType: 'json',
             success: function (obj) {
                 alert('Cliente ' + actionText + ' exitosamente.');

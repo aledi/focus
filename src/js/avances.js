@@ -5,7 +5,7 @@ $(document).on('ready', function () {
         getEncuestas('avances');
     }, 500);
 
-    $('#encuestas-select').on('change', function () {
+    $('#avances-encuestas-select').on('change', function () {
         var idEncuesta = parseInt($(this).val(), 10);
         $('#avance-percentage').empty();
         $('#avance-panelistas').empty();

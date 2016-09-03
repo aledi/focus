@@ -74,7 +74,7 @@ $(document).on('ready', function () {
                 return;
         }
 
-        var parameters = {
+        var data = {
             'action': 'ALTA_PANELISTA',
             'nombre': firstName,
             'apellidos': lastName,
@@ -91,7 +91,7 @@ $(document).on('ready', function () {
         };
 
         if (modifying) {
-            parameters.id = idPanelista;
+            data.id = idPanelista;
         }
 
         // Clear feedback <span>
@@ -101,7 +101,7 @@ $(document).on('ready', function () {
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: parameters,
+            data: data,
             dataType: 'json',
             success: function (obj) {
                 alert('Panelista '+ actionText + ' exitosamente.');
@@ -113,7 +113,7 @@ $(document).on('ready', function () {
     });
 
     $('#allPanelistas').on('click', '.deleteButton', function () {
-        var parameters = {
+        var data = {
             'action': 'DELETE_PANELISTA',
             'id': $(this).parent().attr('value')
         }
@@ -121,7 +121,7 @@ $(document).on('ready', function () {
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
-            data: parameters,
+            data: data,
             dataType: 'json',
             success: function (obj) {
                 alert('Panelista eliminado exitosamente.');

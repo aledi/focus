@@ -53,7 +53,7 @@ $(document).on('ready', function () {
             return;
         }
 
-        var parameters = {
+        var data = {
             'action': 'ALTA_PANEL',
             'nombre': nombre,
             'descripcion' : descripcion,
@@ -63,14 +63,14 @@ $(document).on('ready', function () {
         };
 
         if (idPanel != '') {
-            parameters.id = idPanel;
+            data.id = idPanel;
         }
 
         var actionText = idPanel !== '' ? 'modificado' : 'agregado';
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: parameters,
+            data: data,
             dataType: 'json',
             success: function (obj) {
                 if (obj.status == 'SUCCESS') {
@@ -132,7 +132,7 @@ $(document).on('ready', function () {
     }, 500);
 
     $('#allPanels').on('click', '.deleteButton', function () {
-        var parameters = {
+        var data = {
             'action': 'DELETE_PANEL',
             'id': $(this).parent().attr('value')
         }
@@ -140,7 +140,7 @@ $(document).on('ready', function () {
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
-            data: parameters,
+            data: data,
             dataType: 'json',
             success: function (obj) {
                 alert('Panelista eliminado exitosamente.');
@@ -195,11 +195,11 @@ $(document).on('ready', function () {
     });
 
     $('#mes, #anio').on('change', function() {
-        changeSelect('Inicio'); 
+        changeSelect('Inicio');
     });
 
     $('#mes_fin, #anio_fin').on('change', function() {
-        changeSelect('Fin'); 
+        changeSelect('Fin');
     });
 
     $('#cancelModify').on('click', function (event) {

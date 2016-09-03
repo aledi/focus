@@ -66,7 +66,7 @@ $(document).on('ready', function () {
             return;
         }
 
-        var parameters = {
+        var data = {
             'action': 'ALTA_ADMIN',
             'nombre': nombre,
             'apellidos': apellidos,
@@ -75,16 +75,16 @@ $(document).on('ready', function () {
         };
 
         if (modifying) {
-            parameters.id = idAdmin;
+            data.id = idAdmin;
         } else {
-            parameters.password = password
+            data.password = password
         }
 
         var actionText = modifying ? 'modificado' : 'agregado';
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: parameters,
+            data: data,
             dataType: 'json',
             success: function (obj) {
                 alert('Adminsitrador ' + actionText + ' exitosamente.');

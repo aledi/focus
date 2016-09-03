@@ -65,7 +65,7 @@ $(document).on('ready', function () {
             return;
         }
 
-        var parameters = {
+        var data = {
             'action': 'ALTA_ENCUESTA',
             'nombre': nombre,
             'fechaInicio': fechaInicio,
@@ -74,14 +74,14 @@ $(document).on('ready', function () {
         };
 
         if (idEncuesta != '') {
-            parameters.id = idEncuesta;
+            data.id = idEncuesta;
         }
 
         var actionText = idEncuesta !== '' ? 'modificada' : 'agregada';
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: parameters,
+            data: data,
             dataType: 'json',
             success: function (obj) {
                 alert('Encuesta ' + actionText + ' exitosamente.');

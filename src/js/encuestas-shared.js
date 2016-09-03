@@ -9,7 +9,7 @@ function getEncuestas (route) {
         success: function (obj) {
             var currentHTML = '';
 
-            if (route === 'avances') {
+            if (route !== 'encuestas') {
                 if (!obj.results.length) {
                     $('#avances-feedback').html('Por el momento no hay encuestas disponibles');
                 }
@@ -19,7 +19,7 @@ function getEncuestas (route) {
                     currentHTML += '<option value="' + result.id + '">' + result.nombre + '</option>';
                 }
 
-                $('#encuestas-select').append(currentHTML);
+                $('#' + route + '-encuestas-select').append(currentHTML);
             } else {
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
