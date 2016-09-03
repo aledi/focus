@@ -27,7 +27,8 @@ $(document).on('ready', function () {
             success: function (response) {
                 $('#preguntas-select').show();
 
-                var currentHTML = '<option value="0">Selecciona una pregunta</option>';
+                var currentHTML = '<option value="-1">Selecciona una pregunta</option>';
+                currentHTML += '<option value="0">General</option>';
                 for (var i = 0; i < response.results.length; i++) {
                     var result = response.results[i];
                     currentHTML += '<option value="' + result.numPregunta + '">' + result.pregunta + '</option>';
@@ -58,7 +59,7 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                
+
             },
             error: function (errorMsg) {
 
