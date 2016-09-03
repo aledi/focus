@@ -73,7 +73,7 @@ $(document).on('ready', function () {
             'panel': id
         },
         dataType: 'json',
-        success: function (obj) {
+        success: function (response) {
             if (flagLoadingPanelist == 0) {
                 var currentHTML = '<thead>';
                 currentHTML += '<tr style="cursor:pointer">';
@@ -87,10 +87,10 @@ $(document).on('ready', function () {
                 currentHTML += '</thead>';
                 currentHTML += '<tbody id="fbody">';
 
-                for (var i = 0; i < obj.results.length; i++) {
-                    var result = obj.results[i];
+                for (var i = 0; i < response.results.length; i++) {
+                    var result = response.results[i];
 
-                    currentHTML += '<tr value="' + result.id +'">';
+                    currentHTML += '<tr value="' + result.id + '">';
                     currentHTML += '<td></td>';
                     currentHTML += '<td>' + result.nombre + '</td>';
                     currentHTML += '<td>' + result.edad + '</td>';
@@ -105,7 +105,7 @@ $(document).on('ready', function () {
 
                     currentHTML += "</tr>";
 
-                    $("#tablaPanelistas").append(currentHTML);
+                    $('#tablaPanelistas').append(currentHTML);
                     currentHTML = '';
                 }
 
@@ -114,7 +114,7 @@ $(document).on('ready', function () {
 
             currentHTML += '</tbody>';
 
-            $("tablaPanelistas").tablesorter({
+            $('tablaPanelistas').tablesorter({
                 // pass the headers argument and assing an object
                 headers: {
                     // assign the secound column (we start counting zero)
@@ -149,7 +149,7 @@ $(document).on('ready', function () {
                 'panel' : id
             },
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 alert('Panel ligado exitosamente.');
                 location.replace('paneles.php');
             },

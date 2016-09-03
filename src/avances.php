@@ -19,7 +19,7 @@
         <div class='avances-wrapper'>
             <h2 id='headerTitle'>Avances</h2>
             <span id='avances-feedback' class='feedback-text'></span>
-            <select id='encuestas-select' class='encuestas-select'>
+            <select id='avances-encuestas-select' class='encuestas-select'>
                 <option value='0'>Selecciona una encuesta</option>
             </select>
             <p id='avance-percentage' class='avance-info'></p>

@@ -6,20 +6,20 @@ function getEncuestas (route) {
         url: '../api/controller.php',
         data: {'action': 'GET_ENCUESTAS'},
         dataType: 'json',
-        success: function (obj) {
+        success: function (response) {
             var currentHTML = '';
 
-            if (route === 'avances') {
-                if (!obj.results.length) {
+            if (route !== 'encuestas') {
+                if (!response.results.length) {
                     $('#avances-feedback').html('Por el momento no hay encuestas disponibles');
                 }
 
-                for (var i = 0; i < obj.results.length; i++) {
-                    var result = obj.results[i];
+                for (var i = 0; i < response.results.length; i++) {
+                    var result = response.results[i];
                     currentHTML += '<option value="' + result.id + '">' + result.nombre + '</option>';
                 }
 
-                $('#encuestas-select').append(currentHTML);
+                $('#' + route + '-encuestas-select').append(currentHTML);
             } else {
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
@@ -32,14 +32,14 @@ function getEncuestas (route) {
                 currentHTML += '</thead>';
                 currentHTML += '<tbody>';
 
-                for (var i = 0; i < obj.results.length; i++) {
-                    var result = obj.results[i];
+                for (var i = 0; i < response.results.length; i++) {
+                    var result = response.results[i];
 
-                    currentHTML += '<tr value="' + result.id +'">';
-                    currentHTML += '<td><a href="preguntas.php?id='+ result.id +'">' + result.nombre +'</a></td>';
-                    currentHTML += '<td>' + result.fechaInicio +'</td>';
-                    currentHTML += '<td>' + result.fechaFin +'</td>';
-                    currentHTML += '<td>' + result.panel +'</td>';
+                    currentHTML += '<tr value="' + result.id + '">';
+                    currentHTML += '<td><a href="preguntas.php?id=' + result.id + '">' + result.nombre + '</a></td>';
+                    currentHTML += '<td>' + result.fechaInicio + '</td>';
+                    currentHTML += '<td>' + result.fechaFin + '</td>';
+                    currentHTML += '<td>' + result.panel + '</td>';
                     currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
