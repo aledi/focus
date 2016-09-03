@@ -51,13 +51,13 @@
                 <div class='input-wrapper'>
                     <label>Fecha de Nacimiento:</label>
                     <select id='dia'>
-                        
+
                     </select>
                     <select id='mes'>
-                        
+
                     </select>
                     <select id='anio'>
-                        
+
                     </select>
                 </div>
                 <div class='input-wrapper'>
@@ -87,7 +87,7 @@
                 <div class='input-wrapper'>
                     <label>Estado:</label>
                     <select class='form-control' id='estado' name='estado'>
-                        <option value='0'>Selecciona un estado...</option>
+                        <option value='0'>Selecciona un estado</option>
                         <option value='AGS'>Aguascalientes</option>
                         <option value='BC'>Baja California</option>
                         <option value='BCS'>Baja California Sur</option>

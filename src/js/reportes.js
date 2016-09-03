@@ -6,6 +6,10 @@ $(document).on('ready', function () {
     }, 500);
 
     $('#preguntas-select').hide();
+    $('#edad-select').hide();
+    $('#genero-select').hide();
+    $('#estado-select').hide();
+    $('#educacion-select').hide();
 
     $('#reportes-encuestas-select').on('change', function () {
         var idEncuesta = parseInt($(this).val(), 10);
@@ -13,6 +17,10 @@ $(document).on('ready', function () {
 
         if (idEncuesta < 1) {
             $('#preguntas-select').hide();
+            $('#edad-select').hide();
+            $('#genero-select').hide();
+            $('#estado-select').hide();
+            $('#educacion-select').hide();
             return;
         }
 
@@ -29,6 +37,7 @@ $(document).on('ready', function () {
 
                 var currentHTML = '<option value="-1">Selecciona una pregunta</option>';
                 currentHTML += '<option value="0">General</option>';
+
                 for (var i = 0; i < response.results.length; i++) {
                     var result = response.results[i];
                     currentHTML += '<option value="' + result.numPregunta + '">' + result.pregunta + '</option>';
@@ -44,6 +53,10 @@ $(document).on('ready', function () {
 
     $('#preguntas-select').on('change', function () {
         var numPregunta = parseInt($(this).val(), 10);
+        $('#edad-select').hide();
+        $('#genero-select').hide();
+        $('#estado-select').hide();
+        $('#educacion-select').hide();
 
         if (numPregunta < 0) {
             return;
@@ -59,7 +72,10 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-
+                $('#edad-select').show();
+                $('#genero-select').show();
+                $('#estado-select').show();
+                $('#educacion-select').show();
             },
             error: function (errorMsg) {
 
