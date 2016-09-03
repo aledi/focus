@@ -195,11 +195,11 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#mes, #anio').on('change', function() {
+    $('#mes, #anio').on('change', function () {
         changeSelect('Inicio');
     });
 
-    $('#mes_fin, #anio_fin').on('change', function() {
+    $('#mes_fin, #anio_fin').on('change', function () {
         changeSelect('Fin');
     });
 
