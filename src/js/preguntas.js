@@ -62,15 +62,15 @@ $(document).on('ready', function () {
                 encuesta : idEncuesta
             },
             dataType: 'json',
-            success: function (obj) {
-                for (var x = 2; x <= obj.results.length; x++) {
+            success: function (response) {
+                for (var x = 2; x <= response.results.length; x++) {
                     appendQuestions(x);
                 }
 
                 $('div#Answers1').empty();
 
-                for (var x = 0; x < obj.results.length; x++) {
-                    var result = obj.results[x];
+                for (var x = 0; x < response.results.length; x++) {
+                    var result = response.results[x];
 
                     $('input.pregunta[name=respuesta]').val(result.pregunta);
                     $('select.tipoPregunta[name=respuesta]').val(result.tipo);
@@ -162,7 +162,7 @@ $(document).on('ready', function () {
                 'preguntas': questionsArray
             },
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 alert('Preguntas ligadas exitosamente.');
                 location.replace('encuestas.php');
             },

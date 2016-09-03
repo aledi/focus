@@ -7,10 +7,11 @@ $(document).on('ready', function () {
             url: '../api/controller.php',
             data: {'action': 'GET_PANELES'},
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 fillSelects(1, 0);
                 fillSelects(2, 0);
                 fillSelects(3, 0);
+
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
                 currentHTML += '<th class="left">Nombre</th>';
@@ -22,8 +23,8 @@ $(document).on('ready', function () {
                 currentHTML += '</thead>';
                 currentHTML += '<tbody>';
 
-                for (var i = 0; i < obj.results.length; i++) {
-                    var result = obj.results[i];
+                for (var i = 0; i < response.results.length; i++) {
+                    var result = response.results[i];
 
                     currentHTML += '<tr value="' + result.id + '">';
                     currentHTML += '<td>' + result.nombre + '</td>';
@@ -83,9 +84,9 @@ $(document).on('ready', function () {
             url: '../api/controller.php',
             data: data,
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 alert('Encuesta ' + actionText + ' exitosamente.');
-                location.replace('preguntas.php?id=' + obj.id);
+                location.replace('preguntas.php?id=' + response.id);
             },
             error: function (error) {
                 $('#feedback').html('Encuesta no ' + actionText + '. Ha ocurrido un error.');
@@ -102,7 +103,7 @@ $(document).on('ready', function () {
                 'id': $(this).parent().attr('value')
             },
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 alert('Encuesta eliminada exitosamente.');
                 $(this).parent().find('td.id').remove();
             },
@@ -132,17 +133,17 @@ $(document).on('ready', function () {
                 'id': idEncuesta
             },
             dataType: 'json',
-            success: function (obj) {
-                for (var i = 0; i < obj.results.length; i++) {
-                    var result = obj.results[i];
+            success: function (response) {
+                for (var i = 0; i < response.results.length; i++) {
+                    var result = response.results[i];
 
                     if (result.id !== idEncuesta) {
                         continue;
                     }
 
                     $('#nombre').val(result.nombre);
-                    getDatefromString(obj.results[i].fechaInicio, 0);
-                    getDatefromString(obj.results[i].fechaFin, 1);
+                    getDatefromString(result.fechaInicio, 0);
+                    getDatefromString(result.fechaFin, 1);
                     $('input[name=id][value="' + result.id + '"]').prop('checked', true);
 
                     var myURL = window.location.href.split('?')[0];

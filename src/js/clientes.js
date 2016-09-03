@@ -7,7 +7,7 @@ $(document).on('ready', function () {
             url: '../api/controller.php',
             data: {'action': 'GET_CLIENTES'},
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
                 currentHTML += '<th>Username</th>';
@@ -18,8 +18,8 @@ $(document).on('ready', function () {
                 currentHTML += '</thead>';
                 currentHTML += '<tbody>';
 
-                for (var i = 0; i < obj.results.length; i++) {
-                    var result = obj.results[i];
+                for (var i = 0; i < response.results.length; i++) {
+                    var result = response.results[i];
 
                     currentHTML += '<tr value="'+ result.id + '">';
                     currentHTML += '<td>' + result.username+'</td>';
@@ -87,7 +87,7 @@ $(document).on('ready', function () {
             url: '../api/controller.php',
             data: data,
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 alert('Cliente ' + actionText + ' exitosamente.');
             },
             error: function (error) {
@@ -105,7 +105,7 @@ $(document).on('ready', function () {
                 'id': $(this).parent().attr('value')
             },
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 alert('Cliente eliminado exitosamente.');
                 $(this).parent().find('td.id').remove();
             },
@@ -137,9 +137,9 @@ $(document).on('ready', function () {
                 'id': idUser
             },
             dataType: 'json',
-            success: function (obj) {
-                for (var i = 0; i < obj.results.length; i++) {
-                    var result = obj.results[i];
+            success: function (response) {
+                for (var i = 0; i < response.results.length; i++) {
+                    var result = response.results[i];
 
                     if (result.id == idUser) {
                         $('#email').val(result.email);
