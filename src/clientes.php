@@ -13,9 +13,9 @@
     <?php include_once('elements/header.php');?>
     <section>
         <div class='clientes-wrapper'>
-            <ul class="tabs">
-                <li class="tab-link current" data-tab="tab-agregarCliente">Agregar Cliente</li>
-                <li class="tab-link" data-tab="tab-modificarCliente">Modificar Cliente</li>
+            <ul class='tabs'>
+                <li class='tab-link current' data-tab='tab-agregarCliente'>Agregar Cliente</li>
+                <li class='tab-link' data-tab='tab-modificarCliente'>Modificar Cliente</li>
             </ul>
 
             <div id='tab-agregarCliente' class='tab-content current'>

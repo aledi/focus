@@ -16,11 +16,11 @@
     <?php include_once('elements/header.php');?>
     <div class='login-form'>
         <form class='form-login'>
-            <h1> Ligar Panelistas</h1>
+            <h1>Ligar Panelistas</h1>
             <div id="panelista">
-                <p>Filtrar Panelistas: <input type="text" id="filteringText"/></p>
+                <p>Filtrar Panelistas: <input id='filteringText' type='text' /></p>
                 <p>Seleccionar Panelistas:</p>
-                <table id="tablaPanelistas"></table>
+                <table id='tablaPanelistas'></table>
             </div>
             <div>
                 <button type='submit' id='loginButtonLigarPanel'>Ligar Panelistas</button>
