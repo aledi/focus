@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 30-08-2016 a las 02:35:58
+-- Tiempo de generación: 06-09-2016 a las 01:51:03
 -- Versión del servidor: 5.5.42
 -- Versión de PHP: 7.0.0
 
@@ -33,7 +33,7 @@ CREATE TABLE `Encuesta` (
 --
 
 INSERT INTO `Encuesta` (`id`, `panel`, `nombre`, `fechaInicio`, `fechaFin`) VALUES
-(1, 1, 'Encuesta Demo MZ', '2016-08-06', '2016-08-31');
+(1, 1, 'Encuesta Demo MZ', '2016-08-06', '2016-12-31');
 
 -- --------------------------------------------------------
 
@@ -56,7 +56,7 @@ CREATE TABLE `Panel` (
 --
 
 INSERT INTO `Panel` (`id`, `nombre`, `descripcion`, `fechaInicio`, `fechaFin`, `cliente`, `creador`) VALUES
-(1, 'Margarita Zavala', '', '2016-08-06', '2016-08-31', 2, 1);
+(1, 'Margarita Zavala', '', '2016-08-06', '2016-12-31', 2, 1);
 
 -- --------------------------------------------------------
 
