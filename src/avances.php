@@ -16,13 +16,16 @@
     <?php include_once('elements/header.php');?>
     </div>
     <section>
-        <h1>Avances</h1>
-        <select id='encuestas-select'>
-            <option value='0'>Selecciona una encuesta</option>
-        </select>
-        <p id='avance-percentage'></p>
-        <p id='avance-panelistas'></p>
-        <table id='avances-table'></table>
+        <div class='avances-wrapper'>
+            <h2 id='headerTitle'>Avances</h2>
+            <span id='avances-feedback' class='feedback-text'></span>
+            <select id='avances-encuestas-select' class='encuestas-select'>
+                <option value='0'>Selecciona una encuesta</option>
+            </select>
+            <p id='avance-percentage' class='avance-info'></p>
+            <p id='avance-panelistas' class='avance-info'></p>
+            <table id='avances-table'></table>
+        </div>
     </section>
 </body>
 </html>

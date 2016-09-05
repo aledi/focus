@@ -45,15 +45,15 @@ $(document).on('ready', function () {
             '<p>Video URL:</p>' +
             '<input id="video" class="video" name="respuesta" type="text"/>' +
             '</div>';
-        currentHTML += '<div id="Answers'+lastQuestion+'"></div>' +
+        currentHTML += '<div id="Answers' + lastQuestion + '"></div>' +
             '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
             '</div>';
 
-        $("#questions").append(currentHTML);
+        $('#questions').append(currentHTML);
         appendAnswers(1, lastQuestion);
     }
 
-    if (idEncuesta != '') {
+    if (idEncuesta !== '') {
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
@@ -62,25 +62,25 @@ $(document).on('ready', function () {
                 encuesta : idEncuesta
             },
             dataType: 'json',
-            success: function (obj) {
-                for (var x = 2; x <= obj.results.length; x++) {
+            success: function (response) {
+                for (var x = 2; x <= response.results.length; x++) {
                     appendQuestions(x);
                 }
 
                 $('div#Answers1').empty();
 
-                for (var x = 0; x < obj.results.length; x++) {
-                    var result = obj.results[x];
+                for (var x = 0; x < response.results.length; x++) {
+                    var result = response.results[x];
 
                     $('input.pregunta[name=respuesta]').val(result.pregunta);
                     $('select.tipoPregunta[name=respuesta]').val(result.tipo);
 
-                    appendAnswers(typeQuestion, questionID);
+                    appendAnswers(result.tipo, questionID);
 
                     $('input.imagen[name=respuesta]').val(result.imagen);
                     $('input.video[name=respuesta]').val(result.video);
 
-                    if (typeQuestion !== 1) {
+                    if (result.tipo !== 1) {
                         $('input.respuesta1[name=respuesta]').val(result.op1);
                         $('input.respuesta2[name=respuesta]').val(result.op2);
                         $('input.respuesta3[name=respuesta]').val(result.op3);
@@ -100,7 +100,7 @@ $(document).on('ready', function () {
         });
     }
 
-    $(document).on('change', '.tipoPregunta', function(){
+    $(document).on('change', '.tipoPregunta', function () {
         var typeQuestion = $(this).val();
         var questionID = $(this).parent().parent().attr('id');
         var answersClass = "div#Answers" + questionID;
@@ -123,7 +123,7 @@ $(document).on('ready', function () {
         $(this).parent().remove();
     });
 
-    $('#submitQuestions').on('click', function(){
+    $('#submitQuestions').on('click', function () {
         var numeroPregunta = 1;
         var questionsArray = [];
         var questionObject = {};
@@ -162,7 +162,7 @@ $(document).on('ready', function () {
                 'preguntas': questionsArray
             },
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 alert('Preguntas ligadas exitosamente.');
                 location.replace('encuestas.php');
             },

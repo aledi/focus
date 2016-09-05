@@ -27,8 +27,8 @@ $(document).on('ready', function () {
                 'password': password
             },
             dataType: 'json',
-            success: function (obj) {
-                if (obj.status === 'SUCCESS') {
+            success: function (response) {
+                if (response.status === 'SUCCESS') {
                     location.replace('panelistas.php');
                 } else {
                     $('#feedback').html('Usuario o contraseña incorrectos');

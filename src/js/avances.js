@@ -5,7 +5,7 @@ $(document).on('ready', function () {
         getEncuestas('avances');
     }, 500);
 
-    $('#encuestas-select').on('change', function () {
+    $('#avances-encuestas-select').on('change', function () {
         var idEncuesta = parseInt($(this).val(), 10);
         $('#avance-percentage').empty();
         $('#avance-panelistas').empty();
@@ -29,7 +29,7 @@ $(document).on('ready', function () {
 
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
-                currentHTML += '<th>Nombre</th>';
+                currentHTML += '<th class="left">Nombre</th>';
                 currentHTML += '<th>Género</th>';
                 currentHTML += '<th>Edad</th>';
                 currentHTML += '<th>Educación</th>';
@@ -48,13 +48,13 @@ $(document).on('ready', function () {
                         var formattedDate = date[2] + ' de ' + convertMonth(parseInt(date[1], 10)) + ', ' + date[0];
                     }
 
-                    currentHTML += '<tr>';
+                    currentHTML += '<tr class="' + (panelista.fecha ? '' : 'red') + '">';
                     currentHTML += '<td>' + panelista.nombre + '</td>';
                     currentHTML += '<td>' + convertGenero(panelista.genero) + '</td>';
-                    currentHTML += '<td>' + panelista.edad + '</td>';
+                    currentHTML += '<td class="centered">' + panelista.edad + '</td>';
                     currentHTML += '<td>' + convertEducacion(panelista.educacion) + '</td>';
                     currentHTML += '<td>' + panelista.municipio + '</td>';
-                    currentHTML += '<td>' + panelista.estado + '</td>';
+                    currentHTML += '<td class="centered">' + panelista.estado + '</td>';
                     currentHTML += '<td>' + (panelista.fecha ? formattedDate : '') + '</td>';
                     currentHTML += '<td>' + panelista.hora + '</td>';
                     currentHTML += '</tr>';
