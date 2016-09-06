@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 30-08-2016 a las 02:35:58
+-- Tiempo de generación: 06-09-2016 a las 01:51:03
 -- Versión del servidor: 5.5.42
 -- Versión de PHP: 7.0.0
 
@@ -33,7 +33,7 @@ CREATE TABLE `Encuesta` (
 --
 
 INSERT INTO `Encuesta` (`id`, `panel`, `nombre`, `fechaInicio`, `fechaFin`) VALUES
-(1, 1, 'Encuesta Demo MZ', '2016-08-06', '2016-08-31');
+(1, 1, 'Encuesta Demo MZ', '2016-08-06', '2016-12-31');
 
 -- --------------------------------------------------------
 
@@ -56,7 +56,7 @@ CREATE TABLE `Panel` (
 --
 
 INSERT INTO `Panel` (`id`, `nombre`, `descripcion`, `fechaInicio`, `fechaFin`, `cliente`, `creador`) VALUES
-(1, 'Margarita Zavala', '', '2016-08-06', '2016-08-31', 2, 1);
+(1, 'Margarita Zavala', '', '2016-08-06', '2016-12-31', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -514,10 +514,10 @@ INSERT INTO `PanelistaEnPanel` (`id`, `panelista`, `panel`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Preguntas`
+-- Estructura de tabla para la tabla `Pregunta`
 --
 
-CREATE TABLE `Preguntas` (
+CREATE TABLE `Pregunta` (
   `id` int(11) NOT NULL,
   `encuesta` int(11) NOT NULL,
   `tipo` int(11) NOT NULL,
@@ -539,10 +539,10 @@ CREATE TABLE `Preguntas` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `Preguntas`
+-- Volcado de datos para la tabla `Pregunta`
 --
 
-INSERT INTO `Preguntas` (`id`, `encuesta`, `tipo`, `numPregunta`, `pregunta`, `video`, `imagen`, `numOpciones`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`) VALUES
+INSERT INTO `Pregunta` (`id`, `encuesta`, `tipo`, `numPregunta`, `pregunta`, `video`, `imagen`, `numOpciones`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`) VALUES
 (1, 1, 1, 1, '¿Qué cosas ha escuchado recientemente de Margarita Zavala?', '', '', 0, '', '', '', '', '', '', '', '', '', ''),
 (2, 1, 2, 2, '¿Su opinión sobre Margarita Zavala es?', '', '', 3, 'Positiva', 'Negativa', 'Neutra', '', '', '', '', '', '', ''),
 (3, 1, 3, 3, '¿Conoce la asociación que promueve Margarita Zavala?', '', '', 2, 'Sí', 'No', '', '', '', '', '', '', '', ''),
@@ -553,10 +553,10 @@ INSERT INTO `Preguntas` (`id`, `encuesta`, `tipo`, `numPregunta`, `pregunta`, `v
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Respuestas`
+-- Estructura de tabla para la tabla `Respuesta`
 --
 
-CREATE TABLE `Respuestas` (
+CREATE TABLE `Respuesta` (
   `id` int(11) NOT NULL,
   `encuesta` int(11) NOT NULL,
   `panelista` int(11) NOT NULL,
@@ -566,10 +566,10 @@ CREATE TABLE `Respuestas` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `Respuestas`
+-- Volcado de datos para la tabla `Respuesta`
 --
 
-INSERT INTO `Respuestas` (`id`, `encuesta`, `panelista`, `respuestas`, `fecha`, `hora`) VALUES
+INSERT INTO `Respuesta` (`id`, `encuesta`, `panelista`, `respuestas`, `fecha`, `hora`) VALUES
 (1, 1, 1, 'res', '2016-08-16', '03:00:00'),
 (2, 1, 2, 'res', '2016-08-01', '00:26:43'),
 (3, 1, 3, 'res', '2016-08-25', '13:12:49');
@@ -633,16 +633,16 @@ ALTER TABLE `PanelistaEnPanel`
   ADD KEY `panel` (`panel`);
 
 --
--- Indices de la tabla `Preguntas`
+-- Indices de la tabla `Pregunta`
 --
-ALTER TABLE `Preguntas`
+ALTER TABLE `Pregunta`
   ADD PRIMARY KEY (`id`),
   ADD KEY `encuesta` (`encuesta`);
 
 --
--- Indices de la tabla `Respuestas`
+-- Indices de la tabla `Respuesta`
 --
-ALTER TABLE `Respuestas`
+ALTER TABLE `Respuesta`
   ADD PRIMARY KEY (`id`),
   ADD KEY `encuesta` (`encuesta`),
   ADD KEY `panelista` (`panelista`);
@@ -678,14 +678,14 @@ ALTER TABLE `Panelista`
 ALTER TABLE `PanelistaEnPanel`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
 --
--- AUTO_INCREMENT de la tabla `Preguntas`
+-- AUTO_INCREMENT de la tabla `Pregunta`
 --
-ALTER TABLE `Preguntas`
+ALTER TABLE `Pregunta`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT de la tabla `Respuestas`
+-- AUTO_INCREMENT de la tabla `Respuesta`
 --
-ALTER TABLE `Respuestas`
+ALTER TABLE `Respuesta`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `Usuario`
@@ -717,14 +717,14 @@ ALTER TABLE `PanelistaEnPanel`
   ADD CONSTRAINT `PanelistaEnPanel_ibfk_2` FOREIGN KEY (`panel`) REFERENCES `Panel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `Preguntas`
+-- Filtros para la tabla `Pregunta`
 --
-ALTER TABLE `Preguntas`
-  ADD CONSTRAINT `Preguntas_ibfk_1` FOREIGN KEY (`encuesta`) REFERENCES `Encuesta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Pregunta`
+  ADD CONSTRAINT `Pregunta_ibfk_1` FOREIGN KEY (`encuesta`) REFERENCES `Encuesta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `Respuestas`
+-- Filtros para la tabla `Respuesta`
 --
-ALTER TABLE `Respuestas`
-  ADD CONSTRAINT `Respuestas_ibfk_1` FOREIGN KEY (`encuesta`) REFERENCES `Encuesta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `Respuestas_ibfk_2` FOREIGN KEY (`panelista`) REFERENCES `Panelista` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Respuesta`
+  ADD CONSTRAINT `Respuesta_ibfk_1` FOREIGN KEY (`encuesta`) REFERENCES `Encuesta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Respuesta_ibfk_2` FOREIGN KEY (`panelista`) REFERENCES `Panelista` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
