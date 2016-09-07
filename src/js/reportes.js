@@ -23,6 +23,7 @@ $(document).on('ready', function () {
             $('#estado-select').hide();
             $('#educacion-select').hide();
             $('#filtros-button').hide();
+
             return;
         }
 
@@ -45,11 +46,10 @@ $(document).on('ready', function () {
                 }
 
                 currentHTML += '<option value="0">General</option>';
-
                 $('#preguntas-select').append(currentHTML);
             },
             error: function (errorMsg) {
-
+                return;
             }
         });
     });
@@ -107,6 +107,10 @@ $(document).on('ready', function () {
             encuesta : parseInt($('#reportes-encuestas-select').val(), 10),
             numPregunta: parseInt($('#preguntas-select').val(), 10)
         };
+
+        if (parseInt($('#edad-select').val(), 10) > 0) {
+            data.edad = parseInt($('#edad-select').val(), 10);
+        }
 
         if ($('#estado-select').val() !== '0') {
             data.estado = $('#estado-select').val();
