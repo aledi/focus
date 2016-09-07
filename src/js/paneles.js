@@ -1,12 +1,14 @@
 'use strict';
 
 $(document).on('ready', function () {
+    $('#paneles-header-option').addClass('selected');
+
     $.ajax({
         type: 'POST',
         url: '../api/controller.php',
         data: {'action': 'GET_CLIENTES'},
         dataType: 'json',
-        success: function (obj) {
+        success: function (response) {
             var currentHTML = '<thead>';
             currentHTML += '<tr>';
             currentHTML += '<th>Nombre</th>';
@@ -16,8 +18,8 @@ $(document).on('ready', function () {
             currentHTML += '</thead>';
             currentHTML += '<tbody>';
 
-            for (var i = 0; i < obj.results.length; i++) {
-                var result = obj.results[i];
+            for (var i = 0; i < response.results.length; i++) {
+                var result = response.results[i];
 
                 currentHTML += '<tr value="' + result.id + '">';
                 currentHTML += "<td>" + result.nombre + " " + result.apellidos + "</td>";
@@ -25,7 +27,7 @@ $(document).on('ready', function () {
                 currentHTML += '<td class="centered"><input type="radio" value=' + result.id + ' name="id"></td>';
                 currentHTML += "</tr>";
 
-                $("#tableClientes").append(currentHTML);
+                $('#tableClientes').append(currentHTML);
                 currentHTML = '';
             }
 
@@ -53,7 +55,7 @@ $(document).on('ready', function () {
             return;
         }
 
-        var parameters = {
+        var data = {
             'action': 'ALTA_PANEL',
             'nombre': nombre,
             'descripcion' : descripcion,
@@ -63,19 +65,19 @@ $(document).on('ready', function () {
         };
 
         if (idPanel != '') {
-            parameters.id = idPanel;
+            data.id = idPanel;
         }
 
         var actionText = idPanel !== '' ? 'modificado' : 'agregado';
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: parameters,
+            data: data,
             dataType: 'json',
-            success: function (obj) {
-                if (obj.status == 'SUCCESS') {
+            success: function (response) {
+                if (response.status == 'SUCCESS') {
                     alert('Panel ' + actionText + ' exitosamente.');
-                    location.replace("liga-panel-panelista.php?id=" + obj.id);
+                    location.replace("liga-panel-panelista.php?id=" + response.id);
                 } else {
                     $('#feedback').html('Panel no ' + actionText + '. Ha ocurrido un error.');
                 }
@@ -92,10 +94,11 @@ $(document).on('ready', function () {
             url: '../api/controller.php',
             data: {'action': 'GET_PANELES'},
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 fillSelects(1, 0);
                 fillSelects(2, 0);
                 fillSelects(3, 0);
+
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
                 currentHTML += '<th>Nombre</th>';
@@ -107,8 +110,8 @@ $(document).on('ready', function () {
                 currentHTML += '</thead>';
                 currentHTML += '<tbody>';
 
-                for (var i = 0; i < obj.results.length; i++) {
-                    var result = obj.results[i];
+                for (var i = 0; i < response.results.length; i++) {
+                    var result = response.results[i];
 
                     currentHTML += '<tr value="'+ result.id +'">';
                     currentHTML += '<td><a href="liga-panel-panelista.php?id=' + result.id +'">' + result.nombre +"</a></td>";
@@ -132,7 +135,7 @@ $(document).on('ready', function () {
     }, 500);
 
     $('#allPanels').on('click', '.deleteButton', function () {
-        var parameters = {
+        var data = {
             'action': 'DELETE_PANEL',
             'id': $(this).parent().attr('value')
         }
@@ -140,9 +143,9 @@ $(document).on('ready', function () {
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
-            data: parameters,
+            data: data,
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 alert('Panelista eliminado exitosamente.');
                 $(this).parent().find('td.id').remove();
             },
@@ -172,14 +175,14 @@ $(document).on('ready', function () {
                 'id': idPanel
             },
             dataType: 'json',
-            success: function (obj) {
-                for (var i = 0; i < obj.results.length; i++) {
-                    var result = obj.results[i];
+            success: function (response) {
+                for (var i = 0; i < response.results.length; i++) {
+                    var result = response.results[i];
 
-                    if (result.id === idPanel){
+                    if (result.id === idPanel) {
                         $('#panelName').val(result.nombre);
-                        getDatefromString(obj.results[i].fechaInicio, 0);
-                        getDatefromString(obj.results[i].fechaFin, 1);
+                        getDatefromString(result.fechaInicio, 0);
+                        getDatefromString(result.fechaFin, 1);
                         $('input[name="id"][value="' + result.id + '"]').prop('checked', true);
 
                         var myURL = window.location.href.split('?')[0];
@@ -194,12 +197,12 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#mes, #anio').on('change', function() {
-        changeSelect('Inicio'); 
+    $('#mes, #anio').on('change', function () {
+        changeSelect('Inicio');
     });
 
-    $('#mes_fin, #anio_fin').on('change', function() {
-        changeSelect('Fin'); 
+    $('#mes_fin, #anio_fin').on('change', function () {
+        changeSelect('Fin');
     });
 
     $('#cancelModify').on('click', function (event) {

@@ -1,16 +1,19 @@
 'use strict';
 
 $(document).on('ready', function () {
+    $('#panelistas-header-option').addClass('selected');
+
     setTimeout(function (event) {
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
             data: {'action': 'GET_PANELISTAS'},
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 fillSelects(1, 1);
                 fillSelects(2, 1);
                 fillSelects(3, 1);
+
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
                 currentHTML += '<th class="left">Nombre</th>';
@@ -23,15 +26,15 @@ $(document).on('ready', function () {
                 currentHTML += '</thead>';
                 currentHTML += '<tbody>';
 
-                for (var i = 0; i < obj.results.length; i++) {
-                    var result = obj.results[i];
+                for (var i = 0; i < response.results.length; i++) {
+                    var result = response.results[i];
 
-                    currentHTML += '<tr value="' + result.id +'">';
-                    currentHTML += '<td>' + result.nombre + " " + result.apellidos +'</td>';
-                    currentHTML += '<td>' + convertGenero(result.genero) +'</td>';
-                    currentHTML += '<td>' + result.edad +'</td>';
-                    currentHTML += '<td>' + result.municipio +'</td>';
-                    currentHTML += '<td>' + result.estado +'</td>';
+                    currentHTML += '<tr value="' + result.id + '">';
+                    currentHTML += '<td>' + result.nombre + " " + result.apellidos + '</td>';
+                    currentHTML += '<td>' + convertGenero(result.genero) + '</td>';
+                    currentHTML += '<td>' + result.edad + '</td>';
+                    currentHTML += '<td>' + result.municipio + '</td>';
+                    currentHTML += '<td>' + result.estado + '</td>';
                     currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
@@ -74,7 +77,7 @@ $(document).on('ready', function () {
                 return;
         }
 
-        var parameters = {
+        var data = {
             'action': 'ALTA_PANELISTA',
             'nombre': firstName,
             'apellidos': lastName,
@@ -91,7 +94,7 @@ $(document).on('ready', function () {
         };
 
         if (modifying) {
-            parameters.id = idPanelista;
+            data.id = idPanelista;
         }
 
         // Clear feedback <span>
@@ -101,9 +104,9 @@ $(document).on('ready', function () {
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: parameters,
+            data: data,
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 alert('Panelista '+ actionText + ' exitosamente.');
             },
             error: function (error) {
@@ -113,7 +116,7 @@ $(document).on('ready', function () {
     });
 
     $('#allPanelistas').on('click', '.deleteButton', function () {
-        var parameters = {
+        var data = {
             'action': 'DELETE_PANELISTA',
             'id': $(this).parent().attr('value')
         }
@@ -121,9 +124,9 @@ $(document).on('ready', function () {
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
-            data: parameters,
+            data: data,
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 alert('Panelista eliminado exitosamente.');
                 $(this).parent().find('td.id').remove();
             },
@@ -140,7 +143,7 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').first().addClass('current');
-        $("#tab-agregarPanelista").addClass('current');
+        $('#tab-agregarPanelista').addClass('current');
 
         $('#headerTitle').text('Modificar Panelista');
         $('#savePanelista').text('Modificar');
@@ -155,9 +158,9 @@ $(document).on('ready', function () {
                 'id': idPanelista
             },
             dataType: 'json',
-            success: function (obj) {
-                for (var i = 0; i < obj.results.length; i++) {
-                    var result = obj.results[i];
+            success: function (response) {
+                for (var i = 0; i < response.results.length; i++) {
+                    var result = response.results[i];
 
                     if (result.id == idPanelista) {
                         $('#firstName').val(result.nombre);
@@ -165,7 +168,7 @@ $(document).on('ready', function () {
                         $('#email').val(result.email);
                         $('#username').val(result.username);
                         $('input[name="gender"][value="' + result.genero + '"]').prop('checked', true);
-                        getDatefromString(obj.results[i].fechaNacimiento, 0);
+                        getDatefromString(result.fechaNacimiento, 0);
                         $('#educacion').val(result.educacion + '');
                         $('#calleNumero').val(result.calleNumero);
                         $('#colonia').val(result.colonia);
@@ -184,7 +187,6 @@ $(document).on('ready', function () {
             }
         });
     });
-
 
     // Listen to keypress & restrict input to numeric value
     $('#cp').keypress(function (event) {
@@ -207,10 +209,10 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').last().addClass('current');
-        $("#tab-modificarPanelista").addClass('current');
+        $('#tab-modificarPanelista').addClass('current');
     });
 
     $('#mes, #anio').on('change', function() {
-        changeSelect('Inicio'); 
+        changeSelect('Inicio');
     });
 });

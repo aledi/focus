@@ -1,6 +1,8 @@
 'use strict';
 
 $(document).on('ready', function () {
+    $('#usuarios-header-option').addClass('selected');
+
     setTimeout(function () {
         $.ajax({
             type: 'POST',
@@ -9,7 +11,7 @@ $(document).on('ready', function () {
                 'action': 'GET_ADMINS'
             },
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
                 currentHTML += '<th>Username</th>';
@@ -20,8 +22,8 @@ $(document).on('ready', function () {
                 currentHTML += '</thead>';
                 currentHTML += '<tbody>';
 
-                for (var i = 0; i < obj.results.length; i++) {
-                    var result = obj.results[i];
+                for (var i = 0; i < response.results.length; i++) {
+                    var result = response.results[i];
 
                     currentHTML += '<tr value="'+ result.id +'">';
                     currentHTML += '<td>' + result.username+'</td>';
@@ -66,7 +68,7 @@ $(document).on('ready', function () {
             return;
         }
 
-        var parameters = {
+        var data = {
             'action': 'ALTA_ADMIN',
             'nombre': nombre,
             'apellidos': apellidos,
@@ -75,18 +77,18 @@ $(document).on('ready', function () {
         };
 
         if (modifying) {
-            parameters.id = idAdmin;
+            data.id = idAdmin;
         } else {
-            parameters.password = password
+            data.password = password
         }
 
         var actionText = modifying ? 'modificado' : 'agregado';
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: parameters,
+            data: data,
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 alert('Adminsitrador ' + actionText + ' exitosamente.');
             },
             error: function (error) {
@@ -104,7 +106,7 @@ $(document).on('ready', function () {
                 'id': $(this).parent().attr('value')
             },
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 alert('Administrador eliminado exitosamente.');
                 $(this).parent().find('td.id').remove();
             },
@@ -137,18 +139,18 @@ $(document).on('ready', function () {
                 'id': idAdministador
             },
             dataType: 'json',
-            success: function (obj) {
-                for (var i = 0; i < obj.results.length; i++) {
-                    var result = obj.results[i];
+            success: function (response) {
+                for (var i = 0; i < response.results.length; i++) {
+                    var result = response.results[i];
 
-                    if (obj.results[i].id == idAdministador) {
+                    if (result.id == idAdministador) {
                         $('#email').val(result.email);
                         $('#firstName').val(result.nombre);
                         $('#lastName').val(result.apellidos);
                         $('#username').val(result.username);
 
                         var myURL = window.location.href.split('?')[0];
-                        myURL = myURL + '?id=' + obj.results[i].id;
+                        myURL = myURL + '?id=' + result.id;
                         history.pushState({}, null, myURL);
                     }
                 }
@@ -173,5 +175,4 @@ $(document).on('ready', function () {
         $('ul.tabs li').last().addClass('current');
         $("#tab-modificarAdministrador").addClass('current');
     });
-
 });

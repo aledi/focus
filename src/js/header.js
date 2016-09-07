@@ -1,42 +1,63 @@
 'use strict';
 
-function convertEdoCivil(data){
-    switch(data){
-        case 0 :
+function convertEdoCivil (edoCivil) {
+    switch (edoCivil) {
+        case 0:
             return 'Casado';
-        case 1 :
+        case 1:
             return 'Viudo';
-        case 2 :
+        case 2:
             return 'Divorciado';
-        case 3 :
+        case 3:
             return 'Separado';
-        case 4 :
+        case 4:
             return 'Soltero';
-        case 5 :
+        case 5:
             return 'Unión Libre';
-        default :
+        default:
             return 'ERROR';
     }
 }
 
-function convertGenero(data){
-    switch(data){
-        case 0 :
+function convertGenero (genero) {
+    switch (genero) {
+        case 0:
             return 'Masculino';
-        case 1 :
+        case 1:
             return 'Femenino';
+        default:
+            return '';
+    }
+}
+
+function convertEducacion (educacion) {
+    switch (educacion) {
+        case 1:
+            return 'Primaria';
+        case 2:
+            return 'Secundaria';
+        case 3:
+            return 'Preparatoria';
+        case 4:
+            return 'Profesional';
+        case 5:
+            return 'Posgrado';
+        case 6:
+            return 'Ninguno';
+        default:
+            return '';
     }
 }
 
 $(document).on('ready', function () {
-    $('ul.tabs li').click(function() {
+    $('ul.tabs li').click(function () {
         var tab_id = $(this).attr('data-tab');
 
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
 
         $(this).addClass('current');
-        $("#"+tab_id).addClass('current');
+        $('#' + tab_id).addClass('current');
     });
 
     $.ajax({
@@ -45,14 +66,14 @@ $(document).on('ready', function () {
         data: {'action': 'VERIFY_SESSION'},
         dataType: 'json',
         success: function (obj) {
-            if (obj.status == 'SUCCESS') {
-                document.getElementsByTagName("html")[0].style.visibility = "visible";
+            if (obj.status === 'SUCCESS') {
+                document.getElementsByTagName('html')[0].style.visibility = 'visible';
             } else {
                 window.location.replace('signin.php');
             }
         },
         error: function (error) {
-            alert("Please login to continue");
+            alert('Please login to continue');
             window.location.replace('signin.php');
         }
     });
@@ -74,7 +95,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('ul.tabs li').click(function(){
+    $('ul.tabs li').click(function () {
         var tab_id = $(this).attr('data-tab');
 
         $('ul.tabs li').removeClass('current');

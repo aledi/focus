@@ -54,6 +54,10 @@ header {
     display: inline-block;
 }
 
+li.selected {
+    background-color: #BCBDD9;
+}
+
 .signout-item {
     float: right;
 }
@@ -76,6 +80,10 @@ li a {
 
 li a:hover{
     background-color: #D2D3E6;
+}
+
+li.selected a:hover {
+    background-color: #BCBDD9;
 }
 
 li a, .dropbtn {
@@ -121,15 +129,33 @@ section {
 
 .panelistas-wrapper, .clientes-wrapper,
 .admins-wrapper, .paneles-wrapper,
-.encuestas-wrapper, .preguntas-wrapper {
+.encuestas-wrapper, .preguntas-wrapper, .avances-wrapper, .liga-panel-wrapper {
     height: 100%;
     margin: 50px auto;
     box-sizing: border-box;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
 }
 
-.panelistas-wrapper, .paneles-wrapper, .encuestas-wrapper {
+.avances-wrapper {
+    width: 1000px;
+    padding: 30px 20px;
+}
+
+.encuestas-select {
+    display: block;
+}
+
+.avance-info {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.panelistas-wrapper, .paneles-wrapper, .encuestas-wrapper, .liga-panel-wrapper {
     width: 800px;
+}
+
+.liga-panel-wrapper {
+    padding: 30px 20px;
 }
 
 .clientes-wrapper, .admins-wrapper, .preguntas-wrapper {
@@ -256,6 +282,10 @@ table {
     width: 100%;
 }
 
+table.padding-bottom {
+    padding-bottom: 30px;
+}
+
 .left {
     text-align: left;
 }
@@ -266,6 +296,10 @@ table {
 
 table tbody tr td {
     padding: 10px 5px;
+}
+
+.red td {
+    color: #E05858;
 }
 
 table tbody tr:nth-child(odd) {

@@ -64,7 +64,7 @@ function validatePanelistaCredentials ($username, $password) {
 
                 while ($row2 = $result2->fetch_assoc()) {
                     $encuestaId = $row2['id'];
-                    $sql3 = "SELECT id, tipo, numPregunta, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Preguntas WHERE encuesta = '$encuestaId'";
+                    $sql3 = "SELECT id, tipo, numPregunta, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Pregunta WHERE encuesta = '$encuestaId'";
                     $result3 = $conn->query($sql3);
 
                     $preguntas = array();
@@ -78,7 +78,7 @@ function validatePanelistaCredentials ($username, $password) {
 
                     $contestada = FALSE;
 
-                    $sql4 = "SELECT id FROM Respuestas WHERE encuesta = '$encuestaId' AND panelista = '$panelista'";
+                    $sql4 = "SELECT id FROM Respuesta WHERE encuesta = '$encuestaId' AND panelista = '$panelista'";
                     $result4 = $conn->query($sql4);
 
                     if ($result4->num_rows > 0) {
@@ -267,16 +267,13 @@ function fetchUser ($tipo, $id) {
         $sql = "SELECT id, username, nombre, apellidos, email FROM Usuario WHERE tipo = '$tipo' AND id = '$id'";
         $result = $conn->query($sql);
 
-        $response = array();
-
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $user = array('id' => (int)$row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos']);
-            $response[] = $user;
         }
 
         $conn->close();
-        return array('results' => $response);
+        return array('result' => $user);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -312,10 +309,8 @@ function fetchPanel ($id) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, cliente, creador FROM Panel WHERE id = '$id'";
+        $sql = "SELECT id, nombre, descripcion, fechaInicio, fechaFin, cliente, creador FROM Panel WHERE id = '$id'";
         $result = $conn->query($sql);
-
-        $response = array();
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
@@ -324,12 +319,11 @@ function fetchPanel ($id) {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
-            $response[] = $client;
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'descripcion' => $row['descripcion'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
         }
 
         $conn->close();
-        return array('results' => $response);
+        return array('result' => $panel);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -363,15 +357,12 @@ function fetchPanelista ($id) {
         $sql = "SELECT id, username, nombre, apellidos, email, genero, fechaNacimiento, educacion, calleNumero, colonia, municipio, estado, cp FROM Panelista WHERE id = '$id'";
         $result = $conn->query($sql);
 
-        $response = array();
-
         while ($row = $result->fetch_assoc()) {
             $panelista = array('id' => (int)$row['id'], 'username' => $row['username'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos'], 'email' => $row['email'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'fechaNacimiento' => $row['fechaNacimiento'], 'educacion' => (int)$row['educacion'], 'calleNumero' => $row['calleNumero'], 'colonia' => $row['colonia'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cp' => (int)$row['cp']);
-            $response[] = $panelista;
         }
 
         $conn->close();
-        return array('results' => $response);
+        return array('result' => $panelista);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -410,8 +401,6 @@ function fetchEncuesta ($id) {
         $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel FROM Encuesta WHERE id = '$id'";
         $result = $conn->query($sql);
 
-        $response = array();
-
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $panel = $row['panel'];
@@ -420,11 +409,10 @@ function fetchEncuesta ($id) {
             $row2 = $result2->fetch_assoc();
 
             $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
-            $response[] = $panelista;
         }
 
         $conn->close();
-        return array('results' => $response);
+        return array('result' => $panelista);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -464,13 +452,13 @@ function fetchPreguntasEncuesta ($encuesta) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, numPregunta, pregunta, tipo, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Preguntas WHERE encuesta = '$encuesta'";
+        $sql = "SELECT * FROM Pregunta WHERE encuesta = '$encuesta'";
         $result = $conn->query($sql);
 
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $pregunta = array('id' => (int)$row['id'], 'encuesta' => (int)$encuesta, 'numPregunta' => (int)$row['numPregunta'], 'pregunta' => $row['pregunta'], 'tipo' => $row['tipo'], 'video' => $row['video'], 'imagen' => $row['imagen'], 'op1' => $row['op1'], 'op2' => $row['op2'], 'op3' => $row['op3'], 'op4' => $row['op4'], 'op5' => $row['op5'], 'op6' => $row['op6'], 'op7' => $row['op7'], 'op8' => $row['op8'], 'op9' => $row['op9'], 'op10' => $row['op10']);
+            $pregunta = array('id' => (int)$row['id'], 'encuesta' => (int)$encuesta, 'numPregunta' => (int)$row['numPregunta'], 'tipo' => (int)$row['tipo'], 'pregunta' => $row['pregunta'], 'video' => $row['video'], 'imagen' => $row['imagen'], 'op1' => $row['op1'], 'op2' => $row['op2'], 'op3' => $row['op3'], 'op4' => $row['op4'], 'op5' => $row['op5'], 'op6' => $row['op6'], 'op7' => $row['op7'], 'op8' => $row['op8'], 'op9' => $row['op9'], 'op10' => $row['op10']);
             $response[] = $pregunta;
         }
 
@@ -499,7 +487,7 @@ function fetchMobileData ($panelista) {
 
             while ($row2 = $result2->fetch_assoc()) {
                 $encuestaId = $row2['id'];
-                $sql3 = "SELECT id, tipo, numPregunta, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Preguntas WHERE encuesta = '$encuestaId'";
+                $sql3 = "SELECT id, tipo, numPregunta, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Pregunta WHERE encuesta = '$encuestaId'";
                 $result3 = $conn->query($sql3);
 
                 $preguntas = array();
@@ -513,7 +501,7 @@ function fetchMobileData ($panelista) {
 
                 $contestada = FALSE;
 
-                $sql4 = "SELECT id FROM Respuestas WHERE encuesta = '$encuestaId' AND panelista = '$panelista'";
+                $sql4 = "SELECT id FROM Respuesta WHERE encuesta = '$encuestaId' AND panelista = '$panelista'";
                 $result4 = $conn->query($sql4);
 
                 if ($result4->num_rows > 0) {
@@ -592,10 +580,10 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
     $deletes = 0;
 
     if ($conn != null) {
-        $sql = "SELECT * FROM Preguntas WHERE encuesta = '$encuesta'";
+        $sql = "SELECT * FROM Pregunta WHERE encuesta = '$encuesta'";
         $result = $conn->query($sql);
         $deletes = $result->num_rows;
-        $sql = "DELETE FROM Preguntas WHERE encuesta = '$encuesta'";
+        $sql = "DELETE FROM Pregunta WHERE encuesta = '$encuesta'";
         $result = $conn->query($sql);
 
         foreach ($preguntas as &$pregunta) {
@@ -660,7 +648,7 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
                 $op10 = $opciones[9];
             }
 
-            $sql = "INSERT INTO Preguntas (encuesta, tipo, numPregunta, pregunta, video, imagen, numOpciones, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$count', '$op1', '$op2', '$op3', '$op4', '$op5', '$op6', '$op7', '$op8', '$op9', '$op10')";
+            $sql = "INSERT INTO Pregunta (encuesta, tipo, numPregunta, pregunta, video, imagen, numOpciones, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$count', '$op1', '$op2', '$op3', '$op4', '$op5', '$op6', '$op7', '$op8', '$op9', '$op10')";
 
             if ($conn->query($sql) === TRUE) {
                 $inserts = $inserts + 1;
@@ -682,7 +670,7 @@ function startEncuesta ($encuesta, $panelista) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "INSERT INTO Respuestas (encuesta, panelista) VALUES ('$encuesta', '$panelista')";
+        $sql = "INSERT INTO Respuesta (encuesta, panelista) VALUES ('$encuesta', '$panelista')";
 
         if ($conn->query($sql) === TRUE) {
             $lastId = mysqli_insert_id($conn);
@@ -701,7 +689,10 @@ function saveRespuestas ($id, $respuestas) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "UPDATE Respuestas SET respuestas = '$respuestas' WHERE id = '$id'";
+        $date = date('Y-m-d');
+        $hour = date('h:i:s');
+
+        $sql = "UPDATE Respuesta SET respuestas = '$respuestas', fecha = '$date', hora = '$hour' WHERE id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
             $conn->close();
@@ -924,7 +915,7 @@ function getSummary ($encuesta) {
             return array('status' => 'NO_DATA');
         }
 
-        $sql = "SELECT COUNT(*) as answers FROM Respuestas WHERE encuesta = '$encuesta' AND respuestas != ''";
+        $sql = "SELECT COUNT(*) as answers FROM Respuesta WHERE encuesta = '$encuesta' AND respuestas != ''";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -932,7 +923,7 @@ function getSummary ($encuesta) {
             $answers = (int)$row['answers'];
         }
 
-        return array('status' => 'SUCCESS', 'respuestas' => $total, 'porcentaje' => $answers / $total);
+        return array('status' => 'SUCCESS', 'respuestas' => $answers, 'porcentaje' => $answers / $total);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -966,7 +957,7 @@ function generalReportData ($encuesta) {
             return array('status' => 'NO_DATA');
         }
 
-        $sql = "SELECT COUNT(*) as answers FROM Respuestas WHERE encuesta = '$encuesta' AND respuestas != ''";
+        $sql = "SELECT COUNT(*) as answers FROM Respuesta WHERE encuesta = '$encuesta' AND respuestas != ''";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -1001,18 +992,18 @@ function generalReportByGender ($encuesta, $total, $default) {
     $conn = connect();
 
     if ($conn != null && !$default) {
-        $sql = "SELECT COUNT(*) as h FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Panelista.genero = 0 AND Respuestas.encuesta = '$encuesta' AND Respuestas.respuestas != ''";
+        $sql = "SELECT COUNT(*) as h FROM Respuesta INNER JOIN Panelista ON Panelista.id = Respuesta.panelista WHERE Panelista.genero = 0 AND Respuesta.encuesta = '$encuesta' AND Respuesta.respuestas != ''";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $conn->close();
-            return array('H' => (int)$row['h'], 'H%' => (int)$row['h'] / $total, 'M' => ($total - (int)$row['h']), 'M%' => ($total - (int)$row['h']) / $total);
+            return array('H#' => (int)$row['h'], 'H' => (int)$row['h'] / $total, 'M#' => ($total - (int)$row['h']), 'M' => ($total - (int)$row['h']) / $total);
         }
     }
 
     $conn->close();
-    return array('H' => 0, 'H%' => 0, 'M' => 0, 'M%' => 0);
+    return array('H#' => 0, 'H' => 0, 'M#' => 0, 'M' => 0);
 }
 
 function generalReportByAge ($encuesta, $total, $default) {
@@ -1028,65 +1019,65 @@ function generalReportByAge ($encuesta, $total, $default) {
         $response = array();
         $count = 0;
 
-        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Respuestas.respuestas != '' AND Panelista.fechaNacimiento >= '$date25'";
+        $sql = "SELECT COUNT(*) as count FROM Respuesta INNER JOIN Panelista ON Panelista.id = Respuesta.panelista WHERE Respuesta.encuesta = 1 AND Respuesta.respuestas != '' AND Panelista.fechaNacimiento >= '$date25'";
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
-            $response['25'] = (int)$row['count'];
-            $response['25'.'%'] = (int)$row['count'] / $total;
+            $response['25#'] = (int)$row['count'];
+            $response['25'] = (int)$row['count'] / $total;
             $count = $count + (int)$row['count'];
         }
 
-        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Respuestas.respuestas != '' AND Panelista.fechaNacimiento >= '$date35' AND Panelista.fechaNacimiento < '$date25'";
+        $sql = "SELECT COUNT(*) as count FROM Respuesta INNER JOIN Panelista ON Panelista.id = Respuesta.panelista WHERE Respuesta.encuesta = 1 AND Respuesta.respuestas != '' AND Panelista.fechaNacimiento >= '$date35' AND Panelista.fechaNacimiento < '$date25'";
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
-            $response['35'] = (int)$row['count'];
-            $response['35'.'%'] = (int)$row['count'] / $total;
+            $response['35#'] = (int)$row['count'];
+            $response['35'] = (int)$row['count'] / $total;
             $count = $count + (int)$row['count'];
         }
 
-        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Respuestas.respuestas != '' AND Panelista.fechaNacimiento >= '$date45' AND Panelista.fechaNacimiento < '$date35'";
+        $sql = "SELECT COUNT(*) as count FROM Respuesta INNER JOIN Panelista ON Panelista.id = Respuesta.panelista WHERE Respuesta.encuesta = 1 AND Respuesta.respuestas != '' AND Panelista.fechaNacimiento >= '$date45' AND Panelista.fechaNacimiento < '$date35'";
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
-            $response['45'] = (int)$row['count'];
-            $response['45'.'%'] = (int)$row['count'] / $total;
+            $response['45#'] = (int)$row['count'];
+            $response['45'] = (int)$row['count'] / $total;
             $count = $count + (int)$row['count'];
         }
 
-        $sql = "SELECT COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = 1 AND Respuestas.respuestas != '' AND Panelista.fechaNacimiento >= '$date55' AND Panelista.fechaNacimiento < '$date45'";
+        $sql = "SELECT COUNT(*) as count FROM Respuesta INNER JOIN Panelista ON Panelista.id = Respuesta.panelista WHERE Respuesta.encuesta = 1 AND Respuesta.respuestas != '' AND Panelista.fechaNacimiento >= '$date55' AND Panelista.fechaNacimiento < '$date45'";
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
-            $response['55'] = (int)$row['count'];
-            $response['55'.'%'] = (int)$row['count'] / $total;
+            $response['55#'] = (int)$row['count'];
+            $response['55'] = (int)$row['count'] / $total;
             $count = $count + (int)$row['count'];
         }
 
-        $response['100'] = $total - $count;
-        $response['100'.'%'] = ($total - $count) / $total;
+        $response['100#'] = $total - $count;
+        $response['100'] = ($total - $count) / $total;
 
         $conn->close();
         return $response;
     }
 
     $conn->close();
-    return array('25' => 0, '25%' => 0, '35' => 0, '35%' => 0, '45' => 0, '45%' => 0, '55' => 0, '55%' => 0, '100' => 0, '100%' => 0);
+    return array('25#' => 0, '25' => 0, '35#' => 0, '35' => 0, '45#' => 0, '45' => 0, '55#' => 0, '55' => 0, '100#' => 0, '100' => 0);
 }
 
 function generalReportByState ($encuesta, $total, $default) {
     $conn = connect();
 
     if ($conn != null && !$default) {
-        $sql = "SELECT estado, COUNT(*) as count FROM Respuestas INNER JOIN Panelista ON Panelista.id = Respuestas.panelista WHERE Respuestas.encuesta = '$encuesta' AND Respuestas.respuestas != '' GROUP BY estado";
+        $sql = "SELECT estado, COUNT(*) as count FROM Respuesta INNER JOIN Panelista ON Panelista.id = Respuesta.panelista WHERE Respuesta.encuesta = '$encuesta' AND Respuesta.respuestas != '' GROUP BY estado";
         $result = $conn->query($sql);
 
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $response[$row['estado']] = (int)$row['count'];
-            $response[$row['estado']."%"] = (int)$row['count'] / $total;
+            $response[$row['estado'].'#'] = (int)$row['count'];
+            $response[$row['estado']] = (int)$row['count'] / $total;
         }
 
         $conn->close();
@@ -1110,7 +1101,7 @@ function currentAnswers ($encuesta) {
             $panelistaId = $row['id'];
             $fecha = '';
             $hora = '';
-            $sql2 = "SELECT fecha, hora, respuestas FROM Respuestas WHERE panelista = '$panelistaId' AND respuestas != ''";
+            $sql2 = "SELECT fecha, hora, respuestas FROM Respuesta WHERE panelista = '$panelistaId' AND encuesta = '$encuesta' AND respuestas != ''";
             $result2 = $conn->query($sql2);
 
             if ($result2->num_rows > 0) {
@@ -1124,10 +1115,127 @@ function currentAnswers ($encuesta) {
         }
 
         $conn->close();
-        return array('panelistas' => $response);
+        $panelistas = array('panelistas' => $response);
+        return array_merge(getSummary($encuesta), $panelistas);
     }
 
     return array();
+}
+
+function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacion) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT tipo, numOpciones, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Pregunta WHERE encuesta = '$encuesta' AND numPregunta = '$numPregunta'";
+        $result = $conn->query($sql);
+        $tipo = 0;
+        $options = array();
+        $votes = array();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $tipo = $row['tipo'];
+
+            for ($x = 1; $x <= $row['numOpciones']; $x++) {
+                $options[] = $row['op'.$x];
+                $votes[] = 0;
+            }
+        }
+
+        if ($genero === null && $edad === null && $estado === null && $educacion === null) {
+            $sql = "SELECT respuestas FROM Respuesta WHERE encuesta = '$encuesta' AND respuestas != ''";
+        } else {
+            $sql = "SELECT respuestas FROM Respuesta INNER JOIN Panelista ON Panelista.id = Respuesta.panelista WHERE Respuesta.encuesta = '$encuesta' AND Respuesta.respuestas != ''";
+
+            if ($genero !== null) {
+                $sql = $sql." AND Panelista.genero = '$genero'";
+            }
+
+            if ($edad !== null) {
+                $dateNow = date('Y-m-d');
+                $date25 = date('Y-m-d', strtotime("-25 year", time()));
+                $date35 = date('Y-m-d', strtotime("-35 year", time()));
+                $date45 = date('Y-m-d', strtotime("-45 year", time()));
+                $date55 = date('Y-m-d', strtotime("-55 year", time()));
+
+                if ($edad == 25) {
+                    $sql = $sql." AND Panelista.fechaNacimiento >= '$date25'";
+                } else if ($edad == 35) {
+                    $sql = $sql." AND Panelista.fechaNacimiento >= '$date35' AND Panelista.fechaNacimiento < '$date25'";
+                } else if ($edad == 45) {
+                    $sql = $sql." AND Panelista.fechaNacimiento >= '$date45' AND Panelista.fechaNacimiento < '$date35'";
+                } else if ($edad == 55) {
+                    $sql = $sql." AND Panelista.fechaNacimiento >= '$date55' AND Panelista.fechaNacimiento < '$date45'";
+                } else if ($edad == 100) {
+                    $sql = $sql." AND Panelista.fechaNacimiento < '$date55'";
+                }
+            }
+
+            if ($estado !== null) {
+                $sql = $sql." AND Panelista.estado = '$estado'";
+            }
+
+            if ($educacion !== null) {
+                $sql = $sql." AND Panelista.educacion = '$educacion'";
+            }
+        }
+
+        $result = $conn->query($sql);
+        $values = array();
+        $total = 0;
+
+        while ($row = $result->fetch_assoc()) {
+            $total = $total + 1;
+            $answers = explode('|', $row['respuestas']);
+
+            if ($tipo == 1) {
+                $values[] = $answers[$numPregunta - 1];
+            } if ($tipo == 2) {
+                for ($x = 0; $x < count($options); $x++) {
+                    if ($answers[$numPregunta - 1] == $options[$x]) {
+                        $votes[$x] = $votes[$x] + 1;
+                        break;
+                    }
+                }
+            } else if ($tipo == 3) {
+                $multipleAnswers = explode('&', $answers[$numPregunta - 1]);
+
+                for ($x = 0; $x < count($options); $x++) {
+                    for ($y = 0; $y < count($multipleAnswers); $y++) {
+                        if ($multipleAnswers[$y] == $options[$x]) {
+                            $votes[$x] = $votes[$x] + 1;
+                            break;
+                        }
+                    }
+                }
+            } else if ($tipo == 4) {
+                $multipleAnswers = explode('&', $answers[$numPregunta - 1]);
+
+                for ($x = 0; $x < count($options); $x++) {
+                    for ($y = 0; $y < count($multipleAnswers); $y++) {
+                        if ($multipleAnswers[$y] == $options[$x]) {
+                            $votes[$x] = $votes[$x] + $y + 1;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        if ($total == 0) {
+            $conn->close();
+            return array('status' => 'NO_DATA');
+        }
+
+        for ($x = 0; $x < count($options); $x++) {
+            $values[] = $votes[$x] / $total;
+        }
+
+        $conn->close();
+        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'valores' => $values, 'votos' => $votes);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
 }
 
 ?>

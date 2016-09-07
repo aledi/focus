@@ -45,9 +45,7 @@
                             <label>Video URL:</label>
                             <input id='video' class='video' name='respuesta' type='text' />
                         </div>
-                        <div id='Answers1'>
-
-                        </div>
+                        <div id='Answers1'></div>
                         <button type="button" id='removeQuestion' class='no-background'>Eliminar Pregunta</button>
                     </div>
                 </div>

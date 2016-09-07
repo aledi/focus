@@ -19,6 +19,7 @@ function checkAll (checkedBox) {
 }
 
 $(document).on('ready', function () {
+    $('#paneles-header-option').addClass('selected');
 
     /*
     *   Función tomada de internet, funciona bien, pero aparentemente
@@ -26,7 +27,7 @@ $(document).on('ready', function () {
     *   un objeto dependiente de la tabla y la cantidad de panelistas.
     */
 
-    $("#filteringText").keyup(function () {
+    $('#filteringText').keyup(function () {
         //split the current value of searchInput
         var data = this.value.split(' ');
 
@@ -73,11 +74,10 @@ $(document).on('ready', function () {
             'panel': id
         },
         dataType: 'json',
-        success: function (obj) {
+        success: function (response) {
             if (flagLoadingPanelist == 0) {
                 var currentHTML = '<thead>';
                 currentHTML += '<tr style="cursor:pointer">';
-                currentHTML += '<th></th>';
                 currentHTML += '<th>Nombre</th>';
                 currentHTML += '<th>Edad</th>';
                 currentHTML += '<th>Municipio</th>';
@@ -87,25 +87,18 @@ $(document).on('ready', function () {
                 currentHTML += '</thead>';
                 currentHTML += '<tbody id="fbody">';
 
-                for (var i = 0; i < obj.results.length; i++) {
-                    var result = obj.results[i];
+                for (var i = 0; i < response.results.length; i++) {
+                    var result = response.results[i];
 
-                    currentHTML += '<tr value="' + result.id +'">';
-                    currentHTML += '<td></td>';
+                    currentHTML += '<tr value="' + result.id + '">';
                     currentHTML += '<td>' + result.nombre + '</td>';
-                    currentHTML += '<td>' + result.edad + '</td>';
+                    currentHTML += '<td class="centered">' + result.edad + '</td>';
                     currentHTML += '<td>' + result.municipio + '</td>';
-                    currentHTML += '<td>' + result.estado + '</td>';
+                    currentHTML += '<td class="centered">' + result.estado + '</td>';
+                    currentHTML += '<td class="centered"><input type="checkbox" value=' + result.id + ' name="panelistas"' + (result.checked ?  ' checked' : '') + '></td>';
+                    currentHTML += '</tr>';
 
-                    if (result.checked) {
-                        currentHTML += '<td><input type="checkbox" value=' + result.id + ' name="panelistas"' + ' checked></td>';
-                    } else {
-                        currentHTML += '<td><input type="checkbox" value=' + result.id + ' name="panelistas"></td>';
-                    }
-
-                    currentHTML += "</tr>";
-
-                    $("#tablaPanelistas").append(currentHTML);
+                    $('#tablaPanelistas').append(currentHTML);
                     currentHTML = '';
                 }
 
@@ -114,7 +107,7 @@ $(document).on('ready', function () {
 
             currentHTML += '</tbody>';
 
-            $("tablaPanelistas").tablesorter({
+            $('tablaPanelistas').tablesorter({
                 // pass the headers argument and assing an object
                 headers: {
                     // assign the secound column (we start counting zero)
@@ -131,7 +124,7 @@ $(document).on('ready', function () {
         }
     });
 
-    $('#loginButtonLigarPanel').on('click', function (event) {
+    $('#ligar-panelistas').on('click', function (event) {
         event.preventDefault();
 
         var panelistas = getCheckedCheckboxesFor('panelistas');
@@ -149,7 +142,7 @@ $(document).on('ready', function () {
                 'panel' : id
             },
             dataType: 'json',
-            success: function (obj) {
+            success: function (response) {
                 alert('Panel ligado exitosamente.');
                 location.replace('paneles.php');
             },
