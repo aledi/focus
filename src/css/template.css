@@ -121,7 +121,7 @@ section {
 
 .panelistas-wrapper, .clientes-wrapper,
 .admins-wrapper, .paneles-wrapper,
-.encuestas-wrapper, .preguntas-wrapper, .avances-wrapper {
+.encuestas-wrapper, .preguntas-wrapper, .avances-wrapper, .liga-panel-wrapper {
     height: 100%;
     margin: 50px auto;
     box-sizing: border-box;
@@ -142,8 +142,12 @@ section {
     margin-right: 20px;
 }
 
-.panelistas-wrapper, .paneles-wrapper, .encuestas-wrapper {
+.panelistas-wrapper, .paneles-wrapper, .encuestas-wrapper, .liga-panel-wrapper {
     width: 800px;
+}
+
+.liga-panel-wrapper {
+    padding: 30px 20px;
 }
 
 .clientes-wrapper, .admins-wrapper, .preguntas-wrapper {
@@ -268,6 +272,10 @@ button.no-background {
 
 table {
     width: 100%;
+}
+
+table.padding-bottom {
+    padding-bottom: 30px;
 }
 
 .left {

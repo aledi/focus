@@ -44,7 +44,7 @@
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Seleccionar Panel: </label>
+                    <label>Seleccionar Panel:</label>
                     <table id='allPanels'></table>
                 </div>
 
