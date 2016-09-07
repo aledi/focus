@@ -178,7 +178,7 @@ $(document).on('ready', function () {
                 getDatefromString(response.results[0].fechaInicio, 0);
                 getDatefromString(response.results[0].fechaFin, 1);
                 $('input[name="id"][value="' + response.results[0].id + '"]').prop('checked', true);
-                
+                $('#descripcion').val(response.results[0].descripcion);
                 var myURL = window.location.href.split('?')[0];
                 myURL = myURL + '?id=' + response.results[0].id;
                 history.pushState({}, null, myURL);
