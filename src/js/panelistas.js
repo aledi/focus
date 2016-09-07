@@ -141,7 +141,7 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').first().addClass('current');
-        $("#tab-agregarPanelista").addClass('current');
+        $('#tab-agregarPanelista').addClass('current');
 
         $('#headerTitle').text('Modificar Panelista');
         $('#savePanelista').text('Modificar');
@@ -186,7 +186,6 @@ $(document).on('ready', function () {
         });
     });
 
-
     // Listen to keypress & restrict input to numeric value
     $('#cp').keypress(function (event) {
         if (!event.metaKey && event.charCode !== 13 && (event.charCode < 48 || event.charCode > 57)) {
@@ -208,7 +207,7 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').last().addClass('current');
-        $("#tab-modificarPanelista").addClass('current');
+        $('#tab-modificarPanelista').addClass('current');
     });
 
     $('#mes, #anio').on('change', function() {
