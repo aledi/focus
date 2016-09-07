@@ -47,7 +47,7 @@
                     <table id='tableClientes'></table>
                 </div>
 
-                <button type='button' id='cancelModify' class='no-background'>Cancelar</button>
+                <button type='button' id='cancelModify' class='no-background' style='visibility: hidden;'>Cancelar</button>
                 <button type='submit' id='savePanel'>Agregar</button>
                 <span id='feedback'></span>
             </div>

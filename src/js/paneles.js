@@ -166,6 +166,7 @@ $(document).on('ready', function () {
 
         $('#headerTitle').text('Modificar Panel');
         $('#savePanel').text('Modificar');
+        $('#cancelModify').css('visibility', '');
 
         $.ajax({
             url: '../api/controller.php',
@@ -176,20 +177,16 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                for (var i = 0; i < response.results.length; i++) {
-                    var result = response.results[i];
+                var result = response.result;
 
-                    if (result.id === idPanel) {
-                        $('#panelName').val(result.nombre);
-                        getDatefromString(result.fechaInicio, 0);
-                        getDatefromString(result.fechaFin, 1);
-                        $('input[name="id"][value="' + result.id + '"]').prop('checked', true);
+                $('#panelName').val(result.nombre);
+                getDatefromString(result.fechaInicio, 0);
+                getDatefromString(result.fechaFin, 1);
+                $('input[name="id"][value="' + result.id + '"]').prop('checked', true);
 
-                        var myURL = window.location.href.split('?')[0];
-                        myURL = myURL + '?id=' + result.id;
-                        history.pushState({}, null, myURL);
-                    }
-                }
+                var myURL = window.location.href.split('?')[0];
+                myURL = myURL + '?id=' + result.id;
+                history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {
                 alert('Error modificando panelista.');
@@ -210,7 +207,7 @@ $(document).on('ready', function () {
         $('#tableClientes input').removeAttr('checked');
         $('#headerTitle').text('Agregar Panel');
         $('#savePanel').text('Agregar');
-
+        $('#cancelModify').css('visibility', '');
         var myURL = window.location.href.split('?')[0];
         history.pushState({}, null, myURL);
 
