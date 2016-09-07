@@ -63,7 +63,6 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                console.log(response.results)
                 for (var x = 2; x <= response.results.length; x++) {
                     appendQuestions(x);
                 }
