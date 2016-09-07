@@ -21,6 +21,11 @@
         <select id='preguntas-select' class='encuestas-select'></select>
         <select id='edad-select' class='encuestas-select'>
             <option value='0'>Selecciona una edad</option>
+            <option value='25'>18 a 25</option>
+            <option value='35'>26 a 35</option>
+            <option value='45'>36 a 45</option>
+            <option value='55'>46 a 55</option>
+            <option value='100'>56 o más</option>
         </select>
         <select id='genero-select' class='encuestas-select'>
             <option value='-1'>Selecciona un género</option>
