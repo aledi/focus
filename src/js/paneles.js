@@ -184,7 +184,7 @@ $(document).on('ready', function () {
                 $('#descripcion').val(result.descripcion);
             
                 var myURL = window.location.href.split('?')[0];
-                myURL = myURL + '?id=' + result.id;
+                myURL += '?id=' + result.id;
                 history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {
