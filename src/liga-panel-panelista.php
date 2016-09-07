@@ -16,15 +16,13 @@
     <?php include_once('elements/header.php');?>
     <section>
         <div class='liga-panel-wrapper'>
-            <form class='form-login'>
-                <h2>Ligar Panelistas</h2>
-                <div id='panelista'>
-                    <p>Filtrar Panelistas: <input id='filteringText' type='text' /></p>
-                    <table id='tablaPanelistas' class='padding-bottom'></table>
-                </div>
-                <button type='submit' id='ligar-panelistas'>Ligar Panelistas</button>
-                <div id='feedback'></div>
-            </form>
+            <h2>Ligar Panelistas</h2>
+            <div id='panelista'>
+                <p>Filtrar Panelistas: <input id='filteringText' type='text' /></p>
+                <table id='tablaPanelistas' class='padding-bottom'></table>
+            </div>
+            <button type='button' id='ligar-panelistas'>Ligar Panelistas</button>
+            <div id='feedback'></div>
         </div>
     </section>
 </body>
