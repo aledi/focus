@@ -1,6 +1,8 @@
 'use strict';
 
 $(document).on('ready', function () {
+    $('#paneles-header-option').addClass('selected');
+
     $.ajax({
         type: 'POST',
         url: '../api/controller.php',

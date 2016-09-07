@@ -54,6 +54,10 @@ header {
     display: inline-block;
 }
 
+li.selected {
+    background-color: #BCBDD9;
+}
+
 .signout-item {
     float: right;
 }
@@ -76,6 +80,10 @@ li a {
 
 li a:hover{
     background-color: #D2D3E6;
+}
+
+li.selected a:hover {
+    background-color: #BCBDD9;
 }
 
 li a, .dropbtn {

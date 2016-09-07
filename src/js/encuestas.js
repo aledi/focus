@@ -1,6 +1,8 @@
 'use strict';
 
 $(document).on('ready', function () {
+    $('#encuestas-header-option').addClass('selected');
+
     setTimeout(function (event) {
         $.ajax({
             type: 'POST',
