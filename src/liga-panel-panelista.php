@@ -14,19 +14,20 @@
 
 <body>
     <?php include_once('elements/header.php');?>
-    <div class='login-form'>
-        <form class='form-login'>
-            <h1>Ligar Panelistas</h1>
-            <div id="panelista">
-                <p>Filtrar Panelistas: <input id='filteringText' type='text' /></p>
-                <p>Seleccionar Panelistas:</p>
-                <table id='tablaPanelistas'></table>
-            </div>
-            <div>
-                <button type='submit' id='loginButtonLigarPanel'>Ligar Panelistas</button>
-            </div>
-            <div id='feedback'></div>
-        </form>
-    </div>
+    <section>
+        <div class='liga-panel-wrapper'>
+            <form class='form-login'>
+                <h2>Ligar Panelistas</h2>
+                <div id='panelista'>
+                    <p>Filtrar Panelistas: <input id='filteringText' type='text' /></p>
+                    <table id='tablaPanelistas'></table>
+                </div>
+                <div>
+                    <button type='submit' id='ligar-panelistas'>Ligar Panelistas</button>
+                </div>
+                <div id='feedback'></div>
+            </form>
+        </div>
+    </section>
 </body>
 </html>

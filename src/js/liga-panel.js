@@ -77,7 +77,6 @@ $(document).on('ready', function () {
             if (flagLoadingPanelist == 0) {
                 var currentHTML = '<thead>';
                 currentHTML += '<tr style="cursor:pointer">';
-                currentHTML += '<th></th>';
                 currentHTML += '<th>Nombre</th>';
                 currentHTML += '<th>Edad</th>';
                 currentHTML += '<th>Municipio</th>';
@@ -91,19 +90,12 @@ $(document).on('ready', function () {
                     var result = response.results[i];
 
                     currentHTML += '<tr value="' + result.id + '">';
-                    currentHTML += '<td></td>';
                     currentHTML += '<td>' + result.nombre + '</td>';
                     currentHTML += '<td>' + result.edad + '</td>';
                     currentHTML += '<td>' + result.municipio + '</td>';
                     currentHTML += '<td>' + result.estado + '</td>';
-
-                    if (result.checked) {
-                        currentHTML += '<td><input type="checkbox" value=' + result.id + ' name="panelistas"' + ' checked></td>';
-                    } else {
-                        currentHTML += '<td><input type="checkbox" value=' + result.id + ' name="panelistas"></td>';
-                    }
-
-                    currentHTML += "</tr>";
+                    currentHTML += '<td class="centered"><input type="checkbox" value=' + result.id + ' name="panelistas"' + (result.checked ?  ' checked' : '') + '></td>';
+                    currentHTML += '</tr>';
 
                     $('#tablaPanelistas').append(currentHTML);
                     currentHTML = '';
@@ -131,7 +123,7 @@ $(document).on('ready', function () {
         }
     });
 
-    $('#loginButtonLigarPanel').on('click', function (event) {
+    $('#ligar-panelistas').on('click', function (event) {
         event.preventDefault();
 
         var panelistas = getCheckedCheckboxesFor('panelistas');
