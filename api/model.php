@@ -312,7 +312,7 @@ function fetchPanel ($id) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, cliente, creador FROM Panel WHERE id = '$id'";
+        $sql = "SELECT id, nombre, descripcion, fechaInicio, fechaFin, cliente, creador FROM Panel WHERE id = '$id'";
         $result = $conn->query($sql);
 
         $response = array();
@@ -324,7 +324,7 @@ function fetchPanel ($id) {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
+            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'descripcion' => $row['descripcion'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
             $response[] = $client;
         }
 
