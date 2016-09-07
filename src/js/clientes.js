@@ -140,20 +140,16 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                for (var i = 0; i < response.results.length; i++) {
-                    var result = response.results[i];
+                var result = response.result;
 
-                    if (result.id == idUser) {
-                        $('#email').val(result.email);
-                        $('#firstName').val(result.nombre);
-                        $('#lastName').val(result.apellidos);
-                        $('#username').val(result.username);
+                $('#email').val(result.email);
+                $('#firstName').val(result.nombre);
+                $('#lastName').val(result.apellidos);
+                $('#username').val(result.username);
 
-                        var myURL = window.location.href.split('?')[0];
-                        myURL = myURL + '?id=' + result.id;
-                        history.pushState({}, null, myURL);
-                    }
-                }
+                var myURL = window.location.href.split('?')[0];
+                myURL = myURL + '?id=' + result.id;
+                history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {
                 alert('Error modificando cliente.');

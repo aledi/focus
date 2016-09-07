@@ -88,7 +88,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 alert('Encuesta ' + actionText + ' exitosamente.');
-                location.replace('preguntas.php?id=' + response.id);
+                location.replace('preguntas.php?id=' + data.id);
             },
             error: function (error) {
                 $('#feedback').html('Encuesta no ' + actionText + '. Ha ocurrido un error.');
@@ -136,22 +136,16 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                for (var i = 0; i < response.results.length; i++) {
-                    var result = response.results[i];
+                var result = response.result;
+                
+                $('#nombre').val(result.nombre);
+                getDatefromString(result.fechaInicio, 0);
+                getDatefromString(result.fechaFin, 1);
+                $('input[name=id][value="' + result.id + '"]').prop('checked', true);
 
-                    if (result.id !== idEncuesta) {
-                        continue;
-                    }
-
-                    $('#nombre').val(result.nombre);
-                    getDatefromString(result.fechaInicio, 0);
-                    getDatefromString(result.fechaFin, 1);
-                    $('input[name=id][value="' + result.id + '"]').prop('checked', true);
-
-                    var myURL = window.location.href.split('?')[0];
-                    myURL = myURL + '?id=' + result.id;
-                    history.pushState({}, null, myURL);
-                }
+                var myURL = window.location.href.split('?')[0];
+                myURL += '?id=' + result.id;
+                history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {
                 alert('Error modificando encuesta.');
