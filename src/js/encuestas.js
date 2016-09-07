@@ -136,7 +136,7 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                 $('#nombre').val(response.results[0].nombre);
+                $('#nombre').val(response.results[0].nombre);
                 getDatefromString(response.results[0].fechaInicio, 0);
                 getDatefromString(response.results[0].fechaFin, 1);
                 $('input[name=id][value="' + response.results[0].id + '"]').prop('checked', true);
