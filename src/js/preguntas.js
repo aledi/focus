@@ -58,8 +58,8 @@ $(document).on('ready', function () {
             url: '../api/controller.php',
             type: 'POST',
             data: {
-                action : 'GET_PREGUNTAS',
-                encuesta : idEncuesta
+                action: 'GET_PREGUNTAS',
+                encuesta: idEncuesta
             },
             dataType: 'json',
             success: function (response) {
