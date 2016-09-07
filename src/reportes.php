@@ -23,7 +23,7 @@
             <option value='0'>Selecciona una edad</option>
         </select>
         <select id='genero-select' class='encuestas-select'>
-            <option value='0'>Selecciona un género</option>
+            <option value='-1'>Selecciona un género</option>
             <option value='1'>Masculino</option>
             <option value='2'>Femenino</option>
         </select>
@@ -70,6 +70,7 @@
             <option value='5'>Posgrado</option>
             <option value='6'>Ninguno</option>
         </select>
+        <button id='filtros-button' type='button'>Aplicar filtros</button>
     </section>
 </body>
 </html>
