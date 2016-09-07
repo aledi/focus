@@ -134,13 +134,15 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                 $('#nombre').val(response.results[0].nombre);
-                getDatefromString(response.results[0].fechaInicio, 0);
-                getDatefromString(response.results[0].fechaFin, 1);
-                $('input[name=id][value="' + response.results[0].id + '"]').prop('checked', true);
+                var result = response.result;
+                
+                $('#nombre').val(result.nombre);
+                getDatefromString(result.fechaInicio, 0);
+                getDatefromString(result.fechaFin, 1);
+                $('input[name=id][value="' + result.id + '"]').prop('checked', true);
 
                 var myURL = window.location.href.split('?')[0];
-                myURL = myURL + '?id=' + response.results[0].id;
+                myURL = myURL + '?id=' + result.id;
                 history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {

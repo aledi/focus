@@ -157,28 +157,24 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                for (var i = 0; i < response.results.length; i++) {
-                    var result = response.results[i];
+                var result = response.result;
+                
+                $('#firstName').val(result.nombre);
+                $('#lastName').val(result.apellidos);
+                $('#email').val(result.email);
+                $('#username').val(result.username);
+                $('input[name="gender"][value="' + result.genero + '"]').prop('checked', true);
+                getDatefromString(result.fechaNacimiento, 0);
+                $('#educacion').val(result.educacion + '');
+                $('#calleNumero').val(result.calleNumero);
+                $('#colonia').val(result.colonia);
+                $('#municipio').val(result.municipio);
+                $('#estado').val(result.estado);
+                $('#cp').val(result.cp);
 
-                    if (result.id == idPanelista) {
-                        $('#firstName').val(result.nombre);
-                        $('#lastName').val(result.apellidos);
-                        $('#email').val(result.email);
-                        $('#username').val(result.username);
-                        $('input[name="gender"][value="' + result.genero + '"]').prop('checked', true);
-                        getDatefromString(result.fechaNacimiento, 0);
-                        $('#educacion').val(result.educacion + '');
-                        $('#calleNumero').val(result.calleNumero);
-                        $('#colonia').val(result.colonia);
-                        $('#municipio').val(result.municipio);
-                        $('#estado').val(result.estado);
-                        $('#cp').val(result.cp);
-
-                        var myURL = window.location.href.split('?')[0];
-                        myURL = myURL + '?id=' + result.id;
-                        history.pushState({}, null, myURL);
-                    }
-                }
+                var myURL = window.location.href.split('?')[0];
+                myURL = myURL + '?id=' + result.id;
+                history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {
                 alert('Error modificando panelista.');
