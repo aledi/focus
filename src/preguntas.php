@@ -22,7 +22,7 @@
                 <h2 id='headerTitle'>Ligar Pregunta</h2>
 
                 <div id='questions'>
-                    <div id="1" class='questionForm'>
+                    <div id="pregunta1" class='questionForm'>
                         <div class='input-wrapper'>
                             <label>Pregunta:</label>
                             <input id='pregunta' class='pregunta' name='respuesta' type='text' />

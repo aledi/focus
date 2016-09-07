@@ -1,6 +1,8 @@
 'use strict';
 
 $(document).on('ready', function () {
+    $('#paneles-header-option').addClass('selected');
+
     $.ajax({
         type: 'POST',
         url: '../api/controller.php',
@@ -180,7 +182,7 @@ $(document).on('ready', function () {
                 getDatefromString(result.fechaFin, 1);
                 $('input[name="id"][value="' + result.id + '"]').prop('checked', true);
                 $('#descripcion').val(result.descripcion);
-                
+            
                 var myURL = window.location.href.split('?')[0];
                 myURL = myURL + '?id=' + result.id;
                 history.pushState({}, null, myURL);

@@ -1,6 +1,8 @@
 'use strict';
 
 $(document).on('ready', function () {
+    $('#reportes-header-option').addClass('selected');
+
     setTimeout(function (event) {
         getEncuestas('reportes');
     }, 500);

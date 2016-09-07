@@ -22,7 +22,7 @@ $(document).on('ready', function () {
     }
 
     function appendQuestions (lastQuestion) {
-        var currentHTML = '<div id="' + lastQuestion + '" class="questionForm">';
+        var currentHTML = '<div id="pregunta' + lastQuestion + '" class="questionForm">';
         currentHTML += '<hr>';
         currentHTML += '<div class="input-wrapper">' +
             '<p>Pregunta:</p>' +
@@ -72,25 +72,25 @@ $(document).on('ready', function () {
                 for (var x = 0; x < response.results.length; x++) {
                     var result = response.results[x];
 
-                    $('#' + (x + 1) + ' > .input-wrapper > #pregunta').val(response.results[x].pregunta);
-                    $('#' + (x + 1) + ' > .input-wrapper > #tipo').val(response.results[x].tipo);
+                    $('#pregunta' + (x + 1) + ' > .input-wrapper > #pregunta').val(response.results[x].pregunta);
+                    $('#pregunta' + (x + 1) + ' > .input-wrapper > #tipo').val(response.results[x].tipo);
 
                     appendAnswers(response.results[x].tipo, (x + 1));
 
-                    $('#' + (x + 1) + ' > .input-wrapper > #imagen').val(response.results[x].imagen);
-                    $('#' + (x + 1) + ' > .input-wrapper > #video').val(response.results[x].video);
+                    $('#pregunta' + (x + 1) + ' > .input-wrapper > #imagen').val(response.results[x].imagen);
+                    $('#pregunta' + (x + 1) + ' > .input-wrapper > #video').val(response.results[x].video);
 
                     if (response.results[x].tipo !== 1) {
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta1').val(response.results[x].op1);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta2').val(response.results[x].op2);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta3').val(response.results[x].op3);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta4').val(response.results[x].op4);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta5').val(response.results[x].op5);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta6').val(response.results[x].op6);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta7').val(response.results[x].op7);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta8').val(response.results[x].op8);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta9').val(response.results[x].op9);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta10').val(response.results[x].op10);
+                        $('#pregunta' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta1').val(response.results[x].op1);
+                        $('#pregunta' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta2').val(response.results[x].op2);
+                        $('#pregunta' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta3').val(response.results[x].op3);
+                        $('#pregunta' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta4').val(response.results[x].op4);
+                        $('#pregunta' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta5').val(response.results[x].op5);
+                        $('#pregunta' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta6').val(response.results[x].op6);
+                        $('#pregunta' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta7').val(response.results[x].op7);
+                        $('#pregunta' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta8').val(response.results[x].op8);
+                        $('#pregunta' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta9').val(response.results[x].op9);
+                        $('#pregunta' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta10').val(response.results[x].op10);
                     }
                 }
             },
