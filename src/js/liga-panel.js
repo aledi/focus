@@ -92,9 +92,9 @@ $(document).on('ready', function () {
 
                     currentHTML += '<tr value="' + result.id + '">';
                     currentHTML += '<td>' + result.nombre + '</td>';
-                    currentHTML += '<td>' + result.edad + '</td>';
+                    currentHTML += '<td class="centered">' + result.edad + '</td>';
                     currentHTML += '<td>' + result.municipio + '</td>';
-                    currentHTML += '<td>' + result.estado + '</td>';
+                    currentHTML += '<td class="centered">' + result.estado + '</td>';
                     currentHTML += '<td class="centered"><input type="checkbox" value=' + result.id + ' name="panelistas"' + (result.checked ?  ' checked' : '') + '></td>';
                     currentHTML += '</tr>';
 
