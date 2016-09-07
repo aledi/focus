@@ -20,11 +20,9 @@
                 <h2>Ligar Panelistas</h2>
                 <div id='panelista'>
                     <p>Filtrar Panelistas: <input id='filteringText' type='text' /></p>
-                    <table id='tablaPanelistas'></table>
+                    <table id='tablaPanelistas' class='padding-bottom'></table>
                 </div>
-                <div>
-                    <button type='submit' id='ligar-panelistas'>Ligar Panelistas</button>
-                </div>
+                <button type='submit' id='ligar-panelistas'>Ligar Panelistas</button>
                 <div id='feedback'></div>
             </form>
         </div>
