@@ -155,7 +155,6 @@ $(document).on('ready', function () {
 
     $('#allPanels').on('click', '.modifyButton', function () {
         var idPanel = $(this).parent().attr('value');
-
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
 
@@ -174,20 +173,15 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                for (var i = 0; i < response.results.length; i++) {
-                    var result = response.results[i];
-
-                    if (result.id === idPanel) {
-                        $('#panelName').val(result.nombre);
-                        getDatefromString(result.fechaInicio, 0);
-                        getDatefromString(result.fechaFin, 1);
-                        $('input[name="id"][value="' + result.id + '"]').prop('checked', true);
-
-                        var myURL = window.location.href.split('?')[0];
-                        myURL = myURL + '?id=' + result.id;
-                        history.pushState({}, null, myURL);
-                    }
-                }
+                
+                $('#panelName').val(response.results[0].nombre);
+                getDatefromString(response.results[0].fechaInicio, 0);
+                getDatefromString(response.results[0].fechaFin, 1);
+                $('input[name="id"][value="' + response.results[0].id + '"]').prop('checked', true);
+                
+                var myURL = window.location.href.split('?')[0];
+                myURL = myURL + '?id=' + response.results[0].id;
+                history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {
                 alert('Error modificando panelista.');
