@@ -1,6 +1,8 @@
 'use strict';
 
 $(document).on('ready', function () {
+    $('#avances-header-option').addClass('selected');
+
     setTimeout(function (event) {
         getEncuestas('avances');
     }, 500);
