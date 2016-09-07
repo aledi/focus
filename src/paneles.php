@@ -32,33 +32,19 @@
                 </div>
                 <div class='input-wrapper'>
                     <label>Fecha de Inicio:</label>
-                    <select id='dia'>
-                        
-                    </select>
-                    <select id='mes'>
-                        
-                    </select>
-                    <select id='anio'>
-                        
-                    </select>
+                    <select id='dia'></select>
+                    <select id='mes'></select>
+                    <select id='anio'></select>
                 </div>
                 <div class='input-wrapper'>
                     <label>Fecha Final:</label>
-                    <select id='dia_fin'>
-                        
-                    </select>
-                    <select id='mes_fin'>
-                        
-                    </select>
-                    <select id='anio_fin'>
-                        
-                    </select>
+                    <select id='dia_fin'></select>
+                    <select id='mes_fin'></select>
+                    <select id='anio_fin'></select>
                 </div>
                 <div>
-                    <p>Seleccionar Cliente: </p>
-                    <table id='tableClientes'>
-
-                    </table>
+                    <p>Seleccionar Cliente:</p>
+                    <table id='tableClientes'></table>
                 </div>
 
                 <button type='button' id='cancelModify' class='no-background'>Cancelar</button>
