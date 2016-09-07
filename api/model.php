@@ -267,16 +267,13 @@ function fetchUser ($tipo, $id) {
         $sql = "SELECT id, username, nombre, apellidos, email FROM Usuario WHERE tipo = '$tipo' AND id = '$id'";
         $result = $conn->query($sql);
 
-        $response = array();
-
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $user = array('id' => (int)$row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos']);
-            $response[] = $user;
         }
 
         $conn->close();
-        return array('results' => $response);
+        return array('result' => $user);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -315,8 +312,6 @@ function fetchPanel ($id) {
         $sql = "SELECT id, nombre, descripcion, fechaInicio, fechaFin, cliente, creador FROM Panel WHERE id = '$id'";
         $result = $conn->query($sql);
 
-        $response = array();
-
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $cliente = $row['cliente'];
@@ -324,12 +319,11 @@ function fetchPanel ($id) {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'descripcion' => $row['descripcion'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
-            $response[] = $client;
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'descripcion' => $row['descripcion'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
         }
 
         $conn->close();
-        return array('results' => $response);
+        return array('result' => $panel);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -363,15 +357,12 @@ function fetchPanelista ($id) {
         $sql = "SELECT id, username, nombre, apellidos, email, genero, fechaNacimiento, educacion, calleNumero, colonia, municipio, estado, cp FROM Panelista WHERE id = '$id'";
         $result = $conn->query($sql);
 
-        $response = array();
-
         while ($row = $result->fetch_assoc()) {
             $panelista = array('id' => (int)$row['id'], 'username' => $row['username'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos'], 'email' => $row['email'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'fechaNacimiento' => $row['fechaNacimiento'], 'educacion' => (int)$row['educacion'], 'calleNumero' => $row['calleNumero'], 'colonia' => $row['colonia'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cp' => (int)$row['cp']);
-            $response[] = $panelista;
         }
 
         $conn->close();
-        return array('results' => $response);
+        return array('result' => $panelista);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -410,8 +401,6 @@ function fetchEncuesta ($id) {
         $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel FROM Encuesta WHERE id = '$id'";
         $result = $conn->query($sql);
 
-        $response = array();
-
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $panel = $row['panel'];
@@ -420,11 +409,10 @@ function fetchEncuesta ($id) {
             $row2 = $result2->fetch_assoc();
 
             $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
-            $response[] = $panelista;
         }
 
         $conn->close();
-        return array('results' => $response);
+        return array('result' => $panelista);
     }
 
     return array('status' => 'DATABASE_ERROR');

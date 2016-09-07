@@ -19,6 +19,7 @@ function checkAll (checkedBox) {
 }
 
 $(document).on('ready', function () {
+    $('#paneles-header-option').addClass('selected');
 
     /*
     *   Función tomada de internet, funciona bien, pero aparentemente
@@ -26,7 +27,7 @@ $(document).on('ready', function () {
     *   un objeto dependiente de la tabla y la cantidad de panelistas.
     */
 
-    $("#filteringText").keyup(function () {
+    $('#filteringText').keyup(function () {
         //split the current value of searchInput
         var data = this.value.split(' ');
 
