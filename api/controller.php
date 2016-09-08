@@ -94,6 +94,9 @@ switch ($_POST['action']) {
     case 'LOG_OUT':
         logOut();
         break;
+    case 'PRIVACY_POLICY':
+        fetchFromFile('privacy.txt');
+        break;
     default:
         echo json_encode(array('status' => 'INVALID_ACTION', 'action' => $_POST['action']));
         break;
@@ -324,6 +327,13 @@ function logOut ()  {
     destroySession();
 
     echo json_encode(array('status' => 'SUCCESS'));
+}
+
+function fetchFromFile ($file)  {
+    $path = '../resources/';
+    $myfile = fopen($path.$file, 'r') or die('Unable to open file!');
+    echo json_encode(array('content' => fread($myfile, filesize($path.$file))));
+    fclose($myfile);
 }
 
 function sendPushNotification ($message, $deviceToken) {
