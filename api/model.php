@@ -43,7 +43,7 @@ function validatePanelistaCredentials ($username, $password) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql0 = "SELECT id, username, email, nombre, apellidos FROM Panelista WHERE username = '$username' AND password = '$password'";
+        $sql0 = "SELECT id, username, genero, email, nombre, apellidos FROM Panelista WHERE username = '$username' AND password = '$password'";
         $result0 = $conn->query($sql0);
 
         if ($result0->num_rows > 0) {
@@ -94,7 +94,7 @@ function validatePanelistaCredentials ($username, $password) {
             }
 
             $conn->close();
-            return array('status' => 'SUCCESS', 'id' => (int)$row0['id'], 'username' => $row0['username'], 'email' => $row0['email'], 'nombre' => $row0['nombre']." ".$row0['apellidos'], 'paneles' => $paneles);
+            return array('status' => 'SUCCESS', 'id' => (int)$row0['id'], 'username' => $row0['username'], 'genero' => (int)$row0['genero'], 'email' => $row0['email'], 'nombre' => $row0['nombre']." ".$row0['apellidos'], 'paneles' => $paneles);
 
         }
 
