@@ -5,10 +5,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
-    <script src="js/jquery-1.12.3.js"></script>
+    <script src='js/jquery-1.12.3.js'></script>
     <script src='elements/tableSorting/jquery.tablesorter.min.js'></script>
     <script src='js/liga-panel.js' type='text/javascript'></script>
-    <script src='js/header.js' type='text/javascript'></script>
     <title> Focus - Ligar Panelista</title>
 </head>
 

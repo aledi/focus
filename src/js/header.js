@@ -27,6 +27,7 @@ $(document).on('ready', function () {
                 } else {
                     // Check if user tried to load another page and not reportes
                     if (window.location.pathname !== '/focus/src/reportes.php') {
+                        // Redirect to reportes & do not show html yet to avoid flashing
                         window.location.replace('reportes.php');
                     } else {
                         document.getElementsByTagName('html')[0].style.visibility = 'visible';
