@@ -10,10 +10,10 @@ $(document).on('ready', function () {
         if (username === '' && password === '') {
             $('#feedback').html('Por favor, indique su usuario y contraseña');
             return;
-        } else if(username === '') {
+        } else if (username === '') {
             $('#feedback').html('Por favor, indique su usuario');
             return;
-        } else if (password === '' ) {
+        } else if (password === '') {
             $('#feedback').html('Por favor, indique su contraseña');
             return;
         }
