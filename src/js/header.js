@@ -1,7 +1,7 @@
 'use strict';
 
-function convertEdoCivil (edoCivil) {
-    switch (edoCivil) {
+function convertEdoCivil (estadoCivil) {
+    switch (estadoCivil) {
         case 0:
             return 'Casado';
         case 1:
@@ -50,6 +50,15 @@ function convertEducacion (educacion) {
 }
 
 $(document).on('ready', function () {
+    if (getUserType() !== 1) {
+        $('#panelistas-header-option').hide();
+        $('#usuarios-header-option').hide();
+        $('#paneles-header-option').hide();
+        $('#encuestas-header-option').hide();
+        $('#reportes-header-option').hide();
+        $('#avances-header-option').hide();
+    }
+
     $('ul.tabs li').click(function () {
         var tab_id = $(this).attr('data-tab');
 
@@ -87,9 +96,9 @@ $(document).on('ready', function () {
             data: {'action': 'LOG_OUT'},
             dataType: 'json',
             success: function (obj) {
-                if (obj.status === "SUCCESS") {
-                    alert("¡Hasta pronto!");
-                    location.replace("signin.php");
+                if (obj.status === 'SUCCESS') {
+                    alert('¡Hasta pronto!');
+                    location.replace('signin.php');
                 }
             }
         });
@@ -102,6 +111,6 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $(this).addClass('current');
-        $("#"+tab_id).addClass('current');
+        $('#' + tab_id).addClass('current');
     });
 });

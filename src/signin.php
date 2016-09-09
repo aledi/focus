@@ -6,6 +6,7 @@
 	<link href='css/signin.css' type='text/css' rel='stylesheet' />
 	<script src="js/jquery-1.12.3.js"></script>
     <script src='js/signin.js' type='text/javascript'></script>
+    <script src='js/user.js' type='text/javascript'></script>
     <title> Focus - Iniciar Sesión</title>
 </head>
 
