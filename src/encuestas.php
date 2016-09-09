@@ -9,7 +9,6 @@
     <script src='js/date-functions.js' type='text/javascript'></script>
     <script src='js/encuestas.js' type='text/javascript'></script>
     <script src='js/encuestas-shared.js' type='text/javascript'></script>
-    <script src='js/header.js' type='text/javascript'></script>
     <title> Focus - Encuestas</title>
 </head>
 
