@@ -1,5 +1,4 @@
 <script src='js/header.js' type='text/javascript'></script>
-<script src='js/user.js' type='text/javascript'></script>
 
 <header>
     <div class='header-wrapper'>
