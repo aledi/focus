@@ -44,13 +44,13 @@ $(document).on('ready', function () {
     });
 
     $('ul.tabs li').click(function () {
-        var tab_id = $(this).attr('data-tab');
+        var tabId = $(this).attr('data-tab');
 
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
 
         $(this).addClass('current');
-        $('#' + tab_id).addClass('current');
+        $('#' + tabId).addClass('current');
     });
 
     $('#signout-button').on('click', function (event) {
@@ -86,7 +86,7 @@ function convertEdoCivil (estadoCivil) {
         case 5:
             return 'Unión Libre';
         default:
-            return 'ERROR';
+            return '';
     }
 }
 
