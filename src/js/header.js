@@ -50,7 +50,7 @@ function convertEducacion (educacion) {
 }
 
 $(document).on('ready', function () {
-    if (getUserType() !== 1) {
+    if (getUserType() === 1) {
         $('#panelistas-header-option').hide();
         $('#usuarios-header-option').hide();
         $('#paneles-header-option').hide();
@@ -87,7 +87,7 @@ $(document).on('ready', function () {
         }
     });
 
-    $('#signOutButton').on('click', function (event) {
+    $('#signout-button').on('click', function (event) {
         event.preventDefault();
 
         $.ajax({
