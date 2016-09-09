@@ -50,14 +50,39 @@ function convertEducacion (educacion) {
 }
 
 $(document).on('ready', function () {
-    if (getUserType() === 1) {
-        $('#panelistas-header-option').hide();
-        $('#usuarios-header-option').hide();
-        $('#paneles-header-option').hide();
-        $('#encuestas-header-option').hide();
-        $('#reportes-header-option').hide();
-        $('#avances-header-option').hide();
-    }
+    $('#panelistas-header-option').hide();
+    $('#usuarios-header-option').hide();
+    $('#paneles-header-option').hide();
+    $('#encuestas-header-option').hide();
+    $('#reportes-header-option').hide();
+    $('#avances-header-option').hide();
+
+    $.ajax({
+        type: 'POST',
+        url: '../api/controller.php',
+        data: {'action': 'VERIFY_SESSION'},
+        dataType: 'json',
+        success: function (response) {
+            if (response.status === 'SUCCESS') {
+                document.getElementsByTagName('html')[0].style.visibility = 'visible';
+
+                if (response.tipo !== 1) {
+                    $('#panelistas-header-option').show();
+                    $('#usuarios-header-option').show();
+                    $('#paneles-header-option').show();
+                    $('#encuestas-header-option').show();
+                    $('#reportes-header-option').show();
+                    $('#avances-header-option').show();
+                }
+            } else {
+                window.location.replace('signin.php');
+            }
+        },
+        error: function (error) {
+            alert('Please login to continue');
+            window.location.replace('signin.php');
+        }
+    });
 
     $('ul.tabs li').click(function () {
         var tab_id = $(this).attr('data-tab');
@@ -67,24 +92,6 @@ $(document).on('ready', function () {
 
         $(this).addClass('current');
         $('#' + tab_id).addClass('current');
-    });
-
-    $.ajax({
-        type: 'POST',
-        url: '../api/controller.php',
-        data: {'action': 'VERIFY_SESSION'},
-        dataType: 'json',
-        success: function (obj) {
-            if (obj.status === 'SUCCESS') {
-                document.getElementsByTagName('html')[0].style.visibility = 'visible';
-            } else {
-                window.location.replace('signin.php');
-            }
-        },
-        error: function (error) {
-            alert('Please login to continue');
-            window.location.replace('signin.php');
-        }
     });
 
     $('#signout-button').on('click', function (event) {

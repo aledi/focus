@@ -29,7 +29,6 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 if (response.status === 'SUCCESS') {
-                    setUserType(response.tipo);
                     location.replace(response.tipo === 1 ? 'reportes.php' : 'panelistas.php');
                 } else {
                     $('#feedback').html('Usuario o contraseña incorrectos');
