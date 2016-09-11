@@ -45,6 +45,7 @@ $(document).on('ready', function () {
                 }
 
                 currentHTML += '</tbody>';
+                $('#cancelModify').hide();
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los clientes');
@@ -149,7 +150,7 @@ $(document).on('ready', function () {
         $('#savePanelista').text('Modificar');
 
         $('#panelista-password').hide();
-        $('#cancelModify').css('visibility', '');
+        $('#cancelModify').show();
 
         $.ajax({
             url: '../api/controller.php',
@@ -198,7 +199,7 @@ $(document).on('ready', function () {
         $('#tab-agregarPanelista').find('input').removeAttr('checked');
         $('#headerTitle').text('Agregar Panelista');
         $('#savePanel').text('Agregar');
-        $('#cancelModify').css('visibility', 'hidden');
+        $('#cancelModify').hide();
 
         var myURL = window.location.href.split('?')[0];
         history.pushState({}, null, myURL);

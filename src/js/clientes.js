@@ -36,6 +36,7 @@ $(document).on('ready', function () {
                 }
 
                 currentHTML += '</tbody>';
+                $('#cancelModify').hide();
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los clientes');
@@ -131,7 +132,7 @@ $(document).on('ready', function () {
         $('#cliente-password').hide();
         $('#cliente-password-confirm').hide();
 
-        $('#cancelModify').css('visibility', '');
+        $('#cancelModify').show();
 
         $.ajax({
             url: '../api/controller.php',
@@ -150,7 +151,7 @@ $(document).on('ready', function () {
                 $('#username').val(result.username);
 
                 var myURL = window.location.href.split('?')[0];
-                myURL = myURL + '?id=' + result.id;
+                myURL += '?id=' + result.id;
                 history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {
@@ -163,7 +164,7 @@ $(document).on('ready', function () {
         $('#tab-agregarCliente').find('input').val('');
         $('#headerTitle').text('Agregar Usuario');
         $('#saveCliente').text('Agregar');
-        $('#cancelModify').css('visibility', 'hidden');
+        $('#cancelModify').hide();
 
         var myURL = window.location.href.split('?')[0];
         history.pushState({}, null, myURL);
