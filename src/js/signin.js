@@ -10,10 +10,10 @@ $(document).on('ready', function () {
         if (username === '' && password === '') {
             $('#feedback').html('Por favor, indique su usuario y contraseña');
             return;
-        } else if(username === '') {
+        } else if (username === '') {
             $('#feedback').html('Por favor, indique su usuario');
             return;
-        } else if (password === '' ) {
+        } else if (password === '') {
             $('#feedback').html('Por favor, indique su contraseña');
             return;
         }
@@ -29,7 +29,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 if (response.status === 'SUCCESS') {
-                    location.replace('panelistas.php');
+                    location.replace(response.tipo === 1 ? 'reportes.php' : 'panelistas.php');
                 } else {
                     $('#feedback').html('Usuario o contraseña incorrectos');
                 }

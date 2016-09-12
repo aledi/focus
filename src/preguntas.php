@@ -6,7 +6,6 @@
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
     <script src="js/jquery-1.12.3.js"></script>
     <script src='js/preguntas.js' type='text/javascript'></script>
-    <script src='js/header.js' type='text/javascript'></script>
     <title> Focus - Encuestas</title>
 </head>
 
@@ -22,7 +21,7 @@
                 <h2 id='headerTitle'>Ligar Pregunta</h2>
 
                 <div id='questions'>
-                    <div id="1" class='questionForm'>
+                    <div id='1' class='questionForm'>
                         <div class='input-wrapper'>
                             <label>Pregunta:</label>
                             <input id='pregunta' class='pregunta' name='respuesta' type='text' />
