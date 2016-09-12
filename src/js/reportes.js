@@ -72,7 +72,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 $('#preguntas-select').show();
-
+                console.log(response);
                 var currentHTML = '<option value="-1">Selecciona una pregunta</option>';
 
                 for (var i = 0; i < response.results.length; i++) {
@@ -114,6 +114,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 // Show filter options with default values
+                console.log(response);
                 $('#edad-select').show();
                 $('#edad-select').val('0');
 

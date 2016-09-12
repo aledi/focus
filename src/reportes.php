@@ -5,9 +5,9 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
     <script src="js/jquery-1.12.3.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src='js/reportes.js' type='text/javascript'></script>
     <script src='js/encuestas-shared.js' type='text/javascript'></script>
-     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <title> Focus - Reportes</title>
 </head>
 
