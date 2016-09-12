@@ -41,6 +41,7 @@ $(document).on('ready', function () {
                 }
 
                 currentHTML += '</tbody>';
+                $('#cancelModify').hide();
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los clientes');
@@ -127,6 +128,8 @@ $(document).on('ready', function () {
         $('#headerTitle').text('Modificar Encuesta');
         $('#saveEncuesta').text('Modificar');
 
+        $('#cancelModify').show();
+
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
@@ -136,22 +139,15 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                for (var i = 0; i < response.results.length; i++) {
-                    var result = response.results[i];
+                var result = response.result;
+                $('#nombre').val(result.nombre);
+                getDatefromString(result.fechaInicio, 0);
+                getDatefromString(result.fechaFin, 1);
+                $('input[name=id][value="' + result.id + '"]').prop('checked', true);
 
-                    if (result.id !== idEncuesta) {
-                        continue;
-                    }
-
-                    $('#nombre').val(result.nombre);
-                    getDatefromString(result.fechaInicio, 0);
-                    getDatefromString(result.fechaFin, 1);
-                    $('input[name=id][value="' + result.id + '"]').prop('checked', true);
-
-                    var myURL = window.location.href.split('?')[0];
-                    myURL = myURL + '?id=' + result.id;
-                    history.pushState({}, null, myURL);
-                }
+                var myURL = window.location.href.split('?')[0];
+                myURL += '?id=' + result.id;
+                history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {
                 alert('Error modificando encuesta.');
@@ -164,6 +160,7 @@ $(document).on('ready', function () {
         $('#allPanels input').removeAttr('checked');
         $('#headerTitle').text('Agregar Encuesta');
         $('#saveEncuesta').text('Agregar');
+        $('#cancelModify').hide();
 
         var myURL = window.location.href.split('?')[0];
         history.pushState({}, null, myURL);
