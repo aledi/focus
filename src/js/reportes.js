@@ -1,31 +1,32 @@
 'use strict';
 
-function pieChart(opciones, votes, i) {
-    google.charts.load('current', {'packages':['corechart']});
+var stateObject = {'AGS':'Aguascalientes', 'BC':'Baja California', 'BCS':'Baja California Sur', 'CAMP':'Campeche', 'COAH':'Coahuila', 'COL':'Colima', 'CHIS':'Chiapas', 'CDMX':'Ciudad de México', 'DGO':'Durango', 'GTO':'Guanajuato', 'HGO':'Hidalgo', 'JAL':'Jalisco', 'EDOMEX':'Estado de México', 'MICH':'Michoacán', 'MOR':'Morelos', 'NAY':'Nayarit', 'NL':'Nuevo León', 'OAX':'Oaxaca', 'PUE':'Puebla', 'QRO':'Querétaro', 'QROO':'Quintana Roo', 'SLP':'San Luis Potosí', 'SIN':'Sinaloa', 'TAB':'Tabasco', 'TAM':'Tamaulipas', 'TLAX':'Tlaxcala', 'VER':'Veracruz', 'YUC':'Yucatan', 'ZAC':'Zacatecas'}
+google.charts.load('current', {'packages':['corechart', 'bar']});
 
-      google.charts.setOnLoadCallback(drawChart);
-
+// CHARTS
+function pieChart(opciones, votes, chartNumber, title) {
+    google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
 
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Opinion');
+        data.addColumn('string', 'Data');
         data.addColumn('number', 'Votos');
 
         for (var x = 0; x < opciones.length; x++) {
             data.addRows([[opciones[x], votes[x]]]);
         }
 
-        var options = {'width':600,
+        var options = { 'title': title.charAt(0).toUpperCase() + title.slice(1),
+                        'width':600,
                         'height':400,
                         'sliceVisibilityThreshold': 0};
 
-        var chart = new google.visualization.PieChart(document.getElementById('chart' + i));
+        var chart = new google.visualization.PieChart(document.getElementById('chart' + chartNumber));
         chart.draw(data, options);
     }
 }
 
-function barChart() {
-    google.charts.load("current", {packages:["corechart"]});
+function barChart(opciones, votes, chartNumber, title) {
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
@@ -57,11 +58,33 @@ function barChart() {
     }
 }
 
-function columnChart(){
-    //google.load('visualization', '1.0', {'packages':['corechart'], 'callback': drawStuff});
+function columnChart(opciones, votes, chartNumber, title){
+    google.charts.setOnLoadCallback(drawStuff);
 
+    function drawStuff() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Data');
+        data.addColumn('number', 'Votos');
+
+        for (var x = 0; x < opciones.length; x++) {
+            data.addRows([[opciones[x], votes[x]]]);
+        }
+
+        var options = {
+          title: title.charAt(0).toUpperCase() + title.slice(1),
+          width: 900,
+          bar: { groupWidth: "40%" }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('chart3'));
+        // Convert the Classic options to Material options.
+        chart.draw(data, options);
+      };
 }
 
+///////////////////////////////////////////
+//              HELPER FUNCTIONS         //
+///////////////////////////////////////////
 
 function getNumberofArrays(response) {
     var obj;
@@ -74,13 +97,52 @@ function getNumberofArrays(response) {
     return arrayCounter
 }
 
+function convertGenderArray(genero) {
+    for (var x = 0; x < genero.length; x++) {
+        genero[x] == 'H' ? genero[x] = 'Hombres' : genero[x] = 'Mujeres';
+    }
+    return genero;
+}
+
+function convertAgeRange(edad) {
+    for (var x = 0; x < edad.length; x++) {
+        switch (edad[x]) {
+            case '25' : 
+                edad[x] = '18 - 25';
+            break;
+            case '35' : 
+                edad[x] = '26 - 35';
+            break;
+            case '45' : 
+                edad[x] = '36 - 45';
+            break;
+            case '55' : 
+                edad[x] = '46 - 55';
+            break;
+            case '100' : 
+                edad[x] = '56+';
+            break;
+            default:
+
+            break;
+        }
+    }
+    return edad;
+}
+
+function convertState(estado) {
+    for (var x = 0; x < estado.length; x++) {
+        estado[x] = stateObject[estado[x]];
+    }
+
+    return estado;
+}
+
 $(document).on('ready', function () {
     $('#reportes-header-option').addClass('selected');
 
     setTimeout(function (event) {
         getEncuestas('reportes');
-        barChart();
-        columnChart();
     }, 500);
 
     $('#preguntas-select').hide();
@@ -142,8 +204,8 @@ $(document).on('ready', function () {
         $('#filtros-button').hide();
 
         if (numPregunta < 0) {
-            console.log("General");
-            return
+
+            return;
         }
 
         var data = {
@@ -179,17 +241,28 @@ $(document).on('ready', function () {
                 }
 
                 if (numPregunta === 0) {
-                    // General
+                    //General
+                    console.log(Object.keys(response)[2]);
+                    pieChart(convertGenderArray(Object.keys(response.genero)),
+                            Object.keys(response.genero).map(k => response.genero[k]),
+                            1, Object.keys(response)[2]);
+                    pieChart(convertAgeRange(Object.keys(response.edad)),
+                            Object.keys(response.edad).map(k => response.edad[k]),
+                            2, Object.keys(response)[0]);
+                    columnChart(convertState(Object.keys(response.estado)),
+                            Object.keys(response.estado).map(k => response.estado[k]),
+                            3, Object.keys(response)[1]);
                 }
-
-                if (response.tipo === 1) {
-                    // Tabla
-                } else if (response.tipo === 4) {
-                    // Barras
-                } else if (Object.keys(response).length < 4) {
-                    pieChart(response.opciones, response.votos, 1);
-                } else {
-                    // Columnas
+                else {
+                    if (response.tipo === 1) {
+                        // Tabla
+                    } else if (response.tipo === 4) {
+                        // Barras
+                    } else if (getNumberofArrays(response) < 4) {
+                        pieChart(response.genero, response.votos, 1);
+                    } else {
+                        // Columnas
+                    }
                 }
 
                 return;

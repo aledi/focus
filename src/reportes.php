@@ -21,6 +21,8 @@
         </select>
         <select id='preguntas-select' class='encuestas-select'></select>
         <div id="chart1"></div>
+        <div id="chart2"></div>
+        <div id="chart3"></div>
         <select id='edad-select' class='encuestas-select'>
             <option value='0'>Selecciona una edad</option>
             <option value='25'>18 a 25</option>
@@ -78,8 +80,6 @@
             <option value='6'>Ninguno</option>
         </select>
         <button id='filtros-button' type='button'>Aplicar filtros</button>
-        <div id="chart2"></div>
-        <div id="chart3"></div>
         <div id="barchart_values" style="width: 900px; height: 300px;"></div>
     </section>
 </body>
