@@ -35,7 +35,7 @@ function getEncuestas (route) {
                 for (var i = 0; i < response.results.length; i++) {
                     var result = response.results[i];
 
-                    currentHTML += '<tr value="' + result.id + '">';
+                    currentHTML += '<tr id="' + result.id + '">';
                     currentHTML += '<td><a href="preguntas.php?id=' + result.id + '">' + result.nombre + '</a></td>';
                     currentHTML += '<td>' + result.fechaInicio + '</td>';
                     currentHTML += '<td>' + result.fechaFin + '</td>';
