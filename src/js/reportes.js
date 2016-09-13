@@ -1,6 +1,8 @@
 'use strict';
 
-function pieChart() {
+function pieChart(opciones, votes) {
+    console.log(opciones);
+    console.log(votes);
     // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
 
@@ -16,12 +18,17 @@ function pieChart() {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
-        data.addRows([
-          ['Positiva', 3],
-          ['Negativa', 1],
-          ['Neutra', 0]
-        ]);
 
+        for (var x = 0; x < opciones.length; x++) {
+            data.addRows([[opciones[x], votes[x]]]);
+        }
+/*
+        data.addRows([
+          [opciones[0], votes[0]+1],
+          [opciones[1], votes[1]],
+          [opciones[2], votes[2]]
+        ]);
+*/
         // Set chart options
         var options = {'title':'How Much Pizza I Ate Last Night',
                        'width':400,
@@ -68,47 +75,37 @@ function barChart() {
 }
 
 function columnChart(){
-    google.charts.load('current', {packages: ['corechart', 'bar']});
-    google.charts.setOnLoadCallback(drawColColors);
+    //google.load('visualization', '1.0', {'packages':['corechart'], 'callback': drawStuff});
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawStuff);
 
-    function drawColColors() {
-      var data = new google.visualization.DataTable();
-      data.addColumn('timeofday', 'Time of Day');
-      data.addColumn('number', 'Motivation Level');
-      data.addColumn('number', 'Energy Level');
+      function drawStuff() {
+        var data = new google.visualization.arrayToDataTable([
+          ['Move', 'Percentage'],
+          ["King's pawn (e4)", 44],
+          ["Queen's pawn (d4)", 31],
+          ["Knight to King 3 (Nf3)", 12],
+          ["Queen's bishop pawn (c4)", 10],
+          ['Other', 3]
+        ]);
 
-      data.addRows([
-        [{v: [8, 0, 0], f: '8 am'}, 1, .25],
-        [{v: [9, 0, 0], f: '9 am'}, 2, .5],
-        [{v: [10, 0, 0], f:'10 am'}, 3, 1],
-        [{v: [11, 0, 0], f: '11 am'}, 4, 2.25],
-        [{v: [12, 0, 0], f: '12 pm'}, 5, 2.25],
-        [{v: [13, 0, 0], f: '1 pm'}, 6, 3],
-        [{v: [14, 0, 0], f: '2 pm'}, 7, 4],
-        [{v: [15, 0, 0], f: '3 pm'}, 8, 5.25],
-        [{v: [16, 0, 0], f: '4 pm'}, 9, 7.5],
-        [{v: [17, 0, 0], f: '5 pm'}, 10, 10],
-      ]);
+        var options = {
+          title: 'Chess opening moves',
+          width: 900,
+          legend: { position: 'none' },
+          chart: { subtitle: 'popularity by percentage' },
+          axes: {
+            x: {
+              0: { side: 'top', label: 'White to move'} // Top x-axis.
+            }
+          },
+          bar: { groupWidth: "90%" }
+        };
 
-      var options = {
-        title: 'Motivation and Energy Level Throughout the Day',
-        colors: ['#9575cd', '#33ac71'],
-        hAxis: {
-          title: 'Time of Day',
-          format: 'h:mm a',
-          viewWindow: {
-            min: [7, 30, 0],
-            max: [17, 30, 0]
-          }
-        },
-        vAxis: {
-          title: 'Rating (scale of 1-10)'
-        }
+        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+        // Convert the Classic options to Material options.
+        chart.draw(data, google.charts.Bar.convertOptions(options));
       };
-
-      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div2'));
-      chart.draw(data, options);
-    }
 }
 
 $(document).on('ready', function () {
@@ -116,7 +113,6 @@ $(document).on('ready', function () {
 
     setTimeout(function (event) {
         getEncuestas('reportes');
-        pieChart();
         barChart();
         columnChart();         
     }, 500);
@@ -209,7 +205,7 @@ $(document).on('ready', function () {
                 $('#educacion-select').val('0');
 
                 $('#filtros-button').show();
-
+                pieChart(response.opciones, response.votos);
                 return;
             },
             error: function (errorMsg) {
