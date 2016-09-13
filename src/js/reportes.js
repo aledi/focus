@@ -62,6 +62,18 @@ function columnChart(){
 
 }
 
+
+function getNumberofArrays(response) {
+    var obj;
+    var arrayCounter = 0;
+
+    for (obj in response) {
+        typeof response[obj] == 'object' ? arrayCounter += 1 : arrayCounter += 0;
+    }
+
+    return arrayCounter
+}
+
 $(document).on('ready', function () {
     $('#reportes-header-option').addClass('selected');
 
@@ -122,14 +134,28 @@ $(document).on('ready', function () {
 
     $('#preguntas-select').on('change', function () {
         var numPregunta = parseInt($(this).val(), 10);
+        console.log(numPregunta);
         $('#edad-select').hide();
         $('#genero-select').hide();
         $('#estado-select').hide();
         $('#educacion-select').hide();
         $('#filtros-button').hide();
 
-        if (numPregunta < 0) {
-            return;
+        if (numPregunta != 0) {
+            console.log("General");
+            $('#edad-select').show();
+            $('#edad-select').val('0');
+
+            $('#genero-select').show();
+            $('#genero-select').val('-1');
+
+            $('#estado-select').show();
+            $('#estado-select').val('0');
+
+            $('#educacion-select').show();
+            $('#educacion-select').val('0');
+
+            $('#filtros-button').show();
         }
 
         var data = {
@@ -146,20 +172,6 @@ $(document).on('ready', function () {
             success: function (response) {
                 // Show filter options with default values
                 console.log(response);
-                $('#edad-select').show();
-                $('#edad-select').val('0');
-
-                $('#genero-select').show();
-                $('#genero-select').val('-1');
-
-                $('#estado-select').show();
-                $('#estado-select').val('0');
-
-                $('#educacion-select').show();
-                $('#educacion-select').val('0');
-
-                $('#filtros-button').show();
-
                 if (response.status === "NO_DATA") {
                     document.getElementById('chart1').innerHTML = "";
                     return;
@@ -173,7 +185,7 @@ $(document).on('ready', function () {
                     // Tabla
                 } else if (response.tipo === 4) {
                     // Barras
-                } else if (response.opciones.length < 4) {
+                } else if (Object.keys(response).length < 4) {
                     pieChart(response.opciones, response.votos, 1);
                 } else {
                     // Columnas
@@ -223,7 +235,7 @@ $(document).on('ready', function () {
 
                 if (response.tipo === 4) {
                     // Barras
-                } else if (response.opciones.length < 4) {
+                } else if (getNumberofArrays(response) < 4) {
                     pieChart(response.opciones, response.votos, 3);
                 } else {
                     // Columnas
