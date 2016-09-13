@@ -1183,7 +1183,7 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
             $answers = explode('|', $row['respuestas']);
 
             if ($tipo == 1) {
-                $values[] = $answers[$numPregunta - 1];
+                $votes[] = $answers[$numPregunta - 1];
             } if ($tipo == 2) {
                 for ($x = 0; $x < count($options); $x++) {
                     if ($answers[$numPregunta - 1] == $options[$x]) {
