@@ -52,7 +52,7 @@
                 </div>
 
                 <button type='button' id='cancelModify' class='no-background'>Cancelar</button>
-                <button type='submit' id='saveCliente'>Agregar</button>
+                <button type='submit' id='save-cliente'>Agregar</button>
                 <span id='feedback'></span>
             </div>
 
