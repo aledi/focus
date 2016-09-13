@@ -16,23 +16,16 @@ function pieChart(opciones, votes) {
 
         // Create the data table.
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
+        data.addColumn('string', 'Opinion');
+        data.addColumn('number', 'Votos');
 
         for (var x = 0; x < opciones.length; x++) {
             data.addRows([[opciones[x], votes[x]]]);
         }
-/*
-        data.addRows([
-          [opciones[0], votes[0]+1],
-          [opciones[1], votes[1]],
-          [opciones[2], votes[2]]
-        ]);
-*/
+
         // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
-                       'width':400,
-                       'height':300,
+        var options = {'width':600,
+                       'height':400,
                         'sliceVisibilityThreshold': 0};
 
         // Instantiate and draw our chart, passing in some options.
@@ -76,36 +69,7 @@ function barChart() {
 
 function columnChart(){
     //google.load('visualization', '1.0', {'packages':['corechart'], 'callback': drawStuff});
-    google.charts.load('current', {'packages':['bar']});
-    google.charts.setOnLoadCallback(drawStuff);
 
-      function drawStuff() {
-        var data = new google.visualization.arrayToDataTable([
-          ['Move', 'Percentage'],
-          ["King's pawn (e4)", 44],
-          ["Queen's pawn (d4)", 31],
-          ["Knight to King 3 (Nf3)", 12],
-          ["Queen's bishop pawn (c4)", 10],
-          ['Other', 3]
-        ]);
-
-        var options = {
-          title: 'Chess opening moves',
-          width: 900,
-          legend: { position: 'none' },
-          chart: { subtitle: 'popularity by percentage' },
-          axes: {
-            x: {
-              0: { side: 'top', label: 'White to move'} // Top x-axis.
-            }
-          },
-          bar: { groupWidth: "90%" }
-        };
-
-        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
-        // Convert the Classic options to Material options.
-        chart.draw(data, google.charts.Bar.convertOptions(options));
-      };
 }
 
 $(document).on('ready', function () {
