@@ -40,7 +40,7 @@ function getEncuestas (route) {
                     currentHTML += '<td>' + result.fechaInicio + '</td>';
                     currentHTML += '<td>' + result.fechaFin + '</td>';
                     currentHTML += '<td>' + result.panel + '</td>';
-                    currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
+                    currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
 

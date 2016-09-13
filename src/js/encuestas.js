@@ -45,7 +45,7 @@ $(document).on('ready', function () {
                 }
 
                 currentHTML += '</tbody>';
-                $('#cancelModify').hide();
+                $('#cancel-edit').hide();
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los clientes');
@@ -93,7 +93,7 @@ $(document).on('ready', function () {
             data.id = idEncuesta;
         }
 
-        var actionText = idEncuesta !== '' ? 'modificada' : 'agregada';
+        var actionText = idEncuesta !== '' ? 'editada' : 'agregada';
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -110,10 +110,10 @@ $(document).on('ready', function () {
     });
 
     // -----------------------------------------------------------------------------------------------
-    // Modify Encuesta
+    // Edit Encuesta
     // -----------------------------------------------------------------------------------------------
 
-    $('#allEncuestas').on('click', '.modifyButton', function() {
+    $('#allEncuestas').on('click', '.edit-button', function() {
         var idEncuesta = $(this).parent().attr('id');
 
         $('ul.tabs li').removeClass('current');
@@ -122,10 +122,10 @@ $(document).on('ready', function () {
         $('ul.tabs li').first().addClass('current');
         $("#tab-agregar-encuesta").addClass('current');
 
-        $('#headerTitle').text('Modificar Encuesta');
-        $('#saveEncuesta').text('Modificar');
+        $('#headerTitle').text('Editar Encuesta');
+        $('#saveEncuesta').text('Editar');
 
-        $('#cancelModify').show();
+        $('#cancel-edit').show();
 
         $.ajax({
             url: '../api/controller.php',
@@ -147,7 +147,7 @@ $(document).on('ready', function () {
                 history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {
-                alert('Error modificando encuesta.');
+                alert('Error editando encuesta.');
             }
         });
     });
@@ -176,12 +176,12 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#cancelModify').on('click', function (event) {
+    $('#cancel-edit').on('click', function (event) {
         $('#tab-agregar-encuesta').find('input').val('');
         $('#allPanels input').removeAttr('checked');
         $('#headerTitle').text('Agregar Encuesta');
         $('#saveEncuesta').text('Agregar');
-        $('#cancelModify').hide();
+        $('#cancel-edit').hide();
 
         var myURL = window.location.href.split('?')[0];
         history.pushState({}, null, myURL);
@@ -190,7 +190,7 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').last().addClass('current');
-        $("#tab-modificar-encuesta").addClass('current');
+        $('#tab-view-encuestas').addClass('current');
     });
 
     $('#mes, #anio').on('change', function() {

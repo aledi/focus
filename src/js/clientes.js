@@ -31,8 +31,8 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + result.username+'</td>';
                     currentHTML += '<td>' + result.nombre + " " + result.apellidos+'</td>';
                     currentHTML += '<td>' + result.email+'</td>';
-                    currentHTML += '<td class=modifyButton><button id= modify type=button>Modificar</button></td>';
-                    currentHTML += '<td class=deleteButton><button id= delete type=button>Eliminar</button></td>';
+                    currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
+                    currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
 
                     $('#allUsers').append(currentHTML);
@@ -40,7 +40,7 @@ $(document).on('ready', function () {
                 }
 
                 currentHTML += '</tbody>';
-                $('#cancelModify').hide();
+                $('#cancel-edit').hide();
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los clientes');
@@ -56,7 +56,7 @@ $(document).on('ready', function () {
         var idCliente = window.location.search.substring(1);
         idCliente = idCliente.substring(3);
 
-        var modifying = idCliente != '';
+        var editing = idCliente != '';
 
         var email = $('#email').val();
         var nombre = $('#firstName').val();
@@ -65,12 +65,12 @@ $(document).on('ready', function () {
         var password = $('#password').val();
         var passwordConfirm = $('#passwordConfirm').val();
 
-        if (nombre === '' || apellidos === '' || email === '' || username === '' || (!modifying && (password === '' || passwordConfirm === ''))) {
+        if (nombre === '' || apellidos === '' || email === '' || username === '' || (!editing && (password === '' || passwordConfirm === ''))) {
             $('#feedback').html('Favor de llenar todos los campos');
             return;
         }
 
-        if (!modifying && (password != passwordConfirm)) {
+        if (!editing && (password != passwordConfirm)) {
             $('#feedback').html('Las contraseñas no coinciden');
             return;
         }
@@ -83,7 +83,7 @@ $(document).on('ready', function () {
             username: username
         };
 
-        if (modifying) {
+        if (editing) {
             data.id = idCliente;
         } else {
             data.password = password;
@@ -92,7 +92,7 @@ $(document).on('ready', function () {
         // Clear feedback <span>
         $('#feedback').empty();
 
-        var actionText = modifying ? 'modificado' : 'agregado';
+        var actionText = editing ? 'editado' : 'agregado';
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -108,13 +108,13 @@ $(document).on('ready', function () {
     });
 
     // -----------------------------------------------------------------------------------------------
-    // Modify Cliente
+    // Edit Cliente
     // -----------------------------------------------------------------------------------------------
 
-    $('#allUsers').on('click', '.modifyButton', function () {
+    $('#allUsers').on('click', '.edit-button', function () {
         var idUser = $(this).parent().attr('id')
-        $('#headerTitle').text('Modificar Cliente');
-        $('#save-cliente').text('Modificar');
+        $('#headerTitle').text('Editar Cliente');
+        $('#save-cliente').text('Editar');
 
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
@@ -125,7 +125,7 @@ $(document).on('ready', function () {
         $('#cliente-password').hide();
         $('#cliente-password-confirm').hide();
 
-        $('#cancelModify').show();
+        $('#cancel-edit').show();
 
         $.ajax({
             url: '../api/controller.php',
@@ -148,7 +148,7 @@ $(document).on('ready', function () {
                 history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {
-                alert('Error modificando cliente.');
+                alert('Error editando cliente.');
             }
         });
     });
@@ -177,11 +177,11 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#cancelModify').on('click', function (event) {
+    $('#cancel-edit').on('click', function (event) {
         $('#tab-agregar-cliente').find('input').val('');
         $('#headerTitle').text('Agregar Usuario');
         $('#save-cliente').text('Agregar');
-        $('#cancelModify').hide();
+        $('#cancel-edit').hide();
 
         var myURL = window.location.href.split('?')[0];
         history.pushState({}, null, myURL);
@@ -190,6 +190,6 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').last().addClass('current');
-        $("#tab-modificar-cliente").addClass('current');
+        $('#tab-view-clientes').addClass('current');
     });
 });

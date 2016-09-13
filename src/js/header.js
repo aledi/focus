@@ -46,8 +46,8 @@ $(document).on('ready', function () {
     $('ul.tabs li').click(function () {
         var tabId = $(this).attr('data-tab');
 
-        // Make sure we clear query every time we go to modify section
-        if (tabId.search('modificar') !== -1 && window.location.search) {
+        // Make sure we clear query every time we go to view all section
+        if (tabId.search('view') !== -1 && window.location.search) {
             history.pushState({}, null, window.location.href.split('?')[0]);
         }
 

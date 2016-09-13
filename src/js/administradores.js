@@ -33,7 +33,7 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + result.username+'</td>';
                     currentHTML += '<td>' + result.nombre+'</td>';
                     currentHTML += '<td>' + result.email+'</td>';
-                    currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
+                    currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
 
@@ -42,7 +42,7 @@ $(document).on('ready', function () {
                 }
 
                 currentHTML += '</tbody>';
-                $('#cancelModify').hide();
+                $('#cancel-edit').hide();
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los administradores');
@@ -58,7 +58,7 @@ $(document).on('ready', function () {
         var idAdmin = window.location.search.substring(1);
         idAdmin = idAdmin.substring(3);
 
-        var modifying = idAdmin != '';
+        var editing = idAdmin != '';
 
         var email = $('#email').val();
         var nombre = $('#firstName').val();
@@ -67,12 +67,12 @@ $(document).on('ready', function () {
         var password = $('#password').val();
         var passwordConfirm = $('#passwordConfirm').val();
 
-        if (nombre === '' || apellidos === '' || email === '' || username === '' || (!modifying && (password === '' || passwordConfirm === ''))) {
+        if (nombre === '' || apellidos === '' || email === '' || username === '' || (!editing && (password === '' || passwordConfirm === ''))) {
             $('#feedback').html('Favor de llenar todos los campos');
             return;
         }
 
-        if (!modifying && (password != passwordConfirm)) {
+        if (!editing && (password != passwordConfirm)) {
             $('#feedback').html('Las contraseñas no coinciden');
             return;
         }
@@ -85,13 +85,13 @@ $(document).on('ready', function () {
             username: username
         };
 
-        if (modifying) {
+        if (editing) {
             data.id = idAdmin;
         } else {
             data.password = password
         }
 
-        var actionText = modifying ? 'modificado' : 'agregado';
+        var actionText = editing ? 'editado' : 'agregado';
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -107,10 +107,10 @@ $(document).on('ready', function () {
     });
 
     // -----------------------------------------------------------------------------------------------
-    // Modify Administrador
+    // Edit Administrador
     // -----------------------------------------------------------------------------------------------
 
-    $('#allAdmins').on('click', '.modifyButton', function ()  {
+    $('#allAdmins').on('click', '.edit-button', function ()  {
         var idAdministador = $(this).parent().attr('id')
 
         $('ul.tabs li').removeClass('current');
@@ -119,13 +119,13 @@ $(document).on('ready', function () {
         $('ul.tabs li').first().addClass('current');
         $("#tab-agregar-administrador").addClass('current');
 
-        $('#headerTitle').text('Modificar Administrador');
-        $('#saveAdmin').text('Modificar');
+        $('#headerTitle').text('Editar Administrador');
+        $('#saveAdmin').text('Editar');
 
         $('#admin-password').hide();
         $('#admin-password-confirm').show();
 
-        $('#cancelModify').show();
+        $('#cancel-edit').show();
 
         $.ajax({
             url: '../api/controller.php',
@@ -148,7 +148,7 @@ $(document).on('ready', function () {
                 history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {
-                alert('Error modificando administrador.');
+                alert('Error editando administrador.');
             }
         });
     });
@@ -177,11 +177,11 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#cancelModify').on('click', function (event) {
+    $('#cancel-edit').on('click', function (event) {
         $('#tab-agregar-administrador').find('input').val('');
         $('#headerTitle').text('Agregar Administrador');
         $('#saveAdmin').text('Agregar');
-        $('#cancelModify').hide();
+        $('#cancel-edit').hide();
 
         var myURL = window.location.href.split('?')[0];
         history.pushState({}, null, myURL);
@@ -190,6 +190,6 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').last().addClass('current');
-        $("#tab-modificar-administrador").addClass('current');
+        $('#tab-view-administradores').addClass('current');
     });
 });

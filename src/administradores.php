@@ -15,7 +15,7 @@
         <div class='admins-wrapper'>
             <ul class='tabs'>
                 <li class='tab-link current' data-tab='tab-agregar-administrador'>Agregar Administrador</li>
-                <li class='tab-link' data-tab='tab-modificar-administrador'>Modificar Administrador</li>
+                <li class='tab-link' data-tab='tab-view-administradores'>Ver Administradores</li>
             </ul>
 
             <div id='tab-agregar-administrador' class='tab-content current'>
@@ -52,11 +52,11 @@
                 </div>
 
                 <button id='saveAdmin' type='submit'>Agregar Administrador</button>
-                <button id='cancelModify' type='submit'>Cancelar Cambios</button>
+                <button id='cancel-edit' type='submit'>Cancelar Cambios</button>
                 <span id='feedback'></span>
             </div>
 
-            <div id='tab-modificar-administrador' class='tab-content'>
+            <div id='tab-view-administradores' class='tab-content'>
                 <h2>Administradores Disponibles</h2>
 
                 <table id="allAdmins"></table>

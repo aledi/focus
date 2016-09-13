@@ -15,7 +15,7 @@
         <div class='clientes-wrapper'>
             <ul class='tabs'>
                 <li class='tab-link current' data-tab='tab-agregar-cliente'>Agregar Cliente</li>
-                <li class='tab-link' data-tab='tab-modificar-cliente'>Modificar Cliente</li>
+                <li class='tab-link' data-tab='tab-view-clientes'>Ver Clientes</li>
             </ul>
 
             <div id='tab-agregar-cliente' class='tab-content current'>
@@ -51,12 +51,12 @@
                     <input type='password' name='Password' placeholder='••••••••' id='passwordConfirm'>
                 </div>
 
-                <button type='button' id='cancelModify' class='no-background'>Cancelar</button>
+                <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
                 <button type='submit' id='save-cliente'>Agregar</button>
                 <span id='feedback'></span>
             </div>
 
-            <div id="tab-modificar-cliente" class="tab-content">
+            <div id='tab-view-clientes' class='tab-content'>
                 <h2>Clientes Disponibles</h2>
 
                 <table id="allUsers"></table>
