@@ -1,8 +1,6 @@
 'use strict';
 
-function pieChart(opciones, votes) {
-    console.log(opciones);
-    console.log(votes);
+function pieChart(opciones, votes, i) {
     // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
 
@@ -26,10 +24,10 @@ function pieChart(opciones, votes) {
         // Set chart options
         var options = {'width':600,
                        'height':400,
-                        'sliceVisibilityThreshold': 0};
+                       'sliceVisibilityThreshold': 0};
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.PieChart(document.getElementById('chart' + i));
         chart.draw(data, options);
       }
 }
@@ -78,7 +76,7 @@ $(document).on('ready', function () {
     setTimeout(function (event) {
         getEncuestas('reportes');
         barChart();
-        columnChart();         
+        columnChart();
     }, 500);
 
     $('#preguntas-select').hide();
@@ -169,7 +167,22 @@ $(document).on('ready', function () {
                 $('#educacion-select').val('0');
 
                 $('#filtros-button').show();
-                pieChart(response.opciones, response.votos);
+
+                if (response.status === "NO_DATA") {
+                    document.getElementById('chart1').innerHTML = "";
+                    return;
+                }
+
+                if (response.tipo === 1) {
+                    // Tabla
+                } else if (response.tipo === 4) {
+                    // Barras
+                } else if (response.opciones.length < 4) {
+                    pieChart(response.opciones, response.votos, 1);
+                } else {
+                    // Columnas
+                }
+
                 return;
             },
             error: function (errorMsg) {
@@ -207,6 +220,19 @@ $(document).on('ready', function () {
             data: data,
             dataType: 'json',
             success: function (response) {
+                if (response.status === "NO_DATA") {
+                    document.getElementById('chart3').innerHTML = "";
+                    return;
+                }
+
+                if (response.tipo === 4) {
+                    // Barras
+                } else if (response.opciones.length < 4) {
+                    pieChart(response.opciones, response.votos, 3);
+                } else {
+                    // Columnas
+                }
+
                 return;
             },
             error: function (errorMsg) {
