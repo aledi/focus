@@ -165,6 +165,10 @@ $(document).on('ready', function () {
                     return;
                 }
 
+                if (numPregunta === 0) {
+                    // General
+                }
+
                 if (response.tipo === 1) {
                     // Tabla
                 } else if (response.tipo === 4) {
