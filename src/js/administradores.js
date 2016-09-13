@@ -117,7 +117,7 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').first().addClass('current');
-        $("#tab-agregarAdministrador").addClass('current');
+        $("#tab-agregar-administrador").addClass('current');
 
         $('#headerTitle').text('Modificar Administrador');
         $('#saveAdmin').text('Modificar');
@@ -178,7 +178,7 @@ $(document).on('ready', function () {
     });
 
     $('#cancelModify').on('click', function (event) {
-        $('#tab-agregarAdministrador').find('input').val('');
+        $('#tab-agregar-administrador').find('input').val('');
         $('#headerTitle').text('Agregar Administrador');
         $('#saveAdmin').text('Agregar');
         $('#cancelModify').hide();
@@ -190,6 +190,6 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').last().addClass('current');
-        $("#tab-modificarAdministrador").addClass('current');
+        $("#tab-modificar-administrador").addClass('current');
     });
 });

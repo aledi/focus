@@ -120,7 +120,7 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').first().addClass('current');
-        $("#tab-agregarEncuesta").addClass('current');
+        $("#tab-agregar-encuesta").addClass('current');
 
         $('#headerTitle').text('Modificar Encuesta');
         $('#saveEncuesta').text('Modificar');
@@ -177,7 +177,7 @@ $(document).on('ready', function () {
     });
 
     $('#cancelModify').on('click', function (event) {
-        $('#tab-agregarEncuesta').find('input').val('');
+        $('#tab-agregar-encuesta').find('input').val('');
         $('#allPanels input').removeAttr('checked');
         $('#headerTitle').text('Agregar Encuesta');
         $('#saveEncuesta').text('Agregar');
@@ -190,7 +190,7 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').last().addClass('current');
-        $("#tab-modificarEncuesta").addClass('current');
+        $("#tab-modificar-encuesta").addClass('current');
     });
 
     $('#mes, #anio').on('change', function() {

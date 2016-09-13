@@ -15,11 +15,11 @@
     <section>
         <div class='paneles-wrapper'>
             <ul class='tabs'>
-                <li class='tab-link current' data-tab='tab-agregarPanel'>Agregar Panel</li>
-                <li class='tab-link' data-tab='tab-modificarPanel'>Modificar Panel</li>
+                <li class='tab-link current' data-tab='tab-agregar-panel'>Agregar Panel</li>
+                <li class='tab-link' data-tab='tab-modificar-panel'>Modificar Panel</li>
             </ul>
 
-            <div id='tab-agregarPanel' class='tab-content current'>
+            <div id='tab-agregar-panel' class='tab-content current'>
                 <h2 id='headerTitle'>Agregar Panel</h2>
 
                 <div class='input-wrapper'>
@@ -52,7 +52,7 @@
                 <span id='feedback'></span>
             </div>
 
-            <div id='tab-modificarPanel' class='tab-content'>
+            <div id='tab-modificar-panel' class='tab-content'>
                 <h2>Paneles Disponibles</h2>
 
                 <table id='allPanels'></table>

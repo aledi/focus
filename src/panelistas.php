@@ -16,11 +16,11 @@
     <section>
         <div class='panelistas-wrapper'>
             <ul class='tabs'>
-                <li class='tab-link current' data-tab='tab-agregarPanelista'>Agregar Panelista</li>
-                <li class='tab-link' data-tab='tab-modificarPanelista'>Modificar Panelista</li>
+                <li class='tab-link current' data-tab='tab-agregar-panelista'>Agregar Panelista</li>
+                <li class='tab-link' data-tab='tab-modificar-panelista'>Modificar Panelista</li>
             </ul>
 
-            <div id='tab-agregarPanelista' class='tab-content current'>
+            <div id='tab-agregar-panelista' class='tab-content current'>
                 <h2 id='headerTitle'>Agregar Panelista</h2>
 
                 <div class='input-wrapper'>
@@ -125,7 +125,7 @@
                 <span id='feedback' class='feedback-text'></span>
             </div>
 
-            <div id='tab-modificarPanelista' class='tab-content'>
+            <div id='tab-modificar-panelista' class='tab-content'>
                 <h2>Panelistas Disponibles</h2>
                 <table id='allPanelistas'></table>
                 <div id='feedback'></div>

@@ -120,7 +120,7 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').first().addClass('current');
-        $("#tab-agregarCliente").addClass('current');
+        $("#tab-agregar-cliente").addClass('current');
 
         $('#cliente-password').hide();
         $('#cliente-password-confirm').hide();
@@ -178,7 +178,7 @@ $(document).on('ready', function () {
     });
 
     $('#cancelModify').on('click', function (event) {
-        $('#tab-agregarCliente').find('input').val('');
+        $('#tab-agregar-cliente').find('input').val('');
         $('#headerTitle').text('Agregar Usuario');
         $('#save-cliente').text('Agregar');
         $('#cancelModify').hide();
@@ -190,6 +190,6 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').last().addClass('current');
-        $("#tab-modificarCliente").addClass('current');
+        $("#tab-modificar-cliente").addClass('current');
     });
 });

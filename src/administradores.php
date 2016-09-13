@@ -14,11 +14,11 @@
     <section>
         <div class='admins-wrapper'>
             <ul class='tabs'>
-                <li class='tab-link current' data-tab='tab-agregarAdministrador'>Agregar Administrador</li>
-                <li class='tab-link' data-tab='tab-modificarAdministrador'>Modificar Administrador</li>
+                <li class='tab-link current' data-tab='tab-agregar-administrador'>Agregar Administrador</li>
+                <li class='tab-link' data-tab='tab-modificar-administrador'>Modificar Administrador</li>
             </ul>
 
-            <div id='tab-agregarAdministrador' class='tab-content current'>
+            <div id='tab-agregar-administrador' class='tab-content current'>
                 <h2 id='headerTitle'>Agregar Administrador</h2>
 
                 <div class='input-wrapper'>
@@ -56,7 +56,7 @@
                 <span id='feedback'></span>
             </div>
 
-            <div id='tab-modificarAdministrador' class='tab-content'>
+            <div id='tab-modificar-administrador' class='tab-content'>
                 <h2>Administradores Disponibles</h2>
 
                 <table id="allAdmins"></table>

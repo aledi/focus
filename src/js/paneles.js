@@ -158,7 +158,7 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').first().addClass('current');
-        $("#tab-agregarPanel").addClass('current');
+        $("#tab-agregar-panel").addClass('current');
 
         $('#headerTitle').text('Modificar Panel');
         $('#savePanel').text('Modificar');
@@ -217,7 +217,7 @@ $(document).on('ready', function () {
     });
 
     $('#cancelModify').on('click', function (event) {
-        $('#tab-agregarPanel').find('input').val('');
+        $('#tab-agregar-panel').find('input').val('');
         $('#tableClientes input').removeAttr('checked');
         $('#headerTitle').text('Agregar Panel');
         $('#savePanel').text('Agregar');
@@ -229,7 +229,7 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').last().addClass('current');
-        $("#tab-modificarPanel").addClass('current');
+        $("#tab-modificar-panel").addClass('current');
     });
 
     $('#mes, #anio').on('change', function () {
