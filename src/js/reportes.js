@@ -73,7 +73,9 @@ function columnChart(opciones, votes, chartNumber, title){
         var options = {
           title: title.charAt(0).toUpperCase() + title.slice(1),
           width: 900,
-          bar: { groupWidth: "40%" }
+          height: 500,
+          bar: { groupWidth: "61.48%",
+                width: "40%"}
         };
 
         var chart = new google.charts.Bar(document.getElementById('chart3'));
