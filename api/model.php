@@ -998,12 +998,12 @@ function generalReportByGender ($encuesta, $total, $default) {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $conn->close();
-            return array('H#' => (int)$row['h'], 'H' => (int)$row['h'] / $total, 'M#' => ($total - (int)$row['h']), 'M' => ($total - (int)$row['h']) / $total);
+            return array('H' => (int)$row['h'], 'M' => ($total - (int)$row['h']));
         }
     }
 
     $conn->close();
-    return array('H#' => 0, 'H' => 0, 'M#' => 0, 'M' => 0);
+    return array('H' => 0, 'M' => 0);
 }
 
 function generalReportByAge ($encuesta, $total, $default) {
@@ -1023,8 +1023,7 @@ function generalReportByAge ($encuesta, $total, $default) {
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
-            $response['25#'] = (int)$row['count'];
-            $response['25'] = (int)$row['count'] / $total;
+            $response['25'] = (int)$row['count'];
             $count = $count + (int)$row['count'];
         }
 
@@ -1032,8 +1031,7 @@ function generalReportByAge ($encuesta, $total, $default) {
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
-            $response['35#'] = (int)$row['count'];
-            $response['35'] = (int)$row['count'] / $total;
+            $response['35'] = (int)$row['count'];
             $count = $count + (int)$row['count'];
         }
 
@@ -1041,8 +1039,7 @@ function generalReportByAge ($encuesta, $total, $default) {
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
-            $response['45#'] = (int)$row['count'];
-            $response['45'] = (int)$row['count'] / $total;
+            $response['45'] = (int)$row['count'];
             $count = $count + (int)$row['count'];
         }
 
@@ -1050,20 +1047,18 @@ function generalReportByAge ($encuesta, $total, $default) {
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
-            $response['55#'] = (int)$row['count'];
-            $response['55'] = (int)$row['count'] / $total;
+            $response['55'] = (int)$row['count'];
             $count = $count + (int)$row['count'];
         }
 
-        $response['100#'] = $total - $count;
-        $response['100'] = ($total - $count) / $total;
+        $response['100'] = $total - $count;
 
         $conn->close();
         return $response;
     }
 
     $conn->close();
-    return array('25#' => 0, '25' => 0, '35#' => 0, '35' => 0, '45#' => 0, '45' => 0, '55#' => 0, '55' => 0, '100#' => 0, '100' => 0);
+    return array('25' => 0, '35' => 0, '45' => 0, '55' => 0, '100' => 0);
 }
 
 function generalReportByState ($encuesta, $total, $default) {
@@ -1076,8 +1071,7 @@ function generalReportByState ($encuesta, $total, $default) {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $response[$row['estado'].'#'] = (int)$row['count'];
-            $response[$row['estado']] = (int)$row['count'] / $total;
+            $response[$row['estado']] = (int)$row['count'];
         }
 
         $conn->close();
@@ -1227,12 +1221,12 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
             return array('status' => 'NO_DATA');
         }
 
-        for ($x = 0; $x < count($options); $x++) {
-            $values[] = $votes[$x] / $total;
-        }
+        // for ($x = 0; $x < count($options); $x++) {
+        //     $values[] = $votes[$x] / $total;
+        // }
 
         $conn->close();
-        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'valores' => $values, 'votos' => $votes);
+        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'votos' => $votes);
     }
 
     return array('status' => 'DATABASE_ERROR');
