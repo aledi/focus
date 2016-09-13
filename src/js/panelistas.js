@@ -135,7 +135,7 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').first().addClass('current');
-        $('#tab-agregarPanelista').addClass('current');
+        $('#tab-agregar-panelista').addClass('current');
 
         $('#headerTitle').text('Modificar Panelista');
         $('#savePanelista').text('Modificar');
@@ -203,9 +203,9 @@ $(document).on('ready', function () {
     });
 
     $('#cancelModify').on('click', function (event) {
-        $('#tab-agregarPanelista').find('input').val('');
-        $('#tab-agregarPanelista').find('select').val('0');
-        $('#tab-agregarPanelista').find('input').removeAttr('checked');
+        $('#tab-agregar-panelista').find('input').val('');
+        $('#tab-agregar-panelista').find('select').val('0');
+        $('#tab-agregar-panelista').find('input').removeAttr('checked');
         $('#headerTitle').text('Agregar Panelista');
         $('#savePanel').text('Agregar');
         $('#cancelModify').hide();
@@ -217,7 +217,7 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').last().addClass('current');
-        $('#tab-modificarPanelista').addClass('current');
+        $('#tab-modificar-panelista').addClass('current');
     });
 
     $('#mes, #anio').on('change', function() {
