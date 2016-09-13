@@ -78,6 +78,8 @@
         </select>
         <button id='filtros-button' type='button'>Aplicar filtros</button>
         <div id="chart_div"></div>
+        <div id="chart_div2"></div>
+        <div id="barchart_values" style="width: 900px; height: 300px;"></div>
     </section>
 </body>
 </html>
