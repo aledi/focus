@@ -3,6 +3,10 @@
 $(document).on('ready', function () {
     $('#usuarios-header-option').addClass('selected');
 
+    // -----------------------------------------------------------------------------------------------
+    // Fetch Administradores
+    // -----------------------------------------------------------------------------------------------
+
     setTimeout(function () {
         $.ajax({
             type: 'POST',
@@ -25,7 +29,7 @@ $(document).on('ready', function () {
                 for (var i = 0; i < response.results.length; i++) {
                     var result = response.results[i];
 
-                    currentHTML += '<tr value="'+ result.id +'">';
+                    currentHTML += '<tr id="'+ result.id +'">';
                     currentHTML += '<td>' + result.username+'</td>';
                     currentHTML += '<td>' + result.nombre+'</td>';
                     currentHTML += '<td>' + result.email+'</td>';
@@ -45,6 +49,10 @@ $(document).on('ready', function () {
             }
         });
     });
+
+    // -----------------------------------------------------------------------------------------------
+    // Save Administrador
+    // -----------------------------------------------------------------------------------------------
 
     $('#saveAdmin').on('click', function (event) {
         var idAdmin = window.location.search.substring(1);
@@ -70,11 +78,11 @@ $(document).on('ready', function () {
         }
 
         var data = {
-            'action': 'ALTA_ADMIN',
-            'nombre': nombre,
-            'apellidos': apellidos,
-            'email': email,
-            'username': username
+            action: 'ALTA_ADMIN',
+            nombre: nombre,
+            apellidos: apellidos,
+            email: email,
+            username: username
         };
 
         if (modifying) {
@@ -98,27 +106,12 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allAdmins').on('click', '.deleteButton', function () {
-        $.ajax({
-            url: '../api/controller.php',
-            type: 'POST',
-            data: {
-                'action': 'DELETE_ADMIN',
-                'id': $(this).parent().attr('value')
-            },
-            dataType: 'json',
-            success: function (response) {
-                alert('Administrador eliminado exitosamente.');
-                $(this).parent().find('td.id').remove();
-            },
-            error: function (errorMsg) {
-                alert('Error eliminando administrador.');
-            }
-        });
-    });
+    // -----------------------------------------------------------------------------------------------
+    // Modify Administrador
+    // -----------------------------------------------------------------------------------------------
 
     $('#allAdmins').on('click', '.modifyButton', function ()  {
-        var idAdministador = $(this).parent().attr('value')
+        var idAdministador = $(this).parent().attr('id')
 
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
@@ -138,8 +131,8 @@ $(document).on('ready', function () {
             url: '../api/controller.php',
             type: 'POST',
             data: {
-                'action': 'GET_ADMINS',
-                'id': idAdministador
+                action: 'GET_ADMINS',
+                id: idAdministador
             },
             dataType: 'json',
             success: function (response) {
@@ -156,6 +149,30 @@ $(document).on('ready', function () {
             },
             error: function (errorMsg) {
                 alert('Error modificando administrador.');
+            }
+        });
+    });
+
+    // -----------------------------------------------------------------------------------------------
+    // Delete Administrador
+    // -----------------------------------------------------------------------------------------------
+
+    $('#allAdmins').on('click', '.deleteButton', function () {
+        var self = this;
+        $.ajax({
+            url: '../api/controller.php',
+            type: 'POST',
+            data: {
+                action: 'DELETE_ADMIN',
+                id: $(this).parent().attr('id')
+            },
+            dataType: 'json',
+            success: function (response) {
+                alert('Administrador eliminado exitosamente.');
+                $(self).parent().remove();
+            },
+            error: function (errorMsg) {
+                alert('Error eliminando administrador.');
             }
         });
     });

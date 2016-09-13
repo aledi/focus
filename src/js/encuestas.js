@@ -3,6 +3,10 @@
 $(document).on('ready', function () {
     $('#encuestas-header-option').addClass('selected');
 
+    // -----------------------------------------------------------------------------------------------
+    // Fetch Paneles
+    // -----------------------------------------------------------------------------------------------
+
     setTimeout(function (event) {
         $.ajax({
             type: 'POST',
@@ -28,7 +32,7 @@ $(document).on('ready', function () {
                 for (var i = 0; i < response.results.length; i++) {
                     var result = response.results[i];
 
-                    currentHTML += '<tr value="' + result.id + '">';
+                    currentHTML += '<tr id="' + result.id + '">';
                     currentHTML += '<td>' + result.nombre + '</td>';
                     currentHTML += '<td>' + result.fechaInicio + '</td>';
                     currentHTML += '<td>' + result.fechaFin + '</td>';
@@ -49,9 +53,17 @@ $(document).on('ready', function () {
         });
     }, 500);
 
+    // -----------------------------------------------------------------------------------------------
+    // Fetch Encuestas
+    // -----------------------------------------------------------------------------------------------
+
     setTimeout(function (event) {
         getEncuestas('encuestas');
     }, 500);
+
+    // -----------------------------------------------------------------------------------------------
+    // Save Encuesta
+    // -----------------------------------------------------------------------------------------------
 
     $('#saveEncuesta').on('click', function (event) {
         event.preventDefault();
@@ -70,11 +82,11 @@ $(document).on('ready', function () {
         }
 
         var data = {
-            'action': 'ALTA_ENCUESTA',
-            'nombre': nombre,
-            'fechaInicio': fechaInicio,
-            'fechaFin': fechaFin,
-            'panel' : panel
+            action: 'ALTA_ENCUESTA',
+            nombre: nombre,
+            fechaInicio: fechaInicio,
+            fechaFin: fechaFin,
+            panel: panel
         };
 
         if (idEncuesta != '') {
@@ -97,27 +109,12 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allEncuestas').on('click', '.deleteButton', function() {
-        $.ajax({
-            url: '../api/controller.php',
-            type: 'POST',
-            data: {
-                'action': 'DELETE_ENCUESTA',
-                'id': $(this).parent().attr('value')
-            },
-            dataType: 'json',
-            success: function (response) {
-                alert('Encuesta eliminada exitosamente.');
-                $(this).parent().find('td.id').remove();
-            },
-            error: function (errorMsg) {
-                alert('Error eliminando encuesta.');
-            }
-        });
-    });
+    // -----------------------------------------------------------------------------------------------
+    // Modify Encuesta
+    // -----------------------------------------------------------------------------------------------
 
     $('#allEncuestas').on('click', '.modifyButton', function() {
-        var idEncuesta = $(this).parent().attr('value');
+        var idEncuesta = $(this).parent().attr('id');
 
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
@@ -134,8 +131,8 @@ $(document).on('ready', function () {
             url: '../api/controller.php',
             type: 'POST',
             data: {
-                'action': 'GET_ENCUESTAS',
-                'id': idEncuesta
+                action: 'GET_ENCUESTAS',
+                id: idEncuesta
             },
             dataType: 'json',
             success: function (response) {
@@ -151,6 +148,30 @@ $(document).on('ready', function () {
             },
             error: function (errorMsg) {
                 alert('Error modificando encuesta.');
+            }
+        });
+    });
+
+    // -----------------------------------------------------------------------------------------------
+    // Delete Encuesta
+    // -----------------------------------------------------------------------------------------------
+
+    $('#allEncuestas').on('click', '.deleteButton', function() {
+        var self = this;
+        $.ajax({
+            url: '../api/controller.php',
+            type: 'POST',
+            data: {
+                action: 'DELETE_ENCUESTA',
+                id: $(this).parent().attr('id')
+            },
+            dataType: 'json',
+            success: function (response) {
+                alert('Encuesta eliminada exitosamente.');
+                $(self).parent().remove();
+            },
+            error: function (errorMsg) {
+                alert('Error eliminando encuesta.');
             }
         });
     });

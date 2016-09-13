@@ -3,6 +3,10 @@
 $(document).on('ready', function () {
     $('#panelistas-header-option').addClass('selected');
 
+    // -----------------------------------------------------------------------------------------------
+    // Fetch Panelistas
+    // -----------------------------------------------------------------------------------------------
+
     setTimeout(function (event) {
         $.ajax({
             type: 'POST',
@@ -29,7 +33,7 @@ $(document).on('ready', function () {
                 for (var i = 0; i < response.results.length; i++) {
                     var result = response.results[i];
 
-                    currentHTML += '<tr value="' + result.id + '">';
+                    currentHTML += '<tr id="' + result.id + '">';
                     currentHTML += '<td>' + result.nombre + " " + result.apellidos + '</td>';
                     currentHTML += '<td>' + convertGenero(result.genero) + '</td>';
                     currentHTML += '<td>' + result.edad + '</td>';
@@ -52,6 +56,10 @@ $(document).on('ready', function () {
             }
         });
     }, 500);
+
+    // -----------------------------------------------------------------------------------------------
+    // Save Panelista
+    // -----------------------------------------------------------------------------------------------
 
     $('#savePanelista').on('click', function (event) {
         var idPanelista = window.location.search.substring(1);
@@ -116,29 +124,12 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allPanelistas').on('click', '.deleteButton', function () {
-        var data = {
-            'action': 'DELETE_PANELISTA',
-            'id': $(this).parent().attr('value')
-        }
-
-        $.ajax({
-            url: '../api/controller.php',
-            type: 'POST',
-            data: data,
-            dataType: 'json',
-            success: function (response) {
-                alert('Panelista eliminado exitosamente.');
-                $(this).parent().find('td.id').remove();
-            },
-            error: function (errorMsg) {
-                alert('Error eliminando panelista.');
-            }
-        });
-    });
+    // -----------------------------------------------------------------------------------------------
+    // Modify Panelista
+    // -----------------------------------------------------------------------------------------------
 
     $('#allPanelistas').on('click', '.modifyButton', function () {
-        var idPanelista = $(this).parent().attr('value');
+        var idPanelista = $(this).parent().attr('id');
 
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
@@ -162,7 +153,6 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 var result = response.result;
-
                 $('#firstName').val(result.nombre);
                 $('#lastName').val(result.apellidos);
                 $('#email').val(result.email);
@@ -177,7 +167,7 @@ $(document).on('ready', function () {
                 $('#cp').val(result.cp);
 
                 var myURL = window.location.href.split('?')[0];
-                myURL = myURL + '?id=' + result.id;
+                myURL += '?id=' + result.id;
                 history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {
@@ -186,11 +176,30 @@ $(document).on('ready', function () {
         });
     });
 
-    // Listen to keypress & restrict input to numeric value
-    $('#cp').keypress(function (event) {
-        if (!event.metaKey && event.charCode !== 13 && (event.charCode < 48 || event.charCode > 57)) {
-            event.preventDefault();
+    // -----------------------------------------------------------------------------------------------
+    // Delete Panelista
+    // -----------------------------------------------------------------------------------------------
+
+    $('#allPanelistas').on('click', '.deleteButton', function () {
+        var self = this;
+        var data = {
+            action: 'DELETE_PANELISTA',
+            id: $(this).parent().attr('id')
         }
+
+        $.ajax({
+            url: '../api/controller.php',
+            type: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function (response) {
+                alert('Panelista eliminado exitosamente.');
+                $(self).parent().remove();
+            },
+            error: function (errorMsg) {
+                alert('Error eliminando panelista.');
+            }
+        });
     });
 
     $('#cancelModify').on('click', function (event) {
@@ -213,5 +222,12 @@ $(document).on('ready', function () {
 
     $('#mes, #anio').on('change', function() {
         changeSelect('Inicio');
+    });
+
+    // Listen to keypress & restrict input to numeric value
+    $('#cp').keypress(function (event) {
+        if (!event.metaKey && event.charCode !== 13 && (event.charCode < 48 || event.charCode > 57)) {
+            event.preventDefault();
+        }
     });
 });
