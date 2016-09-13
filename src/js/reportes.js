@@ -141,21 +141,9 @@ $(document).on('ready', function () {
         $('#educacion-select').hide();
         $('#filtros-button').hide();
 
-        if (numPregunta != 0) {
+        if (numPregunta < 0) {
             console.log("General");
-            $('#edad-select').show();
-            $('#edad-select').val('0');
-
-            $('#genero-select').show();
-            $('#genero-select').val('-1');
-
-            $('#estado-select').show();
-            $('#estado-select').val('0');
-
-            $('#educacion-select').show();
-            $('#educacion-select').val('0');
-
-            $('#filtros-button').show();
+            return
         }
 
         var data = {
@@ -172,6 +160,19 @@ $(document).on('ready', function () {
             success: function (response) {
                 // Show filter options with default values
                 console.log(response);
+                $('#edad-select').show();
+                $('#edad-select').val('0');
+
+                $('#genero-select').show();
+                $('#genero-select').val('-1');
+
+                $('#estado-select').show();
+                $('#estado-select').val('0');
+
+                $('#educacion-select').show();
+                $('#educacion-select').val('0');
+
+                $('#filtros-button').show();
                 if (response.status === "NO_DATA") {
                     document.getElementById('chart1').innerHTML = "";
                     return;
