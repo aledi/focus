@@ -18,7 +18,7 @@
         <div class='encuestas-wrapper'>
             <ul class='tabs'>
                 <li class='tab-link current' data-tab='tab-agregar-encuesta'>Agregar Encuesta</li>
-                <li class='tab-link' data-tab='tab-modificar-encuesta'>Modificar Encuesta</li>
+                <li class='tab-link' data-tab='tab-view-encuestas'>Ver Encuestas</li>
             </ul>
 
             <div id='tab-agregar-encuesta' class='tab-content current'>
@@ -47,12 +47,12 @@
                     <table id='allPanels'></table>
                 </div>
 
-                <button type='button' id='cancelModify' class='no-background'>Cancelar</button>
+                <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
                 <button type='submit' id='saveEncuesta'>Agregar</button>
                 <span id='feedback'></span>
             </div>
 
-            <div id='tab-modificar-encuesta' class='tab-content'>
+            <div id='tab-view-encuestas' class='tab-content'>
                 <h2>Encuestas Disponibles</h2>
 
                 <table id='allEncuestas'></table>

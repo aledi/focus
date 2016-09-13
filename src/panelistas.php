@@ -17,7 +17,7 @@
         <div class='panelistas-wrapper'>
             <ul class='tabs'>
                 <li class='tab-link current' data-tab='tab-agregar-panelista'>Agregar Panelista</li>
-                <li class='tab-link' data-tab='tab-modificar-panelista'>Modificar Panelista</li>
+                <li class='tab-link' data-tab='tab-view-panelistas'>Ver Panelistas</li>
             </ul>
 
             <div id='tab-agregar-panelista' class='tab-content current'>
@@ -120,12 +120,12 @@
                     <input id='cp' type='text' />
                 </div>
 
-                <button type='button' id='cancelModify' class='no-background' style='visibility: hidden;'>Cancelar</button>
+                <button type='button' id='cancel-edit' class='no-background' style='visibility: hidden;'>Cancelar</button>
                 <button type='submit' id='savePanelista'>Agregar</button>
                 <span id='feedback' class='feedback-text'></span>
             </div>
 
-            <div id='tab-modificar-panelista' class='tab-content'>
+            <div id='tab-view-panelistas' class='tab-content'>
                 <h2>Panelistas Disponibles</h2>
                 <table id='allPanelistas'></table>
                 <div id='feedback'></div>

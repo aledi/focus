@@ -39,7 +39,7 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + result.edad + '</td>';
                     currentHTML += '<td>' + result.municipio + '</td>';
                     currentHTML += '<td>' + result.estado + '</td>';
-                    currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
+                    currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
 
@@ -49,7 +49,7 @@ $(document).on('ready', function () {
                 }
 
                 currentHTML += '</tbody>';
-                $('#cancelModify').hide();
+                $('#cancel-edit').hide();
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los clientes');
@@ -65,7 +65,7 @@ $(document).on('ready', function () {
         var idPanelista = window.location.search.substring(1);
         idPanelista = idPanelista.substring(3);
 
-        var modifying = idPanelista != '';
+        var editing = idPanelista != '';
 
         var firstName = $('#firstName').val();
         var lastName = $('#lastName').val();
@@ -79,7 +79,7 @@ $(document).on('ready', function () {
         var estado = $('#estado').val();
         var cp = $('#cp').val();
 
-        if (firstName === '' || lastName === '' || email === '' || username === '' || (!modifying && password === '') ||
+        if (firstName === '' || lastName === '' || email === '' || username === '' || (!editing && password === '') ||
             fechaNacimiento === '' || educacion === '0' || calleNumero === '' || colonia === '' || municipio === '' ||
             estado === '0' || cp === '') {
                 $('#feedback').html('Favor de llenar todos los campos');
@@ -102,14 +102,14 @@ $(document).on('ready', function () {
             'cp': cp
         };
 
-        if (modifying) {
+        if (editing) {
             data.id = idPanelista;
         }
 
         // Clear feedback <span>
         $('#feedback').empty();
 
-        var actionText = modifying ? 'modificado' : 'agregado';
+        var actionText = editing ? 'editado' : 'agregado';
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -125,10 +125,10 @@ $(document).on('ready', function () {
     });
 
     // -----------------------------------------------------------------------------------------------
-    // Modify Panelista
+    // Edit Panelista
     // -----------------------------------------------------------------------------------------------
 
-    $('#allPanelistas').on('click', '.modifyButton', function () {
+    $('#allPanelistas').on('click', '.edit-button', function () {
         var idPanelista = $(this).parent().attr('id');
 
         $('ul.tabs li').removeClass('current');
@@ -137,11 +137,11 @@ $(document).on('ready', function () {
         $('ul.tabs li').first().addClass('current');
         $('#tab-agregar-panelista').addClass('current');
 
-        $('#headerTitle').text('Modificar Panelista');
-        $('#savePanelista').text('Modificar');
+        $('#headerTitle').text('Editar Panelista');
+        $('#savePanelista').text('Editar');
 
         $('#panelista-password').hide();
-        $('#cancelModify').show();
+        $('#cancel-edit').show();
 
         $.ajax({
             url: '../api/controller.php',
@@ -171,7 +171,7 @@ $(document).on('ready', function () {
                 history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {
-                alert('Error modificando panelista.');
+                alert('Error editando panelista.');
             }
         });
     });
@@ -202,13 +202,13 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#cancelModify').on('click', function (event) {
+    $('#cancel-edit').on('click', function (event) {
         $('#tab-agregar-panelista').find('input').val('');
         $('#tab-agregar-panelista').find('select').val('0');
         $('#tab-agregar-panelista').find('input').removeAttr('checked');
         $('#headerTitle').text('Agregar Panelista');
         $('#savePanel').text('Agregar');
-        $('#cancelModify').hide();
+        $('#cancel-edit').hide();
 
         var myURL = window.location.href.split('?')[0];
         history.pushState({}, null, myURL);
@@ -217,7 +217,7 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').last().addClass('current');
-        $('#tab-modificar-panelista').addClass('current');
+        $('#tab-view-panelistas').addClass('current');
     });
 
     $('#mes, #anio').on('change', function() {

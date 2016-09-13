@@ -76,7 +76,7 @@ $(document).on('ready', function () {
                     currentHTML += "<td>" + result.fechaInicio + "</td>";
                     currentHTML += "<td>" + result.fechaFin + "</td>";
                     currentHTML += "<td>" + result.cliente + "</td>";
-                    currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
+                    currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += "</tr>";
 
@@ -85,7 +85,7 @@ $(document).on('ready', function () {
                 }
 
                 currentHTML += '</tbody>';
-                $('#cancelModify').hide();
+                $('#cancel-edit').hide();
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los paneles');
@@ -127,7 +127,7 @@ $(document).on('ready', function () {
             data.id = idPanel;
         }
 
-        var actionText = idPanel !== '' ? 'modificado' : 'agregado';
+        var actionText = idPanel !== '' ? 'editado' : 'agregado';
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -148,10 +148,10 @@ $(document).on('ready', function () {
     });
 
     // -----------------------------------------------------------------------------------------------
-    // Modify Panel
+    // Edit Panel
     // -----------------------------------------------------------------------------------------------
 
-    $('#allPanels').on('click', '.modifyButton', function () {
+    $('#allPanels').on('click', '.edit-button', function () {
         var idPanel = $(this).parent().attr('id');
 
         $('ul.tabs li').removeClass('current');
@@ -160,9 +160,9 @@ $(document).on('ready', function () {
         $('ul.tabs li').first().addClass('current');
         $("#tab-agregar-panel").addClass('current');
 
-        $('#headerTitle').text('Modificar Panel');
-        $('#savePanel').text('Modificar');
-        $('#cancelModify').show();
+        $('#headerTitle').text('Editar Panel');
+        $('#savePanel').text('Editar');
+        $('#cancel-edit').show();
 
         $.ajax({
             url: '../api/controller.php',
@@ -185,7 +185,7 @@ $(document).on('ready', function () {
                 history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {
-                alert('Error modificando panelista.');
+                alert('Error editando panelista.');
             }
         });
     });
@@ -216,12 +216,12 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#cancelModify').on('click', function (event) {
+    $('#cancel-edit').on('click', function (event) {
         $('#tab-agregar-panel').find('input').val('');
         $('#tableClientes input').removeAttr('checked');
         $('#headerTitle').text('Agregar Panel');
         $('#savePanel').text('Agregar');
-        $('#cancelModify').hide();
+        $('#cancel-edit').hide();
         var myURL = window.location.href.split('?')[0];
         history.pushState({}, null, myURL);
 
@@ -229,7 +229,7 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').last().addClass('current');
-        $("#tab-modificar-panel").addClass('current');
+        $('#tab-view-paneles').addClass('current');
     });
 
     $('#mes, #anio').on('change', function () {
