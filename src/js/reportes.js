@@ -138,6 +138,16 @@ function convertState(estado) {
     return estado;
 }
 
+function getObjectProperties(object) {
+    var properties = [];
+    for(var key in object) {
+        properties.push(object[key]);
+    }
+
+    return properties;
+}
+
+
 $(document).on('ready', function () {
     $('#reportes-header-option').addClass('selected');
 
@@ -244,13 +254,13 @@ $(document).on('ready', function () {
                     //General
                     console.log(Object.keys(response)[2]);
                     pieChart(convertGenderArray(Object.keys(response.genero)),
-                            Object.keys(response.genero).map(k => response.genero[k]),
+                            getObjectProperties(response.genero),
                             1, Object.keys(response)[2]);
                     pieChart(convertAgeRange(Object.keys(response.edad)),
-                            Object.keys(response.edad).map(k => response.edad[k]),
+                            getObjectProperties(response.edad),
                             2, Object.keys(response)[0]);
                     columnChart(convertState(Object.keys(response.estado)),
-                            Object.keys(response.estado).map(k => response.estado[k]),
+                            getObjectProperties(response.estado),
                             3, Object.keys(response)[1]);
                 }
                 else {
