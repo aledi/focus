@@ -147,8 +147,8 @@ $(document).on('ready', function () {
             url: '../api/controller.php',
             type: 'POST',
             data: {
-                'action': 'GET_PANELISTAS',
-                'id': idPanelista
+                action: 'GET_PANELISTAS',
+                id: idPanelista
             },
             dataType: 'json',
             success: function (response) {
