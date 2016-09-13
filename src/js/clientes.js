@@ -3,6 +3,10 @@
 $(document).on('ready', function () {
     $('#usuarios-header-option').addClass('selected');
 
+    // -----------------------------------------------------------------------------------------------
+    // Fetch Clientes
+    // -----------------------------------------------------------------------------------------------
+
     setTimeout(function (event) {
         $.ajax({
             type: 'POST',
@@ -23,12 +27,12 @@ $(document).on('ready', function () {
                 for (var i = 0; i < response.results.length; i++) {
                     var result = response.results[i];
 
-                    currentHTML += '<tr value="'+ result.id + '">';
+                    currentHTML += '<tr id="'+ result.id + '">';
                     currentHTML += '<td>' + result.username+'</td>';
                     currentHTML += '<td>' + result.nombre + " " + result.apellidos+'</td>';
                     currentHTML += '<td>' + result.email+'</td>';
-                    currentHTML += '<td class=modifyButton><button id= modify type=button>Modificar</button></td>';
-                    currentHTML += '<td class=deleteButton><button id= delete type=button>Eliminar</button></td>';
+                    currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
+                    currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
 
                     $('#allUsers').append(currentHTML);
@@ -36,7 +40,7 @@ $(document).on('ready', function () {
                 }
 
                 currentHTML += '</tbody>';
-                $('#cancelModify').hide();
+                $('#cancel-edit').hide();
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los clientes');
@@ -44,11 +48,15 @@ $(document).on('ready', function () {
         });
     }, 500);
 
-    $('#saveCliente').on('click', function (event) {
+    // -----------------------------------------------------------------------------------------------
+    // Save Cliente
+    // -----------------------------------------------------------------------------------------------
+
+    $('#save-cliente').on('click', function (event) {
         var idCliente = window.location.search.substring(1);
         idCliente = idCliente.substring(3);
 
-        var modifying = idCliente != '';
+        var editing = idCliente != '';
 
         var email = $('#email').val();
         var nombre = $('#firstName').val();
@@ -57,25 +65,25 @@ $(document).on('ready', function () {
         var password = $('#password').val();
         var passwordConfirm = $('#passwordConfirm').val();
 
-        if (nombre === '' || apellidos === '' || email === '' || username === '' || (!modifying && (password === '' || passwordConfirm === ''))) {
+        if (nombre === '' || apellidos === '' || email === '' || username === '' || (!editing && (password === '' || passwordConfirm === ''))) {
             $('#feedback').html('Favor de llenar todos los campos');
             return;
         }
 
-        if (!modifying && (password != passwordConfirm)) {
+        if (!editing && (password != passwordConfirm)) {
             $('#feedback').html('Las contraseñas no coinciden');
             return;
         }
 
         var data = {
-            'action': 'ALTA_CLIENTE',
-            'nombre': nombre,
-            'apellidos': apellidos,
-            'email': email,
-            'username': username
+            action: 'ALTA_CLIENTE',
+            nombre: nombre,
+            apellidos: apellidos,
+            email: email,
+            username: username
         };
 
-        if (modifying) {
+        if (editing) {
             data.id = idCliente;
         } else {
             data.password = password;
@@ -84,7 +92,7 @@ $(document).on('ready', function () {
         // Clear feedback <span>
         $('#feedback').empty();
 
-        var actionText = modifying ? 'modificado' : 'agregado';
+        var actionText = editing ? 'editado' : 'agregado';
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -99,47 +107,32 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allUsers').on('click', '.deleteButton', function () {
-        $.ajax({
-            url: '../api/controller.php',
-            type: 'POST',
-            data: {
-                'action': 'DELETE_CLIENTE',
-                'id': $(this).parent().attr('value')
-            },
-            dataType: 'json',
-            success: function (response) {
-                alert('Cliente eliminado exitosamente.');
-                $(this).parent().find('td.id').remove();
-            },
-            error: function (errorMsg) {
-                alert('Error eliminando cliente.');
-            }
-        });
-    });
+    // -----------------------------------------------------------------------------------------------
+    // Edit Cliente
+    // -----------------------------------------------------------------------------------------------
 
-    $('#allUsers').on('click', '.modifyButton', function () {
-        var idUser = $(this).parent().attr('value')
-        $('#headerTitle').text('Modificar Cliente');
-        $('#saveCliente').text('Modificar');
+    $('#allUsers').on('click', '.edit-button', function () {
+        var idUser = $(this).parent().attr('id')
+        $('#headerTitle').text('Editar Cliente');
+        $('#save-cliente').text('Editar');
 
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').first().addClass('current');
-        $("#tab-agregarCliente").addClass('current');
+        $("#tab-agregar-cliente").addClass('current');
 
         $('#cliente-password').hide();
         $('#cliente-password-confirm').hide();
 
-        $('#cancelModify').show();
+        $('#cancel-edit').show();
 
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
             data: {
-                'action': 'GET_CLIENTES',
-                'id': idUser
+                action: 'GET_CLIENTES',
+                id: idUser
             },
             dataType: 'json',
             success: function (response) {
@@ -155,16 +148,40 @@ $(document).on('ready', function () {
                 history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {
-                alert('Error modificando cliente.');
+                alert('Error editando cliente.');
             }
         });
     });
 
-    $('#cancelModify').on('click', function (event) {
-        $('#tab-agregarCliente').find('input').val('');
+    // -----------------------------------------------------------------------------------------------
+    // Delete Cliente
+    // -----------------------------------------------------------------------------------------------
+
+    $('#allUsers').on('click', '.deleteButton', function () {
+        var self = this;
+        $.ajax({
+            url: '../api/controller.php',
+            type: 'POST',
+            data: {
+                action: 'DELETE_CLIENTE',
+                id: $(this).parent().attr('id')
+            },
+            dataType: 'json',
+            success: function (response) {
+                alert('Cliente eliminado exitosamente.');
+                $(self).parent().remove();
+            },
+            error: function (errorMsg) {
+                alert('Error eliminando cliente.');
+            }
+        });
+    });
+
+    $('#cancel-edit').on('click', function (event) {
+        $('#tab-agregar-cliente').find('input').val('');
         $('#headerTitle').text('Agregar Usuario');
-        $('#saveCliente').text('Agregar');
-        $('#cancelModify').hide();
+        $('#save-cliente').text('Agregar');
+        $('#cancel-edit').hide();
 
         var myURL = window.location.href.split('?')[0];
         history.pushState({}, null, myURL);
@@ -173,6 +190,6 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').last().addClass('current');
-        $("#tab-modificarCliente").addClass('current');
+        $('#tab-view-clientes').addClass('current');
     });
 });

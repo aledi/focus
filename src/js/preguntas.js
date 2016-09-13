@@ -157,9 +157,9 @@ $(document).on('ready', function () {
             type: 'POST',
             url: '../api/controller.php',
             data: {
-                'action': 'SET_PREGUNTAS_ENCUESTA',
-                'encuesta': idEncuesta,
-                'preguntas': questionsArray
+                action: 'SET_PREGUNTAS_ENCUESTA',
+                encuesta: idEncuesta,
+                preguntas: questionsArray
             },
             dataType: 'json',
             success: function (response) {

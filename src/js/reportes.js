@@ -297,8 +297,8 @@ $(document).on('ready', function () {
 
     $('#filtros-button').on('click', function () {
         var data = {
-            action : 'REPORT_DATA',
-            encuesta : parseInt($('#reportes-encuestas-select').val(), 10),
+            action: 'REPORT_DATA',
+            encuesta: parseInt($('#reportes-encuestas-select').val(), 10),
             numPregunta: parseInt($('#preguntas-select').val(), 10)
         };
 
