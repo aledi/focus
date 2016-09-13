@@ -252,6 +252,16 @@ $(document).on('ready', function () {
 
                 if (numPregunta === 0) {
                     //General
+                    $('#edad-select').hide();
+
+                    $('#genero-select').hide();
+
+                    $('#estado-select').hide();
+
+                    $('#educacion-select').hide();
+
+                    $('#filtros-button').hide();
+
                     console.log(Object.keys(response)[2]);
                     pieChart(convertGenderArray(Object.keys(response.genero)),
                             getObjectProperties(response.genero),
