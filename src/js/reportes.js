@@ -16,10 +16,13 @@ function pieChart(opciones, votes, chartNumber, title) {
             data.addRows([[opciones[x], votes[x]]]);
         }
 
-        var options = { 'title': title.charAt(0).toUpperCase() + title.slice(1),
-                        'width':600,
+        var options = { 'width':600,
                         'height':400,
                         'sliceVisibilityThreshold': 0};
+
+        if (title != "") {
+            options.title = title.charAt(0).toUpperCase() + title.slice(1);
+        }
 
         var chart = new google.visualization.PieChart(document.getElementById('chart' + chartNumber));
         chart.draw(data, options);
@@ -208,7 +211,6 @@ $(document).on('ready', function () {
 
     $('#preguntas-select').on('change', function () {
         var numPregunta = parseInt($(this).val(), 10);
-        console.log(numPregunta);
         $('#edad-select').hide();
         $('#genero-select').hide();
         $('#estado-select').hide();
@@ -255,16 +257,11 @@ $(document).on('ready', function () {
                 if (numPregunta === 0) {
                     //General
                     $('#edad-select').hide();
-
                     $('#genero-select').hide();
-
                     $('#estado-select').hide();
-
                     $('#educacion-select').hide();
-
                     $('#filtros-button').hide();
 
-                    console.log(Object.keys(response)[2]);
                     pieChart(convertGenderArray(Object.keys(response.genero)),
                             getObjectProperties(response.genero),
                             1, Object.keys(response)[2]);
@@ -276,12 +273,16 @@ $(document).on('ready', function () {
                             3, Object.keys(response)[1]);
                 }
                 else {
+                    $('#chart1').html("");
+                    $('#chart2').html("");
+                    $('#chart3').html("");
+                    console.log(getNumberofArrays(response));
                     if (response.tipo === 1) {
                         // Tabla
                     } else if (response.tipo === 4) {
                         // Barras
                     } else if (getNumberofArrays(response) < 4) {
-                        pieChart(response.genero, response.votos, 1);
+                        pieChart(getObjectProperties(response.opciones), response.votos, 1, "");
                     } else {
                         // Columnas
                     }
@@ -332,7 +333,7 @@ $(document).on('ready', function () {
                 if (response.tipo === 4) {
                     // Barras
                 } else if (getNumberofArrays(response) < 4) {
-                    pieChart(response.opciones, response.votos, 3);
+                    pieChart(response.opciones, response.votos, 1, "");
                 } else {
                     // Columnas
                 }
