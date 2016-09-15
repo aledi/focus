@@ -972,17 +972,23 @@ function generalReportData ($encuesta) {
         if ($answers === 0) {
             $byGender = generalReportByGender($encuesta, $answers, TRUE);
             $byAge = generalReportByAge($encuesta, $answers, TRUE);
-            $byState = generalReportByState($encuesta, $answers, TRUE);
+
+            $byStateData = generalReportByState($encuesta, $answers, TRUE);
+            $byState = $byStateData[0];
+            $byStatePercentage = $byStateData[1];
 
             $conn->close();
-            return array('respuestas' => 0, 'porcentaje' => 0, 'genero' => $byGender, 'edad' => $byAge, 'estado' => $byState);
+            return array('respuestas' => 0, 'porcentaje' => 0, 'genero' => $byGender, 'edad' => $byAge, 'estado' => $byState, 'estadoPercentage' => $byStatePercentage);
         }
 
         $byGender = generalReportByGender($encuesta, $answers, FALSE);
         $byAge = generalReportByAge($encuesta, $answers, FALSE);
-        $byState = generalReportByState($encuesta, $answers, FALSE);
 
-        return array('respuestas' => $answers, 'porcentaje' => $answers / $total, 'genero' => $byGender, 'edad' => $byAge, 'estado' => $byState);
+        $byStateData = generalReportByState($encuesta, $answers, FALSE);
+        $byState = $byStateData[0];
+        $byStatePercentage = $byStateData[1];
+
+        return array('respuestas' => $answers, 'porcentaje' => $answers / $total, 'genero' => $byGender, 'edad' => $byAge, 'estado' => $byState, 'estadoPercentage' => $byStatePercentage);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -1069,17 +1075,19 @@ function generalReportByState ($encuesta, $total, $default) {
         $result = $conn->query($sql);
 
         $response = array();
+        $responsePercentage = array();
 
         while ($row = $result->fetch_assoc()) {
             $response[$row['estado']] = (int)$row['count'];
+            $responsePercentage[$row['estado'].'%'] = (int)$row['count'] / $total;
         }
 
         $conn->close();
-        return $response;
+        return array($response, $responsePercentage);
     }
 
     $conn->close();
-    return array();
+    return array(array(), array());
 }
 
 function currentAnswers ($encuesta) {
