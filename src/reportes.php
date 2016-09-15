@@ -5,6 +5,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
     <script src="js/jquery-1.12.3.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src='js/reportes.js' type='text/javascript'></script>
     <script src='js/encuestas-shared.js' type='text/javascript'></script>
     <title> Focus - Reportes</title>
@@ -19,6 +20,9 @@
             <option value='0'>Selecciona una encuesta</option>
         </select>
         <select id='preguntas-select' class='encuestas-select'></select>
+        <div id='chart1'></div>
+        <div id='chart2'></div>
+        <div id='chart3'></div>
         <select id='edad-select' class='encuestas-select'>
             <option value='0'>Selecciona una edad</option>
             <option value='25'>18 a 25</option>
@@ -29,8 +33,8 @@
         </select>
         <select id='genero-select' class='encuestas-select'>
             <option value='-1'>Selecciona un género</option>
-            <option value='1'>Masculino</option>
-            <option value='2'>Femenino</option>
+            <option value='0'>Masculino</option>
+            <option value='1'>Femenino</option>
         </select>
         <select id='estado-select' class='encuestas-select'>
             <option value='0'>Selecciona un estado</option>
