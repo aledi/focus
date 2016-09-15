@@ -1226,7 +1226,7 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
         }
 
         $conn->close();
-        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'votos' => $votes. 'porcentajes' => $values);
+        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'votos' => $votes, 'porcentajes' => $values);
     }
 
     return array('status' => 'DATABASE_ERROR');

@@ -45,7 +45,8 @@ function barChart(opciones, votes, chartNumber, title) {
           width: 900,
           height: 500,
           bar: { groupWidth: "61.48%",
-                width: "40%"}
+                width: "40%"},
+          hAxis: { format: 'percent'}
         };
 
         if (title != "") {
@@ -57,7 +58,7 @@ function barChart(opciones, votes, chartNumber, title) {
     }
 }
 
-function columnChart(opciones, votes, chartNumber, title){
+function columnChart(opciones, votes, percent, chartNumber, title){
     google.charts.setOnLoadCallback(drawStuff);
 
     function drawStuff() {
@@ -66,6 +67,7 @@ function columnChart(opciones, votes, chartNumber, title){
         data.addColumn('number', 'Votos');
 
         for (var x = 0; x < opciones.length; x++) {
+            opciones[x] +=  " (" + String(percent[x] * 100) + "%)";
             data.addRows([[opciones[x], votes[x]]]);
         }
 
@@ -73,7 +75,8 @@ function columnChart(opciones, votes, chartNumber, title){
           width: 900,
           height: 500,
           bar: { groupWidth: "61.48%",
-                width: "40%"}
+                width: "40%"},
+            vAxis: { format: '#%'}
         };
 
         if (title != "") {
@@ -111,19 +114,19 @@ function convertGenderArray(genero) {
 function convertAgeRange(edad) {
     for (var x = 0; x < edad.length; x++) {
         switch (edad[x]) {
-            case '25' :
+            case '25' : 
                 edad[x] = '18 - 25';
             break;
-            case '35' :
+            case '35' : 
                 edad[x] = '26 - 35';
             break;
-            case '45' :
+            case '45' : 
                 edad[x] = '36 - 45';
             break;
-            case '55' :
+            case '55' : 
                 edad[x] = '46 - 55';
             break;
-            case '100' :
+            case '100' : 
                 edad[x] = '56+';
             break;
             default:
@@ -275,15 +278,17 @@ $(document).on('ready', function () {
                     $('#chart1').html("");
                     $('#chart2').html("");
                     $('#chart3').html("");
-
+                    console.log(getNumberofArrays(response));
                     if (response.tipo === 1) {
                         // Tabla
                     } else if (response.tipo === 4) {
+                        // Barras
                         barChart(getObjectProperties(response.opciones), response.votos, 1, "");
                     } else if (response.opciones.length < 4) {
                         pieChart(getObjectProperties(response.opciones), response.votos, 1, "");
                     } else {
-                        columnChart(getObjectProperties(response.opciones), response.votos, 1, "");
+                        // Columnas
+                        columnChart(getObjectProperties(response.opciones), response.votos, response.porcentajes, 1, "");
                     }
                 }
 
@@ -324,19 +329,19 @@ $(document).on('ready', function () {
             data: data,
             dataType: 'json',
             success: function (response) {
+                console.log()
                 if (response.status === "NO_DATA") {
                     document.getElementById('chart3').innerHTML = "";
                     return;
                 }
 
-                if (response.tipo === 1) {
-                    // Tabla
-                } else if (response.tipo === 4) {
-                    barChart(getObjectProperties(response.opciones), response.votos, 3, "");
+                if (response.tipo === 4) {
+                    // Barras
                 } else if (response.opciones.length < 4) {
-                    pieChart(getObjectProperties(response.opciones), response.votos, 3, "");
+                    pieChart(response.opciones, response.votos, 1, "");
                 } else {
-                    columnChart(getObjectProperties(response.opciones), response.votos, 3, "");
+                    // Columnas
+                    columnChart(response.opciones, response.votos, response.porcentajes, 1, "");
                 }
 
                 return;
