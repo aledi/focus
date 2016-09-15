@@ -33,31 +33,27 @@ function barChart(opciones, votes, chartNumber, title) {
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ["Element", "Density", { role: "style" } ],
-            ["Copper", 8.94, "#b87333"],
-            ["Silver", 10.49, "silver"],
-            ["Gold", 19.30, "gold"],
-            ["Platinum", 21.45, "color: #e5e4e2"]
-        ]);
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Data');
+        data.addColumn('number', 'Votos');
 
-        var view = new google.visualization.DataView(data);
-        view.setColumns([0, 1,
-                       { calc: "stringify",
-                         sourceColumn: 1,
-                         type: "string",
-                         role: "annotation" },
-                       2]);
+        for (var x = 0; x < opciones.length; x++) {
+            data.addRows([[opciones[x], votes[x]]]);
+        }
 
         var options = {
-            title: "Density of Precious Metals, in g/cm^3",
-            width: 600,
-            height: 400,
-            bar: {groupWidth: "95%"},
-            legend: { position: "none" },
+          width: 900,
+          height: 500,
+          bar: { groupWidth: "61.48%",
+                width: "40%"}
         };
-        var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
-        chart.draw(view, options);
+
+        if (title != "") {
+            options.title = title.charAt(0).toUpperCase() + title.slice(1);
+        }
+
+        var chart = new google.visualization.BarChart(document.getElementById('chart' + chartNumber));
+        chart.draw(data, options);
     }
 }
 
@@ -74,14 +70,17 @@ function columnChart(opciones, votes, chartNumber, title){
         }
 
         var options = {
-          title: title.charAt(0).toUpperCase() + title.slice(1),
           width: 900,
           height: 500,
           bar: { groupWidth: "61.48%",
                 width: "40%"}
         };
 
-        var chart = new google.charts.Bar(document.getElementById('chart3'));
+        if (title != "") {
+            options.title = title.charAt(0).toUpperCase() + title.slice(1);
+        }
+
+        var chart = new google.charts.Bar(document.getElementById('chart' + chartNumber));
         // Convert the Classic options to Material options.
         chart.draw(data, options);
       };
@@ -281,11 +280,12 @@ $(document).on('ready', function () {
                         // Tabla
                     } else if (response.tipo === 4) {
                         // Barras
+                        barChart(getObjectProperties(response.opciones), response.votos, 1, "");
                     } else if (response.opciones.length < 4) {
-                        console.log("Pie");
                         pieChart(getObjectProperties(response.opciones), response.votos, 1, "");
                     } else {
                         // Columnas
+                        columnChart(getObjectProperties(response.opciones), response.votos, 1, "");
                     }
                 }
 
@@ -326,6 +326,7 @@ $(document).on('ready', function () {
             data: data,
             dataType: 'json',
             success: function (response) {
+                console.log()
                 if (response.status === "NO_DATA") {
                     document.getElementById('chart3').innerHTML = "";
                     return;
@@ -333,11 +334,11 @@ $(document).on('ready', function () {
 
                 if (response.tipo === 4) {
                     // Barras
-                } else if (getNumberofArrays(response) < 4) {
+                } else if (response.opciones.length < 4) {
                     pieChart(response.opciones, response.votos, 1, "");
                 } else {
                     // Columnas
-                    columnChart(opciones, votes, chartNumber, title);
+                    columnChart(response.opciones, response.votos, 1, "");
                 }
 
                 return;
