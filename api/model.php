@@ -1221,12 +1221,12 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
             return array('status' => 'NO_DATA');
         }
 
-        // for ($x = 0; $x < count($options); $x++) {
-        //     $values[] = $votes[$x] / $total;
-        // }
+        for ($x = 0; $x < count($options); $x++) {
+            $values[] = $votes[$x] / $total;
+        }
 
         $conn->close();
-        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'votos' => $votes);
+        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'votos' => $votes. 'porcentajes' => $values);
     }
 
     return array('status' => 'DATABASE_ERROR');
