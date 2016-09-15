@@ -114,19 +114,19 @@ function convertGenderArray(genero) {
 function convertAgeRange(edad) {
     for (var x = 0; x < edad.length; x++) {
         switch (edad[x]) {
-            case '25' : 
+            case '25' :
                 edad[x] = '18 - 25';
             break;
-            case '35' : 
+            case '35' :
                 edad[x] = '26 - 35';
             break;
-            case '45' : 
+            case '45' :
                 edad[x] = '36 - 45';
             break;
-            case '55' : 
+            case '55' :
                 edad[x] = '46 - 55';
             break;
-            case '100' : 
+            case '100' :
                 edad[x] = '56+';
             break;
             default:
@@ -194,7 +194,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 $('#preguntas-select').show();
-                console.log(response);
+
                 var currentHTML = '<option value="-1">Selecciona una pregunta</option>';
 
                 for (var i = 0; i < response.results.length; i++) {
@@ -237,7 +237,6 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 // Show filter options with default values
-                console.log(response);
                 $('#edad-select').show();
                 $('#edad-select').val('0');
 
@@ -273,21 +272,18 @@ $(document).on('ready', function () {
                     columnChart(convertState(Object.keys(response.estado)),
                             getObjectProperties(response.estado),
                             3, Object.keys(response)[1]);
-                }
-                else {
+                } else {
                     $('#chart1').html("");
                     $('#chart2').html("");
                     $('#chart3').html("");
-                    console.log(getNumberofArrays(response));
+
                     if (response.tipo === 1) {
                         // Tabla
                     } else if (response.tipo === 4) {
-                        // Barras
                         barChart(getObjectProperties(response.opciones), response.votos, 1, "");
                     } else if (response.opciones.length < 4) {
                         pieChart(getObjectProperties(response.opciones), response.votos, 1, "");
                     } else {
-                        // Columnas
                         columnChart(getObjectProperties(response.opciones), response.votos, response.porcentajes, 1, "");
                     }
                 }
@@ -329,19 +325,16 @@ $(document).on('ready', function () {
             data: data,
             dataType: 'json',
             success: function (response) {
-                console.log()
-                if (response.status === "NO_DATA") {
-                    document.getElementById('chart3').innerHTML = "";
-                    return;
-                }
+                document.getElementById('chart3').innerHTML = "";
 
-                if (response.tipo === 4) {
-                    // Barras
+                if (response.tipo === 1) {
+                    // Tabla
+                } else if (response.tipo === 4) {
+                    barChart(getObjectProperties(response.opciones), response.votos, 3, "");
                 } else if (response.opciones.length < 4) {
-                    pieChart(response.opciones, response.votos, 1, "");
+                    pieChart(getObjectProperties(response.opciones), response.votos, 3, "");
                 } else {
-                    // Columnas
-                    columnChart(response.opciones, response.votos, response.porcentajes, 1, "");
+                    columnChart(getObjectProperties(response.opciones), response.votos, response.porcentajes, 3, "");
                 }
 
                 return;
