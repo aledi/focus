@@ -281,7 +281,8 @@ $(document).on('ready', function () {
                         // Tabla
                     } else if (response.tipo === 4) {
                         // Barras
-                    } else if (getNumberofArrays(response) < 4) {
+                    } else if (response.opciones.length < 4) {
+                        console.log("Pie");
                         pieChart(getObjectProperties(response.opciones), response.votos, 1, "");
                     } else {
                         // Columnas
@@ -336,6 +337,7 @@ $(document).on('ready', function () {
                     pieChart(response.opciones, response.votos, 1, "");
                 } else {
                     // Columnas
+                    columnChart(opciones, votes, chartNumber, title);
                 }
 
                 return;
