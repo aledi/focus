@@ -315,11 +315,11 @@ function fetchPanel ($id) {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $cliente = $row['cliente'];
-            $sql2 = "SELECT nombre, apellidos FROM Usuario WHERE id = '$cliente'";
+            $sql2 = "SELECT id, nombre, apellidos FROM Usuario WHERE id = '$cliente'";
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'descripcion' => $row['descripcion'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'descripcion' => $row['descripcion'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'clienteID' => (int)$row2['id'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
         }
 
         $conn->close();
