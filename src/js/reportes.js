@@ -1,6 +1,35 @@
 'use strict';
 
-var stateObject = {'AGS':'Aguascalientes', 'BC':'Baja California', 'BCS':'Baja California Sur', 'CAMP':'Campeche', 'COAH':'Coahuila', 'COL':'Colima', 'CHIS':'Chiapas', 'CDMX':'Ciudad de México', 'DGO':'Durango', 'GTO':'Guanajuato', 'HGO':'Hidalgo', 'JAL':'Jalisco', 'EDOMEX':'Estado de México', 'MICH':'Michoacán', 'MOR':'Morelos', 'NAY':'Nayarit', 'NL':'Nuevo León', 'OAX':'Oaxaca', 'PUE':'Puebla', 'QRO':'Querétaro', 'QROO':'Quintana Roo', 'SLP':'San Luis Potosí', 'SIN':'Sinaloa', 'TAB':'Tabasco', 'TAM':'Tamaulipas', 'TLAX':'Tlaxcala', 'VER':'Veracruz', 'YUC':'Yucatan', 'ZAC':'Zacatecas'}
+var stateObject = { 'AGS':'Aguascalientes',
+                    'BC':'Baja California',
+                    'BCS':'Baja California Sur',
+                    'CAMP':'Campeche', 'COAH':'Coahuila',
+                    'COL':'Colima',
+                    'CHIS':'Chiapas',
+                    'CDMX':'Ciudad de México',
+                    'DGO':'Durango',
+                    'GTO':'Guanajuato',
+                    'HGO':'Hidalgo',
+                    'JAL':'Jalisco',
+                    'EDOMEX':'Estado de México',
+                    'MICH':'Michoacán',
+                    'MOR':'Morelos',
+                    'NAY':'Nayarit',
+                    'NL':'Nuevo León',
+                    'OAX':'Oaxaca',
+                    'PUE':'Puebla',
+                    'QRO':'Querétaro',
+                    'QROO':'Quintana Roo',
+                    'SLP':'San Luis Potosí',
+                    'SIN':'Sinaloa',
+                    'TAB':'Tabasco',
+                    'TAM':'Tamaulipas',
+                    'TLAX':'Tlaxcala',
+                    'VER':'Veracruz',
+                    'YUC':'Yucatan',
+                    'ZAC':'Zacatecas'
+                }
+
 google.charts.load('current', {'packages':['corechart', 'bar']});
 
 // CHARTS
@@ -16,9 +45,10 @@ function pieChart(opciones, votes, chartNumber, title) {
             data.addRows([[opciones[x], votes[x]]]);
         }
 
-        var options = { 'width':600,
-                        'height':400,
-                        'sliceVisibilityThreshold': 0};
+        var options = { 'width' : 600,
+                        'height' : 400,
+                        'sliceVisibilityThreshold' : 0
+                    };
 
         if (title != "") {
             options.title = title.charAt(0).toUpperCase() + title.slice(1);
@@ -44,8 +74,9 @@ function barChart(opciones, votes, chartNumber, title) {
         var options = {
           width: 900,
           height: 500,
-          bar: { groupWidth: "61.48%",
-                width: "40%"},
+          bar: { groupWidth : "61.48%",
+                 width : "40%"
+                },
           hAxis: { format: 'percent'}
         };
 
@@ -73,10 +104,11 @@ function columnChart(opciones, votes, percent, chartNumber, title){
 
         var options = {
           width: 900,
-          height: 500,
-          bar: { groupWidth: "61.48%",
-                width: "40%"},
-            vAxis: { format: '#%'}
+          height: 400,
+          bar: { groupWidth : "11.48%",
+                 width : "40%"
+                },
+          vAxis: {format : '#%'}
         };
 
         if (title != "") {
@@ -98,7 +130,7 @@ function getNumberofArrays(response) {
     var arrayCounter = 0;
 
     for (obj in response) {
-        typeof response[obj] == 'object' ? arrayCounter += 1 : arrayCounter += 0;
+        arrayCounter += typeof response[obj] == 'object' ? 1 : 0;
     }
 
     return arrayCounter
@@ -106,8 +138,9 @@ function getNumberofArrays(response) {
 
 function convertGenderArray(genero) {
     for (var x = 0; x < genero.length; x++) {
-        genero[x] == 'H' ? genero[x] = 'Hombres' : genero[x] = 'Mujeres';
+        genero[x] = genero[x] == 'H' ? 'Hombres' : 'Mujeres';
     }
+
     return genero;
 }
 
@@ -147,6 +180,7 @@ function convertState(estado) {
 
 function getObjectProperties(object) {
     var properties = [];
+
     for(var key in object) {
         properties.push(object[key]);
     }
@@ -220,7 +254,6 @@ $(document).on('ready', function () {
         $('#filtros-button').hide();
 
         if (numPregunta < 0) {
-
             return;
         }
 
@@ -250,6 +283,7 @@ $(document).on('ready', function () {
                 $('#educacion-select').val('0');
 
                 $('#filtros-button').show();
+
                 if (response.status === "NO_DATA") {
                     document.getElementById('chart1').innerHTML = "";
                     return;

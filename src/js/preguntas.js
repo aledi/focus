@@ -63,7 +63,6 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                console.log(response.results)
                 for (var x = 2; x <= response.results.length; x++) {
                     appendQuestions(x);
                 }
@@ -158,9 +157,9 @@ $(document).on('ready', function () {
             type: 'POST',
             url: '../api/controller.php',
             data: {
-                'action': 'SET_PREGUNTAS_ENCUESTA',
-                'encuesta': idEncuesta,
-                'preguntas': questionsArray
+                action : 'SET_PREGUNTAS_ENCUESTA',
+                encuesta : idEncuesta,
+                preguntas : questionsArray
             },
             dataType: 'json',
             success: function (response) {

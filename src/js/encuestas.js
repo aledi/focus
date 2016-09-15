@@ -101,8 +101,6 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 alert('Encuesta ' + actionText + ' exitosamente.');
-                console.log(response.id);
-                console.log(response);
                 location.replace('preguntas.php?id=' + data.id);
             },
             error: function (error) {
