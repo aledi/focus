@@ -33,8 +33,8 @@
         </select>
         <select id='genero-select' class='encuestas-select'>
             <option value='-1'>Selecciona un género</option>
-            <option value='1'>Masculino</option>
-            <option value='2'>Femenino</option>
+            <option value='0'>Masculino</option>
+            <option value='1'>Femenino</option>
         </select>
         <select id='estado-select' class='encuestas-select'>
             <option value='0'>Selecciona un estado</option>
