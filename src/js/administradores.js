@@ -123,7 +123,7 @@ $(document).on('ready', function () {
         $('#saveAdmin').text('Editar');
 
         $('#admin-password').hide();
-        $('#admin-password-confirm').show();
+        $('#admin-password-confirm').hide();
 
         $('#cancel-edit').show();
 
@@ -182,6 +182,8 @@ $(document).on('ready', function () {
         $('#headerTitle').text('Agregar Administrador');
         $('#saveAdmin').text('Agregar');
         $('#cancel-edit').hide();
+        $('#admin-password').show();
+        $('#admin-password-confirm').show();
 
         var myURL = window.location.href.split('?')[0];
         history.pushState({}, null, myURL);
