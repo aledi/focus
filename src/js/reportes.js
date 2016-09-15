@@ -1,43 +1,47 @@
 'use strict';
 
-var stateObject = { 'AGS':'Aguascalientes',
-                    'BC':'Baja California',
-                    'BCS':'Baja California Sur',
-                    'CAMP':'Campeche',
-                    'COAH':'Coahuila',
-                    'COL':'Colima',
-                    'CHIS':'Chiapas',
-                    'CDMX':'Ciudad de México',
-                    'DGO':'Durango',
-                    'GTO':'Guanajuato',
-                    'HGO':'Hidalgo',
-                    'JAL':'Jalisco',
-                    'EDOMEX':'Estado de México',
-                    'MICH':'Michoacán',
-                    'MOR':'Morelos',
-                    'NAY':'Nayarit',
-                    'NL':'Nuevo León',
-                    'OAX':'Oaxaca',
-                    'PUE':'Puebla',
-                    'QRO':'Querétaro',
-                    'QROO':'Quintana Roo',
-                    'SLP':'San Luis Potosí',
-                    'SIN':'Sinaloa',
-                    'TAB':'Tabasco',
-                    'TAM':'Tamaulipas',
-                    'TLAX':'Tlaxcala',
-                    'VER':'Veracruz',
-                    'YUC':'Yucatan',
-                    'ZAC':'Zacatecas'
-                }
+var stateObject = {
+    AGS: 'Aguascalientes',
+    BC: 'Baja California',
+    BCS: 'Baja California Sur',
+    CAMP: 'Campeche',
+    COAH: 'Coahuila',
+    COL: 'Colima',
+    CHIS: 'Chiapas',
+    CDMX: 'Ciudad de México',
+    DGO: 'Durango',
+    GTO: 'Guanajuato',
+    HGO: 'Hidalgo',
+    JAL: 'Jalisco',
+    EDOMEX: 'Estado de México',
+    MICH: 'Michoacán',
+    MOR: 'Morelos',
+    NAY: 'Nayarit',
+    NL: 'Nuevo León',
+    OAX: 'Oaxaca',
+    PUE: 'Puebla',
+    QRO: 'Querétaro',
+    QROO: 'Quintana Roo',
+    SLP: 'San Luis Potosí',
+    SIN: 'Sinaloa',
+    TAB: 'Tabasco',
+    TAM: 'Tamaulipas',
+    TLAX: 'Tlaxcala',
+    VER: 'Veracruz',
+    YUC: 'Yucatan',
+    ZAC: 'Zacatecas'
+}
 
-google.charts.load('current', {'packages':['corechart', 'bar']});
+google.charts.load('current', {'packages': ['corechart', 'bar']});
 
-// CHARTS
-function pieChart(opciones, votes, chartNumber, title) {
+// -----------------------------------------------------------------------------------------------
+// Charts
+// -----------------------------------------------------------------------------------------------
+
+function pieChart (opciones, votes, chartNumber, title) {
     google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
 
+    function drawChart () {
         var data = new google.visualization.DataTable();
         data.addColumn('string', '');
         data.addColumn('number', 'Votos');
@@ -47,9 +51,9 @@ function pieChart(opciones, votes, chartNumber, title) {
         }
 
         var options = {
-            'width' : 600,
-            'height' : 400,
-            'sliceVisibilityThreshold' : 0
+            width: chartNumber !== 3 ? '100%' : 600,
+            height: 400,
+            sliceVisibilityThreshold: 0
         };
 
         options.title = title;
@@ -59,7 +63,7 @@ function pieChart(opciones, votes, chartNumber, title) {
     }
 }
 
-function barChart(opciones, votes, chartNumber, title) {
+function barChart (opciones, votes, chartNumber, title) {
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
@@ -72,13 +76,13 @@ function barChart(opciones, votes, chartNumber, title) {
         }
 
         var options = {
-          width : 900,
-          height : 500,
-          bar : {
-              groupWidth : "61.48%",
-              width : "40%"
-          },
-          hAxis: { format : 'percent'}
+            width: chartNumber !== 3 ? '100%' : 600,
+            height: 500,
+            bar: {
+                groupWidth: '61.48%',
+                width: '20%'
+            },
+            hAxis: {format: 'percent'}
         };
 
         options.title = title;
@@ -88,27 +92,27 @@ function barChart(opciones, votes, chartNumber, title) {
     }
 }
 
-function columnChart(opciones, votes, percent, chartNumber, title) {
+function columnChart (opciones, votes, percent, chartNumber, title) {
     google.charts.setOnLoadCallback(drawStuff);
 
-    function drawStuff() {
+    function drawStuff () {
         var data = new google.visualization.DataTable();
         data.addColumn('string', '');
         data.addColumn('number', 'Votos');
 
         for (var x = 0; x < opciones.length; x++) {
-            opciones[x] +=  " (" + String((percent[x] * 100).toFixed(2)) + "%)";
+            opciones[x] += ' (' + String((percent[x] * 100).toFixed(2)) + '%)';
             data.addRows([[opciones[x], votes[x]]]);
         }
 
         var options = {
-          width : 900,
-          height : 400,
-          bar : {
-              groupWidth : "11.48%",
-              width : "40%"
+            width: chartNumber !== 3 ? '100%' : 600,
+            height: 400,
+            bar: {
+                groupWidth: '11.48%',
+                width: '40%'
             },
-          vAxis : {format : '#%'}
+            vAxis: {format: '#%'}
         };
 
         options.title = title;
@@ -118,11 +122,11 @@ function columnChart(opciones, votes, percent, chartNumber, title) {
     }
 }
 
-///////////////////////////////////////////
-//              HELPER FUNCTIONS         //
-///////////////////////////////////////////
+// -----------------------------------------------------------------------------------------------
+// Helper Functions
+// -----------------------------------------------------------------------------------------------
 
-function getNumberofArrays(response) {
+function getNumberofArrays (response) {
     var obj;
     var arrayCounter = 0;
 
@@ -133,7 +137,7 @@ function getNumberofArrays(response) {
     return arrayCounter
 }
 
-function convertGenderArray(genero) {
+function convertGenderArray (genero) {
     for (var x = 0; x < genero.length; x++) {
         genero[x] = genero[x] == 'H' ? 'Hombres' : 'Mujeres';
     }
@@ -141,26 +145,29 @@ function convertGenderArray(genero) {
     return genero;
 }
 
-function convertAgeRange(edad) {
+function convertAgeRange (edad) {
     for (var x = 0; x < edad.length; x++) {
         switch (edad[x]) {
             case '25':
                 edad[x] = '18 - 25';
-            break;
+                break;
             case '35':
                 edad[x] = '26 - 35';
-            break;
+                break;
             case '45':
                 edad[x] = '36 - 45';
-            break;
+                break;
             case '55':
                 edad[x] = '46 - 55';
-            break;
+                break;
             case '100':
                 edad[x] = '56+';
-            break;
+                break;
+            default:
+                break;
         }
     }
+
     return edad;
 }
 
@@ -175,7 +182,7 @@ function convertState(estado) {
 function getObjectProperties(object) {
     var properties = [];
 
-    for(var key in object) {
+    for (var key in object) {
         properties.push(object[key]);
     }
 
@@ -277,11 +284,11 @@ $(document).on('ready', function () {
 
                 $('#filtros-button').show();
 
-                $('#chart1').html("");
-                $('#chart2').html("");
-                $('#chart3').html("");
+                $('#chart1').html('');
+                $('#chart2').html('');
+                $('#chart3').html('');
 
-                if (response.status === "NO_DATA") {
+                if (response.status === 'NO_DATA') {
                     return;
                 }
 
@@ -292,8 +299,6 @@ $(document).on('ready', function () {
                     $('#estado-select').hide();
                     $('#educacion-select').hide();
                     $('#filtros-button').hide();
-
-                    console.log(response);
 
                     pieChart(convertGenderArray(Object.keys(response.genero)),
                             getObjectProperties(response.genero),
@@ -308,7 +313,7 @@ $(document).on('ready', function () {
 
                 } else {
                     if (response.tipo === 1) {
-                        // Tabla
+                    // Tabla
                     } else if (response.tipo === 4) {
                         barChart(getObjectProperties(response.opciones), response.votos, 1, '');
                     } else if (response.opciones.length < 4) {
@@ -355,10 +360,10 @@ $(document).on('ready', function () {
             data: data,
             dataType: 'json',
             success: function (response) {
-                $('#chart3').html("");
+                $('#chart3').html('');
 
                 if (response.tipo === 1) {
-                    // Tabla
+                // Tabla
                 } else if (response.tipo === 4) {
                     barChart(getObjectProperties(response.opciones), response.votos, 3, '');
                 } else if (response.opciones.length < 4) {

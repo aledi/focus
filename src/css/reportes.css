@@ -1,0 +1,26 @@
+.reportes-section {
+    padding: 30px;
+}
+
+.main-selects {
+    margin-bottom: 30px;
+}
+
+.chart1, .chart2-wrapper {
+    width: 48%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.chart3 {
+    width: 600px;
+    margin: 0 auto;
+}
+
+.filtros-button {
+    margin-top: 50px;
+}
+
+select {
+    margin-bottom: 5px;
+}

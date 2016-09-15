@@ -48,7 +48,7 @@
                 </div>
 
                 <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
-                <button type='submit' id='saveEncuesta'>Agregar</button>
+                <button type='submit' id='save-encuesta'>Agregar</button>
                 <span id='feedback'></span>
             </div>
 
