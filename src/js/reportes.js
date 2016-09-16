@@ -171,7 +171,7 @@ function convertAgeRange (edad) {
     return edad;
 }
 
-function convertState(estado) {
+function convertState (estado) {
     for (var x = 0; x < estado.length; x++) {
         estado[x] = stateObject[estado[x]];
     }
@@ -179,7 +179,7 @@ function convertState(estado) {
     return estado;
 }
 
-function getObjectProperties(object) {
+function getObjectProperties (object) {
     var properties = [];
 
     for (var key in object) {
