@@ -97,7 +97,7 @@ $(document).on('ready', function () {
     // Save Panel
     // -----------------------------------------------------------------------------------------------
 
-    $('#savePanel').on('click', function (event) {
+    $('#save-panel').on('click', function (event) {
         event.preventDefault();
 
         var idPanel = window.location.search.substring(1);
@@ -161,7 +161,7 @@ $(document).on('ready', function () {
         $("#tab-agregar-panel").addClass('current');
 
         $('#headerTitle').text('Editar Panel');
-        $('#savePanel').text('Editar');
+        $('#save-panel').text('Editar');
         $('#cancel-edit').show();
 
         $.ajax({
@@ -220,7 +220,7 @@ $(document).on('ready', function () {
         $('#tab-agregar-panel').find('input').val('');
         $('#tableClientes input').removeAttr('checked');
         $('#headerTitle').text('Agregar Panel');
-        $('#savePanel').text('Agregar');
+        $('#save-panel').text('Agregar');
         $('#cancel-edit').hide();
         var myURL = window.location.href.split('?')[0];
         history.pushState({}, null, myURL);

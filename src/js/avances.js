@@ -26,7 +26,7 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                $('#avance-summary').html('Respuestas: ' + response.respuestas + '  (' + ((response.porcentaje * 100).toFixed(2)) + '%)');
+                $('#avance-summary').html('Respuestas: ' + response.respuestas + '  (' + (response.porcentaje * 100).toFixed(2) + '%)');
 
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
