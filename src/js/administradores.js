@@ -111,7 +111,8 @@ $(document).on('ready', function () {
     // -----------------------------------------------------------------------------------------------
 
     $('#allAdmins').on('click', '.edit-button', function ()  {
-        var idAdministador = $(this).parent().attr('id')
+        var idAdministador = $(this).parent().attr('id');
+        
         $('#headerTitle').text('Editar Administrador');
         $('#save-admin').text('Editar');
 
