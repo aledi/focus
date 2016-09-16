@@ -173,13 +173,12 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                console.log(response);
                 var result = response.result;
 
                 $('#panelName').val(result.nombre);
                 getDatefromString(result.fechaInicio, 0);
                 getDatefromString(result.fechaFin, 1);
-                $('input[name="id"][value="' + result.clienteID + '"]').prop('checked', true);
+                $('input[name="id"][value="' + result.cliente + '"]').prop('checked', true);
 
                 var myURL = window.location.href.split('?')[0];
                 myURL += '?id=' + result.id;
