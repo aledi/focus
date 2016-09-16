@@ -65,7 +65,7 @@ $(document).on('ready', function () {
     // Save Encuesta
     // -----------------------------------------------------------------------------------------------
 
-    $('#saveEncuesta').on('click', function (event) {
+    $('#save-encuesta').on('click', function (event) {
         event.preventDefault();
 
         var idEncuesta = window.location.search.substring(1);
@@ -123,7 +123,7 @@ $(document).on('ready', function () {
         $("#tab-agregar-encuesta").addClass('current');
 
         $('#headerTitle').text('Editar Encuesta');
-        $('#saveEncuesta').text('Editar');
+        $('#save-encuesta').text('Editar');
 
         $('#cancel-edit').show();
 
@@ -180,7 +180,7 @@ $(document).on('ready', function () {
         $('#tab-agregar-encuesta').find('input').val('');
         $('#allPanels input').removeAttr('checked');
         $('#headerTitle').text('Agregar Encuesta');
-        $('#saveEncuesta').text('Agregar');
+        $('#save-encuesta').text('Agregar');
         $('#cancel-edit').hide();
 
         var myURL = window.location.href.split('?')[0];
