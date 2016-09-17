@@ -122,7 +122,7 @@ $(document).on('ready', function () {
         var startDate = new Date($('select#anio').val(), parseInt($('select#mes').val(),10) - 1, $('select#dia').val());
         var endDate = new Date($('select#anio_fin').val(), parseInt($('select#mes_fin').val(),10) - 1, $('select#dia_fin').val());
 
-        if (endDate < startDate) {
+        if (endDate <= startDate) {
             $('#feedback').html('La fecha de inicio es posterior a la fecha fin');
             return;
         }
