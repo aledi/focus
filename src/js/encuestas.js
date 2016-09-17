@@ -81,6 +81,14 @@ $(document).on('ready', function () {
             return;
         }
 
+        var startDate = new Date($('select#anio').val(), parseInt($('select#mes').val(),10) - 1, $('select#dia').val());
+        var endDate = new Date($('select#anio_fin').val(), parseInt($('select#mes_fin').val(),10) - 1, $('select#dia_fin').val());
+
+        if (endDate < startDate) {
+            $('#feedback').html('La fecha de inicio es posterior a la fecha fin');
+            return;
+        }
+
         var data = {
             action: 'ALTA_ENCUESTA',
             nombre: nombre,
@@ -193,79 +201,11 @@ $(document).on('ready', function () {
         $('#tab-view-encuestas').addClass('current');
     });
 
-    $('#dia').on('change', function (event) {
-        var startDate = new Date($('select#anio').val(), parseInt($('select#mes').val(),10) - 1, $(this).val());
-        var endDate = new Date($('select#anio_fin').val(), parseInt($('select#mes_fin').val(),10) - 1, $('select#dia_fin').val());
-
-        if (!validDateRange(startDate, endDate)) {
-            $(this).val($.data(this, 'val') || '1');
-            return;
-        }
-
-        $.data(this, 'val', $(this).val());
-    });
-
-    $('#dia_fin').on('change', function (event) {
-        var startDate = new Date($('select#anio').val(), parseInt($('select#mes').val(), 10) - 1, $('select#dia').val());
-        var endDate = new Date($('select#anio_fin').val(), parseInt($('select#mes_fin').val(), 10) - 1, $(this).val());
-
-        if (!validDateRange(startDate, endDate)) {
-            $(this).val($.data(this, 'val') || '1');
-            return;
-        }
-
-        $.data(this, 'val', $(this).val());
-    });
-
-    $('#mes').on('change', function () {
-        var startDate = new Date($('select#anio').val(), parseInt($(this).val(), 10) - 1, $('select#dia').val());
-        var endDate = new Date($('select#anio_fin').val(), parseInt($('select#mes_fin').val(), 10) - 1, $('select#dia_fin').val());
-
-        if (!validDateRange(startDate, endDate)) {
-            $(this).val($.data(this, 'val') || '1');
-            return;
-        }
-
-        $.data(this, 'val', $(this).val());
+    $('#mes, #anio').on('change', function() {
         changeSelect('Inicio');
     });
 
-    $('#mes_fin').on('change', function () {
-        var startDate = new Date($('select#anio').val(), parseInt($('select#mes').val(), 10) - 1, $('select#dia').val());
-        var endDate = new Date($('select#anio_fin').val(), parseInt($(this).val(), 10) - 1, $('select#dia_fin').val());
-
-        if (!validDateRange(startDate, endDate)) {
-            $(this).val($.data(this, 'val') || '1');
-            return;
-        }
-
-        $.data(this, 'val', $(this).val());
-        changeSelect('Fin');
-    });
-
-    $('#anio').on('change', function () {
-        var startDate = new Date($(this).val(), parseInt($('select#mes').val(), 10) - 1, $('select#dia').val());
-        var endDate = new Date($('select#anio_fin').val(), parseInt($('select#mes_fin').val(), 10) - 1, $('select#dia_fin').val());
-
-        if (!validDateRange(startDate, endDate)) {
-            $(this).val($.data(this, 'val') || new Date().getFullYear() + '');
-            return;
-        }
-
-        $.data(this, 'val', $(this).val());
-        changeSelect('Inicio');
-    });
-
-    $('#anio_fin').on('change', function () {
-        var startDate = new Date($('select#anio').val(), parseInt($('select#mes').val(), 10) - 1, $('select#dia').val());
-        var endDate = new Date($(this).val(), parseInt($('select#mes_fin').val(), 10) - 1, $('select#dia_fin').val());
-
-        if (!validDateRange(startDate, endDate)) {
-            $(this).val($.data(this, 'val') || new Date().getFullYear() + '');
-            return;
-        }
-
-        $.data(this, 'val', $(this).val());
+    $('#mes_fin, #anio_fin').on('change', function() {
         changeSelect('Fin');
     });
 });

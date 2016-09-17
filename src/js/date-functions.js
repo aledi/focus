@@ -54,10 +54,8 @@ function fillDay (days, option) {
         $('#dia').empty();
         $('#dia').append(currentHTML);
     } else {
-        var currentValue = $('#dia_fin').val();
         $('#dia_fin').empty();
         $('#dia_fin').append(currentHTML);
-        $('#dia_fin').val(currentValue);
     }
 }
 
@@ -121,8 +119,4 @@ function changeSelect (option) {
 
         fillDay(dias, 2);
     }
-}
-
-function validDateRange (startDate, endDate) {
-    return endDate > startDate;
 }
