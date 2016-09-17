@@ -51,7 +51,7 @@ function pieChart (opciones, votes, chartNumber, title) {
         }
 
         var options = {
-            width: 700,
+            width: chartNumber === 3 ? 700 : '100%',
             height: 350,
             sliceVisibilityThreshold: 0
         };
@@ -76,7 +76,7 @@ function barChart (opciones, votes, chartNumber, title) {
         }
 
         var options = {
-            width: 800,
+            width: chartNumber === 3 ? 800 : '100%',
             height: 500,
             bar: {
                 groupWidth: '61.48%',
@@ -106,7 +106,7 @@ function columnChart (opciones, votes, percent, chartNumber, title) {
         }
 
         var options = {
-            width: 700,
+            width: chartNumber === 3 ? 700 : '100%',
             height: 400,
             bar: {
                 groupWidth: '11.48%',
@@ -222,8 +222,8 @@ $(document).on('ready', function () {
             url: '../api/controller.php',
             type: 'POST',
             data: {
-                action : 'GET_PREGUNTAS',
-                encuesta : idEncuesta
+                action: 'GET_PREGUNTAS',
+                encuesta: idEncuesta
             },
             dataType: 'json',
             success: function (response) {
@@ -258,8 +258,8 @@ $(document).on('ready', function () {
         }
 
         var data = {
-            action : 'REPORT_DATA',
-            encuesta : parseInt($('#reportes-encuestas-select').val(), 10),
+            action: 'REPORT_DATA',
+            encuesta: parseInt($('#reportes-encuestas-select').val(), 10),
             numPregunta: numPregunta
         };
 
@@ -365,11 +365,11 @@ $(document).on('ready', function () {
                 if (response.tipo === 1) {
                 // Tabla
                 } else if (response.tipo === 4) {
-                    barChart(getObjectProperties(response.opciones), response.votos, 3, '');
+                    barChart(getObjectProperties(response.opciones), response.votos, 2, '');
                 } else if (response.opciones.length < 4) {
-                    pieChart(getObjectProperties(response.opciones), response.votos, 3, '');
+                    pieChart(getObjectProperties(response.opciones), response.votos, 2, '');
                 } else {
-                    columnChart(getObjectProperties(response.opciones), response.votos, response.porcentajes, 3, '');
+                    columnChart(getObjectProperties(response.opciones), response.votos, response.porcentajes, 2, '');
                 }
 
                 return;
