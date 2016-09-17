@@ -21,7 +21,7 @@
             </ul>
 
             <div id='tab-agregar-panelista' class='tab-content current'>
-                <h2 id='headerTitle'>Agregar Panelista</h2>
+                <h2 id='header-title'>Agregar Panelista</h2>
 
                 <div class='input-wrapper'>
                     <label>Nombre(s)</label>
