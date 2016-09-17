@@ -101,7 +101,7 @@ function columnChart (opciones, votes, percent, chartNumber, title) {
         data.addColumn('number', 'Votos');
 
         for (var x = 0; x < opciones.length; x++) {
-            opciones[x] += ' (' + String((percent[x] * 100).toFixed(2)) + '%)';
+            opciones[x] += '\n(' + String((percent[x] * 100).toFixed(2)) + '%)';
             data.addRows([[opciones[x], votes[x]]]);
         }
 
