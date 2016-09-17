@@ -2,23 +2,25 @@
     padding: 30px;
 }
 
-.main-selects {
+.selects-wrapper {
+    height: 150px;
     margin-bottom: 30px;
 }
 
-.chart1, .chart2-wrapper {
+.main-selects, .filter-selects {
     width: 48%;
     display: inline-block;
     vertical-align: top;
 }
 
-.chart3 {
-    width: 600px;
+.chart1, .chart2, .chart3 {
+    width: 800px;
     margin: 0 auto;
 }
 
 .filtros-button {
-    margin-top: 50px;
+    margin: 20px 0;
+    margin-bottom: 0;
 }
 
 select {

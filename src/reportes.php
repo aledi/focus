@@ -17,15 +17,14 @@
     </div>
     <section class='reportes-section'>
         <h2>Reportes</h2>
-        <div class='main-selects'>
-            <select id='reportes-encuestas-select' class='encuestas-select'>
-                <option value='0'>Selecciona una encuesta</option>
-            </select>
-            <select id='preguntas-select' class='encuestas-select'></select>
-        </div>
-        <div id='chart1' class='chart1'></div>
-        <div id='chart2-wrapper' class='chart2-wrapper'>
-            <div>
+        <div class='selects-wrapper'>
+            <div class='main-selects'>
+                <select id='reportes-encuestas-select' class='encuestas-select'>
+                    <option value='0'>Selecciona una encuesta</option>
+                </select>
+                <select id='preguntas-select' class='encuestas-select'></select>
+            </div>
+            <div class='filter-selects'>
                 <select id='edad-select' class='encuestas-select'>
                     <option value='0'>Selecciona una edad</option>
                     <option value='25'>18 a 25</option>
@@ -82,11 +81,12 @@
                     <option value='5'>Posgrado</option>
                     <option value='6'>Ninguno</option>
                 </select>
+                <button id='filtros-button' class='filtros-button' type='button'>Aplicar filtros</button>
             </div>
-            <div id='chart2' class='chart2'></div>
         </div>
+        <div id='chart1' class='chart1'></div>
+        <div id='chart2' class='chart2'></div>
         <div id='chart3' class='chart3'></div>
-        <button id='filtros-button' class='filtros-button' type='button'>Aplicar filtros</button>
     </section>
 </body>
 </html>

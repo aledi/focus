@@ -51,8 +51,8 @@ function pieChart (opciones, votes, chartNumber, title) {
         }
 
         var options = {
-            width: chartNumber !== 3 ? '100%' : 600,
-            height: 400,
+            width: 700,
+            height: 350,
             sliceVisibilityThreshold: 0
         };
 
@@ -76,7 +76,7 @@ function barChart (opciones, votes, chartNumber, title) {
         }
 
         var options = {
-            width: chartNumber !== 3 ? '100%' : 600,
+            width: 800,
             height: 500,
             bar: {
                 groupWidth: '61.48%',
@@ -106,7 +106,7 @@ function columnChart (opciones, votes, percent, chartNumber, title) {
         }
 
         var options = {
-            width: chartNumber !== 3 ? '100%' : 600,
+            width: 700,
             height: 400,
             bar: {
                 groupWidth: '11.48%',
