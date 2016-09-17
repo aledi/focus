@@ -70,8 +70,7 @@ function fillMonth () {
 }
 
 function fillYear (option) {
-    var currentTime = new Date();
-    var currentYear = currentTime.getFullYear();
+    var currentYear = new Date().getFullYear();
     var currentHTML = '';
 
     if (option === 0) {

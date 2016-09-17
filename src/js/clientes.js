@@ -113,7 +113,7 @@ $(document).on('ready', function () {
 
     $('#allUsers').on('click', '.edit-button', function () {
         var idUser = $(this).parent().attr('id')
-        $('#headerTitle').text('Editar Cliente');
+        $('#header-title').text('Editar Cliente');
         $('#save-cliente').text('Editar');
 
         $('ul.tabs li').removeClass('current');
@@ -179,7 +179,7 @@ $(document).on('ready', function () {
 
     $('#cancel-edit').on('click', function (event) {
         $('#tab-agregar-cliente').find('input').val('');
-        $('#headerTitle').text('Agregar Usuario');
+        $('#header-title').text('Agregar Usuario');
         $('#save-cliente').text('Agregar');
         $('#cancel-edit').hide();
         $('#cliente-password').show();

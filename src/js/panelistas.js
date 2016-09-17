@@ -137,7 +137,7 @@ $(document).on('ready', function () {
         $('ul.tabs li').first().addClass('current');
         $('#tab-agregar-panelista').addClass('current');
 
-        $('#headerTitle').text('Editar Panelista');
+        $('#header-title').text('Editar Panelista');
         $('#savePanelista').text('Editar');
 
         $('#panelista-password').hide();
@@ -206,7 +206,7 @@ $(document).on('ready', function () {
         $('#tab-agregar-panelista').find('input').val('');
         $('#tab-agregar-panelista').find('select').val('0');
         $('#tab-agregar-panelista').find('input').removeAttr('checked');
-        $('#headerTitle').text('Agregar Panelista');
+        $('#header-title').text('Agregar Panelista');
         $('#savePanel').text('Agregar');
         $('#cancel-edit').hide();
 

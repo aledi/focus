@@ -20,7 +20,7 @@
             </ul>
 
             <div id='tab-agregar-panel' class='tab-content current'>
-                <h2 id='headerTitle'>Agregar Panel</h2>
+                <h2 id='header-title'>Agregar Panel</h2>
 
                 <div class='input-wrapper'>
                     <label>Nombre del Panel:</label>
@@ -48,12 +48,12 @@
 
                 <div class='input-wrapper'>
                     <label>Seleccionar Cliente:</label>
-                    <table id='tableClientes'></table>
+                    <table id='table-clientes'></table>
                 </div>
 
                 <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
                 <button type='submit' id='save-panel'>Agregar</button>
-                <span id='feedback'></span>
+                <span id='feedback' class='feedback-text'></span>
             </div>
 
             <div id='tab-view-paneles' class='tab-content'>

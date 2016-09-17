@@ -31,7 +31,7 @@ $(document).on('ready', function () {
                 currentHTML += '<td class="centered"><input type="radio" value=' + result.id + ' name="id"></td>';
                 currentHTML += "</tr>";
 
-                $('#tableClientes').append(currentHTML);
+                $('#table-clientes').append(currentHTML);
                 currentHTML = '';
             }
 
@@ -109,8 +109,21 @@ $(document).on('ready', function () {
         var fechaFin = getCompleteDate(2);
         var cliente = $('input[name=id]:checked').val();
 
-        if (nombre === '' || fechaInicio === '' || fechaFin === '' || typeof cliente === 'undefined') {
-            $('#feedback').html('Favor de llenar todos los campos');
+        if (!nombre || !nombre.trim()) {
+            $('#feedback').html('Favor de elegir un nombre');
+            return;
+        }
+
+        if (!cliente) {
+            $('#feedback').html('Favor de seleccionar un cliente');
+            return;
+        }
+
+        var startDate = new Date($('select#anio').val(), parseInt($('select#mes').val(),10) - 1, $('select#dia').val());
+        var endDate = new Date($('select#anio_fin').val(), parseInt($('select#mes_fin').val(),10) - 1, $('select#dia_fin').val());
+
+        if (endDate < startDate) {
+            $('#feedback').html('La fecha de inicio es posterior a la fecha fin');
             return;
         }
 
@@ -158,9 +171,9 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').first().addClass('current');
-        $("#tab-agregar-panel").addClass('current');
+        $('#tab-agregar-panel').addClass('current');
 
-        $('#headerTitle').text('Editar Panel');
+        $('#header-title').text('Editar Panel');
         $('#save-panel').text('Editar');
         $('#cancel-edit').show();
 
@@ -218,8 +231,8 @@ $(document).on('ready', function () {
 
     $('#cancel-edit').on('click', function (event) {
         $('#tab-agregar-panel').find('input').val('');
-        $('#tableClientes input').removeAttr('checked');
-        $('#headerTitle').text('Agregar Panel');
+        $('#table-clientes input').removeAttr('checked');
+        $('#header-title').text('Agregar Panel');
         $('#save-panel').text('Agregar');
         $('#cancel-edit').hide();
         var myURL = window.location.href.split('?')[0];

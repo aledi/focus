@@ -22,7 +22,7 @@
             </ul>
 
             <div id='tab-agregar-encuesta' class='tab-content current'>
-                <h2 id='headerTitle'>Agregar Encuesta</h2>
+                <h2 id='header-title'>Agregar Encuesta</h2>
 
                 <div class='input-wrapper'>
                     <label>Nombre de Encuesta:</label>
@@ -35,7 +35,7 @@
                     <select id='mes'></select>
                     <select id='anio'></select>
                 </div>
-                
+
                 <div class='input-wrapper'>
                     <label>Fecha Final:</label>
                     <select id='dia_fin'></select>
@@ -50,7 +50,7 @@
 
                 <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
                 <button type='submit' id='save-encuesta'>Agregar</button>
-                <span id='feedback'></span>
+                <span id='feedback' class='feedback-text'></span>
             </div>
 
             <div id='tab-view-encuestas' class='tab-content'>
