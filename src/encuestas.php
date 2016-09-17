@@ -35,6 +35,7 @@
                     <select id='mes'></select>
                     <select id='anio'></select>
                 </div>
+                
                 <div class='input-wrapper'>
                     <label>Fecha Final:</label>
                     <select id='dia_fin'></select>

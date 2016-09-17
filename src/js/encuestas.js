@@ -140,7 +140,7 @@ $(document).on('ready', function () {
                 $('#nombre').val(result.nombre);
                 getDatefromString(result.fechaInicio, 0);
                 getDatefromString(result.fechaFin, 1);
-                $('input[name=id][value="' + result.id + '"]').prop('checked', true);
+                $('input[name=id][value="' + result.panel + '"]').prop('checked', true);
 
                 var myURL = window.location.href.split('?')[0];
                 myURL += '?id=' + result.id;

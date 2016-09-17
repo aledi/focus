@@ -38,7 +38,7 @@
 
                 <div class='input-wrapper'>
                     <label>Usuario:</label>
-                    <input id="username" type="text" />
+                    <input id='username' type='text' />
                 </div>
 
                 <div id='admin-password' class='input-wrapper'>
@@ -51,8 +51,8 @@
                     <input id='passwordConfirm' type='password' name='Password' placeholder='••••••••'>
                 </div>
 
-                <button id='saveAdmin' type='submit'>Agregar Administrador</button>
-                <button id='cancel-edit' type='submit'>Cancelar Cambios</button>
+                <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
+                <button type='submit' id='save-admin'>Agregar</button>
                 <span id='feedback'></span>
             </div>
 

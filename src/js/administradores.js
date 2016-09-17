@@ -54,7 +54,7 @@ $(document).on('ready', function () {
     // Save Administrador
     // -----------------------------------------------------------------------------------------------
 
-    $('#saveAdmin').on('click', function (event) {
+    $('#save-admin').on('click', function (event) {
         var idAdmin = window.location.search.substring(1);
         idAdmin = idAdmin.substring(3);
 
@@ -111,7 +111,10 @@ $(document).on('ready', function () {
     // -----------------------------------------------------------------------------------------------
 
     $('#allAdmins').on('click', '.edit-button', function ()  {
-        var idAdministador = $(this).parent().attr('id')
+        var idAdministador = $(this).parent().attr('id');
+        
+        $('#headerTitle').text('Editar Administrador');
+        $('#save-admin').text('Editar');
 
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
@@ -119,11 +122,8 @@ $(document).on('ready', function () {
         $('ul.tabs li').first().addClass('current');
         $("#tab-agregar-administrador").addClass('current');
 
-        $('#headerTitle').text('Editar Administrador');
-        $('#saveAdmin').text('Editar');
-
         $('#admin-password').hide();
-        $('#admin-password-confirm').show();
+        $('#admin-password-confirm').hide();
 
         $('#cancel-edit').show();
 
@@ -180,8 +180,10 @@ $(document).on('ready', function () {
     $('#cancel-edit').on('click', function (event) {
         $('#tab-agregar-administrador').find('input').val('');
         $('#headerTitle').text('Agregar Administrador');
-        $('#saveAdmin').text('Agregar');
+        $('#save-admin').text('Agregar');
         $('#cancel-edit').hide();
+        $('#admin-password').show();
+        $('#admin-password-confirm').show();
 
         var myURL = window.location.href.split('?')[0];
         history.pushState({}, null, myURL);
