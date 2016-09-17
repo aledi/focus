@@ -182,6 +182,8 @@ $(document).on('ready', function () {
         $('#headerTitle').text('Agregar Usuario');
         $('#save-cliente').text('Agregar');
         $('#cancel-edit').hide();
+        $('#cliente-password').show();
+        $('#cliente-password-confirm').show();
 
         var myURL = window.location.href.split('?')[0];
         history.pushState({}, null, myURL);

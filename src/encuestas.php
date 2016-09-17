@@ -35,6 +35,7 @@
                     <select id='mes'></select>
                     <select id='anio'></select>
                 </div>
+                
                 <div class='input-wrapper'>
                     <label>Fecha Final:</label>
                     <select id='dia_fin'></select>
@@ -48,7 +49,7 @@
                 </div>
 
                 <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
-                <button type='submit' id='saveEncuesta'>Agregar</button>
+                <button type='submit' id='save-encuesta'>Agregar</button>
                 <span id='feedback'></span>
             </div>
 

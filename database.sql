@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 12-09-2016 a las 16:29:26
+-- Tiempo de generación: 15-09-2016 a las 02:59:34
 -- Versión del servidor: 5.5.42
 -- Versión de PHP: 7.0.0
 
@@ -88,17 +88,17 @@ CREATE TABLE `Panelista` (
 --
 
 INSERT INTO `Panelista` (`id`, `username`, `password`, `nombre`, `apellidos`, `email`, `genero`, `fechaNacimiento`, `educacion`, `calleNumero`, `colonia`, `municipio`, `estado`, `cp`, `deviceToken`, `deviceType`) VALUES
-(1, 'Carlos', 'pass', 'Carlos', 'Mayo Rodriguez', 'carlosmay@hotmail.com', 0, '1979-04-13', 4, '', '', 'Monterrey', 'NL', 0, '', 1),
+(1, 'Carlos', 'pass', 'Carlos', 'Mayo Rodriguez', 'carlosmay@hotmail.com', 0, '1979-04-13', 4, 'Calle y número', 'Colonia', 'Monterrey', 'NL', 0, '', 0),
 (2, 'Alejandra', 'pass', 'Alejandra', 'Sandoval Ramirez', 'alesanra23@hotmail.com', 1, '1979-08-24', 4, '', '', 'Monterrey', 'NL', 0, '', 0),
-(3, 'María', 'pass', 'María', 'Zazueta López', 'mariazaz802@hotmail.com', 1, '1977-03-26', 3, '', '', 'Guadalupe', 'NL', 0, '', 1),
-(4, 'Elizabeth', 'pass', 'Elizabeth', 'Verdugo Mayo', 'elizabethvm809824@hotmail.com', 1, '1976-03-17', 1, '', '', 'Monterrey', 'NL', 0, '', 1),
-(5, 'Alberto', 'pass', 'Alberto', 'López Méndez', 'albertolm8970@hotmail.com', 0, '1975-03-09', 2, '', '', 'Juárez', 'NL', 0, '', 1),
-(6, 'Enrique', 'pass', 'Enrique', 'Martínez Lagos', 'enrmarl9035@hotmail.com', 0, '1974-02-28', 3, '', '', 'Monterrey', 'NL', 0, '', 1),
-(7, 'Mario', 'pass', 'Mario', 'Casas Gutiérrez', 'mariocasas80901@hotmail.com', 0, '1973-02-19', 2, '', '', 'Monterrey', 'NL', 0, '', 1),
-(8, 'Natalia Paulina', 'pass', 'Natalia Paulina', 'Jasso León', 'natapa2815@hotmail.com', 1, '1972-02-11', 4, '', '', 'San Pedro', 'NL', 0, '', 1),
-(9, 'Fernando', 'pass', 'Fernando', 'Portes Zambrano', 'ferpat0713@hotmail.com', 0, '1971-02-02', 2, '', '', 'Apodaca', 'NL', 0, '', 1),
-(10, 'Karla María', 'pass', 'Karla María', 'Montes Fuentes', 'karlammf0368@hotmail.com', 1, '1970-01-24', 4, '', '', 'Monterrey', 'NL', 0, '', 1),
-(11, 'Alma Alexia', 'pass', 'Alma Alexia', 'Muñoz Montes', 'almaa9090@hotmail.com', 1, '1969-01-15', 4, '', '', 'Monterrey', 'NL', 0, '', 1),
+(3, 'María', 'pass', 'María', 'Zazueta López', 'mariazaz802@hotmail.com', 1, '1977-03-26', 3, '', '', 'Guadalupe', 'CAMP', 0, '', 0),
+(4, 'Elizabeth', 'pass', 'Elizabeth', 'Verdugo Mayo', 'elizabethvm809824@hotmail.com', 1, '1976-03-17', 1, '', '', 'Monterrey', 'NL', 0, '', 0),
+(5, 'Alberto', 'pass', 'Alberto', 'López Méndez', 'albertolm8970@hotmail.com', 0, '1975-03-09', 2, '', '', 'Juárez', 'SIN', 0, '', 0),
+(6, 'Enrique', 'pass', 'Enrique', 'Martínez Lagos', 'enrmarl9035@hotmail.com', 0, '1974-02-28', 3, '', '', 'Monterrey', 'NL', 0, '', 0),
+(7, 'Mario', 'pass', 'Mario', 'Casas Gutiérrez', 'mariocasas80901@hotmail.com', 0, '1973-02-19', 2, '', '', 'Monterrey', 'SIN', 0, '', 0),
+(8, 'Natalia', 'pass', 'Natalia Paulina', 'Jasso León', 'natapa2815@hotmail.com', 1, '1972-02-11', 4, '', '', 'San Pedro', 'NL', 0, '', 0),
+(9, 'Fernando', 'pass', 'Fernando', 'Portes Zambrano', 'ferpat0713@hotmail.com', 0, '1971-02-02', 2, '', '', 'Apodaca', 'NL', 0, '', 0),
+(10, 'Karla', 'pass', 'Karla María', 'Montes Fuentes', 'karlammf0368@hotmail.com', 1, '1970-01-24', 4, '', '', 'Monterrey', 'CAMP', 0, '', 0),
+(11, 'Alma', 'pass', 'Alma Alexia', 'Muñoz Montes', 'almaa9090@hotmail.com', 1, '1969-01-15', 4, '', '', 'Monterrey', 'NL', 0, '', 1),
 (12, 'Ulises', 'pass', 'Ulises', 'Montemayor Montes', 'ulisesmmm9080@hotmail.com', 0, '1968-01-07', 2, '', '', 'Juárez', 'NL', 0, '', 1),
 (13, 'Filiberto', 'pass', 'Filiberto', 'Zazueta Cordoba', 'filizazc7890@hotmail.com', 0, '1966-12-29', 5, '', '', 'Monterrey', 'NL', 0, '', 1),
 (14, 'Ricardo', 'pass', 'Ricardo', 'Duarte Fontes', 'rickyduarte5687@hotmail.com', 0, '1985-07-27', 1, '', '', 'Apodaca', 'NL', 0, '', 1),
@@ -500,16 +500,26 @@ CREATE TABLE `PanelistaEnPanel` (
   `id` int(11) NOT NULL,
   `panelista` int(11) NOT NULL,
   `panel` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `PanelistaEnPanel`
 --
 
 INSERT INTO `PanelistaEnPanel` (`id`, `panelista`, `panel`) VALUES
-(23, 1, 1),
-(24, 2, 1),
-(26, 3, 1);
+(37, 1, 1),
+(38, 2, 1),
+(39, 3, 1),
+(40, 4, 1),
+(41, 5, 1),
+(42, 6, 1),
+(43, 7, 1),
+(44, 8, 1),
+(45, 9, 1),
+(46, 10, 1),
+(47, 11, 1),
+(48, 12, 1),
+(49, 13, 1);
 
 -- --------------------------------------------------------
 
@@ -536,19 +546,19 @@ CREATE TABLE `Pregunta` (
   `op8` text COLLATE utf8_spanish_ci NOT NULL,
   `op9` text COLLATE utf8_spanish_ci NOT NULL,
   `op10` text COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Pregunta`
 --
 
 INSERT INTO `Pregunta` (`id`, `encuesta`, `tipo`, `numPregunta`, `pregunta`, `video`, `imagen`, `numOpciones`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`) VALUES
-(1, 1, 1, 1, '¿Qué cosas ha escuchado recientemente de Margarita Zavala?', 'test.m4v', 'test.jpg', 0, '', '', '', '', '', '', '', '', '', ''),
-(2, 1, 2, 2, '¿Su opinión sobre Margarita Zavala es?', 'test2.mov', '', 3, 'Positiva', 'Negativa', 'Neutra', '', '', '', '', '', '', ''),
-(3, 1, 3, 3, '¿Conoce la asociación que promueve Margarita Zavala?', 'test3.mp4', '', 2, 'Sí', 'No', '', '', '', '', '', '', '', ''),
-(4, 1, 2, 4, '¿Sabe usted qué promueve dicha asociación?', '', '', 2, 'Sí', 'No', '', '', '', '', '', '', '', ''),
-(5, 1, 2, 5, 'Después de ver el video, su opinión sobre MZ...', '', '', 3, 'Mejoró', 'Empeoró', 'Sigue igual', '', '', '', '', '', '', ''),
-(6, 1, 2, 6, '¿Cree usted que tiene posibilidades para ser Presidenta de México?', '', '', 3, 'Sí', 'No', 'Aún es muy pronto para dar una opinión', '', '', '', '', '', '', '');
+(13, 1, 1, 1, '¿Qué cosas ha escuchado recientemente de Margarita Zavala?', 'test.m4v', 'test.jpg', 0, '', '', '', '', '', '', '', '', '', ''),
+(14, 1, 3, 2, '¿Su opinión sobre Margarita Zavala es?', 'test2.mov', 'test.jpg', 5, 'Positiva', 'Negativa', 'Neutra', 'Muy Mala', 'Muy Buena', '', '', '', '', ''),
+(15, 1, 2, 3, '¿Conoce la asociación que promueve Margarita Zavala?', 'test3.mp4', 'test.jpg', 2, 'Sí', 'No', '', '', '', '', '', '', '', ''),
+(16, 1, 2, 4, '¿Sabe usted qué promueve dicha asociación?', '', '', 2, 'Sí', 'No', '', '', '', '', '', '', '', ''),
+(17, 1, 2, 5, 'Después de ver el video, su opinión sobre MZ...', '', '', 3, 'Mejoró', 'Empeoró', 'Sigue igual', '', '', '', '', '', '', ''),
+(18, 1, 2, 6, '¿Cree usted que tiene posibilidades para ser Presidenta de México?', '', '', 4, 'Sí', 'No', 'Aún es muy pronto para dar una opinión', 'Tal vez', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -563,15 +573,24 @@ CREATE TABLE `Respuesta` (
   `respuestas` longtext COLLATE utf8_spanish_ci NOT NULL,
   `fecha` date NOT NULL,
   `hora` time NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Respuesta`
 --
 
 INSERT INTO `Respuesta` (`id`, `encuesta`, `panelista`, `respuestas`, `fecha`, `hora`) VALUES
-(4, 1, 1, 'res|Positiva|Sí&No&|Sí|Empeoró|No|', '2016-09-12', '04:27:31'),
-(5, 1, 3, 'maria|Neutra|Sí&|No|Mejoró|Aún es muy pronto para dar una opinión|', '2016-09-12', '04:28:20');
+(9, 1, 1, 'shido|Positiva&|Sí|Sí|Sigue igual|Tal vez|', '2016-09-15', '02:37:05'),
+(11, 1, 2, 'no me quejo|Neutra&|No|Sí|Empeoró|Aún es muy pronto para dar una opinión|', '2016-09-15', '02:39:15'),
+(12, 1, 6, 'Respuesta|Positiva&Negativa&Neutra&|Sí|No|Empeoró|Aún es muy pronto para dar una opinión|', '2016-09-15', '02:39:10'),
+(13, 1, 3, 'nada|Muy Mala&|No|No|Mejoró|Sí|', '2016-09-15', '02:40:21'),
+(14, 1, 7, 'Qwerty|Positiva&Muy Buena&|Sí|Sí|Mejoró|Tal vez|', '2016-09-15', '02:40:23'),
+(15, 1, 4, 'no me parce|Muy Buena&|Sí|No|Sigue igual|No|', '2016-09-15', '02:41:30'),
+(16, 1, 8, 'Pop outer|Positiva&Negativa&Neutra&Muy Mala&Muy Buena&|No|No|Sigue igual|No|', '2016-09-15', '02:41:17'),
+(17, 1, 9, 'Más,más fuerte|Muy Buena&|No|Sí|Empeoró|Tal vez|', '2016-09-15', '02:42:25'),
+(18, 1, 5, 'betoooo|Muy Mala&|No|No|Sigue igual|Tal vez|', '2016-09-15', '02:42:55'),
+(19, 1, 10, 'Cobb |Neutra&Muy Mala&Muy Buena&|Sí|No|Mejoró|Aún es muy pronto para dar una opinión|', '2016-09-15', '02:43:18'),
+(20, 1, 11, '', '0000-00-00', '00:00:00');
 
 -- --------------------------------------------------------
 
@@ -675,17 +694,17 @@ ALTER TABLE `Panelista`
 -- AUTO_INCREMENT de la tabla `PanelistaEnPanel`
 --
 ALTER TABLE `PanelistaEnPanel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=50;
 --
 -- AUTO_INCREMENT de la tabla `Pregunta`
 --
 ALTER TABLE `Pregunta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT de la tabla `Respuesta`
 --
 ALTER TABLE `Respuesta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT de la tabla `Usuario`
 --

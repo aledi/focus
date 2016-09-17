@@ -21,8 +21,7 @@
             <select id='avances-encuestas-select' class='encuestas-select'>
                 <option value='0'>Selecciona una encuesta</option>
             </select>
-            <p id='avance-percentage' class='avance-info'></p>
-            <p id='avance-panelistas' class='avance-info'></p>
+            <p id='avance-summary' class='avance-info'></p>
             <table id='avances-table'></table>
         </div>
     </section>

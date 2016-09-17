@@ -26,29 +26,33 @@
                     <label>Nombre del Panel:</label>
                     <input id='panelName' type='text' />
                 </div>
+
                 <div class='input-wrapper'>
                     <label>Descripción:</label>
                     <textarea id='descripcion'></textarea>
                 </div>
+
                 <div class='input-wrapper'>
                     <label>Fecha de Inicio:</label>
                     <select id='dia'></select>
                     <select id='mes'></select>
                     <select id='anio'></select>
                 </div>
+
                 <div class='input-wrapper'>
                     <label>Fecha Final:</label>
                     <select id='dia_fin'></select>
                     <select id='mes_fin'></select>
                     <select id='anio_fin'></select>
                 </div>
-                <div>
-                    <p>Seleccionar Cliente:</p>
+
+                <div class='input-wrapper'>
+                    <label>Seleccionar Cliente:</label>
                     <table id='tableClientes'></table>
                 </div>
 
                 <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
-                <button type='submit' id='savePanel'>Agregar</button>
+                <button type='submit' id='save-panel'>Agregar</button>
                 <span id='feedback'></span>
             </div>
 
