@@ -19,7 +19,7 @@
             </ul>
 
             <div id='tab-agregar-administrador' class='tab-content current'>
-                <h2 id='headerTitle'>Agregar Administrador</h2>
+                <h2 id='header-title'>Agregar Administrador</h2>
 
                 <div class='input-wrapper'>
                     <label>Nombre(s):</label>

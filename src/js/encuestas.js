@@ -76,8 +76,15 @@ $(document).on('ready', function () {
         var fechaFin = getCompleteDate(2);
         var panel = $('input[name=id]:checked').val();
 
-        if (nombre === '' || fechaInicio === '' || fechaFin === '' || panel === '') {
-            $('#feedback').html('Favor de llenar todos los campos');
+        debugger
+
+        if (!nombre || !nombre.trim()) {
+            $('#feedback').html('Favor de elegir un nombre');
+            return;
+        }
+
+        if (!panel) {
+            $('#feedback').html('Favor de seleccionar un panel');
             return;
         }
 
@@ -130,7 +137,7 @@ $(document).on('ready', function () {
         $('ul.tabs li').first().addClass('current');
         $("#tab-agregar-encuesta").addClass('current');
 
-        $('#headerTitle').text('Editar Encuesta');
+        $('#header-title').text('Editar Encuesta');
         $('#save-encuesta').text('Editar');
 
         $('#cancel-edit').show();
@@ -187,7 +194,7 @@ $(document).on('ready', function () {
     $('#cancel-edit').on('click', function (event) {
         $('#tab-agregar-encuesta').find('input').val('');
         $('#allPanels input').removeAttr('checked');
-        $('#headerTitle').text('Agregar Encuesta');
+        $('#header-title').text('Agregar Encuesta');
         $('#save-encuesta').text('Agregar');
         $('#cancel-edit').hide();
 
