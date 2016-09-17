@@ -54,8 +54,10 @@ function fillDay (days, option) {
         $('#dia').empty();
         $('#dia').append(currentHTML);
     } else {
+        var currentValue = $('#dia_fin').val();
         $('#dia_fin').empty();
         $('#dia_fin').append(currentHTML);
+        $('#dia_fin').val(currentValue);
     }
 }
 
