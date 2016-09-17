@@ -113,7 +113,7 @@ $(document).on('ready', function () {
     $('#allAdmins').on('click', '.edit-button', function ()  {
         var idAdministador = $(this).parent().attr('id');
         
-        $('#headerTitle').text('Editar Administrador');
+        $('#header-title').text('Editar Administrador');
         $('#save-admin').text('Editar');
 
         $('ul.tabs li').removeClass('current');
@@ -179,7 +179,7 @@ $(document).on('ready', function () {
 
     $('#cancel-edit').on('click', function (event) {
         $('#tab-agregar-administrador').find('input').val('');
-        $('#headerTitle').text('Agregar Administrador');
+        $('#header-title').text('Agregar Administrador');
         $('#save-admin').text('Agregar');
         $('#cancel-edit').hide();
         $('#admin-password').show();
