@@ -2,6 +2,11 @@
     padding: 30px;
 }
 
+.reportes-wrapper {
+    padding: 20px;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+}
+
 .selects-wrapper {
     height: 150px;
     margin-bottom: 30px;
