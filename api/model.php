@@ -235,6 +235,35 @@ function registerEncuesta ($nombre, $fechaInicio, $fechaFin, $panel) {
     return array('status' => 'DATABASE_ERROR');
 }
 
+function registerResource ($nombre, $tipo) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre FROM Recurso WHERE nombre = '$nombre'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            $conn->close();
+            return array('status' => 'RECORD_EXISTS', 'id' => (int)$row['id'], 'nombre' => $row['nombre']);
+        }
+
+        $sql = "INSERT INTO Recurso (nombre, tipo) VALUES ('$nombre', '$tipo')";
+
+        if ($conn->query($sql) === TRUE) {
+            $lastId = mysqli_insert_id($conn);
+            $conn->close();
+            return array('status' => 'SUCCESS', 'id' => $lastId);
+        }
+
+        $conn->close();
+        return array('status' => 'ERROR');
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 // -------------------------------
 // Fetch
 // -------------------------------

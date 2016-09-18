@@ -25,6 +25,9 @@ switch ($_POST['action']) {
     case 'ALTA_ENCUESTA':
         newEncuesta();
         break;
+    case 'ALTA_RECURSO':
+        newResource();
+        break;
     case 'GET_ADMINS':
         getRecords('ADMINS');
         break;
@@ -46,7 +49,7 @@ switch ($_POST['action']) {
     case 'GET_MOBILE_DATA':
         getRecords('MOBILE');
         break;
-    case 'GET_RESOURCES':
+    case 'GET_RECURSOS':
         getRecords('RESOURCES');
         break;
     case 'SET_PANELISTAS_PANEL':
@@ -197,6 +200,11 @@ function newEncuesta () {
     echo json_encode($registrationResult);
 }
 
+function newResource() {
+    $registrationResult = registerResource($_POST['nombre'], $_POST['tipo']);
+    echo json_encode($registrationResult);
+}
+
 function getRecords ($type) {
     switch ($type) {
         case 'ADMINS':
@@ -249,7 +257,7 @@ function getRecords ($type) {
                 echo json_encode(fetchPreguntasEncuesta($_POST['encuesta']));
                 return;
             }
-            
+
             break;
         case 'MOBILE':
             echo json_encode(fetchMobileData($_POST['panelista']));
