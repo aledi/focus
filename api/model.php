@@ -235,6 +235,35 @@ function registerEncuesta ($nombre, $fechaInicio, $fechaFin, $panel) {
     return array('status' => 'DATABASE_ERROR');
 }
 
+function registerResource ($nombre, $tipo) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre FROM Recurso WHERE nombre = '$nombre'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            $conn->close();
+            return array('status' => 'RECORD_EXISTS', 'id' => (int)$row['id'], 'nombre' => $row['nombre']);
+        }
+
+        $sql = "INSERT INTO Recurso (nombre, tipo) VALUES ('$nombre', '$tipo')";
+
+        if ($conn->query($sql) === TRUE) {
+            $lastId = mysqli_insert_id($conn);
+            $conn->close();
+            return array('status' => 'SUCCESS', 'id' => $lastId);
+        }
+
+        $conn->close();
+        return array('status' => 'ERROR');
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 // -------------------------------
 // Fetch
 // -------------------------------
@@ -518,6 +547,48 @@ function fetchMobileData ($panelista) {
 
         $conn->close();
         return array('paneles' => $paneles);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function fetchResources() {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT * FROM Recurso";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $recurso = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'tipo' => (int)$row['tipo']);
+            $response[] = $recurso;
+        }
+
+        $conn->close();
+        return array('results' => $response);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function fetchResourcesOfType($type) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT * FROM Recurso WHERE tipo = '$type'";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $recurso = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'tipo' => (int)$row['tipo']);
+            $response[] = $recurso;
+        }
+
+        $conn->close();
+        return array('results' => $response);
     }
 
     return array('status' => 'DATABASE_ERROR');
