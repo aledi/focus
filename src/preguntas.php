@@ -56,7 +56,7 @@
                 <span class='feedback'></span>
             </div>
             <div id='tab-agregar-recursos' class='tab-content'> 
-                <form action="upload.php" method="post" enctype="multipart/form-data">
+                <form action="../api/upload.php" method="post" enctype="multipart/form-data">
                     Select image to upload:
                     <input type="file" name="fileToUpload" id="fileToUpload">
                     <br/>
