@@ -79,7 +79,7 @@ switch ($_POST['action']) {
     case 'DELETE_ENCUESTA':
         deleteRecord('Encuesta');
         break;
-    case 'DELETE_ENCUESTA':
+    case 'DELETE_RECURSO':
         deleteRecord('Recurso');
         break;
     case 'VERIFY_SESSION':
