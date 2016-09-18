@@ -14,12 +14,12 @@
     <section>
         <div class='admins-wrapper'>
             <ul class='tabs'>
-                <li class='tab-link current' data-tab='tab-agregarAdministrador'>Agregar Administrador</li>
-                <li class='tab-link' data-tab='tab-modificarAdministrador'>Modificar Administrador</li>
+                <li class='tab-link current' data-tab='tab-agregar-administrador'>Agregar Administrador</li>
+                <li class='tab-link' data-tab='tab-view-administradores'>Ver Administradores</li>
             </ul>
 
-            <div id='tab-agregarAdministrador' class='tab-content current'>
-                <h2 id='headerTitle'>Agregar Administrador</h2>
+            <div id='tab-agregar-administrador' class='tab-content current'>
+                <h2 id='header-title'>Agregar Administrador</h2>
 
                 <div class='input-wrapper'>
                     <label>Nombre(s):</label>
@@ -38,7 +38,7 @@
 
                 <div class='input-wrapper'>
                     <label>Usuario:</label>
-                    <input id="username" type="text" />
+                    <input id='username' type='text' />
                 </div>
 
                 <div id='admin-password' class='input-wrapper'>
@@ -51,12 +51,12 @@
                     <input id='passwordConfirm' type='password' name='Password' placeholder='••••••••'>
                 </div>
 
-                <button id='saveAdmin' type='submit'>Agregar Administrador</button>
-                <button id='cancelModify' type='submit'>Cancelar Cambios</button>
+                <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
+                <button type='submit' id='save-admin'>Agregar</button>
                 <span id='feedback'></span>
             </div>
 
-            <div id='tab-modificarAdministrador' class='tab-content'>
+            <div id='tab-view-administradores' class='tab-content'>
                 <h2>Administradores Disponibles</h2>
 
                 <table id="allAdmins"></table>

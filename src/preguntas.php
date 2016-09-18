@@ -14,11 +14,11 @@
     <section>
         <div class='preguntas-wrapper'>
             <ul class='tabs'>
-                <li class='tab-link current' data-tab='tab-agregarEncuesta'>Ligar Pregunta</li>
+                <li class='tab-link current' data-tab='tab-agregar-encuesta'>Ligar Pregunta</li>
             </ul>
 
-            <div id='tab-agregarEncuesta' class='tab-content current'>
-                <h2 id='headerTitle'>Ligar Pregunta</h2>
+            <div id='tab-agregar-encuesta' class='tab-content current'>
+                <h2 id='header-title'>Ligar Pregunta</h2>
 
                 <div id='questions'>
                     <div id='1' class='questionForm'>

@@ -15,44 +15,48 @@
     <section>
         <div class='paneles-wrapper'>
             <ul class='tabs'>
-                <li class='tab-link current' data-tab='tab-agregarPanel'>Agregar Panel</li>
-                <li class='tab-link' data-tab='tab-modificarPanel'>Modificar Panel</li>
+                <li class='tab-link current' data-tab='tab-agregar-panel'>Agregar Panel</li>
+                <li class='tab-link' data-tab='tab-view-paneles'>Ver Paneles</li>
             </ul>
 
-            <div id='tab-agregarPanel' class='tab-content current'>
-                <h2 id='headerTitle'>Agregar Panel</h2>
+            <div id='tab-agregar-panel' class='tab-content current'>
+                <h2 id='header-title'>Agregar Panel</h2>
 
                 <div class='input-wrapper'>
                     <label>Nombre del Panel:</label>
                     <input id='panelName' type='text' />
                 </div>
+
                 <div class='input-wrapper'>
                     <label>Descripción:</label>
                     <textarea id='descripcion'></textarea>
                 </div>
+
                 <div class='input-wrapper'>
                     <label>Fecha de Inicio:</label>
                     <select id='dia'></select>
                     <select id='mes'></select>
                     <select id='anio'></select>
                 </div>
+
                 <div class='input-wrapper'>
                     <label>Fecha Final:</label>
                     <select id='dia_fin'></select>
                     <select id='mes_fin'></select>
                     <select id='anio_fin'></select>
                 </div>
-                <div>
-                    <p>Seleccionar Cliente:</p>
-                    <table id='tableClientes'></table>
+
+                <div class='input-wrapper'>
+                    <label>Seleccionar Cliente:</label>
+                    <table id='table-clientes'></table>
                 </div>
 
-                <button type='button' id='cancelModify' class='no-background'>Cancelar</button>
-                <button type='submit' id='savePanel'>Agregar</button>
-                <span id='feedback'></span>
+                <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
+                <button type='submit' id='save-panel'>Agregar</button>
+                <span id='feedback' class='feedback-text'></span>
             </div>
 
-            <div id='tab-modificarPanel' class='tab-content'>
+            <div id='tab-view-paneles' class='tab-content'>
                 <h2>Paneles Disponibles</h2>
 
                 <table id='allPanels'></table>

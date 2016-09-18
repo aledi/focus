@@ -12,7 +12,7 @@ $(document).on('ready', function () {
     $.ajax({
         type: 'POST',
         url: '../api/controller.php',
-        data: {'action': 'VERIFY_SESSION'},
+        data: {action: 'VERIFY_SESSION'},
         dataType: 'json',
         success: function (response) {
             if (response.status === 'SUCCESS') {
@@ -46,6 +46,11 @@ $(document).on('ready', function () {
     $('ul.tabs li').click(function () {
         var tabId = $(this).attr('data-tab');
 
+        // Make sure we clear query every time we go to view all section
+        if (tabId.search('view') !== -1 && window.location.search) {
+            history.pushState({}, null, window.location.href.split('?')[0]);
+        }
+
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
 
@@ -59,7 +64,7 @@ $(document).on('ready', function () {
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: {'action': 'LOG_OUT'},
+            data: {action: 'LOG_OUT'},
             dataType: 'json',
             success: function (obj) {
                 if (obj.status === 'SUCCESS') {

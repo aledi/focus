@@ -315,11 +315,11 @@ function fetchPanel ($id) {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $cliente = $row['cliente'];
-            $sql2 = "SELECT nombre, apellidos FROM Usuario WHERE id = '$cliente'";
+            $sql2 = "SELECT id FROM Usuario WHERE id = '$cliente'";
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'descripcion' => $row['descripcion'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'descripcion' => $row['descripcion'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => (int)$row2['id'], 'creador' => (int)$row['creador']);
         }
 
         $conn->close();
@@ -404,11 +404,11 @@ function fetchEncuesta ($id) {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $panel = $row['panel'];
-            $sql2 = "SELECT nombre FROM Panel WHERE id = '$panel'";
+            $sql2 = "SELECT id FROM Panel WHERE id = '$panel'";
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
+            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['id']);
         }
 
         $conn->close();
@@ -972,17 +972,23 @@ function generalReportData ($encuesta) {
         if ($answers === 0) {
             $byGender = generalReportByGender($encuesta, $answers, TRUE);
             $byAge = generalReportByAge($encuesta, $answers, TRUE);
-            $byState = generalReportByState($encuesta, $answers, TRUE);
+
+            $byStateData = generalReportByState($encuesta, $answers, TRUE);
+            $byState = $byStateData[0];
+            $byStatePercentage = $byStateData[1];
 
             $conn->close();
-            return array('respuestas' => 0, 'porcentaje' => 0, 'genero' => $byGender, 'edad' => $byAge, 'estado' => $byState);
+            return array('respuestas' => 0, 'porcentaje' => 0, 'genero' => $byGender, 'edad' => $byAge, 'estado' => $byState, 'estadoPercentage' => $byStatePercentage);
         }
 
         $byGender = generalReportByGender($encuesta, $answers, FALSE);
         $byAge = generalReportByAge($encuesta, $answers, FALSE);
-        $byState = generalReportByState($encuesta, $answers, FALSE);
 
-        return array('respuestas' => $answers, 'porcentaje' => $answers / $total, 'genero' => $byGender, 'edad' => $byAge, 'estado' => $byState);
+        $byStateData = generalReportByState($encuesta, $answers, FALSE);
+        $byState = $byStateData[0];
+        $byStatePercentage = $byStateData[1];
+
+        return array('respuestas' => $answers, 'porcentaje' => $answers / $total, 'genero' => $byGender, 'edad' => $byAge, 'estado' => $byState, 'estadoPercentage' => $byStatePercentage);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -1019,7 +1025,7 @@ function generalReportByAge ($encuesta, $total, $default) {
         $response = array();
         $count = 0;
 
-        $sql = "SELECT COUNT(*) as count FROM Respuesta INNER JOIN Panelista ON Panelista.id = Respuesta.panelista WHERE Respuesta.encuesta = 1 AND Respuesta.respuestas != '' AND Panelista.fechaNacimiento >= '$date25'";
+        $sql = "SELECT COUNT(*) as count FROM Respuesta INNER JOIN Panelista ON Panelista.id = Respuesta.panelista WHERE Respuesta.encuesta = '$encuesta' AND Respuesta.respuestas != '' AND Panelista.fechaNacimiento >= '$date25'";
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
@@ -1027,7 +1033,7 @@ function generalReportByAge ($encuesta, $total, $default) {
             $count = $count + (int)$row['count'];
         }
 
-        $sql = "SELECT COUNT(*) as count FROM Respuesta INNER JOIN Panelista ON Panelista.id = Respuesta.panelista WHERE Respuesta.encuesta = 1 AND Respuesta.respuestas != '' AND Panelista.fechaNacimiento >= '$date35' AND Panelista.fechaNacimiento < '$date25'";
+        $sql = "SELECT COUNT(*) as count FROM Respuesta INNER JOIN Panelista ON Panelista.id = Respuesta.panelista WHERE Respuesta.encuesta = '$encuesta' AND Respuesta.respuestas != '' AND Panelista.fechaNacimiento >= '$date35' AND Panelista.fechaNacimiento < '$date25'";
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
@@ -1035,7 +1041,7 @@ function generalReportByAge ($encuesta, $total, $default) {
             $count = $count + (int)$row['count'];
         }
 
-        $sql = "SELECT COUNT(*) as count FROM Respuesta INNER JOIN Panelista ON Panelista.id = Respuesta.panelista WHERE Respuesta.encuesta = 1 AND Respuesta.respuestas != '' AND Panelista.fechaNacimiento >= '$date45' AND Panelista.fechaNacimiento < '$date35'";
+        $sql = "SELECT COUNT(*) as count FROM Respuesta INNER JOIN Panelista ON Panelista.id = Respuesta.panelista WHERE Respuesta.encuesta = '$encuesta' AND Respuesta.respuestas != '' AND Panelista.fechaNacimiento >= '$date45' AND Panelista.fechaNacimiento < '$date35'";
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
@@ -1043,7 +1049,7 @@ function generalReportByAge ($encuesta, $total, $default) {
             $count = $count + (int)$row['count'];
         }
 
-        $sql = "SELECT COUNT(*) as count FROM Respuesta INNER JOIN Panelista ON Panelista.id = Respuesta.panelista WHERE Respuesta.encuesta = 1 AND Respuesta.respuestas != '' AND Panelista.fechaNacimiento >= '$date55' AND Panelista.fechaNacimiento < '$date45'";
+        $sql = "SELECT COUNT(*) as count FROM Respuesta INNER JOIN Panelista ON Panelista.id = Respuesta.panelista WHERE Respuesta.encuesta = '$encuesta' AND Respuesta.respuestas != '' AND Panelista.fechaNacimiento >= '$date55' AND Panelista.fechaNacimiento < '$date45'";
         $result = $conn->query($sql);
 
         if ($row = $result->fetch_assoc()) {
@@ -1069,17 +1075,19 @@ function generalReportByState ($encuesta, $total, $default) {
         $result = $conn->query($sql);
 
         $response = array();
+        $responsePercentage = array();
 
         while ($row = $result->fetch_assoc()) {
             $response[$row['estado']] = (int)$row['count'];
+            $responsePercentage[$row['estado'].'%'] = (int)$row['count'] / $total;
         }
 
         $conn->close();
-        return $response;
+        return array($response, $responsePercentage);
     }
 
     $conn->close();
-    return array();
+    return array(array(), array());
 }
 
 function currentAnswers ($encuesta) {
@@ -1183,7 +1191,7 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
             $answers = explode('|', $row['respuestas']);
 
             if ($tipo == 1) {
-                $values[] = $answers[$numPregunta - 1];
+                $votes[] = $answers[$numPregunta - 1];
             } if ($tipo == 2) {
                 for ($x = 0; $x < count($options); $x++) {
                     if ($answers[$numPregunta - 1] == $options[$x]) {
@@ -1221,12 +1229,12 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
             return array('status' => 'NO_DATA');
         }
 
-        // for ($x = 0; $x < count($options); $x++) {
-        //     $values[] = $votes[$x] / $total;
-        // }
+        for ($x = 0; $x < count($options); $x++) {
+            $values[] = $votes[$x] / $total;
+        }
 
         $conn->close();
-        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'votos' => $votes);
+        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'votos' => $votes, 'porcentajes' => $values);
     }
 
     return array('status' => 'DATABASE_ERROR');

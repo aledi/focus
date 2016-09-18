@@ -58,8 +58,8 @@ $(document).on('ready', function () {
             url: '../api/controller.php',
             type: 'POST',
             data: {
-                action: 'GET_PREGUNTAS',
-                encuesta: idEncuesta
+                action : 'GET_PREGUNTAS',
+                encuesta : idEncuesta
             },
             dataType: 'json',
             success: function (response) {
@@ -72,25 +72,25 @@ $(document).on('ready', function () {
                 for (var x = 0; x < response.results.length; x++) {
                     var result = response.results[x];
 
-                    $('input.pregunta[name=respuesta]').val(result.pregunta);
-                    $('select.tipoPregunta[name=respuesta]').val(result.tipo);
+                    $('#' + (x + 1) + ' > .input-wrapper > #pregunta').val(response.results[x].pregunta);
+                    $('#' + (x + 1) + ' > .input-wrapper > #tipo').val(response.results[x].tipo);
 
-                    appendAnswers(result.tipo, questionID);
+                    appendAnswers(response.results[x].tipo, (x + 1));
 
-                    $('input.imagen[name=respuesta]').val(result.imagen);
-                    $('input.video[name=respuesta]').val(result.video);
+                    $('#' + (x + 1) + ' > .input-wrapper > #imagen').val(response.results[x].imagen);
+                    $('#' + (x + 1) + ' > .input-wrapper > #video').val(response.results[x].video);
 
-                    if (result.tipo !== 1) {
-                        $('input.respuesta1[name=respuesta]').val(result.op1);
-                        $('input.respuesta2[name=respuesta]').val(result.op2);
-                        $('input.respuesta3[name=respuesta]').val(result.op3);
-                        $('input.respuesta4[name=respuesta]').val(result.op4);
-                        $('input.respuesta5[name=respuesta]').val(result.op5);
-                        $('input.respuesta6[name=respuesta]').val(result.op6);
-                        $('input.respuesta7[name=respuesta]').val(result.op7);
-                        $('input.respuesta8[name=respuesta]').val(result.op8);
-                        $('input.respuesta9[name=respuesta]').val(result.op9);
-                        $('input.respuesta10[name=respuesta]').val(result.op10);
+                    if (response.results[x].tipo !== 1) {
+                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta1').val(response.results[x].op1);
+                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta2').val(response.results[x].op2);
+                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta3').val(response.results[x].op3);
+                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta4').val(response.results[x].op4);
+                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta5').val(response.results[x].op5);
+                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta6').val(response.results[x].op6);
+                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta7').val(response.results[x].op7);
+                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta8').val(response.results[x].op8);
+                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta9').val(response.results[x].op9);
+                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta10').val(response.results[x].op10);
                     }
                 }
             },
@@ -157,9 +157,9 @@ $(document).on('ready', function () {
             type: 'POST',
             url: '../api/controller.php',
             data: {
-                'action': 'SET_PREGUNTAS_ENCUESTA',
-                'encuesta': idEncuesta,
-                'preguntas': questionsArray
+                action : 'SET_PREGUNTAS_ENCUESTA',
+                encuesta : idEncuesta,
+                preguntas : questionsArray
             },
             dataType: 'json',
             success: function (response) {

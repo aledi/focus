@@ -35,12 +35,12 @@ function getEncuestas (route) {
                 for (var i = 0; i < response.results.length; i++) {
                     var result = response.results[i];
 
-                    currentHTML += '<tr value="' + result.id + '">';
+                    currentHTML += '<tr id="' + result.id + '">';
                     currentHTML += '<td><a href="preguntas.php?id=' + result.id + '">' + result.nombre + '</a></td>';
                     currentHTML += '<td>' + result.fechaInicio + '</td>';
                     currentHTML += '<td>' + result.fechaFin + '</td>';
                     currentHTML += '<td>' + result.panel + '</td>';
-                    currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
+                    currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
 

@@ -3,6 +3,10 @@
 $(document).on('ready', function () {
     $('#panelistas-header-option').addClass('selected');
 
+    // -----------------------------------------------------------------------------------------------
+    // Fetch Panelistas
+    // -----------------------------------------------------------------------------------------------
+
     setTimeout(function (event) {
         $.ajax({
             type: 'POST',
@@ -29,13 +33,13 @@ $(document).on('ready', function () {
                 for (var i = 0; i < response.results.length; i++) {
                     var result = response.results[i];
 
-                    currentHTML += '<tr value="' + result.id + '">';
+                    currentHTML += '<tr id="' + result.id + '">';
                     currentHTML += '<td>' + result.nombre + " " + result.apellidos + '</td>';
                     currentHTML += '<td>' + convertGenero(result.genero) + '</td>';
                     currentHTML += '<td>' + result.edad + '</td>';
                     currentHTML += '<td>' + result.municipio + '</td>';
                     currentHTML += '<td>' + result.estado + '</td>';
-                    currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
+                    currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
 
@@ -45,7 +49,7 @@ $(document).on('ready', function () {
                 }
 
                 currentHTML += '</tbody>';
-                $('#cancelModify').hide();
+                $('#cancel-edit').hide();
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los clientes');
@@ -53,11 +57,15 @@ $(document).on('ready', function () {
         });
     }, 500);
 
+    // -----------------------------------------------------------------------------------------------
+    // Save Panelista
+    // -----------------------------------------------------------------------------------------------
+
     $('#savePanelista').on('click', function (event) {
         var idPanelista = window.location.search.substring(1);
         idPanelista = idPanelista.substring(3);
 
-        var modifying = idPanelista != '';
+        var editing = idPanelista != '';
 
         var firstName = $('#firstName').val();
         var lastName = $('#lastName').val();
@@ -71,7 +79,7 @@ $(document).on('ready', function () {
         var estado = $('#estado').val();
         var cp = $('#cp').val();
 
-        if (firstName === '' || lastName === '' || email === '' || username === '' || (!modifying && password === '') ||
+        if (firstName === '' || lastName === '' || email === '' || username === '' || (!editing && password === '') ||
             fechaNacimiento === '' || educacion === '0' || calleNumero === '' || colonia === '' || municipio === '' ||
             estado === '0' || cp === '') {
                 $('#feedback').html('Favor de llenar todos los campos');
@@ -94,14 +102,14 @@ $(document).on('ready', function () {
             'cp': cp
         };
 
-        if (modifying) {
+        if (editing) {
             data.id = idPanelista;
         }
 
         // Clear feedback <span>
         $('#feedback').empty();
 
-        var actionText = modifying ? 'modificado' : 'agregado';
+        var actionText = editing ? 'editado' : 'agregado';
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -116,53 +124,35 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allPanelistas').on('click', '.deleteButton', function () {
-        var data = {
-            'action': 'DELETE_PANELISTA',
-            'id': $(this).parent().attr('value')
-        }
+    // -----------------------------------------------------------------------------------------------
+    // Edit Panelista
+    // -----------------------------------------------------------------------------------------------
 
-        $.ajax({
-            url: '../api/controller.php',
-            type: 'POST',
-            data: data,
-            dataType: 'json',
-            success: function (response) {
-                alert('Panelista eliminado exitosamente.');
-                $(this).parent().find('td.id').remove();
-            },
-            error: function (errorMsg) {
-                alert('Error eliminando panelista.');
-            }
-        });
-    });
-
-    $('#allPanelistas').on('click', '.modifyButton', function () {
-        var idPanelista = $(this).parent().attr('value');
+    $('#allPanelistas').on('click', '.edit-button', function () {
+        var idPanelista = $(this).parent().attr('id');
 
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').first().addClass('current');
-        $('#tab-agregarPanelista').addClass('current');
+        $('#tab-agregar-panelista').addClass('current');
 
-        $('#headerTitle').text('Modificar Panelista');
-        $('#savePanelista').text('Modificar');
+        $('#header-title').text('Editar Panelista');
+        $('#savePanelista').text('Editar');
 
         $('#panelista-password').hide();
-        $('#cancelModify').show();
+        $('#cancel-edit').show();
 
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
             data: {
-                'action': 'GET_PANELISTAS',
-                'id': idPanelista
+                action: 'GET_PANELISTAS',
+                id: idPanelista
             },
             dataType: 'json',
             success: function (response) {
                 var result = response.result;
-
                 $('#firstName').val(result.nombre);
                 $('#lastName').val(result.apellidos);
                 $('#email').val(result.email);
@@ -177,29 +167,48 @@ $(document).on('ready', function () {
                 $('#cp').val(result.cp);
 
                 var myURL = window.location.href.split('?')[0];
-                myURL = myURL + '?id=' + result.id;
+                myURL += '?id=' + result.id;
                 history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {
-                alert('Error modificando panelista.');
+                alert('Error editando panelista.');
             }
         });
     });
 
-    // Listen to keypress & restrict input to numeric value
-    $('#cp').keypress(function (event) {
-        if (!event.metaKey && event.charCode !== 13 && (event.charCode < 48 || event.charCode > 57)) {
-            event.preventDefault();
+    // -----------------------------------------------------------------------------------------------
+    // Delete Panelista
+    // -----------------------------------------------------------------------------------------------
+
+    $('#allPanelistas').on('click', '.deleteButton', function () {
+        var self = this;
+        var data = {
+            action: 'DELETE_PANELISTA',
+            id: $(this).parent().attr('id')
         }
+
+        $.ajax({
+            url: '../api/controller.php',
+            type: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function (response) {
+                alert('Panelista eliminado exitosamente.');
+                $(self).parent().remove();
+            },
+            error: function (errorMsg) {
+                alert('Error eliminando panelista.');
+            }
+        });
     });
 
-    $('#cancelModify').on('click', function (event) {
-        $('#tab-agregarPanelista').find('input').val('');
-        $('#tab-agregarPanelista').find('select').val('0');
-        $('#tab-agregarPanelista').find('input').removeAttr('checked');
-        $('#headerTitle').text('Agregar Panelista');
+    $('#cancel-edit').on('click', function (event) {
+        $('#tab-agregar-panelista').find('input').val('');
+        $('#tab-agregar-panelista').find('select').val('0');
+        $('#tab-agregar-panelista').find('input').removeAttr('checked');
+        $('#header-title').text('Agregar Panelista');
         $('#savePanel').text('Agregar');
-        $('#cancelModify').hide();
+        $('#cancel-edit').hide();
 
         var myURL = window.location.href.split('?')[0];
         history.pushState({}, null, myURL);
@@ -208,10 +217,17 @@ $(document).on('ready', function () {
         $('.tab-content').removeClass('current');
 
         $('ul.tabs li').last().addClass('current');
-        $('#tab-modificarPanelista').addClass('current');
+        $('#tab-view-panelistas').addClass('current');
     });
 
     $('#mes, #anio').on('change', function() {
         changeSelect('Inicio');
+    });
+
+    // Listen to keypress & restrict input to numeric value
+    $('#cp').keypress(function (event) {
+        if (!event.metaKey && event.charCode !== 13 && (event.charCode < 48 || event.charCode > 57)) {
+            event.preventDefault();
+        }
     });
 });

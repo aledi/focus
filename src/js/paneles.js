@@ -3,6 +3,10 @@
 $(document).on('ready', function () {
     $('#paneles-header-option').addClass('selected');
 
+    // -----------------------------------------------------------------------------------------------
+    // Fetch Clientes
+    // -----------------------------------------------------------------------------------------------
+
     $.ajax({
         type: 'POST',
         url: '../api/controller.php',
@@ -21,13 +25,13 @@ $(document).on('ready', function () {
             for (var i = 0; i < response.results.length; i++) {
                 var result = response.results[i];
 
-                currentHTML += '<tr value="' + result.id + '">';
+                currentHTML += '<tr id="' + result.id + '">';
                 currentHTML += "<td>" + result.nombre + " " + result.apellidos + "</td>";
                 currentHTML += "<td>" + result.email + "</td>";
                 currentHTML += '<td class="centered"><input type="radio" value=' + result.id + ' name="id"></td>';
                 currentHTML += "</tr>";
 
-                $('#tableClientes').append(currentHTML);
+                $('#table-clientes').append(currentHTML);
                 currentHTML = '';
             }
 
@@ -38,55 +42,9 @@ $(document).on('ready', function () {
         }
     });
 
-    $('#savePanel').on('click', function (event) {
-        event.preventDefault();
-
-        var idPanel = window.location.search.substring(1);
-        idPanel = idPanel.substring(3);
-
-        var nombre = $('#panelName').val();
-        var descripcion = $('#descripcion').val();
-        var fechaInicio = getCompleteDate(1);
-        var fechaFin = getCompleteDate(2);
-        var cliente = $("input[name=id]:checked").val();
-
-        if (nombre === '' || fechaInicio === '' || fechaFin === '' || typeof cliente === 'undefined') {
-            $('#feedback').html('Favor de llenar todos los campos');
-            return;
-        }
-
-        var data = {
-            'action': 'ALTA_PANEL',
-            'nombre': nombre,
-            'descripcion' : descripcion,
-            'fechaInicio': fechaInicio,
-            'fechaFin': fechaFin,
-            'cliente' : cliente
-        };
-
-        if (idPanel != '') {
-            data.id = idPanel;
-        }
-
-        var actionText = idPanel !== '' ? 'modificado' : 'agregado';
-        $.ajax({
-            type: 'POST',
-            url: '../api/controller.php',
-            data: data,
-            dataType: 'json',
-            success: function (response) {
-                if (response.status == 'SUCCESS') {
-                    alert('Panel ' + actionText + ' exitosamente.');
-                    location.replace("liga-panel-panelista.php?id=" + response.id);
-                } else {
-                    $('#feedback').html('Panel no ' + actionText + '. Ha ocurrido un error.');
-                }
-            },
-            error: function (error) {
-                $('#feedback').html('Panel no ' + actionText + '. Ha ocurrido un error.');
-            }
-        });
-    });
+    // -----------------------------------------------------------------------------------------------
+    // Fetch Paneles
+    // -----------------------------------------------------------------------------------------------
 
     setTimeout(function (event) {
         $.ajax({
@@ -113,32 +71,147 @@ $(document).on('ready', function () {
                 for (var i = 0; i < response.results.length; i++) {
                     var result = response.results[i];
 
-                    currentHTML += '<tr value="'+ result.id +'">';
+                    currentHTML += '<tr id="'+ result.id +'">';
                     currentHTML += '<td><a href="liga-panel-panelista.php?id=' + result.id +'">' + result.nombre +"</a></td>";
                     currentHTML += "<td>" + result.fechaInicio + "</td>";
                     currentHTML += "<td>" + result.fechaFin + "</td>";
                     currentHTML += "<td>" + result.cliente + "</td>";
-                    currentHTML += '<td class=modifyButton><button id=modify type=button>Modificar</button></td>';
+                    currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += "</tr>";
 
-                    $("#allPanels").append(currentHTML);
+                    $('#allPanels').append(currentHTML);
                     currentHTML = '';
                 }
 
                 currentHTML += '</tbody>';
-                $('#cancelModify').hide();
+                $('#cancel-edit').hide();
             },
             error: function (error) {
-                $('#feedback').html('Error cargando los clientes');
+                $('#feedback').html('Error cargando los paneles');
             }
         });
     }, 500);
 
+    // -----------------------------------------------------------------------------------------------
+    // Save Panel
+    // -----------------------------------------------------------------------------------------------
+
+    $('#save-panel').on('click', function (event) {
+        event.preventDefault();
+
+        var idPanel = window.location.search.substring(1);
+        idPanel = idPanel.substring(3);
+
+        var nombre = $('#panelName').val();
+        var descripcion = $('#descripcion').val();
+        var fechaInicio = getCompleteDate(1);
+        var fechaFin = getCompleteDate(2);
+        var cliente = $('input[name=id]:checked').val();
+
+        if (!nombre || !nombre.trim()) {
+            $('#feedback').html('Favor de elegir un nombre');
+            return;
+        }
+
+        if (!cliente) {
+            $('#feedback').html('Favor de seleccionar un cliente');
+            return;
+        }
+
+        var startDate = new Date($('select#anio').val(), parseInt($('select#mes').val(),10) - 1, $('select#dia').val());
+        var endDate = new Date($('select#anio_fin').val(), parseInt($('select#mes_fin').val(),10) - 1, $('select#dia_fin').val());
+
+        if (endDate <= startDate) {
+            $('#feedback').html('La fecha fin debe ser posterior a la fecha de inicio');
+            return;
+        }
+
+        var data = {
+            action: 'ALTA_PANEL',
+            nombre: nombre,
+            descripcion: descripcion,
+            fechaInicio: fechaInicio,
+            fechaFin: fechaFin,
+            cliente: cliente
+        };
+
+        if (idPanel != '') {
+            data.id = idPanel;
+        }
+
+        var actionText = idPanel !== '' ? 'editado' : 'agregado';
+        $.ajax({
+            type: 'POST',
+            url: '../api/controller.php',
+            data: data,
+            dataType: 'json',
+            success: function (response) {
+                if (response.status == 'SUCCESS') {
+                    alert('Panel ' + actionText + ' exitosamente.');
+                    location.replace("liga-panel-panelista.php?id=" + response.id);
+                } else {
+                    $('#feedback').html('Panel no ' + actionText + '. Ha ocurrido un error.');
+                }
+            },
+            error: function (error) {
+                $('#feedback').html('Panel no ' + actionText + '. Ha ocurrido un error.');
+            }
+        });
+    });
+
+    // -----------------------------------------------------------------------------------------------
+    // Edit Panel
+    // -----------------------------------------------------------------------------------------------
+
+    $('#allPanels').on('click', '.edit-button', function () {
+        var idPanel = $(this).parent().attr('id');
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $('ul.tabs li').first().addClass('current');
+        $('#tab-agregar-panel').addClass('current');
+
+        $('#header-title').text('Editar Panel');
+        $('#save-panel').text('Editar');
+        $('#cancel-edit').show();
+
+        $.ajax({
+            url: '../api/controller.php',
+            type: 'POST',
+            data: {
+                action: 'GET_PANELES',
+                id: idPanel
+            },
+            dataType: 'json',
+            success: function (response) {
+                var result = response.result;
+
+                $('#panelName').val(result.nombre);
+                getDatefromString(result.fechaInicio, 0);
+                getDatefromString(result.fechaFin, 1);
+                $('input[name="id"][value="' + result.cliente + '"]').prop('checked', true);
+
+                var myURL = window.location.href.split('?')[0];
+                myURL += '?id=' + result.id;
+                history.pushState({}, null, myURL);
+            },
+            error: function (errorMsg) {
+                alert('Error editando panelista.');
+            }
+        });
+    });
+
+    // -----------------------------------------------------------------------------------------------
+    // Delete Panel
+    // -----------------------------------------------------------------------------------------------
+
     $('#allPanels').on('click', '.deleteButton', function () {
+        var self = this;
         var data = {
             'action': 'DELETE_PANEL',
-            'id': $(this).parent().attr('value')
+            'id': $(this).parent().attr('id')
         }
 
         $.ajax({
@@ -148,7 +221,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 alert('Panelista eliminado exitosamente.');
-                $(this).parent().find('td.id').remove();
+                $(self).parent().remove();
             },
             error: function (errorMsg) {
                 alert('Error eliminando panelista.');
@@ -156,43 +229,20 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#allPanels').on('click', '.modifyButton', function () {
-        var idPanel = $(this).parent().attr('value');
+    $('#cancel-edit').on('click', function (event) {
+        $('#tab-agregar-panel').find('input').val('');
+        $('#table-clientes input').removeAttr('checked');
+        $('#header-title').text('Agregar Panel');
+        $('#save-panel').text('Agregar');
+        $('#cancel-edit').hide();
+        var myURL = window.location.href.split('?')[0];
+        history.pushState({}, null, myURL);
 
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
 
-        $('ul.tabs li').first().addClass('current');
-        $("#tab-agregarPanel").addClass('current');
-
-        $('#headerTitle').text('Modificar Panel');
-        $('#savePanel').text('Modificar');
-        $('#cancelModify').show();
-
-        $.ajax({
-            url: '../api/controller.php',
-            type: 'POST',
-            data: {
-                'action': 'GET_PANELES',
-                'id': idPanel
-            },
-            dataType: 'json',
-            success: function (response) {
-                var result = response.result;
-
-                $('#panelName').val(result.nombre);
-                getDatefromString(result.fechaInicio, 0);
-                getDatefromString(result.fechaFin, 1);
-                $('input[name="id"][value="' + result.id + '"]').prop('checked', true);
-
-                var myURL = window.location.href.split('?')[0];
-                myURL += '?id=' + result.id;
-                history.pushState({}, null, myURL);
-            },
-            error: function (errorMsg) {
-                alert('Error modificando panelista.');
-            }
-        });
+        $('ul.tabs li').last().addClass('current');
+        $('#tab-view-paneles').addClass('current');
     });
 
     $('#mes, #anio').on('change', function () {
@@ -202,21 +252,4 @@ $(document).on('ready', function () {
     $('#mes_fin, #anio_fin').on('change', function () {
         changeSelect('Fin');
     });
-
-    $('#cancelModify').on('click', function (event) {
-        $('#tab-agregarPanel').find('input').val('');
-        $('#tableClientes input').removeAttr('checked');
-        $('#headerTitle').text('Agregar Panel');
-        $('#savePanel').text('Agregar');
-        $('#cancelModify').hide();
-        var myURL = window.location.href.split('?')[0];
-        history.pushState({}, null, myURL);
-
-        $('ul.tabs li').removeClass('current');
-        $('.tab-content').removeClass('current');
-
-        $('ul.tabs li').last().addClass('current');
-        $("#tab-modificarPanel").addClass('current');
-    });
-
 });
