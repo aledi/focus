@@ -90,7 +90,7 @@ $(document).on('ready', function () {
         var endDate = new Date($('select#anio_fin').val(), parseInt($('select#mes_fin').val(),10) - 1, $('select#dia_fin').val());
 
         if (endDate <= startDate) {
-            $('#feedback').html('La fecha de inicio debe ser menor a la fecha fin');
+            $('#feedback').html('La fecha fin debe ser posterior a la fecha de inicio');
             return;
         }
 
