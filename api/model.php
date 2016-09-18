@@ -523,6 +523,48 @@ function fetchMobileData ($panelista) {
     return array('status' => 'DATABASE_ERROR');
 }
 
+function fetchResources() {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT * FROM Recurso";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $recurso = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'tipo' => (int)$row['tipo']);
+            $response[] = $recurso;
+        }
+
+        $conn->close();
+        return array('results' => $response);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function fetchResourcesOfType($type) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT * FROM Recurso WHERE tipo = '$type'";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $recurso = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'tipo' => (int)$row['tipo']);
+            $response[] = $recurso;
+        }
+
+        $conn->close();
+        return array('results' => $response);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 function emptyString ($string) {
     return($string !== '');
 }

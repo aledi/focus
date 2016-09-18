@@ -46,6 +46,9 @@ switch ($_POST['action']) {
     case 'GET_MOBILE_DATA':
         getRecords('MOBILE');
         break;
+    case 'GET_RESOURCES':
+        getRecords('RESOURCES');
+        break;
     case 'SET_PANELISTAS_PANEL':
         setPanelistasPanel();
         break;
@@ -246,9 +249,18 @@ function getRecords ($type) {
                 echo json_encode(fetchPreguntasEncuesta($_POST['encuesta']));
                 return;
             }
+            
             break;
         case 'MOBILE':
             echo json_encode(fetchMobileData($_POST['panelista']));
+            break;
+        case 'RESOURCES':
+            if (isset($_POST['tipo'])) {
+                echo json_encode(fetchResourcesOfType($_POST['tipo']));
+                return;
+            }
+
+            echo json_encode(fetchResources());
             break;
     }
 }
