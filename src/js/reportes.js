@@ -69,7 +69,7 @@ function barChart (opciones, votes, chartNumber, title) {
     function drawChart() {
         var data = new google.visualization.DataTable();
         data.addColumn('string', '');
-        data.addColumn('number', 'Votos');
+        data.addColumn('number', 'Posición Promedio');
 
         for (var x = 0; x < opciones.length; x++) {
             data.addRows([[opciones[x], votes[x]]]);
@@ -82,7 +82,14 @@ function barChart (opciones, votes, chartNumber, title) {
                 groupWidth: '61.48%',
                 width: '20%'
             },
-            hAxis: {format: 'percent'}
+            hAxis: {
+                format : '#',
+                ticks : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                viewWindow : {
+                    min : 0,
+                    max : 10
+                }
+            }
         };
 
         options.title = title;
@@ -102,6 +109,7 @@ function columnChart (opciones, votes, percent, chartNumber, title) {
 
         for (var x = 0; x < opciones.length; x++) {
             opciones[x] += '\n(' + String((percent[x] * 100).toFixed(2)) + '%)';
+
             data.addRows([[opciones[x], votes[x]]]);
         }
 
@@ -315,7 +323,7 @@ $(document).on('ready', function () {
                     if (response.tipo === 1) {
                     // Tabla
                     } else if (response.tipo === 4) {
-                        barChart(getObjectProperties(response.opciones), response.votos, 1, '');
+                        barChart(getObjectProperties(response.opciones), response.porcentajes, 1, '');
                     } else if (response.opciones.length < 4) {
                         pieChart(getObjectProperties(response.opciones), response.votos, 1, '');
                     } else {
@@ -365,7 +373,7 @@ $(document).on('ready', function () {
                 if (response.tipo === 1) {
                 // Tabla
                 } else if (response.tipo === 4) {
-                    barChart(getObjectProperties(response.opciones), response.votos, 2, '');
+                    barChart(getObjectProperties(response.opciones), response.porcentajes, 2, '');
                 } else if (response.opciones.length < 4) {
                     pieChart(getObjectProperties(response.opciones), response.votos, 2, '');
                 } else {
