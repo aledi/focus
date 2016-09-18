@@ -6,7 +6,7 @@
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
     <script src="js/jquery-1.12.3.js"></script>
     <script src='js/preguntas.js' type='text/javascript'></script>
-    <title> Focus - Encuestas</title>
+    <title> Focus - Preguntas</title>
 </head>
 
 <body>
@@ -14,10 +14,11 @@
     <section>
         <div class='preguntas-wrapper'>
             <ul class='tabs'>
-                <li class='tab-link current' data-tab='tab-agregar-encuesta'>Ligar Pregunta</li>
+                <li class='tab-link current' data-tab='tab-agregar-pregunta'>Ligar Pregunta</li>
+                 <li class='tab-link' data-tab='tab-agregar-recursos'>Recursos</li>
             </ul>
 
-            <div id='tab-agregar-encuesta' class='tab-content current'>
+            <div id='tab-agregar-pregunta' class='tab-content current'>
                 <h2 id='header-title'>Ligar Pregunta</h2>
 
                 <div id='questions'>
@@ -53,6 +54,13 @@
                 <button type='submit' id='submitQuestions'>Confimar Preguntas</button>
 
                 <span class='feedback'></span>
+            </div>
+            <div id='tab-agregar-recursos' class='tab-content'> 
+                <form action="upload.php" method="post" enctype="multipart/form-data">
+                    Select image to upload:
+                    <input type="file" name="fileToUpload" id="fileToUpload">
+                    <input type="submit" value="Upload Image" name="submit">
+                </form>
             </div>
         </div>
     </section>
