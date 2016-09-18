@@ -65,7 +65,7 @@ function barChart(opciones, votes, chartNumber, title) {
     function drawChart() {
         var data = new google.visualization.DataTable();
         data.addColumn('string', '');
-        data.addColumn('number', 'Votos');
+        data.addColumn('number', 'Posición Promedio');
 
         for (var x = 0; x < opciones.length; x++) {
             data.addRows([[opciones[x], votes[x]]]);
@@ -75,10 +75,17 @@ function barChart(opciones, votes, chartNumber, title) {
           width : 900,
           height : 500,
           bar : {
-              groupWidth : "61.48%",
-              width : "40%"
+              groupWidth : '61.48%',
+              width : '40%'
           },
-          hAxis: { format : 'percent'}
+          hAxis: {
+              format : '#',
+              ticks : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+              viewWindow : {
+                  min : 0,
+                  max : 10
+              }
+          }
         };
 
         options.title = title;
@@ -97,7 +104,7 @@ function columnChart(opciones, votes, percent, chartNumber, title) {
         data.addColumn('number', 'Votos');
 
         for (var x = 0; x < opciones.length; x++) {
-            opciones[x] +=  " (" + String((percent[x] * 100).toFixed(2)) + "%)";
+            opciones[x] +=  ' (' + String((percent[x] * 100).toFixed(2)) + '%)';
             data.addRows([[opciones[x], votes[x]]]);
         }
 
@@ -105,10 +112,10 @@ function columnChart(opciones, votes, percent, chartNumber, title) {
           width : 900,
           height : 400,
           bar : {
-              groupWidth : "11.48%",
-              width : "40%"
+              groupWidth : '11.48%',
+              width : '40%'
             },
-          vAxis : {format : '#%'}
+          vAxis : { format : '#%' }
         };
 
         options.title = title;
@@ -277,11 +284,11 @@ $(document).on('ready', function () {
 
                 $('#filtros-button').show();
 
-                $('#chart1').html("");
-                $('#chart2').html("");
-                $('#chart3').html("");
+                $('#chart1').html('');
+                $('#chart2').html('');
+                $('#chart3').html('');
 
-                if (response.status === "NO_DATA") {
+                if (response.status === 'NO_DATA') {
                     return;
                 }
 
@@ -310,7 +317,7 @@ $(document).on('ready', function () {
                     if (response.tipo === 1) {
                         // Tabla
                     } else if (response.tipo === 4) {
-                        barChart(getObjectProperties(response.opciones), response.votos, 1, '');
+                        barChart(getObjectProperties(response.opciones), response.porcentajes, 1, '');
                     } else if (response.opciones.length < 4) {
                         pieChart(getObjectProperties(response.opciones), response.votos, 1, '');
                     } else {
@@ -355,12 +362,12 @@ $(document).on('ready', function () {
             data: data,
             dataType: 'json',
             success: function (response) {
-                $('#chart3').html("");
+                $('#chart3').html('');
 
                 if (response.tipo === 1) {
                     // Tabla
                 } else if (response.tipo === 4) {
-                    barChart(getObjectProperties(response.opciones), response.votos, 3, '');
+                    barChart(getObjectProperties(response.opciones), response.porcentajes, 3, '');
                 } else if (response.opciones.length < 4) {
                     pieChart(getObjectProperties(response.opciones), response.votos, 3, '');
                 } else {

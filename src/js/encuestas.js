@@ -114,7 +114,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 alert('Encuesta ' + actionText + ' exitosamente.');
-                location.replace('preguntas.php?id=' + data.id);
+                location.replace('preguntas.php?id=' + response.id);
             },
             error: function (error) {
                 $('#feedback').html('Encuesta no ' + actionText + '. Ha ocurrido un error.');
