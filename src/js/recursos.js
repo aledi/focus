@@ -11,6 +11,10 @@ function getTypeWithNumber(tipo) {
 
 $(document).on('ready', function () {
 
+    // -----------------------------------------------------------------------------------------------
+    // Fetch Resources
+    // -----------------------------------------------------------------------------------------------
+
     setTimeout(function () {
         $.ajax({
             type: 'POST',
@@ -49,6 +53,32 @@ $(document).on('ready', function () {
             }
         });
     });
+
+    // -----------------------------------------------------------------------------------------------
+    // Delete Resources
+    // -----------------------------------------------------------------------------------------------
+
+    $('#allResources').on('click', '.deleteButton', function () {
+        var self = this;
+        $.ajax({
+            url: '../api/controller.php',
+            type: 'POST',
+            data: {
+                action: 'DELETE_RECURSO',
+                id: $(this).parent().attr('id')
+            },
+            dataType: 'json',
+            success: function (response) {
+                alert('Recurso eliminado exitosamente.');
+                $(self).parent().remove();
+            },
+            error: function (errorMsg) {
+                alert('Error eliminando recurso.');
+            }
+        });
+    });
+
+
 /*
 	$('#uploadData').on('click', function (event) {
 		$.ajax({
