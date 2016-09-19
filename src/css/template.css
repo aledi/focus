@@ -136,7 +136,7 @@ section {
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
 }
 
-.avances-wrapper {
+.recursos-wrapper, .avances-wrapper {
     width: 1000px;
     padding: 30px 20px;
 }

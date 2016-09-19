@@ -27,9 +27,7 @@
 	            <input type='submit' value='Upload' name='submit' id='uploadData'>
             </form>
             <div id='#resources'>
-            	<table id='allResources'>
-
-            	</table>
+            	<table id='allResources'></table>
             </div>
 		</div>
 	</section>
