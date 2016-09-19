@@ -205,10 +205,13 @@ function newEncuesta () {
 }
 
 function newResource() {
-    $uploadResult = uploadFile($_POST['archivo'], $_POST['nombre'], $_POST['tipo']);
+    $uploadResult = uploadFile($_POST['file-name'], $_POST['tipo']);
 
-    if ($registrationResult['status'] === 'SUCCESS') {
-        echo json_encode(registerResource($_POST['nombre'], $_POST['tipo']));
+    if ($uploadResult['status'] === 'SUCCESS') {
+        registerResource($_POST['nombre'], $_POST['tipo']);
+        header('Location: ../src/recursos.php');
+
+        exit();
     } else {
         echo json_encode($uploadResult);
     }

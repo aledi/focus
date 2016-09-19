@@ -6,7 +6,7 @@
     <script src='js/jquery-1.12.3.js'></script>
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
     <!--<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js'></script>-->
-    <script src='js/recursos.js'></script>
+    <!-- <script src='js/recursos.js'></script> -->
     <title> Focus - Encuestas</title>
 </head>
 
@@ -15,14 +15,15 @@
 	<section class='recursos-section'>
 		<div class='recursos-wrapper'>
 			<h2>Recursos</h2>
-			<div>
+			<form action='../api/controller.php' method='POST' enctype='multipart/form-data'>
                 Select image to upload:
-                <input type='text' name='name' id='file-name'>
-	            <input type='file' name='file' id='file'>
-	            <br/>
                 <input type='hidden' name='action' value='ALTA_RECURSO'>
+                <input type='text' name='file-name' id='file-name'>
+	            <input type='file' name='file' id='file'><br/>
 	            <input type='submit' value='Upload' name='submit' id='uploadData'>
-            </div>
+                <input type='radio' name='tipo' value='1'>Imagen</input>
+                <input type='radio' name='tipo' value='2'>Video</input>
+            </form>
 		</div>
 	</section>
 </body>
