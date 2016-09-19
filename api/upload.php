@@ -1,20 +1,19 @@
 <?php
 
-function uploadFile() {
-    $target_dir = '../resources/';
-    $target_file = $target_dir . basename($_FILES['file']['name']);
+function uploadFile($file, $name, $tipo) {
+    $target_dir = '../resources/'.($tipo === 1 ? 'images/' : 'videos/');
+    $target_file = $target_dir.$nombre;
     $uploadOk = 1;
-    $fileType = pathinfo($target_file,PATHINFO_EXTENSION);
+    $fileType = pathinfo($target_file, PATHINFO_EXTENSION);
 
-    // Check if image file is a actual image or fake image
-    if(isset($_POST['submit'])) {
-        $check = getimagesize($_FILES['file']['tmp_name']);
-        if($check !== false) {
-            $uploadOk = 1;
-        } else {
-            $uploadOk = 0;
-            return array('status' => 'File is not an image');
-        }
+    // Check if image file is an actual image or fake image
+    $check = getimagesize($target_file);
+
+    if ($check !== false) {
+        $uploadOk = 1;
+    } else {
+        $uploadOk = 0;
+        return array('status' => 'File is not an image');
     }
 
     // Check if file already exists
@@ -24,7 +23,7 @@ function uploadFile() {
     }
 
     // Check file size
-    if ($_FILES['file']['size'] > 500000) {
+    if ($file['size'] > 500000) {
         $uploadOk = 0;
         return array('status' => 'Sorry, your file is too large.');
     }
@@ -39,7 +38,7 @@ function uploadFile() {
         echo 'Sorry, your file was not uploaded.';
     // if everything is ok, try to upload file
     } else {
-        if (move_uploaded_file($_FILES['file']['tmp_name'], $target_file)) {
+        if (move_uploaded_file($file['tmp_name'], $target_file)) {
             return array('status' => 'The file has been uploaded.');
         } else {
             return array('status' => 'Sorry, there was an error uploading your file.');

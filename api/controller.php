@@ -205,10 +205,13 @@ function newEncuesta () {
 }
 
 function newResource() {
-    echo json_encode(uploadFile());
+    $uploadResult = uploadFile($_POST['archivo'], $_POST['nombre'], $_POST['tipo']);
 
-    $registrationResult = registerResource($_POST['nombre'], $_POST['tipo']);
-    // echo json_encode($registrationResult);
+    if ($registrationResult['status'] === 'SUCCESS') {
+        echo json_encode(registerResource($_POST['nombre'], $_POST['tipo']));
+    } else {
+        echo json_encode($uploadResult);
+    }
 }
 
 function getRecords ($type) {
@@ -310,6 +313,11 @@ function setRespuestas () {
 }
 
 function deleteRecord ($table) {
+    if ($table === 'RECURSO') {
+        $path = '../resources/'.((int)$_POST['id'] === 1 ? 'images/' : 'videos/').$_POST['nombre'];
+        unlink($path);
+    }
+
     $deleteResult = removeRecord($_POST['id'], $table);
 
     echo json_encode($deleteResult);
