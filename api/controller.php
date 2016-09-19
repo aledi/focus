@@ -316,14 +316,14 @@ function setRespuestas () {
 }
 
 function deleteRecord ($table) {
-    if ($table === 'RECURSO') {
-        $path = '../resources/'.((int)$_POST['id'] === 1 ? 'images/' : 'videos/').$_POST['nombre'];
+    if ($table === 'Recurso') {
+        $path = '../resources/'.((int)$_POST['tipo'] == 1 ? 'images/' : 'videos/').$_POST['nombre'];
         unlink($path);
     }
 
     $deleteResult = removeRecord($_POST['id'], $table);
 
-    echo json_encode($deleteResult);
+    echo json_encode($path);
 }
 
 function verifyActiveSession () {
