@@ -49,7 +49,7 @@ $(document).on('ready', function () {
                     var result = response.results[i];
 
                     currentHTML += '<tr id="'+ result.id +'">';
-                    currentHTML += '<td>' + result.nombre+'</td>';
+                    currentHTML += '<td id="nombre">' + result.nombre+'</td>';
                     currentHTML += '<td class="Type">' + changeType(result.tipo, 0) +'</td>';
                     currentHTML += '<td class="deleteButton"><button id="delete" type="button">Eliminar</button></td>';
                     currentHTML += '</tr>';
@@ -72,13 +72,15 @@ $(document).on('ready', function () {
 
     $('#allResources').on('click', '.deleteButton', function () {
         var self = this;
-
+        console.log($(this).parent().find('#nombre').text());
+        console.log(changeType($(this).parent().find('.Type').text(), 1));
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
             data: {
                 action: 'DELETE_RECURSO',
                 id: $(this).parent().attr('id'),
+                nombre: $(this).parent().find('#nombre').text(),
                 tipo: changeType($(this).parent().find('.Type').text(), 1)
             },
             dataType: 'json',
