@@ -16,13 +16,15 @@
 		<div class='recursos-wrapper'>
 			<h2>Recursos</h2>
 			<form action='../api/controller.php' method='POST' enctype='multipart/form-data'>
-                Select image to upload:
                 <input type='hidden' name='action' value='ALTA_RECURSO'>
-                <input type='text' name='file-name' id='file-name'>
-	            <input type='file' name='file' id='file'><br/>
-	            <input type='submit' value='Upload' name='submit' id='uploadData'>
+                Selecciona un archivo:
+                <input type='file' name='file' id='file'><br>
+                Nombre:
+                <input type='text' name='file-name' id='file-name'><br>
+                Tipo:
                 <input type='radio' name='tipo' value='1'>Imagen</input>
-                <input type='radio' name='tipo' value='2'>Video</input>
+                <input type='radio' name='tipo' value='2'>Video</input><br>
+	            <input type='submit' value='Upload' name='submit' id='uploadData'>
             </form>
 		</div>
 	</section>
