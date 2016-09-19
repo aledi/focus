@@ -9,7 +9,8 @@ $(document).on('ready', function () {
             data: {
                 action: 'ALTA_RECURSO',
                	nombre: $('#file-name').val(),
-               	file: $('#file').val()
+               	archivo: $('#file').val(),
+                tipo: 1
             },
             dataType: 'json',
             success: function (response) {

@@ -15,13 +15,13 @@
 	<section class='recursos-section'>
 		<div class='recursos-wrapper'>
 			<h2>Recursos</h2>
-			<form action='../api/controller.php' method='post' enctype='multipart/form-data'>
+			<form method='post' enctype='multipart/form-data'>
                 Select image to upload:
                 <input type='text' name='name' id='file-name'>
 	            <input type='file' name='file' id='file'>
 	            <br/>
                 <input type='hidden' name='action' value='ALTA_RECURSO'>
-	            <input type='submit' value='Upload' name='submit'>
+	            <input type='submit' value='Upload' name='submit' id='uploadData'>
             </form>
 		</div>
 	</section>
