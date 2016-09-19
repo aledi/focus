@@ -1049,7 +1049,7 @@ function generalReportData ($encuesta) {
             $byStatePercentage = $byStateData[1];
 
             $conn->close();
-            return array('respuestas' => 0, 'porcentaje' => 0, 'genero' => $byGender, 'edad' => $byAge, 'estado' => $byState, 'estadoPercentage' => $byStatePercentage);
+            return array('status' => 'NO_DATA', 'respuestas' => 0, 'porcentaje' => 0, 'genero' => $byGender, 'edad' => $byAge, 'estado' => $byState, 'estadoPercentage' => $byStatePercentage);
         }
 
         $byGender = generalReportByGender($encuesta, $answers, FALSE);
@@ -1059,7 +1059,7 @@ function generalReportData ($encuesta) {
         $byState = $byStateData[0];
         $byStatePercentage = $byStateData[1];
 
-        return array('respuestas' => $answers, 'porcentaje' => $answers / $total, 'genero' => $byGender, 'edad' => $byAge, 'estado' => $byState, 'estadoPercentage' => $byStatePercentage);
+        return array('status' => 'SUCCESS', 'respuestas' => $answers, 'porcentaje' => $answers / $total, 'genero' => $byGender, 'edad' => $byAge, 'estado' => $byState, 'estadoPercentage' => $byStatePercentage);
     }
 
     return array('status' => 'DATABASE_ERROR');
