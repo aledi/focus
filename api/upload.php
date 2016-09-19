@@ -1,47 +1,50 @@
 <?php
-$target_dir = "../resources/";
-$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-$uploadOk = 1;
-$fileType = pathinfo($target_file,PATHINFO_EXTENSION);
 
-// Check if image file is a actual image or fake image
-if(isset($_POST["submit"])) {
-    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-    if($check !== false) {
-        echo "File is an image - " . $check["mime"] . ".";
-        $uploadOk = 1;
-    } else {
-        echo "File is not an image.";
+function uploadFile() {
+    $target_dir = '../resources/';
+    $target_file = $target_dir . basename($_FILES['file']['name']);
+    $uploadOk = 1;
+    $fileType = pathinfo($target_file,PATHINFO_EXTENSION);
+
+    // Check if image file is a actual image or fake image
+    if(isset($_POST['submit'])) {
+        $check = getimagesize($_FILES['file']['tmp_name']);
+        if($check !== false) {
+            $uploadOk = 1;
+        } else {
+            $uploadOk = 0;
+            return array('status' => 'File is not an image');
+        }
+    }
+
+    // Check if file already exists
+    if (file_exists($target_file)) {
         $uploadOk = 0;
+        return array('status' => 'Sorry, file already exists.');
     }
-}
 
-// Check if file already exists
-if (file_exists($target_file)) {
-    echo "Sorry, file already exists.";
-    $uploadOk = 0;
-}
+    // Check file size
+    if ($_FILES['file']['size'] > 500000) {
+        $uploadOk = 0;
+        return array('status' => 'Sorry, your file is too large.');
+    }
 
-// Check file size
-if ($_FILES["fileToUpload"]["size"] > 500000) {
-    echo "Sorry, your file is too large.";
-    $uploadOk = 0;
-}
-
-// Allow certain file formats
-if($fileType != "jpg" && $fileType != "png" && $fileType != "mp4" ) {
-    echo "Sorry, only JPG, PNG & MP4 files are allowed.";
-    $uploadOk = 0;
-}
-// Check if $uploadOk is set to 0 by an error
-if ($uploadOk == 0) {
-    echo "Sorry, your file was not uploaded.";
-// if everything is ok, try to upload file
-} else {
-    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+    // Allow certain file formats
+    if($fileType != 'jpg' && $fileType != 'png' && $fileType != 'mp4' ) {
+        $uploadOk = 0;
+        return array('status' => 'Sorry, only JPG, PNG & MP4 files are allowed.');
+    }
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+        echo 'Sorry, your file was not uploaded.';
+    // if everything is ok, try to upload file
     } else {
-        echo "Sorry, there was an error uploading your file.";
+        if (move_uploaded_file($_FILES['file']['tmp_name'], $target_file)) {
+            return array('status' => 'The file has been uploaded.');
+        } else {
+            return array('status' => 'Sorry, there was an error uploading your file.');
+        }
     }
 }
+
 ?>

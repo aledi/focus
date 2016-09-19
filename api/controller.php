@@ -2,6 +2,7 @@
 
 header('Content-type: application/json');
 require_once 'model.php';
+require_once 'upload.php';
 
 switch ($_POST['action']) {
     case 'WEB_LOG_IN':
@@ -204,8 +205,10 @@ function newEncuesta () {
 }
 
 function newResource() {
+    echo json_encode(uploadFile());
+
     $registrationResult = registerResource($_POST['nombre'], $_POST['tipo']);
-    echo json_encode($registrationResult);
+    // echo json_encode($registrationResult);
 }
 
 function getRecords ($type) {
