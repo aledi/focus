@@ -1,11 +1,23 @@
 'use strict';
 
-function getTypeWithNumber(tipo) {
-    if (tipo === 1) {
-        return "Imagen";
-    }
-    else {
-        return "Video";
+function changeType(tipo, action) {
+    switch (action) {
+        case 0:
+            if (tipo === 1) {
+                return "Imagen";
+            }
+            else {
+                return "Video";
+            }
+        break;
+        case 1:
+            if (tipo === "Imagen") {
+                return 1;
+            }
+            else {
+                return 2;
+            }
+        break;
     }
 }
 
@@ -38,7 +50,7 @@ $(document).on('ready', function () {
 
                     currentHTML += '<tr id="'+ result.id +'">';
                     currentHTML += '<td>' + result.nombre+'</td>';
-                    currentHTML += '<td>' + getTypeWithNumber(result.tipo) +'</td>';
+                    currentHTML += '<td class="Type">' + changeType(result.tipo, 0) +'</td>';
                     currentHTML += '<td class="deleteButton"><button id="delete" type="button">Eliminar</button></td>';
                     currentHTML += '</tr>';
 
@@ -60,12 +72,14 @@ $(document).on('ready', function () {
 
     $('#allResources').on('click', '.deleteButton', function () {
         var self = this;
+
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
             data: {
                 action: 'DELETE_RECURSO',
-                id: $(this).parent().attr('id')
+                id: $(this).parent().attr('id'),
+                tipo: changeType($(this).parent().find('.Type').text(), 1)
             },
             dataType: 'json',
             success: function (response) {
