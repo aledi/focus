@@ -14,7 +14,7 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                
+              alert("Hola");  
             },
             error: function (errorMsg) {
                 alert('Error eliminando administrador.');
