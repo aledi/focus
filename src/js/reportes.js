@@ -277,6 +277,11 @@ $(document).on('ready', function () {
             data: data,
             dataType: 'json',
             success: function (response) {
+                if (response.status === 'NO_DATA') {
+                    $('#reportes-feedback').html('No hay información para la encuesta y pregunta seleccionadas');
+                    return;
+                }
+
                 // Show filter options with default values
                 $('#edad-select').show();
                 $('#edad-select').val('0');
@@ -295,10 +300,6 @@ $(document).on('ready', function () {
                 $('#chart1').html('');
                 $('#chart2').html('');
                 $('#chart3').html('');
-
-                if (response.status === 'NO_DATA') {
-                    return;
-                }
 
                 if (numPregunta === 0) {
                     //General
@@ -334,7 +335,7 @@ $(document).on('ready', function () {
                 return;
             },
             error: function (errorMsg) {
-                return;
+                $('#reportes-feedback').html('Ha ocurrido un error. Favor de intentar de nuevo.');
             }
         });
     });
@@ -368,6 +369,11 @@ $(document).on('ready', function () {
             data: data,
             dataType: 'json',
             success: function (response) {
+                if (response.status === 'NO_DATA') {
+                    $('#reportes-filtros-feedback').html('No hay información para los filtros seleccionados');
+                    return;
+                }
+
                 $('#chart3').html('');
 
                 if (response.tipo === 1) {
@@ -383,8 +389,32 @@ $(document).on('ready', function () {
                 return;
             },
             error: function (errorMsg) {
-                return;
+                $('#reportes-feedback').html('Ha ocurrido un error. Favor de intentar de nuevo.');
             }
         });
+    });
+
+    $('#edad-select').on('change', function () {
+        if ($('#reportes-filtros-feedback').html()) {
+            $('#reportes-filtros-feedback').empty();
+        }
+    });
+
+    $('#genero-select').on('change', function () {
+        if ($('#reportes-filtros-feedback').html()) {
+            $('#reportes-filtros-feedback').empty();
+        }
+    });
+
+    $('#estado-select').on('change', function () {
+        if ($('#reportes-filtros-feedback').html()) {
+            $('#reportes-filtros-feedback').empty();
+        }
+    });
+
+    $('#educacion-select').on('change', function () {
+        if ($('#reportes-filtros-feedback').html()) {
+            $('#reportes-filtros-feedback').empty();
+        }
     });
 });
