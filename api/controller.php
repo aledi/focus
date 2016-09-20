@@ -196,7 +196,7 @@ function newEncuesta () {
 
         if ($registrationResult['status'] === 'SUCCESS') {
             foreach ($registrationResult['deviceTokens'] as $deviceToken) {
-                sendPushNotification('Nueva Encuesta', $deviceToken);
+                sendPushNotification('¡Nueva Encuesta Disponible!', $deviceToken);
             }
         }
     }
@@ -292,7 +292,7 @@ function setPanelistasPanel () {
 
     if ($saveResult['status'] === 'SUCCESS') {
         foreach ($saveResult['deviceTokens'] as $deviceToken) {
-            sendPushNotification('Nuevo Panel', $deviceToken);
+            sendPushNotification('¡Has sido registrado a un nuevo Panel! Pronto recibirás encuestas para responder.', $deviceToken);
         }
     }
 }
