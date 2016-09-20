@@ -6,7 +6,7 @@
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
     <script src="js/jquery-1.12.3.js"></script>
     <script src='js/preguntas.js' type='text/javascript'></script>
-    <title> Focus - Encuestas</title>
+    <title> Focus - Preguntas</title>
 </head>
 
 <body>
@@ -14,10 +14,11 @@
     <section>
         <div class='preguntas-wrapper'>
             <ul class='tabs'>
-                <li class='tab-link current' data-tab='tab-agregar-encuesta'>Ligar Pregunta</li>
+                <li class='tab-link current' data-tab='tab-agregar-pregunta'>Ligar Pregunta</li>
+                 <li class='tab-link' data-tab='tab-agregar-recursos'>Recursos</li>
             </ul>
 
-            <div id='tab-agregar-encuesta' class='tab-content current'>
+            <div id='tab-agregar-pregunta' class='tab-content current'>
                 <h2 id='header-title'>Ligar Pregunta</h2>
 
                 <div id='questions'>
