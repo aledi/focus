@@ -352,7 +352,6 @@ $(document).on('ready', function () {
                         var html = '';
                         $('#abiertas-table').show();
                         for (var i = 0; i < response.votos.length; i++) {
-                            debugger
                             var even = i % 2 === 0;
                             html += (even ? '<tr>' : '') + '<td>' + response.votos[i] + '</td>' + (even ? '' : '</tr>');
                         }
