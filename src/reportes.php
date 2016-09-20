@@ -87,6 +87,7 @@
                 </div>
             </div>
             <span id='reportes-feedback' class='feedback-text'></span>
+            <table id='abiertas-table' class='abiertas-table'></table>
             <div id='chart1' class='chart1'></div>
             <div id='chart2' class='chart2'></div>
             <div id='chart3' class='chart3'></div>
