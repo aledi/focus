@@ -280,6 +280,10 @@ $(document).on('ready', function () {
         }
 
         if (numPregunta < 0) {
+            $('#abiertas-table').empty();
+            $('#chart1').empty();
+            $('#chart2').empty();
+            $('#chart3').empty();
             return;
         }
 
@@ -300,24 +304,29 @@ $(document).on('ready', function () {
                     return;
                 }
 
-                // Show filter options with default values
-                $('#edad-select').show();
-                $('#edad-select').val('0');
-
-                $('#genero-select').show();
-                $('#genero-select').val('-1');
-
-                $('#estado-select').show();
-                $('#estado-select').val('0');
-
-                $('#educacion-select').show();
-                $('#educacion-select').val('0');
-
-                $('#filtros-button').show();
-
+                $('#abiertas-table').empty();
                 $('#chart1').empty();
                 $('#chart2').empty();
                 $('#chart3').empty();
+
+                if (response.tipo !== 1) {
+                    // Show filter options with default values
+                    $('#edad-select').show();
+                    $('#edad-select').val('0');
+
+                    $('#genero-select').show();
+                    $('#genero-select').val('-1');
+
+                    $('#estado-select').show();
+                    $('#estado-select').val('0');
+
+                    $('#educacion-select').show();
+                    $('#educacion-select').val('0');
+
+                    $('#filtros-button').show();
+
+                    $('#abiertas-table').hide();
+                }
 
                 if (numPregunta === 0) {
                     //General
@@ -340,7 +349,15 @@ $(document).on('ready', function () {
 
                 } else {
                     if (response.tipo === 1) {
-                    // Tabla
+                        var html = '';
+                        $('#abiertas-table').show();
+                        for (var i = 0; i < response.votos.length; i++) {
+                            debugger
+                            var even = i % 2 === 0;
+                            html += (even ? '<tr>' : '') + '<td>' + response.votos[i] + '</td>' + (even ? '' : '</tr>');
+                        }
+
+                        $('#abiertas-table').append(html);
                     } else if (response.tipo === 4) {
                         barChart(getObjectProperties(response.opciones), response.porcentajes, 1, '');
                     } else if (response.opciones.length < 4) {
@@ -349,8 +366,6 @@ $(document).on('ready', function () {
                         columnChart(getObjectProperties(response.opciones), response.votos, response.porcentajes, 1, '');
                     }
                 }
-
-                return;
             },
             error: function (errorMsg) {
                 $('#reportes-feedback').html('Ha ocurrido un error. Favor de intentar de nuevo.');
@@ -405,9 +420,7 @@ $(document).on('ready', function () {
                     return;
                 }
 
-                if (response.tipo === 1) {
-                // Tabla
-                } else if (response.tipo === 4) {
+                if (response.tipo === 4) {
                     barChart(getObjectProperties(response.opciones), response.porcentajes, 2, '');
                 } else if (response.opciones.length < 4) {
                     pieChart(getObjectProperties(response.opciones), response.votos, 2, '');
