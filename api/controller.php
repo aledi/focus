@@ -323,7 +323,7 @@ function deleteRecord ($table) {
 
     $deleteResult = removeRecord($_POST['id'], $table);
 
-    echo json_encode($path);
+    echo json_encode($deleteResult);
 }
 
 function verifyActiveSession () {
