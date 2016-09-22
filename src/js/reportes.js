@@ -32,6 +32,15 @@ var stateObject = {
     ZAC: 'Zacatecas'
 }
 
+var educationObject = {
+    1: 'Primaria',
+    2: 'Secundaria',
+    3: 'Preparatoria',
+    4: 'Profesional',
+    5: 'Posgrado',
+    6: 'Ninguno'
+}
+
 google.charts.load('current', {'packages': ['corechart', 'bar']});
 
 // -----------------------------------------------------------------------------------------------
@@ -185,6 +194,14 @@ function convertState (estado) {
     }
 
     return estado;
+}
+
+function convertEducation (education) {
+    for (var x = 0; x < education.length; x++) {
+        education[x] = educationObject[parseInt(education[x])];
+    }
+
+    return education;
 }
 
 function getObjectProperties (object) {
@@ -342,6 +359,9 @@ $(document).on('ready', function () {
                     pieChart(convertAgeRange(Object.keys(response.edad)),
                             getObjectProperties(response.edad),
                             2, 'Edad');
+                    // pieChart(convertEducation(Object.keys(response.educacion)),
+                    //         getObjectProperties(response.educacion),
+                    //         2, 'Educación');
                     columnChart(convertState(Object.keys(response.estado)),
                             getObjectProperties(response.estado),
                             getObjectProperties(response.estadoPercentage),
