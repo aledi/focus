@@ -148,8 +148,8 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 if (response.status === 'SUCCESS') {
-                    alert('Encuesta ' + actionText + ' exitosamente.');
-                    location.replace('preguntas.php?id=' + response.id);
+                    alert('Panel ' + actionText + ' exitosamente.');
+                    location.replace((actionText == 'agregado') ? 'liga-panel-panelista.php?id=' + response.id : 'paneles.php');
                 } else if (response.status === 'RECORD_EXISTS') {
                     alert('El panel ya existe. Por favor, eliga un nombre diferente.');
                 } else {

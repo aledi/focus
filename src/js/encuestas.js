@@ -115,7 +115,7 @@ $(document).on('ready', function () {
             success: function (response) {
                 if (response.status === 'SUCCESS') {
                     alert('Encuesta ' + actionText + ' exitosamente.');
-                    location.replace('preguntas.php?id=' + response.id);
+                    location.replace((actionText == 'agregada') ? 'preguntas.php?id=' + response.id : 'encuestas.php');
                 } else if (response.status === 'RECORD_EXISTS') {
                     alert('La encuesta ya existe. Por favor, eliga un nombre diferente.');
                 } else {
