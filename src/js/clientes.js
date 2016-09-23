@@ -100,6 +100,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 alert('Cliente ' + actionText + ' exitosamente.');
+                location.replace('clientes.php');
             },
             error: function (error) {
                 $('#feedback').html('Cliente no ' + actionText + '. Ha ocurrido un error.');

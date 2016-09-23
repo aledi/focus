@@ -117,6 +117,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 alert('Panelista '+ actionText + ' exitosamente.');
+                location.replace('panelistas.php');
             },
             error: function (error) {
                 $('#feedback').html('Panelista no ' + actionText + '. Ha ocurrido un error.');

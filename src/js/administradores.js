@@ -99,6 +99,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 alert('Adminsitrador ' + actionText + ' exitosamente.');
+                location.replace('administradores.php');
             },
             error: function (error) {
                 $('#feedback').html('Administrador no ' + actionText + '. Ha ocurrido un error.');
