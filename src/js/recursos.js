@@ -6,6 +6,23 @@ function changeType(tipo, action) {
 
 $(document).on('ready', function () {
 
+    $('input[type=radio][name=tipo]').change(function() {
+        var currentHTML = ''
+        $('#extension').empty();
+        if (this.value == '1') {
+            currentHTML += '<option value="jpg">jpg</option>' +
+            '<option value="png">png</option>';
+
+            $('#extension').append(currentHTML);
+        }
+        else if (this.value == '2') {
+            currentHTML += '<option value="mp4">mp4</option>';
+
+            $('#extension').append(currentHTML);
+        }
+    });
+
+
     // -----------------------------------------------------------------------------------------------
     // Fetch Resources
     // -----------------------------------------------------------------------------------------------
