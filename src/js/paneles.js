@@ -151,7 +151,7 @@ $(document).on('ready', function () {
                     alert('Panel ' + actionText + ' exitosamente.');
                     location.replace((actionText == 'agregado') ? 'liga-panel-panelista.php?id=' + response.id : 'paneles.php');
                 } else if (response.status === 'RECORD_EXISTS') {
-                    $('#feedback').html('El panel ya existe. Por favor, eliga un nombre diferente.');
+                    $('#feedback').html('El panel ya existe. Por favor, elija un nombre diferente.');
                 } else {
                     $('#feedback').html('Hubo un error al guardar el panel. Por favor, intente más tarde.');
                 }

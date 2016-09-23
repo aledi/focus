@@ -103,7 +103,7 @@ $(document).on('ready', function () {
                     alert('Cliente ' + actionText + ' exitosamente.');
                     location.replace('clientes.php');
                 } else if (response.status === 'USER_EXISTS') {
-                    $('#feedback').html('El usuario ya existe. Por favor, eliaj otro');
+                    $('#feedback').html('El usuario ya existe. Por favor, elija otro');
                 } else {
                     $('#feedback').html('Hubo un error al guardar el usuario. Por favor, intente más tarde');
                 }
