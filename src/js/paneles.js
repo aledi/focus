@@ -149,7 +149,12 @@ $(document).on('ready', function () {
             success: function (response) {
                 if (response.status == 'SUCCESS') {
                     alert('Panel ' + actionText + ' exitosamente.');
-                    location.replace("liga-panel-panelista.php?id=" + response.id);
+                    if (actionText === 'agregado') {
+                        location.replace("liga-panel-panelista.php?id=" + response.id);
+                    }
+                    else {
+                        location.replace('paneles.php');
+                    }
                 } else {
                     $('#feedback').html('Panel no ' + actionText + '. Ha ocurrido un error.');
                 }
