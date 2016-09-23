@@ -77,7 +77,7 @@
                         <option value='0'>Selecciona un nivel de educación</option>
                         <option value='1'>Primaria</option>
                         <option value='2'>Secundaria</option>
-                        <option value='3'>Preparatoria</option>
+                        <option value='3'>Preparatoria o Técnica</option>
                         <option value='4'>Profesional</option>
                         <option value='5'>Posgrado</option>
                         <option value='6'>Ninguno</option>

@@ -35,7 +35,7 @@ var stateObject = {
 var educationObject = {
     1: 'Primaria',
     2: 'Secundaria',
-    3: 'Preparatoria',
+    3: 'Preparatoria o Técnica',
     4: 'Profesional',
     5: 'Posgrado',
     6: 'Ninguno'
