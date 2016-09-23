@@ -14,7 +14,7 @@
     <section>
         <div class='preguntas-wrapper'>
             <ul class='tabs'>
-                <li class='tab-link current' data-tab='tab-agregar-pregunta'>Ligar Pregunta</li>
+                <li class='tab-link current' data-tab='tab-agregar-pregunta'>Preguntas</li>
             </ul>
 
             <div id='tab-agregar-pregunta' class='tab-content current'>
