@@ -80,16 +80,17 @@ $(document).on('ready', function () {
             '</div>';
         currentHTML += '<div class="input-wrapper">' +
             '<p>Imagen URL:</p>' +
-            '<select id="imagen' + lastQuestion + '" class="imagen" name="respuesta" type="text"></select>' +
+            '<select id="imagen' + lastQuestion + '" class="imagen" name="respuesta" type="text">' +
+            '<option value="0">Selecciona una Imagen</option></select>' +
             '</div>';
         currentHTML += '<div class="input-wrapper">' +
             '<p>Video URL:</p>' +
-            '<select id="video' + lastQuestion + '" class="video" name="respuesta" type="text"/></select>' +
+            '<select id="video' + lastQuestion + '" class="video" name="respuesta" type="text">' +
+            '<option value="0">Selecciona un video</option></select>' +
             '</div>';
         currentHTML += '<div id="Answers' + lastQuestion + '"></div>' +
             '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
             '</div>';
-            console.log(lastQuestion);
         
         $('#questions').append(currentHTML);
         appendSelect(lastQuestion);
@@ -120,8 +121,8 @@ $(document).on('ready', function () {
 
                     appendAnswers(response.results[x].tipo, (x + 1));
 
-                    $('#' + (x + 1) + ' > .input-wrapper > #imagen').val(response.results[x].imagen);
-                    $('#' + (x + 1) + ' > .input-wrapper > #video').val(response.results[x].video);
+                    $('#' + (x + 1) + ' > .input-wrapper > #imagen' + (x + 1)).val(response.results[x].imagen);
+                    $('#' + (x + 1) + ' > .input-wrapper > #video' + (x + 1)).val(response.results[x].video);
 
                     if (response.results[x].tipo !== 1) {
                         $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta1').val(response.results[x].op1);
@@ -176,8 +177,8 @@ $(document).on('ready', function () {
             questionObject.numPregunta = numeroPregunta;
             questionObject.pregunta = $(this).find('#pregunta').val();
             questionObject.tipo = $(this).find('#tipo').val();
-            questionObject.imagen = $(this).find('#imagen').val();
-            questionObject.video = $(this).find('#video').val();
+            questionObject.imagen = $(this).find('.imagen').val();
+            questionObject.video = $(this).find('.video').val();
 
             if (questionObject.tipo !== 1) {
                 var opcion = 1;

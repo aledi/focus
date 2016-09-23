@@ -15,7 +15,6 @@
         <div class='preguntas-wrapper'>
             <ul class='tabs'>
                 <li class='tab-link current' data-tab='tab-agregar-pregunta'>Ligar Pregunta</li>
-                 <li class='tab-link' data-tab='tab-agregar-recursos'>Recursos</li>
             </ul>
 
             <div id='tab-agregar-pregunta' class='tab-content current'>
@@ -39,14 +38,14 @@
                         <div class='input-wrapper'>
                             <label>Imagen:</label>
                             <select id='imagen1' class='imagen' name='respuesta' type='text'>
-
+                                <option value='0'>Selecciona una imagen</option>
                             </select>
                         </div>
 
                         <div class='input-wrapper'>
                             <label>Video:</label>
                             <select id='video1' class='video' name='respuesta' type='text'>
-
+                                <option value='0'>Selecciona un video</option>
                             </select>
                         </div>
                         <div id='Answers1'></div>
