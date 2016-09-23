@@ -1,8 +1,49 @@
 'use strict';
 
+var globalImages = [];
+var globalVideo = [];
+
+function appendSelect(lastQuestion){
+    var currentHTML = '';
+    for(var x = 0; x < globalImages.length; x++) {
+        currentHTML += '<option value="' + globalImages[x] + '">' + globalImages[x] + '</option>';
+    }
+
+    $('#imagen' + lastQuestion).append(currentHTML);
+    currentHTML = '';
+
+    for(var x = 0; x < globalVideo.length; x++) {
+        currentHTML += '<option value="' + globalVideo[x] + '">' + globalVideo[x] + '</option>';
+    }
+
+    $('#video' + lastQuestion).append(currentHTML);
+}
+
 $(document).on('ready', function () {
     var idEncuesta = window.location.search.substring(1);
     idEncuesta = idEncuesta.substring(3);
+
+
+    $.ajax({
+        type: 'POST',
+        url: '../api/controller.php',
+        data: {
+            action : 'GET_RECURSOS'
+        },
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);
+            var result = response.results;
+
+            for (var x = 0; x < result.length; x++) {
+                result[x].tipo == 1 ? globalImages.push(result[x].nombre) : globalVideo.push(result[x].nombre);
+            }
+            appendSelect(1);
+        },
+        error: function (error) {
+            $('#feedback').html('Preguntas no añadidas. Ha ocurrido un error.');
+        }
+    });
 
     function appendAnswers (typeQuestion, questionID) {
         $('#Answers' + questionID).empty();
@@ -39,17 +80,19 @@ $(document).on('ready', function () {
             '</div>';
         currentHTML += '<div class="input-wrapper">' +
             '<p>Imagen URL:</p>' +
-            '<input id="imagen" class="imagen" name="respuesta" type="text" />' +
+            '<select id="imagen' + lastQuestion + '" class="imagen" name="respuesta" type="text"></select>' +
             '</div>';
         currentHTML += '<div class="input-wrapper">' +
             '<p>Video URL:</p>' +
-            '<input id="video" class="video" name="respuesta" type="text"/>' +
+            '<select id="video' + lastQuestion + '" class="video" name="respuesta" type="text"/></select>' +
             '</div>';
         currentHTML += '<div id="Answers' + lastQuestion + '"></div>' +
             '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
             '</div>';
-
+            console.log(lastQuestion);
+        
         $('#questions').append(currentHTML);
+        appendSelect(lastQuestion);
         appendAnswers(1, lastQuestion);
     }
 
