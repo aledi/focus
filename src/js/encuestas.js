@@ -117,9 +117,9 @@ $(document).on('ready', function () {
                     alert('Encuesta ' + actionText + ' exitosamente.');
                     location.replace((actionText == 'agregada') ? 'preguntas.php?id=' + response.id : 'encuestas.php');
                 } else if (response.status === 'RECORD_EXISTS') {
-                    alert('La encuesta ya existe. Por favor, eliga un nombre diferente.');
+                    $('#feedback').html('La encuesta ya existe. Por favor, elija un nombre diferente.');
                 } else {
-                    alert('Hubo un error al guardar la encuesta. Por favor, intente más tarde.');
+                    $('#feedback').html('Hubo un error al guardar la encuesta. Por favor, intente más tarde');
                 }
             },
             error: function (error) {
