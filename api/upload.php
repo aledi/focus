@@ -19,6 +19,7 @@ function uploadFile($name, $tipo) {
     }
 
     if (move_uploaded_file($_FILES['file']['tmp_name'], $target_file)) {
+        chmod($target_file, 0777);
         return array('status' => 'SUCCESS');
     } else {
         return array('status' => 'ERROR');
