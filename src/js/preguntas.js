@@ -81,12 +81,12 @@ $(document).on('ready', function () {
         currentHTML += '<div class="input-wrapper">' +
             '<p>Imagen URL:</p>' +
             '<select id="imagen' + lastQuestion + '" class="imagen" name="respuesta" type="text">' +
-            '<option value="0">Selecciona una Imagen</option></select>' +
+            '<option value="">Selecciona una Imagen</option></select>' +
             '</div>';
         currentHTML += '<div class="input-wrapper">' +
             '<p>Video URL:</p>' +
             '<select id="video' + lastQuestion + '" class="video" name="respuesta" type="text">' +
-            '<option value="0">Selecciona un video</option></select>' +
+            '<option value="">Selecciona un video</option></select>' +
             '</div>';
         currentHTML += '<div id="Answers' + lastQuestion + '"></div>' +
             '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
