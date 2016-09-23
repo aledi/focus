@@ -113,8 +113,14 @@ $(document).on('ready', function () {
             data: data,
             dataType: 'json',
             success: function (response) {
-                alert('Encuesta ' + actionText + ' exitosamente.');
-                location.replace('preguntas.php?id=' + response.id);
+                if (response.status === 'SUCCESS') {
+                    alert('Encuesta ' + actionText + ' exitosamente.');
+                    location.replace((actionText == 'agregada') ? 'preguntas.php?id=' + response.id : 'encuestas.php');
+                } else if (response.status === 'RECORD_EXISTS') {
+                    alert('La encuesta ya existe. Por favor, eliga un nombre diferente.');
+                } else {
+                    alert('Hubo un error al guardar la encuesta. Por favor, intente más tarde.');
+                }
             },
             error: function (error) {
                 $('#feedback').html('Encuesta no ' + actionText + '. Ha ocurrido un error.');

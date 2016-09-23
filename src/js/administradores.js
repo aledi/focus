@@ -98,7 +98,14 @@ $(document).on('ready', function () {
             data: data,
             dataType: 'json',
             success: function (response) {
-                alert('Adminsitrador ' + actionText + ' exitosamente.');
+                if (response.status === 'SUCCESS') {
+                    alert('Adminsitrador ' + actionText + ' exitosamente.');
+                    location.replace('administradores.php');
+                } else if (response.status === 'USER_EXISTS') {
+                    alert('El usuario ya existe. Por favor, eliga otro.');
+                } else {
+                    alert('Hubo un error al guardar el usuario. Por favor, intente más tarde.');
+                }
             },
             error: function (error) {
                 $('#feedback').html('Administrador no ' + actionText + '. Ha ocurrido un error.');
