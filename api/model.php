@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('America/Mexico_City');
+
 function connect() {
     // servername, username, password, dbname
     $connection = new mysqli('localhost', 'root', 'root', 'focus');
@@ -761,7 +763,7 @@ function saveRespuestas ($id, $respuestas) {
 
     if ($conn != null) {
         $date = date('Y-m-d');
-        $hour = date('h:i:s');
+        $hour = date('H:i:s');
 
         $sql = "UPDATE Respuesta SET respuestas = '$respuestas', fecha = '$date', hora = '$hour' WHERE id = '$id'";
 
