@@ -120,9 +120,9 @@ $(document).on('ready', function () {
                     alert('Panelista '+ actionText + ' exitosamente.');
                     location.replace('panelistas.php');
                 } else if (response.status === 'USER_EXISTS') {
-                    alert('El usuario ya existe. Por favor, eliga otro.');
+                    $('#feedback').html('El panelista ya existe. Por favor, elija otro.');
                 } else {
-                    alert('Hubo un error al guardar el usuario. Por favor, intente más tarde.');
+                    $('#feedback').html('Hubo un error al guardar el panelista. Por favor, intente más tarde.');
                 }
             },
             error: function (error) {

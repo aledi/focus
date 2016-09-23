@@ -102,9 +102,9 @@ $(document).on('ready', function () {
                     alert('Adminsitrador ' + actionText + ' exitosamente.');
                     location.replace('administradores.php');
                 } else if (response.status === 'USER_EXISTS') {
-                    alert('El usuario ya existe. Por favor, eliga otro.');
+                    $('#feedback').html('El usuario ya existe. Por favor, elija otro.');
                 } else {
-                    alert('Hubo un error al guardar el usuario. Por favor, intente más tarde.');
+                    $('#feedback').html('Hubo un error al guardar el usuario. Por favor, intente más tarde.');
                 }
             },
             error: function (error) {
