@@ -147,11 +147,13 @@ $(document).on('ready', function () {
             data: data,
             dataType: 'json',
             success: function (response) {
-                if (response.status == 'SUCCESS') {
-                    alert('Panel ' + actionText + ' exitosamente.');
-                    location.replace("liga-panel-panelista.php?id=" + response.id);
+                if (response.status === 'SUCCESS') {
+                    alert('Encuesta ' + actionText + ' exitosamente.');
+                    location.replace('preguntas.php?id=' + response.id);
+                } else if (response.status === 'RECORD_EXISTS') {
+                    alert('El panel ya existe. Por favor, eliga un nombre diferente.');
                 } else {
-                    $('#feedback').html('Panel no ' + actionText + '. Ha ocurrido un error.');
+                    alert('Hubo un error al guardar el panel. Por favor, intente más tarde.');
                 }
             },
             error: function (error) {
