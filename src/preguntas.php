@@ -36,13 +36,17 @@
                             </select>
                         </div>
                         <div class='input-wrapper'>
-                            <label>Imagen URL:</label>
-                            <input id='imagen' class='imagen' name='respuesta' type='text' />
+                            <label>Imagen:</label>
+                            <select id='imagen1' class='imagen' name='respuesta' type='text'>
+                                <option value=''>Selecciona una imagen</option>
+                            </select>
                         </div>
 
                         <div class='input-wrapper'>
-                            <label>Video URL:</label>
-                            <input id='video' class='video' name='respuesta' type='text' />
+                            <label>Video:</label>
+                            <select id='video1' class='video' name='respuesta' type='text'>
+                                <option value=''>Selecciona un video</option>
+                            </select>
                         </div>
                         <div id='Answers1'></div>
                         <button type="button" id='removeQuestion' class='no-background'>Eliminar Pregunta</button>
