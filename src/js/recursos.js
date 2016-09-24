@@ -48,7 +48,10 @@ $(document).on('ready', function () {
                     success: function(response){
                         if (response.status == 'ERROR') {
                             $('#feedback').html(response.reason);
-                        }  
+                        }
+                        else {
+                            location.reload();
+                        } 
                     }
             });
         }
