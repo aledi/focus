@@ -33,8 +33,7 @@ $(document).on('ready', function () {
         form_data.append('fileType', fileType);
         form_data.append('file-name', name);
         form_data.append('tipo', type);
-        form_data.append('action', 'ALTA_RECURSO');
-        alert(form_data);                             
+        form_data.append('action', 'ALTA_RECURSO');                            
         $.ajax({
                 url: '../api/controller.php', // point to server-side PHP script 
                 dataType: 'json',  // what to expect back from the PHP script, if anything
