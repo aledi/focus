@@ -111,6 +111,7 @@ $(document).on('ready', function () {
     $('#allResources').on('click', '.deleteButton', function () {
         var self = this;
         var data = $(this).parent().attr('id').split('&');
+
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
@@ -118,7 +119,7 @@ $(document).on('ready', function () {
                 action: 'DELETE_RECURSO',
                 id: data[0],
                 nombre: data[1],
-                tipo: changeType(data[2], 1)
+                tipo: data[2]
             },
             dataType: 'json',
             success: function (response) {
