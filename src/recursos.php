@@ -15,8 +15,6 @@
 	<section class='recursos-section'>
 		<div class='recursos-wrapper'>
 			<h2>Recursos</h2>
-			<form action='../api/controller.php' method='POST' enctype='multipart/form-data'>
-                <input type='hidden' name='action' value='ALTA_RECURSO'>
                 Selecciona un archivo:
                 <input type='file' name='file' id='file'><br>
                 Tipo:
@@ -29,7 +27,6 @@
                 </select>
                 <br>
 	            <input type='submit' value='Upload' name='submit' id='uploadData'></input>
-            </form>
             <div id='#resources'>
             	<table id='allResources'></table>
             </div>
