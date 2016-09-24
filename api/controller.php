@@ -209,8 +209,8 @@ function newResource() {
 
     if ($uploadResult['status'] === 'SUCCESS') {
         registerResource($_POST['file-name'] . '.' . $_POST['fileType'], $_POST['tipo']);
-        header('Location: ../src/recursos.php');
-
+        //header('Location: ../src/recursos.php');
+        echo json_encode($uploadResult);
         exit();
     } else {
         echo json_encode($uploadResult);

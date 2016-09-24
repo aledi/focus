@@ -29,23 +29,32 @@ $(document).on('ready', function () {
         var type = $('input[name=tipo]:checked').val();
         var form_data = new FormData();
 
-        form_data.append('file', file_data);
-        form_data.append('fileType', fileType);
-        form_data.append('file-name', name);
-        form_data.append('tipo', type);
-        form_data.append('action', 'ALTA_RECURSO');                            
-        $.ajax({
-                url: '../api/controller.php', // point to server-side PHP script 
-                dataType: 'json',  // what to expect back from the PHP script, if anything
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: form_data,                         
-                type: 'post',
-                success: function(response){
-                    console.log(response); // display response from the PHP script, if any
-                }
-         });
+
+        if (name != '' && type != undefined && fileType != '' && file_data != undefined) {
+            $('#feedback').html('');
+            form_data.append('file', file_data);
+            form_data.append('fileType', fileType);
+            form_data.append('file-name', name);
+            form_data.append('tipo', type);
+            form_data.append('action', 'ALTA_RECURSO');                          
+            $.ajax({
+                    url: '../api/controller.php', // point to server-side PHP script 
+                    dataType: 'json',  // what to expect back from the PHP script, if anything
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: form_data,                         
+                    type: 'post',
+                    success: function(response){
+                        if (response.status == 'ERROR') {
+                            $('#feedback').html(response.reason);
+                        }  
+                    }
+            });
+        }
+        else {
+            $('#feedback').html('Favor de llenar todos los campos');
+        }
     });
 
 

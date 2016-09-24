@@ -27,6 +27,7 @@
                 </select>
                 <br>
 	            <input type='submit' value='Upload' name='submit' id='uploadData'></input>
+                <span id='feedback' class='feedback-text'></span>
             <div id='#resources'>
             	<table id='allResources'></table>
             </div>
