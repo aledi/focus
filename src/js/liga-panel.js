@@ -79,7 +79,9 @@ $(document).on('ready', function () {
                 var currentHTML = '<thead>';
                 currentHTML += '<tr style="cursor:pointer">';
                 currentHTML += '<th>Nombre</th>';
+                currentHTML += '<th>Género</th>';
                 currentHTML += '<th>Edad</th>';
+                currentHTML += '<th>Educación</th>';
                 currentHTML += '<th>Municipio</th>';
                 currentHTML += '<th>Estado</th>';
                 currentHTML += '<th><input type="checkbox" onclick="checkAll(this)"/></th>';
@@ -91,7 +93,8 @@ $(document).on('ready', function () {
                     var result = response.results[i];
 
                     currentHTML += '<tr value="' + result.id + '">';
-                    currentHTML += '<td>' + result.nombre + '</td>';
+                    currentHTML += '<td>' + result.nombre + ' ' + result.apellidos + '</td>';
+                    currentHTML += '<td>' + convertGenero(result.genero) + '</td>';
                     currentHTML += '<td class="centered">' + result.edad + '</td>';
                     currentHTML += '<td>' + result.municipio + '</td>';
                     currentHTML += '<td class="centered">' + result.estado + '</td>';
