@@ -25,26 +25,26 @@
                 <h2 id='header-title'>Agregar Encuesta</h2>
 
                 <div class='input-wrapper'>
-                    <label>Nombre de Encuesta:</label>
+                    <label>Nombre de Encuesta<span class='required-input'>*</span></label>
                     <input id='nombre' type='text' />
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Fecha de Inicio:</label>
+                    <label>Fecha de Inicio<span class='required-input'>*</span></label>
                     <select id='dia'></select>
                     <select id='mes'></select>
                     <select id='anio'></select>
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Fecha Final:</label>
+                    <label>Fecha Final<span class='required-input'>*</span></label>
                     <select id='dia_fin'></select>
                     <select id='mes_fin'></select>
                     <select id='anio_fin'></select>
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Seleccionar Panel:</label>
+                    <label>Seleccionar Panel<span class='required-input'>*</span></label>
                     <table id='allPanels'></table>
                 </div>
 

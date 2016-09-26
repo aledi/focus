@@ -66,11 +66,11 @@ $(document).on('ready', function () {
         var currentHTML = '<div id="' + lastQuestion + '" class="questionForm">';
         currentHTML += '<hr>';
         currentHTML += '<div class="input-wrapper">' +
-            '<p>Pregunta:</p>' +
+            '<p>Pregunta</p>' +
             '<input id="pregunta" class="pregunta" name="respuesta" type="text" />' +
             '</div>';
         currentHTML += '<div class="input-wrapper">' +
-            '<p>Tipo de pregunta:</p>' +
+            '<p>Tipo de pregunta</p>' +
             '<select id="tipo" class="tipoPregunta" name="respuesta" required>' +
             '<option value="1">Abiertas</option>' +
             '<option value="2">Selección Única</option>' +
@@ -79,19 +79,19 @@ $(document).on('ready', function () {
             '</select>' +
             '</div>';
         currentHTML += '<div class="input-wrapper">' +
-            '<p>Imagen URL:</p>' +
+            '<p>Imagen</p>' +
             '<select id="imagen' + lastQuestion + '" class="imagen" name="respuesta" type="text">' +
             '<option value="">Selecciona una Imagen</option></select>' +
             '</div>';
         currentHTML += '<div class="input-wrapper">' +
-            '<p>Video URL:</p>' +
+            '<p>Video</p>' +
             '<select id="video' + lastQuestion + '" class="video" name="respuesta" type="text">' +
             '<option value="">Selecciona un video</option></select>' +
             '</div>';
         currentHTML += '<div id="Answers' + lastQuestion + '"></div>' +
             '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
             '</div>';
-        
+
         $('#questions').append(currentHTML);
         appendSelect(lastQuestion);
         appendAnswers(1, lastQuestion);
