@@ -6,23 +6,23 @@ function uploadFile($name, $tipo) {
     $fileType = pathinfo($target_file, PATHINFO_EXTENSION);
 
     if (file_exists($target_file)) {
-        return array('status' => 'RESOURCE_EXISTS');
+        return array('status' => 'ERROR', 'reason' => 'El archivo ya existe, favor de asignar un nuevo nombre.');
     }
 
     // Check file size to 25MB
-    if ($_FILES['file']['size'] > 26214400) {
-        return array('status' => 'SIZE');
+    if ($_FILES['file']['size'] > 20971520) {
+        return array('status' => 'ERROR', 'reason' => 'El archivo es muy grande!.');
     }
 
     if($fileType != 'jpg' && $fileType != 'png' && $fileType != 'mp4' ) {
-        return array('status' => 'FORMAT');
+        return array('status' => 'ERROR', 'reason' => 'Formato no disponible, favor de usar solamente .jpg, .png, o .mp4');
     }
 
     if (move_uploaded_file($_FILES['file']['tmp_name'], $target_file)) {
         chmod($target_file, 0777);
         return array('status' => 'SUCCESS');
     } else {
-        return array('status' => 'ERROR');
+        return array('status' => 'ERROR', 'reason' => 'Alta fallida, favor de intentar de nuevo.');
     }
 }
 
