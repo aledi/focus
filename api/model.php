@@ -453,7 +453,7 @@ function fetchPanelistasPanel ($panel) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, apellidos, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, estado, municipio FROM Panelista";
+        $sql = "SELECT id, nombre, apellidos, genero, educacion, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, estado, municipio FROM Panelista";
         $result = $conn->query($sql);
 
         $response = array();
@@ -468,7 +468,7 @@ function fetchPanelistasPanel ($panel) {
                 $checked = TRUE;
             }
 
-            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos'], 'edad' => (int)$row['edad'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'checked' => $checked);
+            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos'], 'edad' => (int)$row['edad'], 'genero' => (int)$row['genero'], 'educacion' => (int)$row['educacion'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'checked' => $checked);
             $response[] = $panelista;
         }
 
