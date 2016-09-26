@@ -23,8 +23,8 @@ $(document).on('ready', function () {
     });
 
     $('#uploadData').on('click', function() {
-        var file_data = $('#file').prop('files')[0]; 
-        var fileType = $('#extension').val();  
+        var file_data = $('#file').prop('files')[0];
+        var fileType = $('#extension').val();
         var name = $('#file-name').val();
         var type = $('input[name=tipo]:checked').val();
         var form_data = new FormData();
@@ -36,22 +36,24 @@ $(document).on('ready', function () {
             form_data.append('fileType', fileType);
             form_data.append('file-name', name);
             form_data.append('tipo', type);
-            form_data.append('action', 'ALTA_RECURSO');                          
+            form_data.append('action', 'ALTA_RECURSO');
+
+            alert('El archivo aparecerá en la lista una vez termine de subirse.');
+
             $.ajax({
-                    url: '../api/controller.php', // point to server-side PHP script 
-                    dataType: 'json',  // what to expect back from the PHP script, if anything
+                    url: '../api/controller.php',
+                    dataType: 'json',
                     cache: false,
                     contentType: false,
                     processData: false,
-                    data: form_data,                         
+                    data: form_data,
                     type: 'post',
                     success: function(response){
                         if (response.status == 'ERROR') {
                             $('#feedback').html(response.reason);
-                        }
-                        else {
+                        } else {
                             location.reload();
-                        } 
+                        }
                     }
             });
         }

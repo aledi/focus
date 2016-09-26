@@ -10,7 +10,7 @@ function uploadFile($name, $tipo) {
     }
 
     // Check file size to 25MB
-    if ($_FILES['file']['size'] > 26214400) {
+    if ($_FILES['file']['size'] > 20971520) {
         return array('status' => 'ERROR', 'reason' => 'El archivo es muy grande!.');
     }
 
