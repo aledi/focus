@@ -96,6 +96,7 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + result.nombre + ' ' + result.apellidos + '</td>';
                     currentHTML += '<td>' + convertGenero(result.genero) + '</td>';
                     currentHTML += '<td class="centered">' + result.edad + '</td>';
+                    currentHTML += '<td>' + convertEducacion(result.educacion) + '</td>';
                     currentHTML += '<td>' + result.municipio + '</td>';
                     currentHTML += '<td class="centered">' + result.estado + '</td>';
                     currentHTML += '<td class="centered"><input type="checkbox" value=' + result.id + ' name="panelistas"' + (result.checked ?  ' checked' : '') + '></td>';
