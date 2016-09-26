@@ -65,7 +65,7 @@ $(document).on('ready', function () {
         var password = $('#password').val();
         var passwordConfirm = $('#passwordConfirm').val();
 
-        if (nombre === '' || apellidos === '' || email === '' || username === '' || (!editing && (password === '' || passwordConfirm === ''))) {
+        if (nombre === '' || username === '' || (!editing && (password === '' || passwordConfirm === ''))) {
             $('#feedback').html('Favor de llenar todos los campos');
             return;
         }
@@ -99,7 +99,14 @@ $(document).on('ready', function () {
             data: data,
             dataType: 'json',
             success: function (response) {
-                alert('Cliente ' + actionText + ' exitosamente.');
+                if (response.status === 'SUCCESS') {
+                    alert('Cliente ' + actionText + ' exitosamente.');
+                    location.replace('clientes.php');
+                } else if (response.status === 'USER_EXISTS') {
+                    $('#feedback').html('El usuario ya existe. Por favor, elija otro');
+                } else {
+                    $('#feedback').html('Hubo un error al guardar el usuario. Por favor, intente más tarde');
+                }
             },
             error: function (error) {
                 $('#feedback').html('Cliente no ' + actionText + '. Ha ocurrido un error.');

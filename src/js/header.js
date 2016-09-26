@@ -113,7 +113,7 @@ function convertEducacion (educacion) {
         case 2:
             return 'Secundaria';
         case 3:
-            return 'Preparatoria';
+            return 'Preparatoria o Técnica';
         case 4:
             return 'Profesional';
         case 5:

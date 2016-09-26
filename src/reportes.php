@@ -77,14 +77,17 @@
                         <option value='0'>Selecciona un nivel de educación</option>
                         <option value='1'>Primaria</option>
                         <option value='2'>Secundaria</option>
-                        <option value='3'>Preparatoria</option>
+                        <option value='3'>Preparatoria o Técnica</option>
                         <option value='4'>Profesional</option>
                         <option value='5'>Posgrado</option>
                         <option value='6'>Ninguno</option>
                     </select>
                     <button id='filtros-button' class='filtros-button' type='button'>Aplicar filtros</button>
+                    <span id='reportes-filtros-feedback' class='feedback-text'></span>
                 </div>
             </div>
+            <span id='reportes-feedback' class='feedback-text'></span>
+            <table id='abiertas-table' class='abiertas-table'></table>
             <div id='chart1' class='chart1'></div>
             <div id='chart2' class='chart2'></div>
             <div id='chart3' class='chart3'></div>

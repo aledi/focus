@@ -116,7 +116,14 @@ $(document).on('ready', function () {
             data: data,
             dataType: 'json',
             success: function (response) {
-                alert('Panelista '+ actionText + ' exitosamente.');
+                if (response.status === 'SUCCESS') {
+                    alert('Panelista '+ actionText + ' exitosamente.');
+                    location.replace('panelistas.php');
+                } else if (response.status === 'USER_EXISTS') {
+                    $('#feedback').html('El panelista ya existe. Por favor, elija otro.');
+                } else {
+                    $('#feedback').html('Hubo un error al guardar el panelista. Por favor, intente más tarde.');
+                }
             },
             error: function (error) {
                 $('#feedback').html('Panelista no ' + actionText + '. Ha ocurrido un error.');

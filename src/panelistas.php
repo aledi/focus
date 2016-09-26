@@ -24,62 +24,62 @@
                 <h2 id='header-title'>Agregar Panelista</h2>
 
                 <div class='input-wrapper'>
-                    <label>Nombre(s)</label>
+                    <label>Nombre(s)<span class='required-input'>*</span></label>
                     <input id='firstName' type='text' />
                 </div>
                 <div class='input-wrapper'>
-                    <label>Apellido(s):</label>
+                    <label>Apellido(s)<span class='required-input'>*</span></label>
                     <input id='lastName' type='text' />
                 </div>
                 <div class='input-wrapper'>
-                    <label>Correo Electrónico:</label>
+                    <label>Correo Electrónico<span class='required-input'>*</span></label>
                     <input id='email' type='text' />
                 </div>
                 <div class='input-wrapper'>
-                    <label>Usuario:</label>
+                    <label>Usuario<span class='required-input'>*</span></label>
                     <input id='username' type='text' />
                 </div>
                 <div id='panelista-password' class='input-wrapper'>
-                    <label>Contraseña:</label>
+                    <label>Contraseña<span class='required-input'>*</span></label>
                     <input id='password' type='password' placeholder='••••••••' />
                 </div>
                 <div class='input-wrapper'>
-                    <label>Género:</label>
+                    <label>Género<span class='required-input'>*</span></label>
                     <input type='radio' value='0' name='gender' checked='true'>Masculino
                     <input type='radio' value='1' name='gender'>Femenino
                 </div>
                 <div class='input-wrapper'>
-                    <label>Fecha de Nacimiento:</label>
+                    <label>Fecha de Nacimiento<span class='required-input'>*</span></label>
                     <select id='dia'></select>
                     <select id='mes'></select>
                     <select id='anio'></select>
                 </div>
                 <div class='input-wrapper'>
-                    <label>Educación:</label>
+                    <label>Educación<span class='required-input'>*</span></label>
                     <select class='form-control' id='educacion' name='educacion'>
                         <option value='0'>Selecciona un nivel de educación</option>
                         <option value='1'>Primaria</option>
                         <option value='2'>Secundaria</option>
-                        <option value='3'>Preparatoria</option>
+                        <option value='3'>Preparatoria o Técnica</option>
                         <option value='4'>Profesional</option>
                         <option value='5'>Posgrado</option>
                         <option value='6'>Ninguno</option>
                     </select>
                 </div>
                 <div class='input-wrapper'>
-                    <label>Calle y Número:</label>
+                    <label>Calle y Número<span class='required-input'>*</span></label>
                     <input id='calleNumero' type='text' />
                 </div>
                 <div class='input-wrapper'>
-                    <label>Colonia:</label>
+                    <label>Colonia<span class='required-input'>*</span></label>
                     <input id='colonia' type='text' />
                 </div>
                 <div class='input-wrapper'>
-                    <label>Municipio:</label>
+                    <label>Municipio<span class='required-input'>*</span></label>
                     <input id='municipio' type='text' />
                 </div>
                 <div class='input-wrapper'>
-                    <label>Estado:</label>
+                    <label>Estado<span class='required-input'>*</span></label>
                     <select class='form-control' id='estado' name='estado'>
                         <option value='0'>Selecciona un estado</option>
                         <option value='AGS'>Aguascalientes</option>
@@ -116,7 +116,7 @@
                     </select>
                 </div>
                 <div class='input-wrapper'>
-                    <label>Código Postal:</label>
+                    <label>Código Postal<span class='required-input'>*</span></label>
                     <input id='cp' type='text' />
                 </div>
 

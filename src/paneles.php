@@ -23,31 +23,31 @@
                 <h2 id='header-title'>Agregar Panel</h2>
 
                 <div class='input-wrapper'>
-                    <label>Nombre del Panel:</label>
+                    <label>Nombre del Panel<span class='required-input'>*</span></label>
                     <input id='panelName' type='text' />
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Descripción:</label>
+                    <label>Descripción</label>
                     <textarea id='descripcion'></textarea>
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Fecha de Inicio:</label>
+                    <label>Fecha de Inicio<span class='required-input'>*</span></label>
                     <select id='dia'></select>
                     <select id='mes'></select>
                     <select id='anio'></select>
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Fecha Final:</label>
+                    <label>Fecha Final<span class='required-input'>*</span></label>
                     <select id='dia_fin'></select>
                     <select id='mes_fin'></select>
                     <select id='anio_fin'></select>
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Seleccionar Cliente:</label>
+                    <label>Seleccionar Cliente<span class='required-input'>*</span></label>
                     <table id='table-clientes'></table>
                 </div>
 

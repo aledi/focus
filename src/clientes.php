@@ -22,32 +22,32 @@
                 <h2 id='header-title'>Agregar Cliente</h2>
 
                 <div class='input-wrapper'>
-                    <label>Nombre(s):</label>
+                    <label>Nombre(s)<span class='required-input'>*</span></label>
                     <input id='firstName' type='text' />
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Apellido(s):</label>
+                    <label>Apellido(s)</label>
                     <input id='lastName' type='text' />
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Correo Electrónico:</label>
+                    <label>Correo Electrónico</label>
                     <input id='email' type='text' />
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Usuario:</label>
+                    <label>Usuario<span class='required-input'>*</span></label>
                     <input id='username' type='text' />
                 </div>
 
                 <div id='cliente-password' class='input-wrapper'>
-                    <label>Contraseña:</label>
+                    <label>Contraseña<span class='required-input'>*</span></label>
                     <input type='password' name='Password' placeholder='••••••••' id='password'>
                 </div>
 
                 <div id='cliente-password-confirm' class='input-wrapper'>
-                    <label>Confirmar Contraseña:</label>
+                    <label>Confirmar Contraseña<span class='required-input'>*</span></label>
                     <input type='password' name='Password' placeholder='••••••••' id='passwordConfirm'>
                 </div>
 

@@ -17,6 +17,7 @@
                 <li id='encuestas-header-option'><a href='encuestas.php'>Encuestas</a></li>
                 <li id='reportes-header-option'><a href='reportes.php'>Reportes</a></li>
                 <li id='avances-header-option'><a href='avances.php'>Avances</a></li>
+                <li id='recursos-header-option'><a href='recursos.php'>Recursos</a></li>
                 <li id='signout-header-option' class='signout-item'><a id='signout-button' href=''>Cerrar Sesión</a></li>
             </ul>
         </div>

@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('America/Mexico_City');
+
 function connect() {
     // servername, username, password, dbname
     $connection = new mysqli('localhost', 'root', 'root', 'focus');
@@ -451,7 +453,7 @@ function fetchPanelistasPanel ($panel) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, apellidos, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, estado, municipio FROM Panelista";
+        $sql = "SELECT id, nombre, apellidos, genero, educacion, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, estado, municipio FROM Panelista";
         $result = $conn->query($sql);
 
         $response = array();
@@ -466,7 +468,7 @@ function fetchPanelistasPanel ($panel) {
                 $checked = TRUE;
             }
 
-            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos'], 'edad' => (int)$row['edad'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'checked' => $checked);
+            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos'], 'edad' => (int)$row['edad'], 'genero' => (int)$row['genero'], 'educacion' => (int)$row['educacion'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'checked' => $checked);
             $response[] = $panelista;
         }
 
@@ -761,7 +763,7 @@ function saveRespuestas ($id, $respuestas) {
 
     if ($conn != null) {
         $date = date('Y-m-d');
-        $hour = date('h:i:s');
+        $hour = date('H:i:s');
 
         $sql = "UPDATE Respuesta SET respuestas = '$respuestas', fecha = '$date', hora = '$hour' WHERE id = '$id'";
 
@@ -1043,23 +1045,25 @@ function generalReportData ($encuesta) {
         if ($answers === 0) {
             $byGender = generalReportByGender($encuesta, $answers, TRUE);
             $byAge = generalReportByAge($encuesta, $answers, TRUE);
+            $byEducation = generalReportByEducation($encuesta, $answers, TRUE);
 
             $byStateData = generalReportByState($encuesta, $answers, TRUE);
             $byState = $byStateData[0];
             $byStatePercentage = $byStateData[1];
 
             $conn->close();
-            return array('respuestas' => 0, 'porcentaje' => 0, 'genero' => $byGender, 'edad' => $byAge, 'estado' => $byState, 'estadoPercentage' => $byStatePercentage);
+            return array('status' => 'NO_DATA', 'respuestas' => 0, 'porcentaje' => 0, 'genero' => $byGender, 'edad' => $byAge, 'educacion' => $byEducation, 'estado' => $byState, 'estadoPercentage' => $byStatePercentage);
         }
 
         $byGender = generalReportByGender($encuesta, $answers, FALSE);
         $byAge = generalReportByAge($encuesta, $answers, FALSE);
+        $byEducation = generalReportByEducation($encuesta, $answers, FALSE);
 
         $byStateData = generalReportByState($encuesta, $answers, FALSE);
         $byState = $byStateData[0];
         $byStatePercentage = $byStateData[1];
 
-        return array('respuestas' => $answers, 'porcentaje' => $answers / $total, 'genero' => $byGender, 'edad' => $byAge, 'estado' => $byState, 'estadoPercentage' => $byStatePercentage);
+        return array('status' => 'SUCCESS', 'respuestas' => $answers, 'porcentaje' => $answers / $total, 'genero' => $byGender, 'edad' => $byAge, 'educacion' => $byEducation, 'estado' => $byState, 'estadoPercentage' => $byStatePercentage);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -1081,6 +1085,53 @@ function generalReportByGender ($encuesta, $total, $default) {
 
     $conn->close();
     return array('H' => 0, 'M' => 0);
+}
+
+function generalReportByEducation ($encuesta, $total, $default) {
+    $conn = connect();
+
+    if ($conn != null && !$default) {
+        $sql = "SELECT educacion, COUNT(*) as count FROM Respuesta INNER JOIN Panelista ON Panelista.id = Respuesta.panelista WHERE Respuesta.encuesta = '$encuesta' AND Respuesta.respuestas != '' GROUP BY educacion";
+        $result = $conn->query($sql);
+
+        $response = array();
+        $flags = [false, false, false, false, false, false];
+
+        while ($row = $result->fetch_assoc()) {
+            $response[$row['educacion']] = (int)$row['count'];
+            $flags[(int)$row['educacion']] = true;
+        }
+
+        if (!$flags[0]) {
+            $response['1'] = 0;
+        }
+
+        if (!$flags[1]) {
+            $response['2'] = 0;
+        }
+
+        if (!$flags[2]) {
+            $response['3'] = 0;
+        }
+
+        if (!$flags[3]) {
+            $response['4'] = 0;
+        }
+
+        if (!$flags[4]) {
+            $response['5'] = 0;
+        }
+
+        if (!$flags[5]) {
+            $response['6'] = 0;
+        }
+
+        $conn->close();
+        return $response;
+    }
+
+    $conn->close();
+    return array(array(), array());
 }
 
 function generalReportByAge ($encuesta, $total, $default) {

@@ -18,6 +18,20 @@
     vertical-align: top;
 }
 
+.abiertas-table {
+    padding: 0 50px;
+    margin-top: -100px;
+}
+
+.abiertas-table tr {
+    padding: 0 50px;
+    width: 100%;
+}
+
+.abiertas-table td {
+    width: 50%;
+}
+
 .chart1, .chart2 {
     width: 48%;
     display: inline-block;

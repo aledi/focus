@@ -2,6 +2,7 @@
 
 header('Content-type: application/json');
 require_once 'model.php';
+require_once 'upload.php';
 
 switch ($_POST['action']) {
     case 'WEB_LOG_IN':
@@ -195,7 +196,7 @@ function newEncuesta () {
 
         if ($registrationResult['status'] === 'SUCCESS') {
             foreach ($registrationResult['deviceTokens'] as $deviceToken) {
-                sendPushNotification('Nueva Encuesta', $deviceToken);
+                sendPushNotification('¡Nueva Encuesta Disponible!', $deviceToken);
             }
         }
     }
@@ -204,8 +205,13 @@ function newEncuesta () {
 }
 
 function newResource() {
-    $registrationResult = registerResource($_POST['nombre'], $_POST['tipo']);
-    echo json_encode($registrationResult);
+    $uploadResult = uploadFile($_POST['file-name'] . '.' . $_POST['fileType'], $_POST['tipo']);
+
+    if ($uploadResult['status'] === 'SUCCESS') {
+        registerResource($_POST['file-name'] . '.' . $_POST['fileType'], $_POST['tipo']);
+    }
+
+    echo json_encode($uploadResult);
 }
 
 function getRecords ($type) {
@@ -283,7 +289,7 @@ function setPanelistasPanel () {
 
     if ($saveResult['status'] === 'SUCCESS') {
         foreach ($saveResult['deviceTokens'] as $deviceToken) {
-            sendPushNotification('Nuevo Panel', $deviceToken);
+            sendPushNotification('¡Has sido registrado a un nuevo Panel! Pronto recibirás encuestas para responder.', $deviceToken);
         }
     }
 }
@@ -307,6 +313,11 @@ function setRespuestas () {
 }
 
 function deleteRecord ($table) {
+    if ($table === 'Recurso') {
+        $path = '../resources/'.((int)$_POST['tipo'] == 1 ? 'images/' : 'videos/').$_POST['nombre'];
+        unlink($path);
+    }
+
     $deleteResult = removeRecord($_POST['id'], $table);
 
     echo json_encode($deleteResult);
