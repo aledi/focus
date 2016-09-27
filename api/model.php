@@ -1366,7 +1366,7 @@ function downloadData ($encuesta) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT Panelista.id, nombre, apellidos, genero, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, educacion, municipio, estado FROM Panelista LEFT JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = (SELECT panel FROM Encuesta WHERE id = '$encuesta')";
+        $sql = "SELECT Panelista.id as id, nombre, apellidos, genero, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, educacion, municipio, estado FROM Panelista LEFT JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = (SELECT panel FROM Encuesta WHERE id = '$encuesta')";
         $result = $conn->query($sql);
         $filas = array();
 

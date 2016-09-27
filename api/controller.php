@@ -332,7 +332,7 @@ function verifyActiveSession () {
     echo json_encode($validationResult);
 }
 
-function getDownloadData () {
+function getReportData () {
     if ($_POST['numPregunta'] == 0) {
         $reportData = generalReportData($_POST['encuesta']);
     } else {
