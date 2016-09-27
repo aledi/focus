@@ -53,7 +53,7 @@
 
                 <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
                 <button type='submit' id='save-admin'>Agregar</button>
-                <span id='feedback'></span>
+                <span id='feedback' class='feedback-text'></span>
             </div>
 
             <div id='tab-view-administradores' class='tab-content'>
