@@ -98,6 +98,9 @@ switch ($_POST['action']) {
     case 'REPORT_DATA':
         getReportData();
         break;
+    case 'DOWNLOAD_DATA':
+        echo json_encode(downloadData($_POST['encuesta']));
+        break;
     case 'CURRENT_ANSWERS':
         getCurrentAnswers();
         break;
@@ -329,7 +332,7 @@ function verifyActiveSession () {
     echo json_encode($validationResult);
 }
 
-function getReportData () {
+function getDownloadData () {
     if ($_POST['numPregunta'] == 0) {
         $reportData = generalReportData($_POST['encuesta']);
     } else {
