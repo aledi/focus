@@ -1362,4 +1362,47 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
     return array('status' => 'DATABASE_ERROR');
 }
 
+function downloadData ($encuesta) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT Panelista.id as id, nombre, apellidos, genero, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, educacion, municipio, estado FROM Panelista LEFT JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = (SELECT panel FROM Encuesta WHERE id = '$encuesta')";
+        $result = $conn->query($sql);
+        $filas = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $fila = array('nombre' => $row['nombre'].' '.$row['apellidos'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'municipio' => $row['municipio'], 'estado' => $row['estado']);
+            $id = $row['id'];
+
+            $sql = "SELECT respuestas FROM Respuesta WHERE encuesta = '$encuesta' AND respuestas != '' AND panelista = '$id'";
+            $result2 = $conn->query($sql);
+
+            if ($result2->num_rows > 0) {
+                $row2 = $result2->fetch_assoc();
+                $answer = str_replace('&', ', ', rtrim($row2['respuestas'], '|'));
+                $answers = explode('|', $answer);
+
+                for ($i = 0; $i < count($answers); $i++) {
+                    $answers[$i] = rtrim($answers[$i], ', ');
+                }
+
+                $fila['respuestas'] = $answers;
+                $filas[] = $fila;
+            }
+        }
+
+        $sql = "SELECT pregunta FROM Pregunta WHERE encuesta = '$encuesta'";
+        $result = $conn->query($sql);
+        $columnas = array('Nombre', 'Género', 'Edad', 'Educación', 'Municipio', 'Estado');
+
+        while ($row = $result->fetch_assoc()) {
+            $columnas[] = $row['pregunta'];
+        }
+
+        return array('columnas' => $columnas, 'filas' => $filas);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 ?>

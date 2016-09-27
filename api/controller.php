@@ -98,6 +98,9 @@ switch ($_POST['action']) {
     case 'REPORT_DATA':
         getReportData();
         break;
+    case 'DOWNLOAD_DATA':
+        echo json_encode(downloadData($_POST['encuesta']));
+        break;
     case 'CURRENT_ANSWERS':
         getCurrentAnswers();
         break;
