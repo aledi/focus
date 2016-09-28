@@ -5,7 +5,8 @@ function changeType(tipo, action) {
 }
 
 $(document).on('ready', function () {
-
+    $('#recursos-header-option').addClass('selected');
+    
     $('input[type=radio][name=tipo]').change(function() {
         var currentHTML = ''
         $('#extension').empty();
