@@ -127,6 +127,7 @@
 
             <div id='tab-view-panelistas' class='tab-content'>
                 <h2>Panelistas Disponibles</h2>
+                <p>Filtrar Panelistas: <input id='filteringText' type='text' /></p>
                 <table id='allPanelistas'></table>
                 <div id='feedback'></div>
             </div>
