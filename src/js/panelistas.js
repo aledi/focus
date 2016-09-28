@@ -2,7 +2,8 @@
 
 $(document).on('ready', function () {
     $('#panelistas-header-option').addClass('selected');
-
+    $('#cancel-edit').hide();
+    
     // -----------------------------------------------------------------------------------------------
     // Fetch Panelistas
     // -----------------------------------------------------------------------------------------------
@@ -49,7 +50,6 @@ $(document).on('ready', function () {
                 }
 
                 currentHTML += '</tbody>';
-                $('#cancel-edit').hide();
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los clientes');

@@ -2,7 +2,8 @@
 
 $(document).on('ready', function () {
     $('#usuarios-header-option').addClass('selected');
-
+    $('#cancel-edit').hide();
+    
     // -----------------------------------------------------------------------------------------------
     // Fetch Administradores
     // -----------------------------------------------------------------------------------------------
@@ -42,7 +43,6 @@ $(document).on('ready', function () {
                 }
 
                 currentHTML += '</tbody>';
-                $('#cancel-edit').hide();
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los administradores');
