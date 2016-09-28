@@ -56,7 +56,7 @@
                 <button type='button' id='addQuestion' class='no-background'>Agregar Nueva Pregunta</button>
                 <button type='submit' id='submitQuestions'>Confimar Preguntas</button>
 
-                <span class='feedback'></span>
+                <span id='feedback' class='feedback-text'></span>
             </div>
         </div>
     </section>

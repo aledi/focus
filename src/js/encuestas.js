@@ -2,7 +2,8 @@
 
 $(document).on('ready', function () {
     $('#encuestas-header-option').addClass('selected');
-
+    $('#cancel-edit').hide();
+    
     // -----------------------------------------------------------------------------------------------
     // Fetch Paneles
     // -----------------------------------------------------------------------------------------------
@@ -45,7 +46,6 @@ $(document).on('ready', function () {
                 }
 
                 currentHTML += '</tbody>';
-                $('#cancel-edit').hide();
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los clientes');

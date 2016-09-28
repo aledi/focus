@@ -42,6 +42,8 @@ $(document).on('ready', function () {
         $(this).unbind('focus');
     });
 
+    $('#cancel-edit').hide();
+
     // -----------------------------------------------------------------------------------------------
     // Fetch Panelistas
     // -----------------------------------------------------------------------------------------------
@@ -88,7 +90,6 @@ $(document).on('ready', function () {
                 }
 
                 currentHTML += '</tbody>';
-                $('#cancel-edit').hide();
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los clientes');

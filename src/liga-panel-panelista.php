@@ -21,7 +21,7 @@
                 <table id='tablaPanelistas' class='padding-bottom'></table>
             </div>
             <button type='button' id='ligar-panelistas'>Ligar Panelistas</button>
-            <div id='feedback'></div>
+            <span id='feedback' class='feedback-text'></span>
         </div>
     </section>
 </body>

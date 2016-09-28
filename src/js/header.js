@@ -5,7 +5,7 @@ $(document).on('ready', function () {
     $('#usuarios-header-option').hide();
     $('#paneles-header-option').hide();
     $('#encuestas-header-option').hide();
-    $('#reportes-header-option').hide();
+    $('#recursos-header-option').hide();
     $('#avances-header-option').hide();
     document.getElementsByTagName('html')[0].style.visibility = 'hidden';
 
@@ -21,7 +21,7 @@ $(document).on('ready', function () {
                     $('#usuarios-header-option').show();
                     $('#paneles-header-option').show();
                     $('#encuestas-header-option').show();
-                    $('#reportes-header-option').show();
+                    $('#recursos-header-option').show();
                     $('#avances-header-option').show();
                     document.getElementsByTagName('html')[0].style.visibility = 'visible';
                 } else {
