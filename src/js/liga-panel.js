@@ -45,7 +45,7 @@ $(document).on('ready', function () {
         jsonObject.filter(function (i, v) {
             var $table = $(this);
             for (var x = 0; x < data.length; x++) {
-                if ($table.is(":contains('" + data[x] + "')")) {
+                if ($table.text().toLowerCase().indexOf(data[x].toLowerCase()) > -1) {
                     return true;
                 }
             }
