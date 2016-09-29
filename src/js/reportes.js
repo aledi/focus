@@ -361,11 +361,11 @@ $(document).on('ready', function () {
                             2, 'Edad');
                     pieChart(convertEducation(Object.keys(response.educacion)),
                              getObjectProperties(response.educacion),
-                             4, 'Educación');
+                             3, 'Educación');
                     columnChart(convertState(Object.keys(response.estado)),
                             getObjectProperties(response.estado),
                             getObjectProperties(response.estadoPercentage),
-                            3, 'Estado');
+                            4, 'Estado');
 
                 } else {
                     if (response.tipo === 1) {
