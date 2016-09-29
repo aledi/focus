@@ -38,10 +38,16 @@
     vertical-align: top;
 }
 
-.chart3 {
+.chart3, .chart4 {
+    width: 48%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+/*.chart3 {
     width: 700px;
     margin: 0 auto;
-}
+}*/
 
 .filtros-button {
     margin: 20px 0;

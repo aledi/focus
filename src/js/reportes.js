@@ -359,9 +359,9 @@ $(document).on('ready', function () {
                     pieChart(convertAgeRange(Object.keys(response.edad)),
                             getObjectProperties(response.edad),
                             2, 'Edad');
-                    // pieChart(convertEducation(Object.keys(response.educacion)),
-                    //         getObjectProperties(response.educacion),
-                    //         2, 'Educación');
+                    pieChart(convertEducation(Object.keys(response.educacion)),
+                             getObjectProperties(response.educacion),
+                             4, 'Educación');
                     columnChart(convertState(Object.keys(response.estado)),
                             getObjectProperties(response.estado),
                             getObjectProperties(response.estadoPercentage),
