@@ -2,8 +2,48 @@
 
 $(document).on('ready', function () {
     $('#panelistas-header-option').addClass('selected');
+
+    /*
+    *   Función tomada de internet, funciona bien, pero aparentemente
+    *   pueda llegar a tener problemas de ineficiencia dado a que es
+    *   un objeto dependiente de la tabla y la cantidad de panelistas.
+    */
+
+    $('#filteringText').keyup(function () {
+        //split the current value of searchInput
+        var data = this.value.split(' ');
+
+        //create a jquery object of the rows
+        var jsonObject = $("#fbody").find("tr");
+        if (this.value == '') {
+            jsonObject.show();
+            return;
+        }
+
+        //hide all the rows
+        jsonObject.hide();
+
+        //Recusively filter the jquery object to get results.
+        jsonObject.filter(function (i, v) {
+            var $table = $(this);
+            for (var x = 0; x < data.length; x++) {
+                if ($table.text().toLowerCase().indexOf(data[x].toLowerCase()) > -1) {
+                    return true;
+                }
+            }
+            return false;
+        })
+        //show the rows that match.
+        .show();
+    }).focus(function () {
+        this.value = '';
+
+        $(this).css({"color": "black"});
+        $(this).unbind('focus');
+    });
+
     $('#cancel-edit').hide();
-    
+
     // -----------------------------------------------------------------------------------------------
     // Fetch Panelistas
     // -----------------------------------------------------------------------------------------------
@@ -29,7 +69,7 @@ $(document).on('ready', function () {
                 currentHTML += '<th colspan="2">Acción</th>';
                 currentHTML += '</tr>';
                 currentHTML += '</thead>';
-                currentHTML += '<tbody>';
+                currentHTML += '<tbody id="fbody">';
 
                 for (var i = 0; i < response.results.length; i++) {
                     var result = response.results[i];
