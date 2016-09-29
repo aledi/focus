@@ -425,6 +425,32 @@ function fetchEncuestas () {
     return array('status' => 'DATABASE_ERROR');
 }
 
+function fetchEncuestasForCliente ($cliente) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT Encuesta.id as id, Encuesta.nombre as nombre, Encuesta.fechaInicio as fechaInicio, Encuesta.fechaFin as fechaFin, panel FROM Encuesta INNER JOIN Panel ON Encuesta.panel = Panel.id WHERE Panel.cliente = '$cliente'";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $panel = $row['panel'];
+            $sql2 = "SELECT nombre FROM Panel WHERE id = '$panel'";
+            $result2 = $conn->query($sql2);
+            $row2 = $result2->fetch_assoc();
+
+            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
+            $response[] = $panelista;
+        }
+
+        $conn->close();
+        return array('results' => $response);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 function fetchEncuesta ($id) {
     $conn = connect();
 
