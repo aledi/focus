@@ -91,7 +91,7 @@
             <div id='chart1' class='chart1'></div>
             <div id='chart2' class='chart2'></div>
             <div id='chart3' class='chart3'></div>
-            <div id='chart4' class = 'chart4'></div>
+            <div id='chart4' class ='chart4'></div>
         </div>
     </section>
 </body>
