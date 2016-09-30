@@ -111,6 +111,7 @@ $(document).on('ready', function () {
         var lastName = $('#lastName').val();
         var email = $('#email').val();
         var username = $('#username').val();
+        var password = $('#password').val();
         var fechaNacimiento = getCompleteDate(1);
         var educacion = $('#educacion').val();
         var calleNumero = $('#calleNumero').val();
@@ -144,9 +145,10 @@ $(document).on('ready', function () {
 
         if (editing) {
             data.id = idPanelista;
+        } else {
+            data.password = password;
         }
-
-        // Clear feedback <span>
+        
         $('#feedback').empty();
 
         var actionText = editing ? 'editado' : 'agregado';
