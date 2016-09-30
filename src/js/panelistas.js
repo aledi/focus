@@ -2,7 +2,8 @@
 
 $(document).on('ready', function () {
     $('#panelistas-header-option').addClass('selected');
-
+    $('#cancel-edit').hide();
+    
     /*
     *   Función tomada de internet, funciona bien, pero aparentemente
     *   pueda llegar a tener problemas de ineficiencia dado a que es
@@ -41,8 +42,6 @@ $(document).on('ready', function () {
         $(this).css({"color": "black"});
         $(this).unbind('focus');
     });
-
-    $('#cancel-edit').hide();
 
     // -----------------------------------------------------------------------------------------------
     // Fetch Panelistas
@@ -148,7 +147,7 @@ $(document).on('ready', function () {
         } else {
             data.password = password;
         }
-        
+
         $('#feedback').empty();
 
         var actionText = editing ? 'editado' : 'agregado';

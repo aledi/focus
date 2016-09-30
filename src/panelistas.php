@@ -120,7 +120,7 @@
                     <input id='cp' type='text' />
                 </div>
 
-                <button type='button' id='cancel-edit' class='no-background' style='visibility: hidden;'>Cancelar</button>
+                <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
                 <button type='submit' id='savePanelista'>Agregar</button>
                 <span id='feedback' class='feedback-text'></span>
             </div>

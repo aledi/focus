@@ -3,7 +3,7 @@
 $(document).on('ready', function () {
     $('#usuarios-header-option').addClass('selected');
     $('#cancel-edit').hide();
-    
+
     // -----------------------------------------------------------------------------------------------
     // Fetch Clientes
     // -----------------------------------------------------------------------------------------------
@@ -88,8 +88,7 @@ $(document).on('ready', function () {
         } else {
             data.password = password;
         }
-
-        // Clear feedback <span>
+        
         $('#feedback').empty();
 
         var actionText = editing ? 'editado' : 'agregado';
