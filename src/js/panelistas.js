@@ -2,7 +2,8 @@
 
 $(document).on('ready', function () {
     $('#panelistas-header-option').addClass('selected');
-
+    $('#cancel-edit').hide();
+    
     /*
     *   Función tomada de internet, funciona bien, pero aparentemente
     *   pueda llegar a tener problemas de ineficiencia dado a que es
@@ -41,8 +42,6 @@ $(document).on('ready', function () {
         $(this).css({"color": "black"});
         $(this).unbind('focus');
     });
-
-    $('#cancel-edit').hide();
 
     // -----------------------------------------------------------------------------------------------
     // Fetch Panelistas
@@ -111,6 +110,7 @@ $(document).on('ready', function () {
         var lastName = $('#lastName').val();
         var email = $('#email').val();
         var username = $('#username').val();
+        var password = $('#password').val();
         var fechaNacimiento = getCompleteDate(1);
         var educacion = $('#educacion').val();
         var calleNumero = $('#calleNumero').val();
@@ -144,9 +144,10 @@ $(document).on('ready', function () {
 
         if (editing) {
             data.id = idPanelista;
+        } else {
+            data.password = password;
         }
 
-        // Clear feedback <span>
         $('#feedback').empty();
 
         var actionText = editing ? 'editado' : 'agregado';
