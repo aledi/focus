@@ -3,7 +3,7 @@
 $(document).on('ready', function () {
     $('#panelistas-header-option').addClass('selected');
     $('#cancel-edit').hide();
-    
+
     /*
     *   Función tomada de internet, funciona bien, pero aparentemente
     *   pueda llegar a tener problemas de ineficiencia dado a que es
@@ -72,8 +72,9 @@ $(document).on('ready', function () {
 
                 for (var i = 0; i < response.results.length; i++) {
                     var result = response.results[i];
+                    var elegible = (result.genero !== -1 && result.edad !== 0 && result.estado !== '');
 
-                    currentHTML += '<tr id="' + result.id + '">';
+                    currentHTML += '<tr id="' + result.id + '" class="' +  (elegible ? '' : 'red') + '">';
                     currentHTML += '<td>' + result.nombre + " " + result.apellidos + '</td>';
                     currentHTML += '<td>' + convertGenero(result.genero) + '</td>';
                     currentHTML += '<td>' + result.edad + '</td>';
