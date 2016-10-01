@@ -18,7 +18,7 @@
             <h2>Ligar Panelistas</h2>
             <div id='panelista'>
                 <p>Buscar: <input id='filteringText' type='text' /></p>
-                <p>*Los panelistas marcados en rojo no cuentan con información suficiente para responder encuestas</p>
+                <p class='alert'>*Los panelistas marcados en rojo no cuentan con información suficiente para responder encuestas</p>
                 <table id='tablaPanelistas' class='padding-bottom'></table>
             </div>
             <button type='button' id='ligar-panelistas'>Ligar Panelistas</button>
