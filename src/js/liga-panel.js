@@ -91,15 +91,16 @@ $(document).on('ready', function () {
 
                 for (var i = 0; i < response.results.length; i++) {
                     var result = response.results[i];
+                    var elegible = (result.genero !== -1 && result.edad !== 0 && result.estado !== '');
 
-                    currentHTML += '<tr value="' + result.id + '">';
+                    currentHTML += '<tr value="' + result.id + '" class="' + (elegible ? '' : 'red') + '">';
                     currentHTML += '<td>' + result.nombre + ' ' + result.apellidos + '</td>';
                     currentHTML += '<td>' + convertGenero(result.genero) + '</td>';
                     currentHTML += '<td class="centered">' + result.edad + '</td>';
                     currentHTML += '<td>' + convertEducacion(result.educacion) + '</td>';
                     currentHTML += '<td>' + result.municipio + '</td>';
                     currentHTML += '<td class="centered">' + result.estado + '</td>';
-                    currentHTML += '<td class="centered"><input type="checkbox" value=' + result.id + ' name="panelistas"' + (result.checked ?  ' checked' : '') + '></td>';
+                    currentHTML += '<td class="centered"><input type="checkbox" value=' + result.id + ' name="panelistas"' + (result.checked ?  ' checked' : '') + ' class="' + (elegible ? '' : 'hidden') + '"></td>';
                     currentHTML += '</tr>';
 
                     $('#tablaPanelistas').append(currentHTML);
