@@ -128,6 +128,7 @@
             <div id='tab-view-panelistas' class='tab-content'>
                 <h2>Panelistas Disponibles</h2>
                 <p>Buscar: <input id='filteringText' type='text' /></p>
+                <p>*Los panelistas marcados en rojo no cuentan con información suficiente para responder encuestas</p>
                 <table id='allPanelistas'></table>
                 <div id='feedback'></div>
             </div>
