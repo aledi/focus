@@ -240,6 +240,7 @@ $(document).on('ready', function () {
         $('#chart1').empty();
         $('#chart2').empty();
         $('#chart3').empty();
+        $('#chart4').empty();
 
         if ($('#reportes-feedback').html()) {
             $('#reportes-feedback').empty();
@@ -301,6 +302,7 @@ $(document).on('ready', function () {
             $('#chart1').empty();
             $('#chart2').empty();
             $('#chart3').empty();
+            $('#chart4').empty();
             return;
         }
 
@@ -325,6 +327,7 @@ $(document).on('ready', function () {
                 $('#chart1').empty();
                 $('#chart2').empty();
                 $('#chart3').empty();
+                $('#chart4').empty();
 
                 if (response.tipo !== 1) {
                     // Show filter options with default values
