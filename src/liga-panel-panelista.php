@@ -17,7 +17,7 @@
         <div class='liga-panel-wrapper'>
             <h2>Ligar Panelistas</h2>
             <div id='panelista'>
-                <p>Filtrar Panelistas: <input id='filteringText' type='text' /></p>
+                <p>Buscar: <input id='filteringText' type='text' /></p>
                 <table id='tablaPanelistas' class='padding-bottom'></table>
             </div>
             <button type='button' id='ligar-panelistas'>Ligar Panelistas</button>

@@ -120,13 +120,14 @@
                     <input id='cp' type='text' />
                 </div>
 
-                <button type='button' id='cancel-edit' class='no-background' style='visibility: hidden;'>Cancelar</button>
+                <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
                 <button type='submit' id='savePanelista'>Agregar</button>
                 <span id='feedback' class='feedback-text'></span>
             </div>
 
             <div id='tab-view-panelistas' class='tab-content'>
                 <h2>Panelistas Disponibles</h2>
+                <p>Buscar: <input id='filteringText' type='text' /></p>
                 <table id='allPanelistas'></table>
                 <div id='feedback'></div>
             </div>

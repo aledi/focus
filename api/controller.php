@@ -262,6 +262,12 @@ function getRecords ($type) {
                 return;
             }
 
+            $sessionData = hasActiveSession();
+            if ($sessionData['tipo'] == 1) {
+                echo json_encode(fetchEncuestasForCliente($sessionData['id']));
+                return;
+            }
+
             echo json_encode(fetchEncuestas());
             break;
         case 'PREGUNTAS':
