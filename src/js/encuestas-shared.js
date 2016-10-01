@@ -11,7 +11,7 @@ function getEncuestas (route) {
 
             if (route !== 'encuestas') {
                 if (!response.results.length) {
-                    $('#avances-feedback').html('Por el momento no hay encuestas disponibles');
+                    $('#available-encuestas-feedback').html('Por el momento no hay encuestas disponibles');
                 }
 
                 for (var i = 0; i < response.results.length; i++) {

@@ -25,6 +25,7 @@
                     </select>
                     <select id='preguntas-select' class='encuestas-select'></select>
                 </div>
+                <span id='available-encuestas-feedback' class='feedback-text'></span>
                 <div class='filter-selects'>
                     <select id='edad-select' class='encuestas-select'>
                         <option value='0'>Selecciona una edad</option>
