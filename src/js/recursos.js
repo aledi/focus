@@ -1,29 +1,27 @@
 'use strict';
 
-function changeType(tipo, action) {
-    return (action === 0) ? (tipo === 1 ? "Imagen" : "Video") : (tipo === "Imagen" ? 1 : 2);
+function changeType (tipo, action) {
+    return action === 0 ? (tipo === 1 ? 'Imagen' : 'Video') : (tipo === 'Imagen' ? 1 : 2);
 }
 
 $(document).on('ready', function () {
     $('#recursos-header-option').addClass('selected');
 
-    $('input[type=radio][name=tipo]').change(function() {
-        var currentHTML = ''
+    $('input[type=radio][name=tipo]').change(function () {
+        var currentHTML = '';
         $('#extension').empty();
         if (this.value == '1') {
             currentHTML += '<option value="jpg">jpg</option>' +
             '<option value="png">png</option>';
 
             $('#extension').append(currentHTML);
-        }
-        else if (this.value == '2') {
+        } else if (this.value == '2') {
             currentHTML += '<option value="mp4">mp4</option>';
-
             $('#extension').append(currentHTML);
         }
     });
 
-    $('#uploadData').on('click', function() {
+    $('#upload-data').on('click', function() {
         $('#feedback').html('');
 
         var file_data = $('#file').prop('files')[0];
@@ -31,7 +29,6 @@ $(document).on('ready', function () {
         var name = $('#file-name').val().trim().split(' ').join('_');
         var type = $('input[name=tipo]:checked').val();
         var form_data = new FormData();
-
 
         if (name != '' && type != undefined && fileType != '' && file_data != undefined) {
             $('#feedback').html('');
@@ -44,27 +41,26 @@ $(document).on('ready', function () {
             $('#feedback').html('El archivo aparecerá en la lista una vez termine de subirse.');
 
             $.ajax({
-                    url: '../api/controller.php',
-                    dataType: 'json',
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    data: form_data,
-                    type: 'post',
-                    success: function(response){
-                        if (response.status == 'ERROR') {
-                            $('#feedback').html(response.reason);
-                        } else {
-                            location.reload();
-                        }
+                url: '../api/controller.php',
+                dataType: 'json',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                type: 'post',
+                success: function(response){
+                    if (response.status == 'ERROR') {
+                        $('#feedback').html(response.reason);
+                    } else {
+                        location.reload();
                     }
+                }
             });
         }
         else {
             $('#feedback').html('Favor de llenar todos los campos');
         }
     });
-
 
     // -----------------------------------------------------------------------------------------------
     // Fetch Resources
@@ -76,9 +72,7 @@ $(document).on('ready', function () {
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: {
-                'action': 'GET_RECURSOS'
-            },
+            data: {action: 'GET_RECURSOS'},
             dataType: 'json',
             success: function (response) {
                 var currentHTML = '<thead>';
@@ -99,7 +93,7 @@ $(document).on('ready', function () {
                     currentHTML += '<td class="deleteButton"><button id="delete" type="button">Eliminar</button></td>';
                     currentHTML += '</tr>';
 
-                    $('#allResources').append(currentHTML);
+                    $('#all-resources').append(currentHTML);
                     currentHTML = '';
                 }
 
@@ -115,9 +109,9 @@ $(document).on('ready', function () {
     // Delete Resources
     // -----------------------------------------------------------------------------------------------
 
-    $('#allResources').on('click', '.deleteButton', function () {
+    $('#all-resources').on('click', '.deleteButton', function () {
         $('#feedback').html('');
-        
+
         var self = this;
         var data = $(this).parent().attr('id').split('&');
 
