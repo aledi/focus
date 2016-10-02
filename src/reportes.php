@@ -25,7 +25,6 @@
                     </select>
                     <select id='preguntas-select' class='encuestas-select'></select>
                 </div>
-                <span id='available-encuestas-feedback' class='feedback-text'></span>
                 <div class='filter-selects'>
                     <select id='edad-select' class='encuestas-select'>
                         <option value='0'>Selecciona una edad</option>
@@ -92,7 +91,7 @@
             <div id='chart1' class='chart1'></div>
             <div id='chart2' class='chart2'></div>
             <div id='chart3' class='chart3'></div>
-            <div id='chart4' class ='chart4'></div>
+            <div id='chart4' class='chart4'></div>
         </div>
     </section>
 </body>
