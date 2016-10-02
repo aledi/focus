@@ -6,7 +6,7 @@ function changeType(tipo, action) {
 
 $(document).on('ready', function () {
     $('#recursos-header-option').addClass('selected');
-    
+
     $('input[type=radio][name=tipo]').change(function() {
         var currentHTML = ''
         $('#extension').empty();
@@ -24,9 +24,11 @@ $(document).on('ready', function () {
     });
 
     $('#uploadData').on('click', function() {
+        $('#feedback').html('');
+
         var file_data = $('#file').prop('files')[0];
         var fileType = $('#extension').val();
-        var name = $('#file-name').val();
+        var name = $('#file-name').val().trim().split(' ').join('_');
         var type = $('input[name=tipo]:checked').val();
         var form_data = new FormData();
 
@@ -39,7 +41,7 @@ $(document).on('ready', function () {
             form_data.append('tipo', type);
             form_data.append('action', 'ALTA_RECURSO');
 
-            alert('El archivo aparecerá en la lista una vez termine de subirse.');
+            $('#feedback').html('El archivo aparecerá en la lista una vez termine de subirse.');
 
             $.ajax({
                     url: '../api/controller.php',
@@ -69,6 +71,8 @@ $(document).on('ready', function () {
     // -----------------------------------------------------------------------------------------------
 
     setTimeout(function () {
+        $('#feedback').html('');
+
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -112,6 +116,8 @@ $(document).on('ready', function () {
     // -----------------------------------------------------------------------------------------------
 
     $('#allResources').on('click', '.deleteButton', function () {
+        $('#feedback').html('');
+        
         var self = this;
         var data = $(this).parent().attr('id').split('&');
 
