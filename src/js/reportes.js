@@ -240,6 +240,7 @@ $(document).on('ready', function () {
         $('#chart1').empty();
         $('#chart2').empty();
         $('#chart3').empty();
+        $('#chart4').empty();
 
         if ($('#reportes-feedback').html()) {
             $('#reportes-feedback').empty();
@@ -301,6 +302,7 @@ $(document).on('ready', function () {
             $('#chart1').empty();
             $('#chart2').empty();
             $('#chart3').empty();
+            $('#chart4').empty();
             return;
         }
 
@@ -325,6 +327,7 @@ $(document).on('ready', function () {
                 $('#chart1').empty();
                 $('#chart2').empty();
                 $('#chart3').empty();
+                $('#chart4').empty();
 
                 if (response.tipo !== 1) {
                     // Show filter options with default values
@@ -359,13 +362,13 @@ $(document).on('ready', function () {
                     pieChart(convertAgeRange(Object.keys(response.edad)),
                             getObjectProperties(response.edad),
                             2, 'Edad');
-                    // pieChart(convertEducation(Object.keys(response.educacion)),
-                    //         getObjectProperties(response.educacion),
-                    //         2, 'Educación');
+                    pieChart(convertEducation(Object.keys(response.educacion)),
+                             getObjectProperties(response.educacion),
+                             3, 'Educación');
                     columnChart(convertState(Object.keys(response.estado)),
                             getObjectProperties(response.estado),
                             getObjectProperties(response.estadoPercentage),
-                            3, 'Estado');
+                            4, 'Estado');
 
                 } else {
                     if (response.tipo === 1) {

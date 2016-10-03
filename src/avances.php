@@ -17,10 +17,10 @@
     <section>
         <div class='avances-wrapper'>
             <h2 id='header-title'>Avances</h2>
-            <span id='avances-feedback' class='feedback-text'></span>
             <select id='avances-encuestas-select' class='encuestas-select'>
                 <option value='0'>Selecciona una encuesta</option>
             </select>
+            <span id='available-encuestas-feedback' class='feedback-text'></span>
             <p id='avance-summary' class='avance-info'></p>
             <table id='avances-table'></table>
         </div>

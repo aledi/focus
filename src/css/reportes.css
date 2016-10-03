@@ -39,11 +39,23 @@
 }
 
 .chart3 {
+    margin-left: 20px;
+}
+
+.chart4 {
     width: 700px;
     margin: 0 auto;
 }
 
 .filtros-button {
+    margin: 20px 0;
+    margin-bottom: 0;
+}
+
+select {
+    margin-bottom: 5px;
+}
+tros-button {
     margin: 20px 0;
     margin-bottom: 0;
 }
