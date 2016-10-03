@@ -30,7 +30,7 @@
                     <option value=''>Selecciona un tipo de archivo</option>
                 </select>
             </div>
-            <input type='submit' value='Guardar' name='submit' id='upload-data'></input>
+            <button type='submit' name='submit' id='upload-data'>Guardar</button>
             <span id='feedback' class='feedback-text'></span>
             <div>
                 <table id='all-resources'></table>

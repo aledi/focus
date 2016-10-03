@@ -21,7 +21,7 @@ $(document).on('ready', function () {
         }
     });
 
-    $('#upload-data').on('click', function() {
+    $('#upload-data').on('click', function () {
         $('#feedback').html('');
 
         var file_data = $('#file').prop('files')[0];
