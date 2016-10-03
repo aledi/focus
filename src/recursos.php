@@ -14,16 +14,16 @@
     <section class='recursos-section'>
         <div class='recursos-wrapper'>
             <h2>Recursos</h2>
-            <div>
+            <div class='input-wrapper'>
                 Selecciona un archivo:
                 <input type='file' name='file' id='file'>
             </div>
-            <div>
+            <div class='input-wrapper'>
                 Tipo:
                 <input id='radio-image' type='radio' name='tipo' value='1'>Imagen</input>
                 <input id='radio-video' type='radio' name='tipo' value='2'>Video</input>
             </div>
-            <div>
+            <div class='input-wrapper'>
                 Nombre:
                 <input type='text' name='file-name' id='file-name'></input>
                 <select id='extension' name='fileType' required>
