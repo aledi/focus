@@ -34,15 +34,15 @@
 
                 <div class='input-wrapper'>
                     <label>Fecha de Inicio<span class='required-input'>*</span></label>
-                    <select id='dia'></select>
                     <select id='mes'></select>
+                    <select id='dia'></select>
                     <select id='anio'></select>
                 </div>
 
                 <div class='input-wrapper'>
                     <label>Fecha Final<span class='required-input'>*</span></label>
-                    <select id='dia_fin'></select>
                     <select id='mes_fin'></select>
+                    <select id='dia_fin'></select>
                     <select id='anio_fin'></select>
                 </div>
 
