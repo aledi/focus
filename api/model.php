@@ -1125,7 +1125,7 @@ function generalReportByEducation ($encuesta, $total, $default) {
 
         while ($row = $result->fetch_assoc()) {
             $response[$row['educacion']] = (int)$row['count'];
-            $flags[(int)$row['educacion']] = true;
+            $flags[(int)$row['educacion'] - 1] = true;
         }
 
         if (!$flags[0]) {
