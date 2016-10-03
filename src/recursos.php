@@ -9,30 +9,33 @@
     <script src='js/recursos.js'></script>
     <title> Focus - Recursos</title>
 </head>
-
 <body>
     <?php include_once('elements/header.php');?>
     <section class='recursos-section'>
         <div class='recursos-wrapper'>
             <h2>Recursos</h2>
+            <div>
                 Selecciona un archivo:
-                <input type='file' name='file' id='file'><br>
+                <input type='file' name='file' id='file'>
+            </div>
+            <div>
                 Tipo:
                 <input id='radio-image' type='radio' name='tipo' value='1'>Imagen</input>
-                <input id='radio-video' type='radio' name='tipo' value='2'>Video</input><br>
+                <input id='radio-video' type='radio' name='tipo' value='2'>Video</input>
+            </div>
+            <div>
                 Nombre:
                 <input type='text' name='file-name' id='file-name'></input>
                 <select id='extension' name='fileType' required>
                     <option value=''>Selecciona un tipo de archivo</option>
                 </select>
-                <br>
-                <input type='submit' value='Upload' name='submit' id='upload-data'></input>
-                <span id='feedback' class='feedback-text'></span>
+            </div>
+            <input type='submit' value='Upload' name='submit' id='upload-data'></input>
+            <span id='feedback' class='feedback-text'></span>
             <div>
                 <table id='all-resources'></table>
             </div>
         </div>
     </section>
 </body>
-
 </html>

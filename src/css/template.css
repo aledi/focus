@@ -135,9 +135,9 @@ section {
     top: 70px; right: 0; left: 0;
 }
 
-.recursos-wrapper, .panelistas-wrapper, .clientes-wrapper,
-.admins-wrapper, .paneles-wrapper,
-.encuestas-wrapper, .preguntas-wrapper, .avances-wrapper, .liga-panel-wrapper {
+.panelistas-wrapper, .clientes-wrapper, .admins-wrapper,
+.paneles-wrapper, .encuestas-wrapper, .preguntas-wrapper,
+.avances-wrapper, .liga-panel-wrapper, .recursos-wrapper {
     height: 100%;
     margin: 50px auto;
     box-sizing: border-box;
