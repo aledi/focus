@@ -524,7 +524,7 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + fila.nombre + '</td>';
                     currentHTML += '<td>' + convertGenero(fila.genero) + '</td>';
                     currentHTML += '<td>' + fila.edad + '</td>';
-                    currentHTML += '<td>' + fila.educacion + '</td>';
+                    currentHTML += '<td>' + convertEducacion(fila.educacion) + '</td>';
                     currentHTML += '<td>' + fila.municipio + '</td>';
                     currentHTML += '<td>' + fila.estado + '</td>';
 
