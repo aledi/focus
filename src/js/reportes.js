@@ -501,6 +501,11 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
+                if (response.status === 'ERROR') {
+                    $('#reportes-feedback').html(response.message);
+                    return;
+                }
+
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
                 for (var i = 0; i < response.columnas.length; i++) {
