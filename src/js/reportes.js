@@ -222,6 +222,7 @@ $(document).on('ready', function () {
     }, 500);
 
     $('#preguntas-select').hide();
+    $('#download-reportes').hide();
     $('#edad-select').hide();
     $('#genero-select').hide();
     $('#estado-select').hide();
@@ -231,6 +232,7 @@ $(document).on('ready', function () {
     $('#reportes-encuestas-select').on('change', function () {
         var idEncuesta = parseInt($(this).val(), 10);
         $('#preguntas-select').empty();
+        $('#download-reportes').hide();
         $('#preguntas-select').hide();
         $('#edad-select').hide();
         $('#genero-select').hide();
@@ -264,6 +266,10 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 $('#preguntas-select').show();
+
+                if ($('#panelistas-header-option').is(':visible') && $('#usuarios-header-option').is(':visible')) {
+                    $('#download-reportes').show();
+                }
 
                 var currentHTML = '<option value="-1">Selecciona una pregunta</option>';
 
@@ -481,4 +487,117 @@ $(document).on('ready', function () {
             $('#reportes-filtros-feedback').empty();
         }
     });
+
+    $('#download-reportes').on('click', function () {
+        var encuestaId = parseInt($('#reportes-encuestas-select').val(), 10);
+
+        if (encuestaId === -1) {
+            return;
+        }
+
+        $.ajax({
+            url: '../api/controller.php',
+            type: 'POST',
+            data: {
+                action: 'DOWNLOAD_DATA',
+                encuesta: encuestaId
+            },
+            dataType: 'json',
+            success: function (response) {
+                if (response.status === 'ERROR') {
+                    $('#reportes-feedback').html(response.message);
+                    return;
+                }
+
+                var currentHTML = '<thead>';
+                currentHTML += '<tr>';
+                for (var i = 0; i < response.columnas.length; i++) {
+                    var columna = response.columnas[i];
+                    currentHTML += '<th>' + columna + '</th>';
+                }
+
+                currentHTML += '</tr></thead><tbody>';
+
+                for (var j = 0; j < response.filas.length; j++) {
+                    var fila = response.filas[j];
+                    currentHTML += '<tr>'
+                    currentHTML += '<td>' + fila.nombre + '</td>';
+                    currentHTML += '<td>' + convertGenero(fila.genero) + '</td>';
+                    currentHTML += '<td>' + fila.edad + '</td>';
+                    currentHTML += '<td>' + fila.educacion + '</td>';
+                    currentHTML += '<td>' + fila.municipio + '</td>';
+                    currentHTML += '<td>' + fila.estado + '</td>';
+
+                    for (var k = 0; k < fila.respuestas.length; k++) {
+                        currentHTML += '<td>' + fila.respuestas[k] + '</td>';
+                    }
+
+                    currentHTML += '</tr>';
+                }
+
+                currentHTML += '</tbody>';
+                $('#reportes-table').append(currentHTML);
+                exportTable();
+            },
+            error: function (errorMsg) {
+                $('#reportes-feedback').html('Ha ocurrido un error. Favor de intentar de nuevo.');
+            }
+        });
+    });
 });
+
+function exportTable () {
+    var uri = 'data:application/vnd.ms-excel;base64,';
+    var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+    var table = document.getElementById('reportes-table');
+    var ctx = {
+        worksheet: 'reportes',
+        table: table.innerHTML
+    };
+
+    while (ctx.table.indexOf('á') !== -1) {
+        ctx.table = ctx.table.replace('á', '&aacute;');
+    }
+
+    while (ctx.table.indexOf('é') !== -1) {
+        ctx.table = ctx.table.replace('é', '&eacute;');
+    }
+
+    while (ctx.table.indexOf('í') !== -1) {
+        ctx.table = ctx.table.replace('í', '&iacute;');
+    }
+
+    while (ctx.table.indexOf('ó') !== -1) {
+        ctx.table = ctx.table.replace('ó', '&oacute;');
+    }
+
+    while (ctx.table.indexOf('ú') !== -1) {
+        ctx.table = ctx.table.replace('ú', '&uacute;');
+    }
+
+    while (ctx.table.indexOf('ü') !== -1) {
+        ctx.table = ctx.table.replace('ü', '&uuml;');
+    }
+
+    while (ctx.table.indexOf('ñ') !== -1) {
+        ctx.table = ctx.table.replace('ñ', '&ntilde;');
+    }
+
+    while (ctx.table.indexOf('¿') !== -1) {
+        ctx.table = ctx.table.replace('¿', '&iquest;');
+    }
+
+    document.getElementById('dlink').href = uri + base64(format(template, ctx));
+    document.getElementById('dlink').download = 'reporte.xls';
+    document.getElementById('dlink').click();
+}
+
+function base64 (s) {
+    return window.btoa(unescape(encodeURIComponent(s)));
+}
+
+function format (s, c) {
+    return s.replace(/{(\w+)}/g, function (m, p) {
+        return c[p];
+    });
+}

@@ -1425,7 +1425,7 @@ function downloadData ($encuesta) {
             $columnas[] = $row['pregunta'];
         }
 
-        return array('columnas' => $columnas, 'filas' => $filas);
+        return array('status' => 'SUCCESS', 'columnas' => $columnas, 'filas' => $filas);
     }
 
     return array('status' => 'DATABASE_ERROR');

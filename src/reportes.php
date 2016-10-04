@@ -18,12 +18,15 @@
     <section class='reportes-section'>
         <div class='reportes-wrapper'>
             <h2>Reportes</h2>
+            <table id='reportes-table' class='hidden'></table>
+            <a id='dlink' class='hidden'></a>
             <div class='selects-wrapper'>
                 <div class='main-selects'>
                     <select id='reportes-encuestas-select' class='encuestas-select'>
                         <option value='0'>Selecciona una encuesta</option>
                     </select>
                     <select id='preguntas-select' class='encuestas-select'></select>
+                    <button type='button' id='download-reportes' class='download-button'>Descargar Reporte</button>
                 </div>
                 <div class='filter-selects'>
                     <select id='edad-select' class='encuestas-select'>

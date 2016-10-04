@@ -20,7 +20,6 @@
 
 .abiertas-table {
     padding: 0 50px;
-    margin-top: -100px;
 }
 
 .abiertas-table tr {
@@ -47,7 +46,7 @@
     margin: 0 auto;
 }
 
-.filtros-button {
+.filtros-button, .download-button {
     margin: 20px 0;
     margin-bottom: 0;
 }
@@ -55,11 +54,7 @@
 select {
     margin-bottom: 5px;
 }
-tros-button {
-    margin: 20px 0;
-    margin-bottom: 0;
-}
 
-select {
-    margin-bottom: 5px;
+.feedback-text {
+    margin-bottom: 20px;
 }
