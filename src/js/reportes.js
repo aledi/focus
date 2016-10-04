@@ -266,7 +266,10 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 $('#preguntas-select').show();
-                $('#download-reportes').show();
+
+                if ($('#panelistas-header-option').is(':visible') && $('#usuarios-header-option').is(':visible')) {
+                    $('#download-reportes').show();
+                }
 
                 var currentHTML = '<option value="-1">Selecciona una pregunta</option>';
 
