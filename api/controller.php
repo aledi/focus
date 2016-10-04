@@ -99,6 +99,12 @@ switch ($_POST['action']) {
         getReportData();
         break;
     case 'DOWNLOAD_DATA':
+        $sessionData = hasActiveSession();
+        if ($sessionData['tipo'] == 1) {
+            echo json_encode(array('status' => 'ERROR', 'message' => 'No tiene permisos para esta acción.'));
+            return;
+        }
+
         echo json_encode(downloadData($_POST['encuesta']));
         break;
     case 'CURRENT_ANSWERS':
