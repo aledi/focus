@@ -222,6 +222,7 @@ $(document).on('ready', function () {
     }, 500);
 
     $('#preguntas-select').hide();
+    $('#download-reportes').hide();
     $('#edad-select').hide();
     $('#genero-select').hide();
     $('#estado-select').hide();
@@ -231,6 +232,7 @@ $(document).on('ready', function () {
     $('#reportes-encuestas-select').on('change', function () {
         var idEncuesta = parseInt($(this).val(), 10);
         $('#preguntas-select').empty();
+        $('#download-reportes').hide();
         $('#preguntas-select').hide();
         $('#edad-select').hide();
         $('#genero-select').hide();
@@ -264,6 +266,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 $('#preguntas-select').show();
+                $('#download-reportes').show();
 
                 var currentHTML = '<option value="-1">Selecciona una pregunta</option>';
 
@@ -485,6 +488,10 @@ $(document).on('ready', function () {
     $('#download-reportes').on('click', function () {
         var encuestaId = parseInt($('#reportes-encuestas-select').val(), 10);
 
+        if (encuestaId === -1) {
+            return;
+        }
+
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
@@ -494,8 +501,6 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                console.log(response)
-
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
                 for (var i = 0; i < response.columnas.length; i++) {
@@ -568,6 +573,10 @@ function exportTable () {
 
     while (ctx.table.indexOf('ñ') !== -1) {
         ctx.table = ctx.table.replace('ñ', '&ntilde;');
+    }
+
+    while (ctx.table.indexOf('¿') !== -1) {
+        ctx.table = ctx.table.replace('¿', '&iquest;');
     }
 
     document.getElementById('dlink').href = uri + base64(format(template, ctx));

@@ -18,15 +18,15 @@
     <section class='reportes-section'>
         <div class='reportes-wrapper'>
             <h2>Reportes</h2>
+            <table id='reportes-table' class='hidden'></table>
+            <a id='dlink' class='hidden'></a>
             <div class='selects-wrapper'>
-                <button type='button' id='download-reportes'>Descargar</button>
-                <table id='reportes-table'></table>
-                <a id='dlink' style={{display: 'none'}} />
                 <div class='main-selects'>
                     <select id='reportes-encuestas-select' class='encuestas-select'>
                         <option value='0'>Selecciona una encuesta</option>
                     </select>
                     <select id='preguntas-select' class='encuestas-select'></select>
+                    <button type='button' id='download-reportes' class='download-button'>Descargar Reporte</button>
                 </div>
                 <div class='filter-selects'>
                     <select id='edad-select' class='encuestas-select'>
@@ -89,7 +89,7 @@
                     <span id='reportes-filtros-feedback' class='feedback-text'></span>
                 </div>
             </div>
-            <span id='reportes-feedback' class='feedback-text'></span>
+            <span id='reportes-feedback' class='feedback-text'>HOLA ESTE ES UN ERROR</span>
             <table id='abiertas-table' class='abiertas-table'></table>
             <div id='chart1' class='chart1'></div>
             <div id='chart2' class='chart2'></div>
