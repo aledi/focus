@@ -54,11 +54,7 @@
 select {
     margin-bottom: 5px;
 }
-tros-button {
-    margin: 20px 0;
-    margin-bottom: 0;
-}
 
-select {
-    margin-bottom: 5px;
+.feedback-text {
+    margin-bottom: 20px;
 }
