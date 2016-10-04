@@ -19,6 +19,9 @@
         <div class='reportes-wrapper'>
             <h2>Reportes</h2>
             <div class='selects-wrapper'>
+                <button type='button' id='download-reportes'>Descargar</button>
+                <table id='reportes-table'></table>
+                <a id='dlink' style={{display: 'none'}} />
                 <div class='main-selects'>
                     <select id='reportes-encuestas-select' class='encuestas-select'>
                         <option value='0'>Selecciona una encuesta</option>

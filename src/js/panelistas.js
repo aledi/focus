@@ -84,7 +84,6 @@ $(document).on('ready', function () {
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
 
-
                     $('#allPanelistas').append(currentHTML);
                     currentHTML = '';
                 }
