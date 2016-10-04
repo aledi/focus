@@ -10,9 +10,9 @@ function getCheckedCheckboxesFor (checkboxName) {
 }
 
 function checkAll (checkedBox) {
-    var checkboxes = document.getElementsByTagName('input');
+    var checkboxes = document.getElementsByName('panelista-checkbox');
     for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].type == 'checkbox') {
+        if (checkboxes[i].className !== 'hidden') {
             checkboxes[i].checked = checkedBox.checked;
         }
     }
@@ -100,7 +100,7 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + convertEducacion(result.educacion) + '</td>';
                     currentHTML += '<td>' + result.municipio + '</td>';
                     currentHTML += '<td class="centered">' + result.estado + '</td>';
-                    currentHTML += '<td class="centered"><input type="checkbox" value=' + result.id + ' name="panelistas"' + (result.checked ?  ' checked' : '') + ' class="' + (elegible ? '' : 'hidden') + '"></td>';
+                    currentHTML += '<td class="centered"><input type="checkbox" value=' + result.id + ' name="panelista-checkbox"' + (result.checked ?  ' checked' : '') + ' class="' + (elegible ? '' : 'hidden') + '"></td>';
                     currentHTML += '</tr>';
 
                     $('#tablaPanelistas').append(currentHTML);
@@ -132,7 +132,7 @@ $(document).on('ready', function () {
     $('#ligar-panelistas').on('click', function (event) {
         event.preventDefault();
 
-        var panelistas = getCheckedCheckboxesFor('panelistas');
+        var panelistas = getCheckedCheckboxesFor('panelista-checkbox');
         if (panelistas === '') {
             $('#feedback').html('Favor de llenar todos los campos');
             return;
