@@ -1,0 +1,328 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    background-color: white;
+    font-family: Segoe UI;
+}
+
+.hidden {
+   display: none;
+}
+
+.alert {
+   color: #E05858;
+}
+
+/* -----------------------------------------------------------------------------------------------
+/ Header
+/ ----------------------------------------------------------------------------------------------- */
+
+header {
+    height: 70px;
+    position: absolute;
+    top: 0; right: 0; left: 0;
+}
+
+.header-wrapper {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background-color: #202382;
+}
+
+.logo {
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    padding: 10px 0 0 10px;
+}
+
+.navigation-bar-wrapper {
+    height: 100%;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 176px;
+}
+
+.navigation-bar {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    background-color: #F3F3F3;
+    border-bottom: 1px solid #E7E7E7;
+    overflow-x: hidden;
+}
+
+.navigation-bar li {
+    height: 100%;
+    display: inline-block;
+}
+
+li.selected {
+    background-color: #BCBDD9;
+}
+
+.signout-item {
+    float: right;
+}
+
+li a {
+    display: block;
+    padding: 0 10px;
+    line-height: 70px;
+    letter-spacing: 1px;
+    text-align: center;
+    text-decoration: none;
+    color: #666;
+}
+
+li a {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+}
+
+li a:hover{
+    background-color: #D2D3E6;
+}
+
+li.selected a:hover {
+    background-color: #BCBDD9;
+}
+
+li a, .dropbtn {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+}
+
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #F9F9F9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #666;
+    padding: 0 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    line-height: 40px;
+}
+
+.dropdown-content a:hover {
+    background-color: #D2D3E6;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+section {
+    position: absolute;
+    top: 70px; right: 0; left: 0;
+}
+
+.panelistas-wrapper, .clientes-wrapper, .admins-wrapper,
+.paneles-wrapper, .encuestas-wrapper, .preguntas-wrapper,
+.avances-wrapper, .liga-panel-wrapper, .recursos-wrapper {
+    height: 100%;
+    margin: 50px auto;
+    box-sizing: border-box;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.recursos-wrapper, .avances-wrapper {
+    width: 1000px;
+    padding: 30px 20px;
+}
+
+.encuestas-select {
+    display: block;
+}
+
+.avance-info {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.panelistas-wrapper, .paneles-wrapper, .encuestas-wrapper, .liga-panel-wrapper {
+    width: 800px;
+}
+
+.liga-panel-wrapper {
+    padding: 30px 20px;
+}
+
+.clientes-wrapper, .admins-wrapper, .preguntas-wrapper {
+    width: 600px;
+}
+
+/* -----------------------------------------------------------------------------------------------
+/ Tabs
+/ ----------------------------------------------------------------------------------------------- */
+
+ul.tabs {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    background-color: #6265A7;
+    color: white;
+}
+
+ul.tabs li {
+    background: none;
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+}
+
+ul.tabs li.current {
+    background-color: #36398E;
+}
+
+/* -----------------------------------------------------------------------------------------------
+/ Tab Content
+/ ----------------------------------------------------------------------------------------------- */
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.current{
+    display: block;
+    padding: 20px 30px;
+    background-color: #F6F6F6;
+}
+
+h2 {
+    margin-top: 0;
+    color: #6265A7;
+    letter-spacing: 1px;
+}
+
+.input-wrapper {
+    margin-bottom: 20px;
+}
+
+.input-wrapper > label {
+    display: block;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+}
+
+.input-wrapper > label > .required-input {
+    color: #E05858;
+}
+
+input[type='text'], input[type='password'], textarea {
+    box-sizing: border-box;
+    letter-spacing: 0.5px;
+    font-size: 13px;
+    border: 1px solid #E4E4E4;
+}
+
+input[type='text'], input[type='password'] {
+    height: 30px;
+    width: 250px;
+    padding: 0 5px;
+}
+
+textarea {
+    height: 100px;
+    width: 100%;
+    padding: 5px;
+    resize: none;
+}
+
+hr {
+    margin: 30px 0;
+    border: none;
+    border-bottom: 2px solid #E4E4E4;
+}
+
+button {
+    height: 40px;
+    width: 200px;
+    display: block;
+    margin: auto;
+    background-color: #202382;
+    border: none;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: white;
+    cursor: pointer;
+}
+
+button.no-background {
+    height: 30px;
+    background-color: transparent;
+    border: 1px solid #202382;
+    color: #202382;
+    margin-bottom: 30px;
+}
+
+.feedback-text {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: #E05858;
+}
+
+/* -----------------------------------------------------------------------------------------------
+/ Table
+/ ----------------------------------------------------------------------------------------------- */
+
+table {
+    width: 100%;
+}
+
+table.padding-bottom {
+    padding-bottom: 30px;
+}
+
+.left {
+    text-align: left;
+}
+
+.centered {
+    text-align: center;
+}
+
+table tbody tr td {
+    padding: 10px 5px;
+}
+
+.red td {
+    color: #E05858;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: #E8E9F2;
+}
+
+table tbody tr td button {
+    height: auto;
+    width: auto;
+    border: none;
+    background-color: transparent;
+    font-size: 11px;
+    color: #4D4F9B;
+}

@@ -1,0 +1,60 @@
+.reportes-section {
+    padding: 30px;
+}
+
+.reportes-wrapper {
+    padding: 20px;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.selects-wrapper {
+    height: 150px;
+    margin-bottom: 30px;
+}
+
+.main-selects, .filter-selects {
+    width: 48%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.abiertas-table {
+    padding: 0 50px;
+}
+
+.abiertas-table tr {
+    width: 100%;
+    padding: 0 50px;
+}
+
+.abiertas-table td {
+    width: 50%;
+}
+
+.chart1, .chart2 {
+    width: 48%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.chart3 {
+    margin-left: 20px;
+}
+
+.chart4 {
+    width: 700px;
+    margin: 0 auto;
+}
+
+.filtros-button, .download-button {
+    margin: 20px 0;
+    margin-bottom: 0;
+}
+
+select {
+    margin-bottom: 5px;
+}
+
+.feedback-text {
+    margin-bottom: 20px;
+}
