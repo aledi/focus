@@ -87,7 +87,7 @@ $(document).on('ready', function () {
         }
 
         var startDate = new Date($('select#anio').val(), parseInt($('select#mes').val(),10) - 1, $('select#dia').val());
-        var endDate = new Date($('select#anio_fin').val(), parseInt($('select#mes_fin').val(),10) - 1, $('select#dia_fin').val());
+        var endDate = new Date($('select#anio-fin').val(), parseInt($('select#mes-fin').val(),10) - 1, $('select#dia-fin').val());
 
         if (endDate <= startDate) {
             $('#feedback').html('La fecha fin debe ser posterior a la fecha de inicio');
@@ -216,7 +216,7 @@ $(document).on('ready', function () {
         changeSelect('Inicio');
     });
 
-    $('#mes_fin, #anio_fin').on('change', function() {
+    $('#mes-fin, #anio-fin').on('change', function() {
         changeSelect('Fin');
     });
 });
