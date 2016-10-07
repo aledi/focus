@@ -60,15 +60,17 @@ function pieChart (opciones, votes, chartNumber, title) {
         }
 
         var options = {
-            width: chartNumber === 3 ? 700 : '100%',
+            width: 700,
             height: 350,
             sliceVisibilityThreshold: 0
         };
 
         options.title = title;
 
-        var chart = new google.visualization.PieChart(document.getElementById('chart' + chartNumber));
-        chart.draw(data, options);
+        var chart = document.getElementById('chart' + chartNumber);
+        chart.className += ' pie-chart';
+        var googleChart = new google.visualization.PieChart(chart);
+        googleChart.draw(data, options);
     }
 }
 
@@ -85,26 +87,28 @@ function barChart (opciones, votes, chartNumber, title) {
         }
 
         var options = {
-            width: chartNumber === 3 ? 800 : '100%',
+            width: 800,
             height: 500,
             bar: {
                 groupWidth: '61.48%',
                 width: '20%'
             },
             hAxis: {
-                format : '#',
-                ticks : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                format: '#',
+                ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
                 viewWindow : {
-                    min : 0,
-                    max : 10
+                    min: 0,
+                    max: 10
                 }
             }
         };
 
         options.title = title;
 
-        var chart = new google.visualization.BarChart(document.getElementById('chart' + chartNumber));
-        chart.draw(data, options);
+        var chart = document.getElementById('chart' + chartNumber);
+        chart.className += ' bar-chart';
+        var googleChart = new google.visualization.BarChart(chart);
+        googleChart.draw(data, options);
     }
 }
 
@@ -123,7 +127,7 @@ function columnChart (opciones, votes, percent, chartNumber, title) {
         }
 
         var options = {
-            width: chartNumber === 3 ? 700 : '100%',
+            width: 800,
             height: 400,
             bar: {
                 groupWidth: '11.48%',
@@ -134,8 +138,10 @@ function columnChart (opciones, votes, percent, chartNumber, title) {
 
         options.title = title;
 
-        var chart = new google.charts.Bar(document.getElementById('chart' + chartNumber));
-        chart.draw(data, options);
+        var chart = document.getElementById('chart' + chartNumber);
+        chart.className += ' column-chart';
+        var googleChart = new google.charts.Bar(chart);
+        googleChart.draw(data, options);
     }
 }
 
