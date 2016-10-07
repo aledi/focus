@@ -88,7 +88,7 @@
                 <button id='filtros-button' class='filtros-button' type='button'>Aplicar filtros</button>
                 <span id='reportes-filtros-feedback' class='feedback-text'></span>
             </div>
-            <span id='reportes-feedback' class='feedback-text'>Texto de feedback</span>
+            <span id='reportes-feedback' class='feedback-text'></span>
             <table id='abiertas-table' class='abiertas-table'></table>
             <div id='chart2' class='chart2'></div>
             <div id='chart3' class='chart3'></div>
