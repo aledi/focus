@@ -12,8 +12,15 @@
     margin-bottom: 30px;
 }
 
+.main-selects {
+    width: 60%;
+}
+
+.filter-selects {
+    width: 38%;
+}
+
 .main-selects, .filter-selects {
-    width: 48%;
     display: inline-block;
     vertical-align: top;
 }
@@ -52,6 +59,7 @@
 }
 
 select {
+    max-width: 100%;
     margin-bottom: 5px;
 }
 
