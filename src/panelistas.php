@@ -50,8 +50,8 @@
                 </div>
                 <div class='input-wrapper'>
                     <label>Fecha de Nacimiento<span class='required-input'>*</span></label>
-                    <select id='mes'></select>
                     <select id='dia'></select>
+                    <select id='mes'></select>
                     <select id='anio'></select>
                 </div>
                 <div class='input-wrapper'>

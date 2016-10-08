@@ -24,24 +24,24 @@ function getDatefromString (stringDate, option) {
         $('#dia').val(parseInt(arrayDate[2]));
     }
     else {
-        $('#anio_fin').val(arrayDate[0]);
-        $('#mes_fin').val(parseInt(arrayDate[1]));
-        $('#dia_fin').val(parseInt(arrayDate[2]));
+        $('#anio-fin').val(arrayDate[0]);
+        $('#mes-fin').val(parseInt(arrayDate[1]));
+        $('#dia-fin').val(parseInt(arrayDate[2]));
     }
 
     return;
 }
 
 function getCompleteDate (option) {
-    var dia = option === 1 ? $('select#dia').val() : $('select#dia_fin').val();
-    var mes = option === 1 ? $('select#mes').val() : $('select#mes_fin').val();
-    var anio = option === 1 ? $('select#anio').val() : $('select#anio_fin').val();
+    var dia = option === 1 ? $('select#dia').val() : $('select#dia-fin').val();
+    var mes = option === 1 ? $('select#mes').val() : $('select#mes-fin').val();
+    var anio = option === 1 ? $('select#anio').val() : $('select#anio-fin').val();
 
     var fecha = anio + '-' + mes + '-' + dia;
     return fecha;
 }
 
-function fillDay (days, option) {
+function fillDay (currentDay, days, option) {
     var currentHTML = '';
     for (var x = 1; x <= days; x++) {
         currentHTML += '<option value="' + x + '">' + x + '</option>';
@@ -49,13 +49,21 @@ function fillDay (days, option) {
 
     if (option === 0) {
         $('#dia').append(currentHTML);
-        $('#dia_fin').append(currentHTML);
+        $('#dia-fin').append(currentHTML);
     } else if (option === 1) {
         $('#dia').empty();
         $('#dia').append(currentHTML);
+
+        if (currentDay && currentDay <= days) {
+            $('#dia').val(currentDay);
+        }
     } else {
-        $('#dia_fin').empty();
-        $('#dia_fin').append(currentHTML);
+        $('#dia-fin').empty();
+        $('#dia-fin').append(currentHTML);
+
+        if (currentDay && currentDay <= days) {
+            $('#dia-fin').val(currentDay);
+        }
     }
 }
 
@@ -66,7 +74,7 @@ function fillMonth () {
     }
 
     $('#mes').append(currentHTML);
-    $('#mes_fin').append(currentHTML);
+    $('#mes-fin').append(currentHTML);
 }
 
 function fillYear (option) {
@@ -79,7 +87,7 @@ function fillYear (option) {
         }
 
         $('#anio').append(currentHTML);
-        $('#anio_fin').append(currentHTML);
+        $('#anio-fin').append(currentHTML);
     } else {
         for (var x = currentYear - 18; x > currentYear - 100 ; x--) {
             currentHTML += '<option value="' + x + '">' + x + '</option>';
@@ -89,16 +97,16 @@ function fillYear (option) {
     }
 }
 
-function fillSelects (option, option_form) {
+function fillSelects (option, optionForm) {
     switch (option) {
         case 1:
-            fillDay(31, 0);
+            fillDay(null, 31, 0);
             break;
         case 2:
             fillMonth();
             break;
         case 3:
-            fillYear(option_form);
+            fillYear(optionForm);
             break;
         default:
             break;
@@ -110,13 +118,15 @@ function changeSelect (option) {
         var mes = parseInt($('select#mes').val());
         var anio = parseInt($('select#anio').val());
         var dias = getMonthDays(mes, anio);
+        var currentDay = parseInt($('select#dia').val());
 
-        fillDay(dias, 1);
+        fillDay(currentDay, dias, 1);
     } else if (option === 'Fin') {
-        var mes = parseInt($('select#mes_fin').val());
-        var anio = parseInt($('select#anio_fin').val());
+        var mes = parseInt($('select#mes-fin').val());
+        var anio = parseInt($('select#anio-fin').val());
         var dias = getMonthDays(mes, anio);
+        var currentDay = parseInt($('select#dia-fin').val());
 
-        fillDay(dias, 2);
+        fillDay(currentDay, dias, 2);
     }
 }
