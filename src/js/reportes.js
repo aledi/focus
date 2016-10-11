@@ -137,6 +137,13 @@ function columnChart (opciones, votes, percent, chartNumber, title) {
             legend: {position: 'none'}
         };
 
+        if (opciones.length > 1){
+          options.bar.width = '80%';
+        }
+        else{
+          options.bar.width = '40%';
+        }
+
         options.title = title;
 
         var chart = document.getElementById('chart' + chartNumber);
