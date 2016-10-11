@@ -118,7 +118,7 @@ function columnChart (opciones, votes, percent, chartNumber, title) {
     function drawStuff () {
         var data = new google.visualization.DataTable();
         data.addColumn('string', '');
-        data.addColumn('number', 'Votos');
+        data.addColumn('number', '');
 
         for (var x = 0; x < opciones.length; x++) {
             opciones[x] += '\n(' + String((percent[x] * 100).toFixed(2)) + '%)';
@@ -133,7 +133,8 @@ function columnChart (opciones, votes, percent, chartNumber, title) {
                 groupWidth: '11.48%',
                 width: '40%'
             },
-            vAxis: {format: '#%'}
+            vAxis: {format: '#%'},
+            legend: {position: 'none'}
         };
 
         options.title = title;
