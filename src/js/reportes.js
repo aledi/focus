@@ -62,7 +62,8 @@ function pieChart (opciones, votes, chartNumber, title) {
         var options = {
             width: 700,
             height: 350,
-            sliceVisibilityThreshold: 0
+            sliceVisibilityThreshold: 0,
+            tooltip: { text: 'percentage' }
         };
 
         options.title = title;
@@ -137,7 +138,7 @@ function columnChart (opciones, votes, percent, chartNumber, title) {
             legend: {position: 'none'}
         };
 
-        opciones.lengt > 1 ? options.bar.width = '80%' : options.bar.width = '40%';
+        opciones.length > 1 ? options.bar.width = '80%' : options.bar.width = '40%';
 
         options.title = title;
 
