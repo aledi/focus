@@ -119,21 +119,21 @@ function columnChart (opciones, votes, percent, chartNumber, title) {
         var data = new google.visualization.DataTable();
         data.addColumn('string', '');
         data.addColumn('number', '');
+        data.addColumn({type: 'string', role: 'tooltip'});
 
         for (var x = 0; x < opciones.length; x++) {
             opciones[x] += '\n(' + String((percent[x] * 100).toFixed(2)) + '%)';
 
-            data.addRows([[opciones[x], votes[x]]]);
+            data.addRows([[opciones[x], votes[x]/10, opciones[x]]]);
         }
 
         var options = {
             width: 800,
             height: 400,
             bar: {
-                groupWidth: '11.48%',
-                width: '40%'
+                width: '80%'
             },
-            vAxis: {format: '#%'},
+            vAxis: {format: 'percent'},
             legend: {position: 'none'}
         };
 
@@ -141,7 +141,7 @@ function columnChart (opciones, votes, percent, chartNumber, title) {
 
         var chart = document.getElementById('chart' + chartNumber);
         chart.className += ' column-chart';
-        var googleChart = new google.charts.Bar(chart);
+        var googleChart = new google.visualization.ColumnChart(chart);
         googleChart.draw(data, options);
     }
 }
