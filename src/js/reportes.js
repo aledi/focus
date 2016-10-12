@@ -125,20 +125,24 @@ function columnChart (opciones, votes, percent, chartNumber, title) {
         for (var x = 0; x < opciones.length; x++) {
             opciones[x] += '\n(' + String((percent[x] * 100).toFixed(2)) + '%)';
 
-            data.addRows([[opciones[x], votes[x]/10, opciones[x]]]);
+            data.addRows([[opciones[x], percent[x], opciones[x]]]);
         }
 
         var options = {
             width: 800,
             height: 400,
             bar: {
-                width: '80%'
+                width: opciones.length > 1 ? '80%' : '40%'
             },
-            vAxis: {format: 'percent'},
+            vAxis: {
+                format: 'percent',
+                viewWindow : {
+                    min: 0,
+                    max: 1
+                }
+            },
             legend: {position: 'none'}
         };
-
-        opciones.length > 1 ? options.bar.width = '80%' : options.bar.width = '40%';
 
         options.title = title;
 
