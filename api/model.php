@@ -1400,11 +1400,14 @@ function downloadData ($encuesta) {
             $fila = array('nombre' => $row['nombre'].' '.$row['apellidos'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'municipio' => $row['municipio'], 'estado' => $row['estado']);
             $id = $row['id'];
 
-            $sql = "SELECT respuestas FROM Respuesta WHERE encuesta = '$encuesta' AND respuestas != '' AND panelista = '$id'";
+            $sql = "SELECT respuestas, fecha, hora FROM Respuesta WHERE encuesta = '$encuesta' AND respuestas != '' AND panelista = '$id'";
             $result2 = $conn->query($sql);
 
             if ($result2->num_rows > 0) {
                 $row2 = $result2->fetch_assoc();
+                $fila['fechaRespuesta'] = $row2['fecha'];
+                $fila['horaRespuesta'] = $row2['hora'];
+
                 $answer = str_replace('&', ', ', rtrim($row2['respuestas'], '|'));
                 $answers = explode('|', $answer);
 
@@ -1419,7 +1422,7 @@ function downloadData ($encuesta) {
 
         $sql = "SELECT pregunta FROM Pregunta WHERE encuesta = '$encuesta'";
         $result = $conn->query($sql);
-        $columnas = array('Nombre', 'Género', 'Edad', 'Educación', 'Municipio', 'Estado');
+        $columnas = array('Nombre', 'Género', 'Edad', 'Educación', 'Municipio', 'Estado', 'Fecha de Respuesta', 'Hora de Respuesta');
 
         while ($row = $result->fetch_assoc()) {
             $columnas[] = $row['pregunta'];

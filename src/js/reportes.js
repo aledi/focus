@@ -113,7 +113,7 @@ function barChart (opciones, votes, chartNumber, title) {
     }
 }
 
-function columnChart (opciones, votes, percent, chartNumber, title) {
+function columnChart (opciones, percent, chartNumber, title) {
     google.charts.setOnLoadCallback(drawStuff);
 
     function drawStuff () {
@@ -383,10 +383,9 @@ $(document).on('ready', function () {
                             getObjectProperties(response.edad),
                             2, 'Edad');
                     pieChart(convertEducation(Object.keys(response.educacion)),
-                             getObjectProperties(response.educacion),
-                             3, 'Educación');
+                            getObjectProperties(response.educacion),
+                            3, 'Educación');
                     columnChart(convertState(Object.keys(response.estado)),
-                            getObjectProperties(response.estado),
                             getObjectProperties(response.estadoPercentage),
                             4, 'Estado');
 
@@ -405,7 +404,7 @@ $(document).on('ready', function () {
                     } else if (response.opciones.length < 4) {
                         pieChart(getObjectProperties(response.opciones), response.votos, 1, '');
                     } else {
-                        columnChart(getObjectProperties(response.opciones), response.votos, response.porcentajes, 1, '');
+                        columnChart(getObjectProperties(response.opciones), response.porcentajes, 1, '');
                     }
                 }
             },
@@ -541,6 +540,8 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + convertEducacion(fila.educacion) + '</td>';
                     currentHTML += '<td>' + fila.municipio + '</td>';
                     currentHTML += '<td>' + fila.estado + '</td>';
+                    currentHTML += '<td>' + fila.fechaRespuesta + '</td>';
+                    currentHTML += '<td>' + fila.horaRespuesta + '</td>';
 
                     for (var k = 0; k < fila.respuestas.length; k++) {
                         currentHTML += '<td>' + fila.respuestas[k] + '</td>';
