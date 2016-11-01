@@ -235,19 +235,21 @@ $(document).on('ready', function () {
             id: $(this).parent().attr('id')
         }
 
-        $.ajax({
-            url: '../api/controller.php',
-            type: 'POST',
-            data: data,
-            dataType: 'json',
-            success: function (response) {
-                alert('Panelista eliminado exitosamente.');
-                $(self).parent().remove();
-            },
-            error: function (errorMsg) {
-                alert('Error eliminando panelista.');
-            }
-        });
+        if(confirmDelete('este Panelista')) {
+            $.ajax({
+                url: '../api/controller.php',
+                type: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (response) {
+                    alert('Panelista eliminado exitosamente.');
+                    $(self).parent().remove();
+                },
+                error: function (errorMsg) {
+                    alert('Error eliminando panelista.');
+                }
+            });
+        }
     });
 
     $('#cancel-edit').on('click', function (event) {

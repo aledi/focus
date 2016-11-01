@@ -88,7 +88,7 @@ $(document).on('ready', function () {
         } else {
             data.password = password;
         }
-        
+
         $('#feedback').empty();
 
         var actionText = editing ? 'editado' : 'agregado';
@@ -165,22 +165,24 @@ $(document).on('ready', function () {
 
     $('#allUsers').on('click', '.deleteButton', function () {
         var self = this;
-        $.ajax({
-            url: '../api/controller.php',
-            type: 'POST',
-            data: {
-                action: 'DELETE_CLIENTE',
-                id: $(this).parent().attr('id')
-            },
-            dataType: 'json',
-            success: function (response) {
-                alert('Cliente eliminado exitosamente.');
-                $(self).parent().remove();
-            },
-            error: function (errorMsg) {
-                alert('Error eliminando cliente.');
-            }
-        });
+        if(confirmDelete('este Cliente')){
+            $.ajax({
+                url: '../api/controller.php',
+                type: 'POST',
+                data: {
+                    action: 'DELETE_CLIENTE',
+                    id: $(this).parent().attr('id')
+                },
+                dataType: 'json',
+                success: function (response) {
+                    alert('Cliente eliminado exitosamente.');
+                    $(self).parent().remove();
+                },
+                error: function (errorMsg) {
+                    alert('Error eliminando cliente.');
+                }
+            });
+        }
     });
 
     $('#cancel-edit').on('click', function (event) {
