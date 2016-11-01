@@ -6,6 +6,11 @@ function convertMonth (mes) {
     return monthArray[mes - 1];
 }
 
+function readableDate (fromDate) {
+    var elements = fromDate.split('-');
+    return parseInt(elements[2]) + ' de ' + convertMonth(parseInt(elements[1], 10)) + ' de ' + elements[0];
+}
+
 function getMonthDays (mes, anio) {
     if (mes === 1 || mes === 3 || mes === 5 || mes === 7 || mes === 8 || mes === 10 || mes === 12) {
         return 31;

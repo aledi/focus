@@ -314,7 +314,7 @@ function fetchPaneles () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, cliente, creador FROM Panel ORDER BY fechaInicio";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, cliente, creador FROM Panel ORDER BY fechaInicio DESC";
         $result = $conn->query($sql);
 
         $response = array();
@@ -403,7 +403,7 @@ function fetchEncuestas () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel FROM Encuesta ORDER BY fechaInicio";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel FROM Encuesta ORDER BY fechaInicio DESC";
         $result = $conn->query($sql);
 
         $response = array();
@@ -1265,6 +1265,11 @@ function currentAnswers ($encuesta) {
         }
 
         $conn->close();
+
+        usort($response, function ($item1, $item2) {
+            return $item2['fecha'] <=> $item1['fecha'];
+        });
+
         $panelistas = array('panelistas' => $response);
         return array_merge(getSummary($encuesta), $panelistas);
     }

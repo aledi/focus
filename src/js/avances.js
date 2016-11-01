@@ -44,10 +44,6 @@ $(document).on('ready', function () {
 
                 for (var i = 0; i < response.panelistas.length; i++) {
                     var panelista = response.panelistas[i];
-                    if (panelista.fecha) {
-                        var date = panelista.fecha.split('-');
-                        var formattedDate = date[2] + ' de ' + convertMonth(parseInt(date[1], 10)) + ', ' + date[0];
-                    }
 
                     currentHTML += '<tr class="' + (panelista.fecha ? '' : 'red') + '">';
                     currentHTML += '<td>' + panelista.nombre + '</td>';
@@ -56,7 +52,7 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + convertEducacion(panelista.educacion) + '</td>';
                     currentHTML += '<td>' + panelista.municipio + '</td>';
                     currentHTML += '<td class="centered">' + panelista.estado + '</td>';
-                    currentHTML += '<td>' + (panelista.fecha ? formattedDate : '') + '</td>';
+                    currentHTML += '<td>' + (panelista.fecha ? readableDate(panelista.fecha) : '') + '</td>';
                     currentHTML += '<td>' + panelista.hora + '</td>';
                     currentHTML += '</tr>';
                 }
