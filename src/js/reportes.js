@@ -60,15 +60,18 @@ function pieChart (opciones, votes, chartNumber, title) {
         }
 
         var options = {
-            width: chartNumber === 3 ? 700 : '100%',
+            width: 700,
             height: 350,
-            sliceVisibilityThreshold: 0
+            sliceVisibilityThreshold: 0,
+            tooltip: { text: 'percentage' }
         };
 
         options.title = title;
 
-        var chart = new google.visualization.PieChart(document.getElementById('chart' + chartNumber));
-        chart.draw(data, options);
+        var chart = document.getElementById('chart' + chartNumber);
+        chart.className += ' pie-chart';
+        var googleChart = new google.visualization.PieChart(chart);
+        googleChart.draw(data, options);
     }
 }
 
@@ -85,57 +88,68 @@ function barChart (opciones, votes, chartNumber, title) {
         }
 
         var options = {
-            width: chartNumber === 3 ? 800 : '100%',
+            width: 800,
             height: 500,
             bar: {
                 groupWidth: '61.48%',
                 width: '20%'
             },
             hAxis: {
-                format : '#',
-                ticks : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                format: '#',
+                ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
                 viewWindow : {
-                    min : 0,
-                    max : 10
+                    min: 0,
+                    max: 10
                 }
             }
         };
 
         options.title = title;
 
-        var chart = new google.visualization.BarChart(document.getElementById('chart' + chartNumber));
-        chart.draw(data, options);
+        var chart = document.getElementById('chart' + chartNumber);
+        chart.className += ' bar-chart';
+        var googleChart = new google.visualization.BarChart(chart);
+        googleChart.draw(data, options);
     }
 }
 
-function columnChart (opciones, votes, percent, chartNumber, title) {
+function columnChart (opciones, percent, chartNumber, title) {
     google.charts.setOnLoadCallback(drawStuff);
 
     function drawStuff () {
         var data = new google.visualization.DataTable();
         data.addColumn('string', '');
-        data.addColumn('number', 'Votos');
+        data.addColumn('number', '');
+        data.addColumn({type: 'string', role: 'tooltip'});
 
         for (var x = 0; x < opciones.length; x++) {
             opciones[x] += '\n(' + String((percent[x] * 100).toFixed(2)) + '%)';
 
-            data.addRows([[opciones[x], votes[x]]]);
+            data.addRows([[opciones[x], percent[x], opciones[x]]]);
         }
 
         var options = {
-            width: chartNumber === 3 ? 700 : '100%',
+            width: 800,
             height: 400,
             bar: {
-                groupWidth: '11.48%',
-                width: '40%'
+                width: opciones.length > 1 ? '80%' : '40%'
             },
-            vAxis: {format: '#%'}
+            vAxis: {
+                format: 'percent',
+                viewWindow : {
+                    min: 0,
+                    max: 1
+                }
+            },
+            legend: {position: 'none'}
         };
 
         options.title = title;
 
-        var chart = new google.charts.Bar(document.getElementById('chart' + chartNumber));
-        chart.draw(data, options);
+        var chart = document.getElementById('chart' + chartNumber);
+        chart.className += ' column-chart';
+        var googleChart = new google.visualization.ColumnChart(chart);
+        googleChart.draw(data, options);
     }
 }
 
@@ -369,10 +383,9 @@ $(document).on('ready', function () {
                             getObjectProperties(response.edad),
                             2, 'Edad');
                     pieChart(convertEducation(Object.keys(response.educacion)),
-                             getObjectProperties(response.educacion),
-                             3, 'Educación');
+                            getObjectProperties(response.educacion),
+                            3, 'Educación');
                     columnChart(convertState(Object.keys(response.estado)),
-                            getObjectProperties(response.estado),
                             getObjectProperties(response.estadoPercentage),
                             4, 'Estado');
 
@@ -391,7 +404,7 @@ $(document).on('ready', function () {
                     } else if (response.opciones.length < 4) {
                         pieChart(getObjectProperties(response.opciones), response.votos, 1, '');
                     } else {
-                        columnChart(getObjectProperties(response.opciones), response.votos, response.porcentajes, 1, '');
+                        columnChart(getObjectProperties(response.opciones), response.porcentajes, 1, '');
                     }
                 }
             },
@@ -527,6 +540,8 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + convertEducacion(fila.educacion) + '</td>';
                     currentHTML += '<td>' + fila.municipio + '</td>';
                     currentHTML += '<td>' + fila.estado + '</td>';
+                    currentHTML += '<td>' + fila.fechaRespuesta + '</td>';
+                    currentHTML += '<td>' + fila.horaRespuesta + '</td>';
 
                     for (var k = 0; k < fila.respuestas.length; k++) {
                         currentHTML += '<td>' + fila.respuestas[k] + '</td>';
