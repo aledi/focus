@@ -1,4 +1,5 @@
 'use strict';
+var arrEstadosMunicipios = {};
 
 $(document).on('ready', function () {
     $('#panelistas-header-option').addClass('selected');
