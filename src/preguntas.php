@@ -24,6 +24,22 @@
                 <div id='questions'>
                     <div id='1' class='questionForm'>
                         <div class='input-wrapper'>
+                            <label>Título</label>
+                            <input id='titulo' class='titulo' name='titulo' type='text' />
+                        </div>
+                        <div class='input-wrapper'>
+                            <label>Imagen</label>
+                            <select id='imagen1' class='imagen' name='respuesta' type='text'>
+                                <option value=''>Selecciona una imagen</option>
+                            </select>
+                        </div>
+                        <div class='input-wrapper'>
+                            <label>Video</label>
+                            <select id='video1' class='video' name='respuesta' type='text'>
+                                <option value=''>Selecciona un video</option>
+                            </select>
+                        </div>
+                        <div class='input-wrapper'>
                             <label>Pregunta</label>
                             <input id='pregunta' class='pregunta' name='respuesta' type='text' />
                         </div>
@@ -34,19 +50,8 @@
                                 <option value='2'>Selección Única</option>
                                 <option value='3'>Selección Múltiple</option>
                                 <option value='4'>Ordenamiento</option>
-                            </select>
-                        </div>
-                        <div class='input-wrapper'>
-                            <label>Imagen</label>
-                            <select id='imagen1' class='imagen' name='respuesta' type='text'>
-                                <option value=''>Selecciona una imagen</option>
-                            </select>
-                        </div>
-
-                        <div class='input-wrapper'>
-                            <label>Video</label>
-                            <select id='video1' class='video' name='respuesta' type='text'>
-                                <option value=''>Selecciona un video</option>
+                                <option value='5'>Matriz</option>
+                                <option value='6'>Escala</option>
                             </select>
                         </div>
                         <div id='Answers1'></div>

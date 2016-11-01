@@ -66,17 +66,8 @@ $(document).on('ready', function () {
         var currentHTML = '<div id="' + lastQuestion + '" class="questionForm">';
         currentHTML += '<hr>';
         currentHTML += '<div class="input-wrapper">' +
-            '<p>Pregunta</p>' +
-            '<input id="pregunta" class="pregunta" name="respuesta" type="text" />' +
-            '</div>';
-        currentHTML += '<div class="input-wrapper">' +
-            '<p>Tipo de pregunta</p>' +
-            '<select id="tipo" class="tipoPregunta" name="respuesta" required>' +
-            '<option value="1">Abiertas</option>' +
-            '<option value="2">Selección Única</option>' +
-            '<option value="3">Selección Múltiple</option>' +
-            '<option value="4">Ordenamiento</option>' +
-            '</select>' +
+            '<p>Título</p>' +
+            '<input id="titulo" class="titulo" name="titulo" type="text" />' +
             '</div>';
         currentHTML += '<div class="input-wrapper">' +
             '<p>Imagen</p>' +
@@ -87,6 +78,21 @@ $(document).on('ready', function () {
             '<p>Video</p>' +
             '<select id="video' + lastQuestion + '" class="video" name="respuesta" type="text">' +
             '<option value="">Selecciona un video</option></select>' +
+            '</div>';
+        currentHTML += '<div class="input-wrapper">' +
+            '<p>Pregunta</p>' +
+            '<input id="pregunta" class="pregunta" name="respuesta" type="text" />' +
+            '</div>';
+        currentHTML += '<div class="input-wrapper">' +
+            '<p>Tipo de pregunta</p>' +
+            '<select id="tipo" class="tipoPregunta" name="respuesta" required>' +
+            '<option value="1">Abiertas</option>' +
+            '<option value="2">Selección Única</option>' +
+            '<option value="3">Selección Múltiple</option>' +
+            '<option value="4">Ordenamiento</option>' +
+            '<option value="5">Matriz</option>' +
+            '<option value="6">Escala</option>' +
+            '</select>' +
             '</div>';
         currentHTML += '<div id="Answers' + lastQuestion + '"></div>' +
             '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
