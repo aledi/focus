@@ -37,8 +37,8 @@ function getEncuestas (route) {
 
                     currentHTML += '<tr id="' + result.id + '">';
                     currentHTML += '<td><a href="preguntas.php?id=' + result.id + '">' + result.nombre + '</a></td>';
-                    currentHTML += '<td>' + result.fechaInicio + '</td>';
-                    currentHTML += '<td>' + result.fechaFin + '</td>';
+                    currentHTML += '<td>' + readableDate(result.fechaInicio) + '</td>';
+                    currentHTML += '<td>' + readableDate(result.fechaFin) + '</td>';
                     currentHTML += '<td>' + result.panel + '</td>';
                     currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
