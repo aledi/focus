@@ -48,7 +48,7 @@
 
                 <div class='input-wrapper'>
                     <label>Seleccionar Cliente<span class='required-input'>*</span></label>
-                    <table id='table-clientes'></table>
+                    <select id='select-clientes'></select>
                 </div>
 
                 <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
