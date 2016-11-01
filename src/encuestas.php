@@ -45,7 +45,7 @@
 
                 <div class='input-wrapper'>
                     <label>Seleccionar Panel<span class='required-input'>*</span></label>
-                    <table id='allPanels'></table>
+                    <select id='select-paneles'></select>
                 </div>
 
                 <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
