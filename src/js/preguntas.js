@@ -31,7 +31,7 @@ function appendAnswers (typeQuestion, questionID) {
         for (var x = 1; x <= 10; x++) {
             currentHTML += '<div class="answer">';
             currentHTML += '<p>Opción ' + x + '</p>';
-            currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + '" name="respuesta' + questionID + '" type="text"/>';
+            currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + '" type="text"/>';
             currentHTML += "</div><br>";
          }
     }
@@ -45,25 +45,25 @@ function appendQuestions (lastQuestion) {
     currentHTML += '<hr>';
     currentHTML += '<div class="input-wrapper">' +
         '<p>Título</p>' +
-        '<input id="titulo" class="titulo" name="titulo" type="text" />' +
+        '<input id="titulo" class="titulo" type="text" />' +
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
         '<p>Imagen</p>' +
-        '<select id="imagen' + lastQuestion + '" class="imagen" name="respuesta" type="text">' +
+        '<select id="imagen' + lastQuestion + '" class="imagen" type="text">' +
         '<option value="">Selecciona una Imagen</option></select>' +
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
         '<p>Video</p>' +
-        '<select id="video' + lastQuestion + '" class="video" name="respuesta" type="text">' +
+        '<select id="video' + lastQuestion + '" class="video" type="text">' +
         '<option value="">Selecciona un video</option></select>' +
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
         '<p>Pregunta</p>' +
-        '<input id="pregunta" class="pregunta" name="respuesta" type="text" />' +
+        '<input id="pregunta" class="pregunta" type="text" />' +
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
         '<p>Tipo de pregunta</p>' +
-        '<select id="tipo" class="tipoPregunta" name="respuesta" required>' +
+        '<select id="tipo" class="tipoPregunta" required>' +
         '<option value="1">Abiertas</option>' +
         '<option value="2">Selección Única</option>' +
         '<option value="3">Selección Múltiple</option>' +
