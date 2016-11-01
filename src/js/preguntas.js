@@ -26,13 +26,13 @@ function appendSelect(lastQuestion){
 function appendAnswers (typeQuestion, questionID) {
     $('#Answers' + questionID).empty();
 
-    if (typeQuestion != 1) {
+    if (typeQuestion != 1 && typeQuestion != 6) {
         var currentHTML = '';
         for (var x = 1; x <= 10; x++) {
             currentHTML += '<div class="answer">';
             currentHTML += '<p>Opción ' + x + '</p>';
             currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + '" name="respuesta' + questionID + '" type="text"/>';
-            currentHTML += "</div>";
+            currentHTML += "</div><br>";
          }
     }
 
@@ -88,7 +88,6 @@ function appendQuestions (lastQuestion) {
 $(document).on('ready', function () {
     var idEncuesta = window.location.search.substring(1);
     idEncuesta = idEncuesta.substring(3);
-
 
     $.ajax({
         type: 'POST',
