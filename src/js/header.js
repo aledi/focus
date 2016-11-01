@@ -76,6 +76,33 @@ $(document).on('ready', function () {
     });
 });
 
+function confirmDelete(optionToDelete){
+    switch (optionToDelete){
+        case 'Admin' :
+            confirm('¿Borrar Administrador?');
+            break;
+        case 'Cliente' :
+            confirm('¿Borrar cliente?');
+            break;
+        case 'Panelista' :
+            confirm('¿Borrar panelista?');
+            break;
+        case 'Panel' :
+            confirm('¿Borrar panel?');
+            break;
+        case 'Encuesta' :
+            confirm('¿Borrar encuesta?');
+            break;
+        case 'Recurso' :
+            confirm('¿Borrar recurso?');
+            break;
+        case 'Pregunta' :
+            confirm('¿Borrar pregunta?');
+            break;
+    }
+}
+
+
 function convertEdoCivil (estadoCivil) {
     switch (estadoCivil) {
         case 0:
