@@ -12,6 +12,7 @@ $(document).on('ready', function () {
         $('#avance-percentage').empty();
         $('#avance-panelistas').empty();
         $('#avances-table').empty();
+        $('#avance-summary').empty();
 
         if (idEncuesta < 1) {
             return;
@@ -26,7 +27,10 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                $('#avance-summary').html('Respuestas: ' + response.respuestas + '  (' + (response.porcentaje * 100).toFixed(2) + '%)');
+                var summaryHTLM = readableDate(response.fechaInicio) + ' - ' + readableDate(response.fechaFin) + ' (' + (response.dias < 0 ? 0 : response.dias) + ' días restantes)';
+                summaryHTLM += '<br><br>';
+                summaryHTLM += 'Respuestas: ' + response.respuestas + '  (' + (response.porcentaje * 100).toFixed(2) + '%)';
+                $('#avance-summary').html(summaryHTLM);
 
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';

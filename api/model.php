@@ -1014,7 +1014,7 @@ function getSummary ($encuesta) {
             return array('status' => 'NO_DATA');
         }
 
-        $sql = "SELECT COUNT(*) as answers FROM Respuesta WHERE encuesta = '$encuesta' AND respuestas != ''";
+        $sql = "SELECT COUNT(*) as answers, fechaInicio, fechaFin, TIMESTAMPDIFF(DAY, CURDATE(), fechaFin) AS dias FROM Respuesta INNER JOIN Encuesta ON Respuesta.encuesta = Encuesta.id WHERE Respuesta.encuesta = '$encuesta' AND Respuesta.respuestas != ''";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -1022,7 +1022,7 @@ function getSummary ($encuesta) {
             $answers = (int)$row['answers'];
         }
 
-        return array('status' => 'SUCCESS', 'respuestas' => $answers, 'porcentaje' => $answers / $total);
+        return array('status' => 'SUCCESS', 'respuestas' => $answers, 'porcentaje' => $answers / $total, 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'dias' => (int)$row['dias']);
     }
 
     return array('status' => 'DATABASE_ERROR');
