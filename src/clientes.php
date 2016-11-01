@@ -2,10 +2,10 @@
 
 <html lang='en'>
 <head>
-    <link rel="icon" href="img/focusicon.ico" type="image/x-icon">
-  	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel='icon' href='img/focusicon.ico' type='image/x-icon'>
+  	<meta http-equiv='content-type' content='text/html; charset=UTF-8' />
   	<link href='css/template.css' type='text/css' rel='stylesheet'/>
-  	<script src="js/jquery-1.12.3.js"></script>
+  	<script src='js/jquery-1.12.3.js'></script>
     <script src='js/clientes.js' type='text/javascript'></script>
     <title> Focus - Clientes</title>
 </head>
@@ -60,7 +60,7 @@
             <div id='tab-view-clientes' class='tab-content'>
                 <h2>Clientes Disponibles</h2>
 
-                <table id="allUsers"></table>
+                <table id='allUsers'></table>
             </div>
         </div>
     </section>
