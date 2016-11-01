@@ -76,10 +76,6 @@ $(document).on('ready', function () {
     });
 });
 
-function confirmDelete(optionToDelete){
-    return confirm('¿Estás seguro de borrar ' + optionToDelete + '?');
-}
-
 function convertEdoCivil (estadoCivil) {
     switch (estadoCivil) {
         case 0:

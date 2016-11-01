@@ -160,13 +160,11 @@ $(document).on('ready', function () {
     });
 
     $('#questions').on('click', '#removeQuestion', function () {
-        if (confirmDelete('esta Pregunta')){
-            if ($(this).parent().attr('id') === 'questions') {
-                return;
-            }
-
-            $(this).parent().remove();
+        if ($(this).parent().attr('id') === 'questions') {
+            return;
         }
+
+        $(this).parent().remove();
     });
 
     $('#submitQuestions').on('click', function () {
