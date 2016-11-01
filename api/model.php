@@ -515,7 +515,7 @@ function fetchPreguntasEncuesta ($encuesta) {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $pregunta = array('id' => (int)$row['id'], 'encuesta' => (int)$encuesta, 'numPregunta' => (int)$row['numPregunta'], 'tipo' => (int)$row['tipo'], 'pregunta' => $row['pregunta'], 'video' => $row['video'], 'imagen' => $row['imagen'], 'op1' => $row['op1'], 'op2' => $row['op2'], 'op3' => $row['op3'], 'op4' => $row['op4'], 'op5' => $row['op5'], 'op6' => $row['op6'], 'op7' => $row['op7'], 'op8' => $row['op8'], 'op9' => $row['op9'], 'op10' => $row['op10']);
+            $pregunta = array('id' => (int)$row['id'], 'encuesta' => (int)$encuesta, 'numPregunta' => (int)$row['numPregunta'], 'titulo' => $row['titulo'], 'tipo' => (int)$row['tipo'], 'pregunta' => $row['pregunta'], 'video' => $row['video'], 'imagen' => $row['imagen'], 'op1' => $row['op1'], 'op2' => $row['op2'], 'op3' => $row['op3'], 'op4' => $row['op4'], 'op5' => $row['op5'], 'op6' => $row['op6'], 'op7' => $row['op7'], 'op8' => $row['op8'], 'op9' => $row['op9'], 'op10' => $row['op10']);
             $response[] = $pregunta;
         }
 
@@ -686,6 +686,7 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
         $result = $conn->query($sql);
 
         foreach ($preguntas as &$pregunta) {
+            $titulo = $pregunta['titulo'];
             $tipo = $pregunta['tipo'];
             $numPregunta = $pregunta['numPregunta'];
             $preguntaText = $pregunta['pregunta'];
@@ -747,7 +748,7 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
                 $op10 = $opciones[9];
             }
 
-            $sql = "INSERT INTO Pregunta (encuesta, tipo, numPregunta, pregunta, video, imagen, numOpciones, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$count', '$op1', '$op2', '$op3', '$op4', '$op5', '$op6', '$op7', '$op8', '$op9', '$op10')";
+            $sql = "INSERT INTO Pregunta (encuesta, tipo, numPregunta, pregunta, video, imagen, numOpciones, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10, titulo) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$count', '$op1', '$op2', '$op3', '$op4', '$op5', '$op6', '$op7', '$op8', '$op9', '$op10', '$titulo')";
 
             if ($conn->query($sql) === TRUE) {
                 $inserts = $inserts + 1;
