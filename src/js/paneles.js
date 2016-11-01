@@ -216,7 +216,7 @@ $(document).on('ready', function () {
             'id': $(this).parent().attr('id')
         }
 
-        if (confirmDelete('el Panel')){
+        if (confirmDelete('este Panel')){
             $.ajax({
                 url: '../api/controller.php',
                 type: 'POST',
