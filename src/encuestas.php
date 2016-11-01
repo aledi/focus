@@ -2,8 +2,9 @@
 
 <html lang='en'>
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <script src="js/jquery-1.12.3.js"></script>
+    <link rel='icon' href='img/focusicon.ico' type='image/x-icon'>
+    <meta http-equiv='content-type' content='text/html; charset=UTF-8' />
+    <script src='js/jquery-1.12.3.js'></script>
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
     <!--<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js'></script>-->
     <script src='js/date-functions.js' type='text/javascript'></script>

@@ -2,9 +2,10 @@
 
 <html lang='en'>
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel='icon' href='img/focusicon.ico' type='image/x-icon'>
+    <meta http-equiv='content-type' content='text/html; charset=UTF-8' />
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
-    <script src="js/jquery-1.12.3.js"></script>
+    <script src='js/jquery-1.12.3.js'></script>
     <script src='js/preguntas.js' type='text/javascript'></script>
     <title> Focus - Preguntas</title>
 </head>
@@ -49,7 +50,7 @@
                             </select>
                         </div>
                         <div id='Answers1'></div>
-                        <button type="button" id='removeQuestion' class='no-background'>Eliminar Pregunta</button>
+                        <button type='button' id='removeQuestion' class='no-background'>Eliminar Pregunta</button>
                     </div>
                 </div>
 
