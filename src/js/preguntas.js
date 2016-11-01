@@ -3,6 +3,10 @@
 var globalImages = [];
 var globalVideo = [];
 
+// -----------------------------------------------------------------------------------------------
+// Helper Functions
+// -----------------------------------------------------------------------------------------------
+
 function appendSelect(lastQuestion){
     var currentHTML = '';
     for(var x = 0; x < globalImages.length; x++) {
@@ -19,10 +23,71 @@ function appendSelect(lastQuestion){
     $('#video' + lastQuestion).append(currentHTML);
 }
 
+function appendAnswers (typeQuestion, questionID) {
+    $('#Answers' + questionID).empty();
+
+    if (typeQuestion != 1 && typeQuestion != 6) {
+        var currentHTML = '';
+        for (var x = 1; x <= 10; x++) {
+            currentHTML += '<div class="answer">';
+            currentHTML += '<p>Opción ' + x + '</p>';
+            currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + '" type="text"/>';
+            currentHTML += "</div><br>";
+         }
+    }
+
+    $('#Answers' + questionID).append(currentHTML);
+    currentHTML = '';
+}
+
+function appendQuestions (lastQuestion) {
+    var currentHTML = '<div id="' + lastQuestion + '" class="questionForm">';
+    currentHTML += '<hr>';
+    currentHTML += '<div class="input-wrapper">' +
+        '<p>Título</p>' +
+        '<input id="titulo" class="titulo" type="text" />' +
+        '</div>';
+    currentHTML += '<div class="input-wrapper">' +
+        '<p>Imagen</p>' +
+        '<select id="imagen' + lastQuestion + '" class="imagen" type="text">' +
+        '<option value="">Selecciona una Imagen</option></select>' +
+        '</div>';
+    currentHTML += '<div class="input-wrapper">' +
+        '<p>Video</p>' +
+        '<select id="video' + lastQuestion + '" class="video" type="text">' +
+        '<option value="">Selecciona un video</option></select>' +
+        '</div>';
+    currentHTML += '<div class="input-wrapper">' +
+        '<p>Pregunta</p>' +
+        '<input id="pregunta" class="pregunta" type="text" />' +
+        '</div>';
+    currentHTML += '<div class="input-wrapper">' +
+        '<p>Tipo de pregunta</p>' +
+        '<select id="tipo" class="tipoPregunta" required>' +
+        '<option value="1">Abiertas</option>' +
+        '<option value="2">Selección Única</option>' +
+        '<option value="3">Selección Múltiple</option>' +
+        '<option value="4">Ordenamiento</option>' +
+        '<option value="5">Matriz</option>' +
+        '<option value="6">Escala</option>' +
+        '</select>' +
+        '</div>';
+    currentHTML += '<div id="Answers' + lastQuestion + '"></div>' +
+        '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
+        '</div>';
+
+    $('#questions').append(currentHTML);
+    appendSelect(lastQuestion);
+    appendAnswers(1, lastQuestion);
+}
+
+// -----------------------------------------------------------------------------------------------
+// Fetch Recursos and Questions, if needed
+// -----------------------------------------------------------------------------------------------
+
 $(document).on('ready', function () {
     var idEncuesta = window.location.search.substring(1);
     idEncuesta = idEncuesta.substring(3);
-
 
     $.ajax({
         type: 'POST',
@@ -45,58 +110,6 @@ $(document).on('ready', function () {
         }
     });
 
-    function appendAnswers (typeQuestion, questionID) {
-        $('#Answers' + questionID).empty();
-
-        if (typeQuestion != 1) {
-            var currentHTML = '';
-            for (var x = 1; x <= 10; x++) {
-                currentHTML += '<div class="answer">';
-                currentHTML += '<p>Opción ' + x + '</p>';
-                currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + '" name="respuesta' + questionID + '" type="text"/>';
-                currentHTML += "</div>";
-             }
-        }
-
-        $('#Answers' + questionID).append(currentHTML);
-        currentHTML = '';
-    }
-
-    function appendQuestions (lastQuestion) {
-        var currentHTML = '<div id="' + lastQuestion + '" class="questionForm">';
-        currentHTML += '<hr>';
-        currentHTML += '<div class="input-wrapper">' +
-            '<p>Pregunta</p>' +
-            '<input id="pregunta" class="pregunta" name="respuesta" type="text" />' +
-            '</div>';
-        currentHTML += '<div class="input-wrapper">' +
-            '<p>Tipo de pregunta</p>' +
-            '<select id="tipo" class="tipoPregunta" name="respuesta" required>' +
-            '<option value="1">Abiertas</option>' +
-            '<option value="2">Selección Única</option>' +
-            '<option value="3">Selección Múltiple</option>' +
-            '<option value="4">Ordenamiento</option>' +
-            '</select>' +
-            '</div>';
-        currentHTML += '<div class="input-wrapper">' +
-            '<p>Imagen</p>' +
-            '<select id="imagen' + lastQuestion + '" class="imagen" name="respuesta" type="text">' +
-            '<option value="">Selecciona una Imagen</option></select>' +
-            '</div>';
-        currentHTML += '<div class="input-wrapper">' +
-            '<p>Video</p>' +
-            '<select id="video' + lastQuestion + '" class="video" name="respuesta" type="text">' +
-            '<option value="">Selecciona un video</option></select>' +
-            '</div>';
-        currentHTML += '<div id="Answers' + lastQuestion + '"></div>' +
-            '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
-            '</div>';
-
-        $('#questions').append(currentHTML);
-        appendSelect(lastQuestion);
-        appendAnswers(1, lastQuestion);
-    }
-
     if (idEncuesta !== '') {
         $.ajax({
             url: '../api/controller.php',
@@ -118,6 +131,7 @@ $(document).on('ready', function () {
 
                     $('#' + (x + 1) + ' > .input-wrapper > #pregunta').val(response.results[x].pregunta);
                     $('#' + (x + 1) + ' > .input-wrapper > #tipo').val(response.results[x].tipo);
+                    $('#' + (x + 1) + ' > .input-wrapper > #titulo').val(response.results[x].titulo);
 
                     appendAnswers(response.results[x].tipo, (x + 1));
 
@@ -177,10 +191,11 @@ $(document).on('ready', function () {
 
         $('#questions').children().each(function () {
             questionObject.numPregunta = numeroPregunta;
-            questionObject.pregunta = $(this).find('#pregunta').val();
-            questionObject.tipo = $(this).find('#tipo').val();
+            questionObject.titulo = $(this).find('#titulo').val();
             questionObject.imagen = $(this).find('.imagen').val();
             questionObject.video = $(this).find('.video').val();
+            questionObject.pregunta = $(this).find('#pregunta').val();
+            questionObject.tipo = $(this).find('#tipo').val();
 
             if (questionObject.tipo !== 1) {
                 var opcion = 1;
