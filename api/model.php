@@ -314,7 +314,7 @@ function fetchPaneles () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, cliente, creador FROM Panel";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, cliente, creador FROM Panel ORDER BY fechaInicio DESC";
         $result = $conn->query($sql);
 
         $response = array();
@@ -403,7 +403,7 @@ function fetchEncuestas () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel FROM Encuesta";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel FROM Encuesta ORDER BY fechaInicio DESC";
         $result = $conn->query($sql);
 
         $response = array();
@@ -1014,7 +1014,7 @@ function getSummary ($encuesta) {
             return array('status' => 'NO_DATA');
         }
 
-        $sql = "SELECT COUNT(*) as answers FROM Respuesta WHERE encuesta = '$encuesta' AND respuestas != ''";
+        $sql = "SELECT COUNT(*) as answers, fechaInicio, fechaFin, TIMESTAMPDIFF(DAY, CURDATE(), fechaFin) AS dias FROM Respuesta INNER JOIN Encuesta ON Respuesta.encuesta = Encuesta.id WHERE Respuesta.encuesta = '$encuesta' AND Respuesta.respuestas != ''";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -1022,7 +1022,7 @@ function getSummary ($encuesta) {
             $answers = (int)$row['answers'];
         }
 
-        return array('status' => 'SUCCESS', 'respuestas' => $answers, 'porcentaje' => $answers / $total);
+        return array('status' => 'SUCCESS', 'respuestas' => $answers, 'porcentaje' => $answers / $total, 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'dias' => (int)$row['dias']);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -1265,6 +1265,11 @@ function currentAnswers ($encuesta) {
         }
 
         $conn->close();
+
+        usort($response, function ($item1, $item2) {
+            return $item2['fecha'] <=> $item1['fecha'];
+        });
+
         $panelistas = array('panelistas' => $response);
         return array_merge(getSummary($encuesta), $panelistas);
     }

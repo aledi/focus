@@ -76,7 +76,7 @@ $(document).on('ready', function () {
     });
 });
 
-function confirmDelete(optionToDelete){
+function confirmDelete (optionToDelete){
     return confirm('¿Estás seguro de borrar ' + optionToDelete + '?');
 }
 
