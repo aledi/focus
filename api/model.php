@@ -314,7 +314,7 @@ function fetchPaneles () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, cliente, creador FROM Panel";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, cliente, creador FROM Panel ORDER BY fechaInicio";
         $result = $conn->query($sql);
 
         $response = array();
