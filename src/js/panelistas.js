@@ -235,7 +235,7 @@ $(document).on('ready', function () {
             id: $(this).parent().attr('id')
         }
 
-        if(confirmDelete('Panelista')) {
+        if(confirmDelete('al Panelista')) {
             $.ajax({
                 url: '../api/controller.php',
                 type: 'POST',

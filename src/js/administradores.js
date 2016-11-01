@@ -166,7 +166,7 @@ $(document).on('ready', function () {
 
     $('#allAdmins').on('click', '.deleteButton', function () {
         var self = this;
-        if (confirmDelete('Admin')){
+        if (confirmDelete('al Administrador')){
           $.ajax({
               url: '../api/controller.php',
               type: 'POST',

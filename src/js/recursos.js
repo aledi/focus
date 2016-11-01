@@ -115,7 +115,7 @@ $(document).on('ready', function () {
         var self = this;
         var data = $(this).parent().attr('id').split('&');
 
-        if (confirmDelete('Recurso')){
+        if (confirmDelete('el Recurso')){
             $.ajax({
                 url: '../api/controller.php',
                 type: 'POST',

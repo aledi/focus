@@ -178,7 +178,7 @@ $(document).on('ready', function () {
     $('#allEncuestas').on('click', '.deleteButton', function() {
         var self = this;
 
-        if (confirmDelete('Encuesta')){
+        if (confirmDelete('la Encuesta')){
             $.ajax({
                 url: '../api/controller.php',
                 type: 'POST',

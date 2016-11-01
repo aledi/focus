@@ -160,7 +160,7 @@ $(document).on('ready', function () {
     });
 
     $('#questions').on('click', '#removeQuestion', function () {
-        if (confirmDelete('Pregunta')){
+        if (confirmDelete('la Pregunta')){
             if ($(this).parent().attr('id') === 'questions') {
                 return;
             }
