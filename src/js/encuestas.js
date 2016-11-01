@@ -19,33 +19,17 @@ $(document).on('ready', function () {
                 fillSelects(2, 0);
                 fillSelects(3, 0);
 
-                var currentHTML = '<thead>';
-                currentHTML += '<tr>';
-                currentHTML += '<th class="left">Nombre</th>';
-                currentHTML += '<th class="left">Fecha Inicio</th>';
-                currentHTML += '<th class="left">Fecha Fin</th>';
-                currentHTML += '<th class="left">Cliente</th>';
-                currentHTML += '<th>Seleccionar</th>';
-                currentHTML += '</tr>';
-                currentHTML += '</thead>';
-                currentHTML += '<tbody>';
+                var currentHTML = '<option value=0> Selecciona un panel </option>';
 
                 for (var i = 0; i < response.results.length; i++) {
                     var result = response.results[i];
 
-                    currentHTML += '<tr id="' + result.id + '">';
-                    currentHTML += '<td>' + result.nombre + '</td>';
-                    currentHTML += '<td>' + result.fechaInicio + '</td>';
-                    currentHTML += '<td>' + result.fechaFin + '</td>';
-                    currentHTML += '<td>' + result.cliente + '</td>';
-                    currentHTML += '<td class="centered"><input type="radio" value=' + result.id + ' name="id"></td>';
-                    currentHTML += '</tr>';
-
-                    $('#allPanels').append(currentHTML);
-                    currentHTML = '';
+                    currentHTML += '<option value=' + result.id + '>';
+                    currentHTML += result.nombre + "   ---   " + result.cliente;
+                    currentHTML += "</option>";
                 }
 
-                currentHTML += '</tbody>';
+                $('#select-paneles').append(currentHTML);
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los clientes');
@@ -74,14 +58,14 @@ $(document).on('ready', function () {
         var nombre = $('#nombre').val();
         var fechaInicio = getCompleteDate(1);
         var fechaFin = getCompleteDate(2);
-        var panel = $('input[name=id]:checked').val();
+        var panel = parseInt($('#select-paneles').val());
 
         if (!nombre || !nombre.trim()) {
             $('#feedback').html('Favor de elegir un nombre');
             return;
         }
 
-        if (!panel) {
+        if (!panel || panel === 0) {
             $('#feedback').html('Favor de seleccionar un panel');
             return;
         }
@@ -159,7 +143,7 @@ $(document).on('ready', function () {
                 $('#nombre').val(result.nombre);
                 getDatefromString(result.fechaInicio, 0);
                 getDatefromString(result.fechaFin, 1);
-                $('input[name=id][value="' + result.panel + '"]').prop('checked', true);
+                $('#select-paneles').val(result.panel);
 
                 var myURL = window.location.href.split('?')[0];
                 myURL += '?id=' + result.id;
