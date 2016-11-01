@@ -115,26 +115,24 @@ $(document).on('ready', function () {
         var self = this;
         var data = $(this).parent().attr('id').split('&');
 
-        if (confirmDelete('este Recurso')){
-            $.ajax({
-                url: '../api/controller.php',
-                type: 'POST',
-                data: {
-                    action: 'DELETE_RECURSO',
-                    id: data[0],
-                    nombre: data[1],
-                    tipo: data[2]
-                },
-                dataType: 'json',
-                success: function (response) {
-                    alert('Recurso eliminado exitosamente.');
-                    $(self).parent().remove();
-                },
-                error: function (errorMsg) {
-                    alert('Error eliminando recurso.');
-                }
-            });
-        }
+        $.ajax({
+            url: '../api/controller.php',
+            type: 'POST',
+            data: {
+                action: 'DELETE_RECURSO',
+                id: data[0],
+                nombre: data[1],
+                tipo: data[2]
+            },
+            dataType: 'json',
+            success: function (response) {
+                alert('Recurso eliminado exitosamente.');
+                $(self).parent().remove();
+            },
+            error: function (errorMsg) {
+                alert('Error eliminando recurso.');
+            }
+        });
     });
 
 });

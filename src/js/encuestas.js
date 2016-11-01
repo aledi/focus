@@ -161,25 +161,22 @@ $(document).on('ready', function () {
 
     $('#allEncuestas').on('click', '.deleteButton', function() {
         var self = this;
-
-        if (confirmDelete('esta Encuesta')){
-            $.ajax({
-                url: '../api/controller.php',
-                type: 'POST',
-                data: {
-                    action: 'DELETE_ENCUESTA',
-                    id: $(this).parent().attr('id')
-                },
-                dataType: 'json',
-                success: function (response) {
-                    alert('Encuesta eliminada exitosamente.');
-                    $(self).parent().remove();
-                },
-                error: function (errorMsg) {
-                    alert('Error eliminando encuesta.');
-                }
-            });
-        }
+        $.ajax({
+            url: '../api/controller.php',
+            type: 'POST',
+            data: {
+                action: 'DELETE_ENCUESTA',
+                id: $(this).parent().attr('id')
+            },
+            dataType: 'json',
+            success: function (response) {
+                alert('Encuesta eliminada exitosamente.');
+                $(self).parent().remove();
+            },
+            error: function (errorMsg) {
+                alert('Error eliminando encuesta.');
+            }
+        });
     });
 
     $('#cancel-edit').on('click', function (event) {
