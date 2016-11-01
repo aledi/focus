@@ -183,10 +183,11 @@ $(document).on('ready', function () {
 
         $('#questions').children().each(function () {
             questionObject.numPregunta = numeroPregunta;
-            questionObject.pregunta = $(this).find('#pregunta').val();
-            questionObject.tipo = $(this).find('#tipo').val();
+            questionObject.titulo = $(this).find('#titulo').val();
             questionObject.imagen = $(this).find('.imagen').val();
             questionObject.video = $(this).find('.video').val();
+            questionObject.pregunta = $(this).find('#pregunta').val();
+            questionObject.tipo = $(this).find('#tipo').val();
 
             if (questionObject.tipo !== 1) {
                 var opcion = 1;
