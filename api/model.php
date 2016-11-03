@@ -622,6 +622,17 @@ function fetchResourcesOfType($type) {
     return array('status' => 'DATABASE_ERROR');
 }
 
+function fetchMunicipios(){
+    $fileMunicipios = fopen("../src/elements/municipios.csv","r");
+
+    while(!feof($fileMunicipios)){
+        print_r(fgetcsv($fileMunicipios));
+    }
+
+    fclose($fileMunicipios);
+}
+
+
 function emptyString ($string) {
     return($string !== '');
 }
