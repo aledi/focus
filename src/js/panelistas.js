@@ -95,6 +95,20 @@ $(document).on('ready', function () {
                 $('#feedback').html('Error cargando los clientes');
             }
         });
+
+        $.ajax({
+            type: 'POST',
+            url: '../api/controller.php',
+            data: {'action': 'GET_MUNICIPIOS'},
+            dataType: 'json',
+            success: function (response) {
+
+            },
+            error: function (error) {
+                $('#feedback').html('Error cargando los municpios');
+            }
+        });
+
     }, 500);
 
     // -----------------------------------------------------------------------------------------------

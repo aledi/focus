@@ -53,6 +53,9 @@ switch ($_POST['action']) {
     case 'GET_RECURSOS':
         getRecords('RESOURCES');
         break;
+    case 'GET_MUNICIPIOS':
+        getRecords('MUNICIPIOS');
+        break;
     case 'SET_PANELISTAS_PANEL':
         setPanelistasPanel();
         break;
