@@ -622,30 +622,6 @@ function fetchResourcesOfType($type) {
     return array('status' => 'DATABASE_ERROR');
 }
 
-function fetchMunicipios(){
-    $fileMunicipios = fopen("../src/elements/municipios.csv","r");
-    $currentState = "Aguascalientes";
-    $arrayEstados = array();
-    $arrayMunicipios = array();
-
-    while(!feof($fileMunicipios)){
-        $arrayRead = fgetcsv($fileMunicipios);
-        if($currentState != $arrayRead[0]){
-            $arrayEstados[(string)$currentState] = $arrayMunicipios;
-            $currentState = $arrayRead[0];
-            unset($arrayMunicipios);
-            $arrayMunicipios = array();
-        }
-        else {
-            $arrayMunicipios[] = $arrayRead[1];
-        }
-    }
-    // print_r($arrayEstados);
-    fclose($fileMunicipios);
-    return $arrayEstados;
-}
-
-
 function emptyString ($string) {
     return($string !== '');
 }

@@ -284,8 +284,8 @@ function getRecords ($type) {
             echo json_encode(fetchMobileData($_POST['panelista']));
             break;
         case 'MUNICIPIOS':
-            print_r(fetchMunicipios());
-            //echo json_encode(fetchMunicipios());
+            //print_r(fetchMunicipios());
+            echo json_encode(getMunicipiosFromFile());
             break;
         case 'RESOURCES':
             if (isset($_POST['tipo'])) {
@@ -394,6 +394,29 @@ function fetchFromFile ($file)  {
     $myfile = fopen($path.$file, 'r') or die('Unable to open file!');
     echo json_encode(array('content' => fread($myfile, filesize($path.$file))));
     fclose($myfile);
+}
+
+function getMunicipiosFromFile(){
+    $fileMunicipios = fopen("../src/elements/municipios.csv","r");
+    $currentState = "Aguascalientes";
+    $arrayEstados = array();
+    $arrayMunicipios = array();
+
+    while(!feof($fileMunicipios)){
+        $arrayRead = fgetcsv($fileMunicipios);
+        if($currentState != $arrayRead[0]){
+            $arrayEstados[(string)$currentState] = $arrayMunicipios;
+            $currentState = $arrayRead[0];
+            unset($arrayMunicipios);
+            $arrayMunicipios = array();
+        }
+        else {
+            $arrayMunicipios[] = $arrayRead[1];
+        }
+    }
+    // print_r($arrayEstados);
+    fclose($fileMunicipios);
+    return array('estados' => $arrayEstados);
 }
 
 function sendPushNotification ($message, $deviceToken) {
