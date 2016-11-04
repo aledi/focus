@@ -770,7 +770,10 @@ function startEncuesta ($encuesta, $panelista) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "INSERT INTO Respuesta (encuesta, panelista) VALUES ('$encuesta', '$panelista')";
+        $date = date('Y-m-d');
+        $hour = date('H:i:s');
+
+        $sql = "INSERT INTO Respuesta (encuesta, panelista, fechaIni, horaIni) VALUES ('$encuesta', '$panelista', '$date', '$hour')";
 
         if ($conn->query($sql) === TRUE) {
             $lastId = mysqli_insert_id($conn);
@@ -792,7 +795,7 @@ function saveRespuestas ($id, $respuestas) {
         $date = date('Y-m-d');
         $hour = date('H:i:s');
 
-        $sql = "UPDATE Respuesta SET respuestas = '$respuestas', fecha = '$date', hora = '$hour' WHERE id = '$id'";
+        $sql = "UPDATE Respuesta SET respuestas = '$respuestas', fechaFin = '$date', horaFin = '$hour' WHERE id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
             $conn->close();
@@ -1015,7 +1018,7 @@ function getSummary ($encuesta) {
             return array('status' => 'NO_DATA');
         }
 
-        $sql = "SELECT COUNT(*) as answers, fechaInicio, fechaFin, TIMESTAMPDIFF(DAY, CURDATE(), fechaFin) AS dias FROM Respuesta INNER JOIN Encuesta ON Respuesta.encuesta = Encuesta.id WHERE Respuesta.encuesta = '$encuesta' AND Respuesta.respuestas != ''";
+        $sql = "SELECT COUNT(*) as answers, Encuesta.fechaInicio, Encuesta.fechaFin, TIMESTAMPDIFF(DAY, CURDATE(), Encuesta.fechaFin) AS dias FROM Respuesta INNER JOIN Encuesta ON Respuesta.encuesta = Encuesta.id WHERE Respuesta.encuesta = '$encuesta' AND Respuesta.respuestas != ''";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -1250,25 +1253,29 @@ function currentAnswers ($encuesta) {
 
         while ($row = $result->fetch_assoc()) {
             $panelistaId = $row['id'];
-            $fecha = '';
-            $hora = '';
-            $sql2 = "SELECT fecha, hora, respuestas FROM Respuesta WHERE panelista = '$panelistaId' AND encuesta = '$encuesta' AND respuestas != ''";
+            $fechaIni = '';
+            $horaIni = '';
+            $fechaFin = '';
+            $horaFin = '';
+            $sql2 = "SELECT fechaIni, horaIni, fechaFin, horaFin, respuestas FROM Respuesta WHERE panelista = '$panelistaId' AND encuesta = '$encuesta' AND respuestas != ''";
             $result2 = $conn->query($sql2);
 
             if ($result2->num_rows > 0) {
                 $row2 = $result2->fetch_assoc();
-                $fecha = $row2['fecha'];
-                $hora = $row2['hora'];
+                $fechaIni = $row2['fechaIni'];
+                $horaIni = $row2['horaIni'];
+                $fechaFin = $row2['fechaFin'];
+                $horaFin = $row2['horaFin'];
             }
 
-            $panelista = array('nombre' => $row['nombre'].' '.$row['apellidos'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'fecha' => $fecha, 'hora' => $hora);
+            $panelista = array('nombre' => $row['nombre'].' '.$row['apellidos'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'fechaIni' => $fechaIni, 'horaIni' => $horaIni, 'fechaFin' => $fechaFin, 'horaFin' => $horaFin);
             $response[] = $panelista;
         }
 
         $conn->close();
 
         usort($response, function ($item1, $item2) {
-            return $item2['fecha'] <=> $item1['fecha'];
+            return $item2['fechaFin'] <=> $item1['fechaFin'];
         });
 
         $panelistas = array('panelistas' => $response);
