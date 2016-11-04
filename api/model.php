@@ -1253,11 +1253,12 @@ function currentAnswers ($encuesta) {
 
         while ($row = $result->fetch_assoc()) {
             $panelistaId = $row['id'];
-            $fechaIni = '';
-            $horaIni = '';
-            $fechaFin = '';
-            $horaFin = '';
-            $sql2 = "SELECT fechaIni, horaIni, fechaFin, horaFin, respuestas FROM Respuesta WHERE panelista = '$panelistaId' AND encuesta = '$encuesta' AND respuestas != ''";
+            $fechaIni = NULL;
+            $horaIni = NULL;
+            $fechaFin = NULL;
+            $horaFin = NULL;
+            
+            $sql2 = "SELECT fechaIni, horaIni, fechaFin, horaFin FROM Respuesta WHERE panelista = '$panelistaId' AND encuesta = '$encuesta' AND respuestas != ''";
             $result2 = $conn->query($sql2);
 
             if ($result2->num_rows > 0) {
