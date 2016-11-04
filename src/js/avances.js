@@ -59,9 +59,9 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + panelista.municipio + '</td>';
                     currentHTML += '<td class="centered">' + panelista.estado + '</td>';
                     currentHTML += '<td>' + readableDate(panelista.fechaIni) + '</td>';
-                    currentHTML += '<td>' + (panelista.horaIni ? panelista.horaIni : '') + '</td>';
+                    currentHTML += '<td>' + validateHour(panelista.horaIni) + '</td>';
                     currentHTML += '<td>' + readableDate(panelista.fechaFin) + '</td>';
-                    currentHTML += '<td>' + (panelista.horaFin ? panelista.horaFin : '') + '</td>';
+                    currentHTML += '<td>' + validateHour(panelista.horaFin) + '</td>';
                     currentHTML += '</tr>';
                 }
 

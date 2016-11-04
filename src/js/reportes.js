@@ -540,8 +540,10 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + convertEducacion(fila.educacion) + '</td>';
                     currentHTML += '<td>' + fila.municipio + '</td>';
                     currentHTML += '<td>' + fila.estado + '</td>';
-                    currentHTML += '<td>' + fila.fechaRespuesta + '</td>';
-                    currentHTML += '<td>' + fila.horaRespuesta + '</td>';
+                    currentHTML += '<td>' + readableDate(fila.fechaIni) + '</td>';
+                    currentHTML += '<td>' + validateHour(fila.horaIni) + '</td>';
+                    currentHTML += '<td>' + readableDate(fila.fechaFin) + '</td>';
+                    currentHTML += '<td>' + validateHour(fila.horaFin) + '</td>';
 
                     for (var k = 0; k < fila.respuestas.length; k++) {
                         currentHTML += '<td>' + fila.respuestas[k] + '</td>';
