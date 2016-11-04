@@ -284,7 +284,8 @@ function getRecords ($type) {
             echo json_encode(fetchMobileData($_POST['panelista']));
             break;
         case 'MUNICIPIOS':
-            echo json_encode(fetchMunicipios());
+            print_r(fetchMunicipios());
+            //echo json_encode(fetchMunicipios());
             break;
         case 'RESOURCES':
             if (isset($_POST['tipo'])) {

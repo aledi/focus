@@ -102,10 +102,10 @@ $(document).on('ready', function () {
             data: {'action': 'GET_MUNICIPIOS'},
             dataType: 'json',
             success: function (response) {
-
+                console.log(response);
             },
             error: function (error) {
-                $('#feedback').html('Error cargando los municpios');
+                $('#feedback').html('Error cargando los municipios');
             }
         });
 
