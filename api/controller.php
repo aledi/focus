@@ -284,8 +284,7 @@ function getRecords ($type) {
             echo json_encode(fetchMobileData($_POST['panelista']));
             break;
         case 'MUNICIPIOS':
-            //print_r(fetchMunicipios());
-            echo json_encode(getMunicipiosFromFile());
+            echo json_encode(getMunicipiosFromFile(), JSON_UNESCAPED_UNICODE);
             break;
         case 'RESOURCES':
             if (isset($_POST['tipo'])) {
@@ -397,24 +396,34 @@ function fetchFromFile ($file)  {
 }
 
 function getMunicipiosFromFile(){
-    $fileMunicipios = fopen("../src/elements/municipios.csv","r");
     $currentState = "Aguascalientes";
     $arrayEstados = array();
     $arrayMunicipios = array();
 
+
+    $fileMunicipios = fopen("../src/elements/municipios.txt","r");
+    fgets($fileMunicipios); //Remove column headers.
+
     while(!feof($fileMunicipios)){
-        $arrayRead = fgetcsv($fileMunicipios);
-        if($currentState != $arrayRead[0]){
-            $arrayEstados[(string)$currentState] = $arrayMunicipios;
-            $currentState = $arrayRead[0];
+        $arrayLineRead = explode("\t", fgets($fileMunicipios));
+        $arrayLineRead[0] = trim($arrayLineRead[0], "\"");
+        $arrayLineRead[1] = trim($arrayLineRead[1], "\n");
+        $arrayLineRead[1] = trim($arrayLineRead[1], "\r");        
+        $arrayLineRead[1] = trim($arrayLineRead[1], "\"");
+
+        if($currentState != (string)$arrayLineRead[0]){
+            $arrayEstados[$currentState] = $arrayMunicipios;
+            $currentState = $arrayLineRead[0];
+
             unset($arrayMunicipios);
             $arrayMunicipios = array();
+            $arrayMunicipios[] = $arrayLineRead[1];
         }
         else {
-            $arrayMunicipios[] = $arrayRead[1];
+            $arrayMunicipios[] = $arrayLineRead[1];
         }
     }
-    // print_r($arrayEstados);
+
     fclose($fileMunicipios);
     return array('estados' => $arrayEstados);
 }
