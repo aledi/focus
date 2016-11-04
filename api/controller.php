@@ -411,6 +411,8 @@ function getMunicipiosFromFile(){
         $arrayLineRead[1] = trim($arrayLineRead[1], "\r");        
         $arrayLineRead[1] = trim($arrayLineRead[1], "\"");
 
+        $arrayLineRead[0] = changeState($arrayLineRead[0]);
+
         if($currentState != (string)$arrayLineRead[0]){
             $arrayEstados[$currentState] = $arrayMunicipios;
             $currentState = $arrayLineRead[0];
@@ -426,6 +428,21 @@ function getMunicipiosFromFile(){
 
     fclose($fileMunicipios);
     return array('estados' => $arrayEstados);
+}
+
+
+function changeState($state){
+    if($state == "Coahuila de Zaragoza"){
+        $state = "Coahuila";
+    }
+    else if($state == "Michoacán de Ocampo"){
+        $state = "Michoacán";
+    }
+    else if($state == "Veracruz de Ignacio de la Llave"){
+        $state = "Veracruz";
+    }
+
+    return $state;
 }
 
 function sendPushNotification ($message, $deviceToken) {
