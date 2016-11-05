@@ -10,6 +10,7 @@
     <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
     <script src='js/reportes.js' type='text/javascript'></script>
     <script src='js/encuestas-shared.js' type='text/javascript'></script>
+    <script src='js/date-functions.js' type='text/javascript'></script>
     <title> Focus - Reportes</title>
 </head>
 

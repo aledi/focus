@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 01-11-2016 a las 16:29:41
+-- Tiempo de generación: 04-11-2016 a las 03:07:52
 -- Versión del servidor: 5.5.42
 -- Versión de PHP: 7.0.0
 
@@ -836,34 +836,36 @@ CREATE TABLE `Respuesta` (
   `encuesta` int(11) NOT NULL,
   `panelista` int(11) NOT NULL,
   `respuestas` longtext COLLATE utf8_spanish_ci NOT NULL,
-  `fecha` date NOT NULL,
-  `hora` time DEFAULT NULL
+  `fechaIni` date DEFAULT NULL,
+  `horaIni` time DEFAULT NULL,
+  `fechaFin` date DEFAULT NULL,
+  `horaFin` time DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Respuesta`
 --
 
-INSERT INTO `Respuesta` (`id`, `encuesta`, `panelista`, `respuestas`, `fecha`, `hora`) VALUES
-(10, 1, 1, 'shido|Positiva&|Sí|Sí|Sigue igual|Tal vez|', '0000-00-00', '00:00:00'),
-(11, 1, 2, 'no me quejo|Neutra&|No|Sí|Empeoró|Aún es muy pronto para dar una opinión|', '2016-09-15', '00:00:00'),
-(12, 1, 6, 'Respuesta|Positiva&Negativa&Neutra&|Sí|No|Empeoró|Aún es muy pronto para dar una opinión|', '2016-09-15', '00:00:00'),
-(13, 1, 3, 'nada|Muy Mala&|No|No|Mejoró|Sí|', '2016-09-15', '00:00:00'),
-(14, 1, 7, 'Qwerty|Positiva&Muy Buena&|Sí|Sí|Mejoró|Tal vez|', '2016-09-15', '00:00:00'),
-(15, 1, 4, 'no me parce|Muy Buena&|Sí|No|Sigue igual|No|', '2016-09-15', '00:00:00'),
-(16, 1, 8, 'Pop outer|Positiva&Negativa&Neutra&Muy Mala&Muy Buena&|No|No|Sigue igual|No|', '2016-09-15', '00:00:00'),
-(17, 1, 9, 'Más,más fuerte|Muy Buena&|No|Sí|Empeoró|Tal vez|', '2016-09-15', '00:00:00'),
-(18, 1, 5, 'betoooo|Muy Mala&|No|No|Sigue igual|Tal vez|', '2016-09-15', '00:00:00'),
-(19, 1, 10, 'Cobb |Neutra&Muy Mala&Muy Buena&|Sí|No|Mejoró|Aún es muy pronto para dar una opinión|', '2016-09-15', '00:00:00'),
-(53, 7, 409, 'Estuvo por debajo|3|Mal gobierno |No me agradan, y no participaría.|Seguridad&Inversión en obra pública&Nuevos programas de apoyo a la comunidad.&Reducción gradual del pago de la Tenencia.&Combate a la corrupción.&|Nuevos programas de apoyo a la comunidad.|No|Inversión en obra pública &|Pésimo|Negativo.|No|', '2016-09-29', '13:22:33'),
-(56, 9, 409, 'Sí|Piezas de pollo&|Regular|8|6|6|La rapidez del servicio |La limpieza del baño |Sí|Más limpieza|Sí|Sí|Nada|Sí|', '2016-09-29', '13:58:01'),
-(58, 1, 409, 'Esta en campaña|Positiva|No|Sí|Empeoró|No|', '2016-09-29', '14:56:12'),
-(60, 1, 410, 'Gghgjghhh|Positiva|Sí|Sí|Empeoró|Sí|', '2016-09-30', '16:48:49'),
-(61, 7, 410, 'Las superó|2|Abajarse|No me agradan, y no participaría.|Inversión en obra pública&|No sé|Igual|Definir si se realizará la obra del Monterrey VI&|Haga|Negativo.|No sé|', '2016-09-30', '16:50:12'),
-(62, 9, 411, 'Sí|Combo&|Excelente|7|9|9|Hghgghh|Fgfgggg|Sí|Gggggggg|Sí|Sí|Hhhhhh|Sí|', '2016-09-30', '16:54:14'),
-(63, 1, 411, 'Dhshshs|Neutra|No|Sí|Empeoró|Sí|', '2016-10-03', '09:55:40'),
-(65, 1, 454, 'Va para la presidencia |Neutra|Sí|No|Sigue igual|Sí|', '2016-10-04', '10:53:26'),
-(66, 1, 455, 'Busca la presidencia |Positiva|Sí|No|Sigue igual|Sí|', '2016-10-04', '15:32:34');
+INSERT INTO `Respuesta` (`id`, `encuesta`, `panelista`, `respuestas`, `fechaIni`, `horaIni`, `fechaFin`, `horaFin`) VALUES
+(10, 1, 1, 'shido|Positiva&|Sí|Sí|Sigue igual|Tal vez|', NULL, NULL, '0000-00-00', NULL),
+(11, 1, 2, 'no me quejo|Neutra&|No|Sí|Empeoró|Aún es muy pronto para dar una opinión|', NULL, NULL, '2016-09-15', NULL),
+(12, 1, 6, 'Respuesta|Positiva&Negativa&Neutra&|Sí|No|Empeoró|Aún es muy pronto para dar una opinión|', NULL, NULL, '2016-09-15', NULL),
+(13, 1, 3, 'nada|Muy Mala&|No|No|Mejoró|Sí|', NULL, NULL, '2016-09-15', NULL),
+(14, 1, 7, 'Qwerty|Positiva&Muy Buena&|Sí|Sí|Mejoró|Tal vez|', NULL, NULL, '2016-09-15', NULL),
+(15, 1, 4, 'no me parce|Muy Buena&|Sí|No|Sigue igual|No|', NULL, NULL, '2016-09-15', NULL),
+(16, 1, 8, 'Pop outer|Positiva&Negativa&Neutra&Muy Mala&Muy Buena&|No|No|Sigue igual|No|', NULL, NULL, '2016-09-15', NULL),
+(17, 1, 9, 'Más,más fuerte|Muy Buena&|No|Sí|Empeoró|Tal vez|', NULL, NULL, '2016-09-15', NULL),
+(18, 1, 5, 'betoooo|Muy Mala&|No|No|Sigue igual|Tal vez|', NULL, NULL, '2016-09-15', NULL),
+(19, 1, 10, 'Cobb |Neutra&Muy Mala&Muy Buena&|Sí|No|Mejoró|Aún es muy pronto para dar una opinión|', NULL, NULL, '2016-09-15', NULL),
+(53, 7, 409, 'Estuvo por debajo|3|Mal gobierno |No me agradan, y no participaría.|Seguridad&Inversión en obra pública&Nuevos programas de apoyo a la comunidad.&Reducción gradual del pago de la Tenencia.&Combate a la corrupción.&|Nuevos programas de apoyo a la comunidad.|No|Inversión en obra pública &|Pésimo|Negativo.|No|', NULL, NULL, '2016-09-29', '13:22:33'),
+(56, 9, 409, 'Sí|Piezas de pollo&|Regular|8|6|6|La rapidez del servicio |La limpieza del baño |Sí|Más limpieza|Sí|Sí|Nada|Sí|', NULL, NULL, '2016-09-29', '13:58:01'),
+(58, 1, 409, 'Esta en campaña|Positiva|No|Sí|Empeoró|No|', NULL, NULL, '2016-09-29', '14:56:12'),
+(60, 1, 410, 'Gghgjghhh|Positiva|Sí|Sí|Empeoró|Sí|', NULL, NULL, '2016-09-30', '16:48:49'),
+(61, 7, 410, 'Las superó|2|Abajarse|No me agradan, y no participaría.|Inversión en obra pública&|No sé|Igual|Definir si se realizará la obra del Monterrey VI&|Haga|Negativo.|No sé|', NULL, NULL, '2016-09-30', '16:50:12'),
+(62, 9, 411, 'Sí|Combo&|Excelente|7|9|9|Hghgghh|Fgfgggg|Sí|Gggggggg|Sí|Sí|Hhhhhh|Sí|', NULL, NULL, '2016-09-30', '16:54:14'),
+(63, 1, 411, 'Dhshshs|Neutra|No|Sí|Empeoró|Sí|', NULL, NULL, '2016-10-03', '09:55:40'),
+(65, 1, 454, 'Va para la presidencia |Neutra|Sí|No|Sigue igual|Sí|', NULL, NULL, '2016-10-04', '10:53:26'),
+(66, 1, 455, 'Busca la presidencia |Positiva|Sí|No|Sigue igual|Sí|', NULL, NULL, '2016-10-04', '15:32:34');
 
 -- --------------------------------------------------------
 

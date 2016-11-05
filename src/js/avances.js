@@ -40,8 +40,10 @@ $(document).on('ready', function () {
                 currentHTML += '<th>Educación</th>';
                 currentHTML += '<th>Municipio</th>';
                 currentHTML += '<th>Estado</th>';
-                currentHTML += '<th>Fecha</th>';
-                currentHTML += '<th>Hora</th>';
+                currentHTML += '<th>Fecha Inicio</th>';
+                currentHTML += '<th>Hora Inicio</th>';
+                currentHTML += '<th>Fecha Fin</th>';
+                currentHTML += '<th>Hora Fin</th>';
                 currentHTML += '</tr>';
                 currentHTML += '</thead>';
                 currentHTML += '<tbody>';
@@ -49,15 +51,17 @@ $(document).on('ready', function () {
                 for (var i = 0; i < response.panelistas.length; i++) {
                     var panelista = response.panelistas[i];
 
-                    currentHTML += '<tr class="' + (panelista.fecha ? '' : 'red') + '">';
+                    currentHTML += '<tr class="' + (panelista.fechaFin ? '' : 'red') + '">';
                     currentHTML += '<td>' + panelista.nombre + '</td>';
                     currentHTML += '<td>' + convertGenero(panelista.genero) + '</td>';
                     currentHTML += '<td class="centered">' + panelista.edad + '</td>';
                     currentHTML += '<td>' + convertEducacion(panelista.educacion) + '</td>';
                     currentHTML += '<td>' + panelista.municipio + '</td>';
                     currentHTML += '<td class="centered">' + panelista.estado + '</td>';
-                    currentHTML += '<td>' + (panelista.fecha ? readableDate(panelista.fecha) : '') + '</td>';
-                    currentHTML += '<td>' + panelista.hora + '</td>';
+                    currentHTML += '<td>' + readableDate(panelista.fechaIni) + '</td>';
+                    currentHTML += '<td>' + validateHour(panelista.horaIni) + '</td>';
+                    currentHTML += '<td>' + readableDate(panelista.fechaFin) + '</td>';
+                    currentHTML += '<td>' + validateHour(panelista.horaFin) + '</td>';
                     currentHTML += '</tr>';
                 }
 
