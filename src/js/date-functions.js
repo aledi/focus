@@ -7,8 +7,16 @@ function convertMonth (mes) {
 }
 
 function readableDate (fromDate) {
+    if (!fromDate) {
+        return '';
+    }
+
     var elements = fromDate.split('-');
     return parseInt(elements[2]) + ' de ' + convertMonth(parseInt(elements[1], 10)) + ' de ' + elements[0];
+}
+
+function validateHour (hour) {
+    return hour ? hour : '';
 }
 
 function getMonthDays (mes, anio) {

@@ -82,6 +82,7 @@ $(document).on('ready', function () {
                 currentHTML += '<th>Género</th>';
                 currentHTML += '<th>Edad</th>';
                 currentHTML += '<th>Educación</th>';
+                currentHTML += '<th>Fecha Registro</th>';
                 currentHTML += '<th>Municipio</th>';
                 currentHTML += '<th>Estado</th>';
                 currentHTML += '<th><input type="checkbox" onclick="checkAll(this)"/></th>';
@@ -94,10 +95,11 @@ $(document).on('ready', function () {
                     var elegible = (result.genero !== -1 && result.edad !== 0 && result.estado !== '');
 
                     currentHTML += '<tr value="' + result.id + '" class="' + (elegible ? '' : 'red') + '">';
-                    currentHTML += '<td>' + result.nombre + ' ' + result.apellidos + '</td>';
+                    currentHTML += '<td>' + result.nombre + '</td>';
                     currentHTML += '<td>' + convertGenero(result.genero) + '</td>';
                     currentHTML += '<td class="centered">' + result.edad + '</td>';
                     currentHTML += '<td>' + convertEducacion(result.educacion) + '</td>';
+                    currentHTML += '<td>' + readableDate(result.fechaRegistro) + '</td>';
                     currentHTML += '<td>' + result.municipio + '</td>';
                     currentHTML += '<td class="centered">' + result.estado + '</td>';
                     currentHTML += '<td class="centered"><input type="checkbox" value=' + result.id + ' name="panelista-checkbox"' + (result.checked ?  ' checked' : '') + ' class="' + (elegible ? '' : 'hidden') + '"></td>';
