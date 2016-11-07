@@ -232,13 +232,15 @@ $(document).on('ready', function () {
                 $('#educacion').val(result.educacion + '');
                 $('#calleNumero').val(result.calleNumero);
                 $('#colonia').val(result.colonia);
-                $('#municipio').val(result.municipio);
                 $('#estado').val(result.estado);
+                fillMunicipios();
+                $('#municipio').val(result.municipio);
                 $('#cp').val(result.cp);
 
                 var myURL = window.location.href.split('?')[0];
                 myURL += '?id=' + result.id;
                 history.pushState({}, null, myURL);
+                
             },
             error: function (errorMsg) {
                 alert('Error editando panelista.');
@@ -303,23 +305,27 @@ $(document).on('ready', function () {
         }
     });
 
-    //
-    //
-    //
+    ///////////////////////////////////////////////////////////////////////////////
+    // Change municipios depending on state
+    ///////////////////////////////////////////////////////////////////////////////
 
     $('#estado').on('change', function() {
         $('#municipio').empty();
-
-        var currentState = $('#estado option:selected').text();
-        var currentHTML = '<option value=\'0\'>Selecciona un municipio</option>';
-
-        for(var county = 0; county < Object.keys(arrEstadosMunicipios[currentState]).length; county++){
-            currentHTML += '<option value=' + county + '>' + arrEstadosMunicipios[currentState][county] + '</option>';
-        }
-
-        $('#municipio').append(currentHTML);
+        fillMunicipios();
     });
 });
+
+
+function fillMunicipios(){
+    var currentState = $('#estado option:selected').text();
+    var currentHTML = '<option value=\'0\'>Selecciona un municipio</option>';
+
+    for(var county = 0; county < Object.keys(arrEstadosMunicipios[currentState]).length; county++){
+        currentHTML += '<option value=' + county + '>' + arrEstadosMunicipios[currentState][county] + '</option>';
+    }
+
+    $('#municipio').append(currentHTML);
+}
 
 
 function stateAbreviations(state){
