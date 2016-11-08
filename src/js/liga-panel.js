@@ -9,12 +9,20 @@ function getCheckedCheckboxesFor (checkboxName) {
     return values;
 }
 
-function checkAll (checkedBox) {
-    var checkboxes = document.getElementsByName('panelista-checkbox');
-    for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].className !== 'hidden') {
-            checkboxes[i].checked = checkedBox.checked;
+function checkAll (checkedBox, numParticipantes) {
+    var tableSize = $('#fbody > tr').length;
+
+    if(tableSize <= numParticipantes) {
+        var checkboxes = document.getElementsByName('panelista-checkbox');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].className !== 'hidden') {
+                checkboxes[i].checked = checkedBox.checked;
+            }
         }
+    }
+    else {
+        alert('Cantidad de panelistas seleccionados exceden el límite de ' + numParticipantes + ' panelistas permitidos.');
+        checkedBox.checked = false;
     }
 }
 
@@ -88,7 +96,7 @@ $(document).on('ready', function () {
                 currentHTML += '<th>Fecha Registro</th>';
                 currentHTML += '<th>Municipio</th>';
                 currentHTML += '<th>Estado</th>';
-                currentHTML += '<th><input type="checkbox" onclick="checkAll(this)"/></th>';
+                currentHTML += '<th><input type="checkbox" onclick="checkAll(this, ' + numParticipantes + ')"/></th>';
                 currentHTML += '</tr>';
                 currentHTML += '</thead>';
                 currentHTML += '<tbody id="fbody">';
