@@ -63,8 +63,11 @@ $(document).on('ready', function () {
     var flagLoadingPanelist = 0;
     event.preventDefault();
 
-    var id = window.location.search.substring(1);
-    id = id.substring(3);
+    var urlParameters = window.location.search.substring(1);
+    urlParameters = urlParameters.split('&')
+
+    var id = urlParameters[0].substring(3);
+    var numParticipantes = urlParameters[1].substring(4);
 
     $.ajax({
         type: 'POST',
