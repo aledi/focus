@@ -1,5 +1,7 @@
 'use strict';
 
+var currentChecked = 0;
+
 function getCheckedCheckboxesFor (checkboxName) {
     var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
     Array.prototype.forEach.call(checkboxes, function(el) {
@@ -8,6 +10,17 @@ function getCheckedCheckboxesFor (checkboxName) {
 
     return values;
 }
+
+function checkNumberPanelistas(checkedBox, numberPanelistas) {
+    currentChecked++;
+    console.log(currentChecked);
+    if (numberPanelistas < currentChecked) {
+        alert('Seleccionar este panelista excede la cantidad permitida de ' + numberPanelistas + ' panelistas.');
+        checkedBox.checked = false;
+        currentChecked--;
+    }
+}
+
 
 function checkAll (checkedBox, numParticipantes) {
     var tableSize = $('#fbody > tr').length;
@@ -113,7 +126,7 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + readableDate(result.fechaRegistro) + '</td>';
                     currentHTML += '<td>' + result.municipio + '</td>';
                     currentHTML += '<td class="centered">' + result.estado + '</td>';
-                    currentHTML += '<td class="centered"><input type="checkbox" value=' + result.id + ' name="panelista-checkbox"' + (result.checked ?  ' checked' : '') + ' class="' + (elegible ? '' : 'hidden') + '"></td>';
+                    currentHTML += '<td class="centered"><input type="checkbox" onclick="checkNumberPanelistas(this, ' + numParticipantes + ')" value=' + result.id + ' name="panelista-checkbox"' + (result.checked ?  ' checked' : '') + ' class="' + (elegible ? '' : 'hidden') + '"></td>';
                     currentHTML += '</tr>';
 
                     $('#tablaPanelistas').append(currentHTML);
