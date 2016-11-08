@@ -320,11 +320,11 @@ $(document).on('ready', function () {
 
 function fillMunicipios(){
     var currentState = $('#estado option:selected').text();
-    var currentHTML = '<option value=\'0\'>Selecciona un municipio</option>';
+    var currentHTML = '<option value=0>Selecciona un municipio</option>';
 
     if (currentState != 'Selecciona un estado'){
         for(var county = 0; county < Object.keys(arrEstadosMunicipios[currentState]).length; county++){
-            currentHTML += '<option value=' + county + '>' + arrEstadosMunicipios[currentState][county] + '</option>';
+            currentHTML += '<option value=' + arrEstadosMunicipios[currentState][county] + '>' + arrEstadosMunicipios[currentState][county] + '</option>';
         }
     }
 
