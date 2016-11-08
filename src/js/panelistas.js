@@ -86,7 +86,7 @@ $(document).on('ready', function () {
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
 
-                    $('#allPanelistas').append(currentHTML);
+                    $('#all-panelistas').append(currentHTML);
                     currentHTML = '';
                 }
 
@@ -123,7 +123,7 @@ $(document).on('ready', function () {
     // Save Panelista
     // -----------------------------------------------------------------------------------------------
 
-    $('#savePanelista').on('click', function (event) {
+    $('#save-panelista').on('click', function (event) {
         var idPanelista = window.location.search.substring(1);
         idPanelista = idPanelista.substring(3);
 
@@ -143,7 +143,7 @@ $(document).on('ready', function () {
         var cp = $('#cp').val();
 
         if (firstName === '' || lastName === '' || email === '' || username === '' || (!editing && password === '') ||
-            fechaNacimiento === '' || educacion === '0' || calleNumero === '' || colonia === '' || municipio === '' ||
+            fechaNacimiento === '' || educacion === '0' || calleNumero === '' || colonia === '' || municipio === '0' ||
             estado === '0' || cp === '') {
                 $('#feedback').html('Favor de llenar todos los campos');
                 return;
@@ -199,7 +199,7 @@ $(document).on('ready', function () {
     // Edit Panelista
     // -----------------------------------------------------------------------------------------------
 
-    $('#allPanelistas').on('click', '.edit-button', function () {
+    $('#all-panelistas').on('click', '.edit-button', function () {
         var idPanelista = $(this).parent().attr('id');
 
         $('ul.tabs li').removeClass('current');
@@ -209,7 +209,7 @@ $(document).on('ready', function () {
         $('#tab-agregar-panelista').addClass('current');
 
         $('#header-title').text('Editar Panelista');
-        $('#savePanelista').text('Editar');
+        $('#save-panelista').text('Editar');
 
         $('#panelista-password').hide();
         $('#cancel-edit').show();
@@ -252,7 +252,7 @@ $(document).on('ready', function () {
     // Delete Panelista
     // -----------------------------------------------------------------------------------------------
 
-    $('#allPanelistas').on('click', '.deleteButton', function () {
+    $('#all-panelistas').on('click', '.deleteButton', function () {
         var self = this;
         var data = {
             action: 'DELETE_PANELISTA',
@@ -306,7 +306,6 @@ $(document).on('ready', function () {
     });
 
     $('#estado').on('change', function() {
-        $('#municipio').empty();
         fillMunicipios();
     });
 });
@@ -314,6 +313,8 @@ $(document).on('ready', function () {
 function fillMunicipios() {
     var currentState = $('#estado option:selected').text();
     var currentHTML = '<option value="0">Selecciona un municipio</option>';
+
+    $('#municipio').empty();
 
     if (currentState !== 'Selecciona un estado'){
         for(var county = 0; county < Object.keys(arrEstadosMunicipios[currentState]).length; county++) {

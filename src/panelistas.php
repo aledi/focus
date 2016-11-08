@@ -94,7 +94,7 @@
                 </div>
 
                 <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
-                <button type='submit' id='savePanelista'>Agregar</button>
+                <button type='submit' id='save-panelista'>Agregar</button>
                 <span id='feedback' class='feedback-text'></span>
             </div>
 
@@ -102,7 +102,7 @@
                 <h2>Panelistas Disponibles</h2>
                 <p>Buscar: <input id='filteringText' type='text' /></p>
                 <p class='alert'>*Los panelistas marcados en rojo no cuentan con información suficiente para responder encuestas</p>
-                <table id='allPanelistas'></table>
+                <table id='all-panelistas'></table>
                 <div id='feedback'></div>
             </div>
         </div>
