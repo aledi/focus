@@ -201,6 +201,27 @@ $(document).on('ready', function () {
 
     setTimeout(function (event) {
         getEncuestas('reportes');
+
+        $.ajax({
+            type: 'POST',
+            url: '../api/controller.php',
+            data: {'action': 'GET_MUNICIPIOS'},
+            dataType: 'json',
+            success: function (response) {
+                arrEstadosMunicipios = response.estados;
+                var currentHTML = '<option value="0">Selecciona un estado</option>';
+
+                for (var estado in arrEstadosMunicipios) {
+                    currentHTML += '<option value="' + stateShortName(estado) + '">' + estado + '</option>';
+                }
+
+                $('#estado-select').append(currentHTML);
+            },
+            error: function (error) {
+                $('#feedback').html('Error cargando los municipios');
+            }
+        });
+
     }, 500);
 
     $('#preguntas-select').hide();

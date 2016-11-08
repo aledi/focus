@@ -46,38 +46,6 @@
                     <option value='1'>Femenino</option>
                 </select>
                 <select id='estado-select' class='encuestas-select'>
-                    <option value='0'>Selecciona un estado</option>
-                    <option value='AGS'>Aguascalientes</option>
-                    <option value='BC'>Baja California</option>
-                    <option value='BCS'>Baja California Sur</option>
-                    <option value='CAMP'>Campeche</option>
-                    <option value='COAH'>Coahuila de Zaragoza</option>
-                    <option value='COL'>Colima</option>
-                    <option value='CHIS'>Chiapas</option>
-                    <option value='CDMX'>Ciudad de México</option>
-                    <option value='DGO'>Durango</option>
-                    <option value='GTO'>Guanajuato</option>
-                    <option value='GRO'>Guerrero</option>
-                    <option value='HGO'>Hidalgo</option>
-                    <option value='JAL'>Jalisco</option>
-                    <option value='EDOMEX'>Estado de México</option>
-                    <option value='MICH'>Michoacán de Ocampo</option>
-                    <option value='MOR'>Morelos</option>
-                    <option value='NAY'>Nayarit</option>
-                    <option value='NL'>Nuevo León</option>
-                    <option value='OAX'>Oaxaca</option>
-                    <option value='PUE'>Puebla</option>
-                    <option value='QRO'>Querétaro</option>
-                    <option value='QROO'>Quintana Roo</option>
-                    <option value='SLP'>San Luis Potosí</option>
-                    <option value='SIN'>Sinaloa</option>
-                    <option value='SON'>Sonora</option>
-                    <option value='TAB'>Tabasco</option>
-                    <option value='TAM'>Tamaulipas</option>
-                    <option value='TLAX'>Tlaxcala</option>
-                    <option value='VER'>Veracruz de Ignacio de la Llave</option>
-                    <option value='YUC'>Yucatán</option>
-                    <option value='ZAC'>Zacatecas</option>
                 </select>
                 <select id='educacion-select' class='encuestas-select'>
                     <option value='0'>Selecciona un nivel de educación</option>
