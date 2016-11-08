@@ -107,7 +107,7 @@ $(document).on('ready', function () {
                 var currentHTML = '<option value="0">Selecciona un estado</option>';
 
                 for (var estado in arrEstadosMunicipios) {
-                    currentHTML += '<option value=' + stateShortName(estado) + '>' + estado + '</option>';
+                    currentHTML += '<option value="' + stateShortName(estado) + '">' + estado + '</option>';
                 }
 
                 $('#estado').append(currentHTML);
