@@ -53,6 +53,9 @@ switch ($_POST['action']) {
     case 'GET_RECURSOS':
         getRecords('RESOURCES');
         break;
+    case 'GET_MUNICIPIOS':
+        echo json_encode(getMunicipiosFromFile(), JSON_UNESCAPED_UNICODE);
+        break;
     case 'SET_PANELISTAS_PANEL':
         setPanelistasPanel();
         break;
@@ -149,7 +152,7 @@ function signinToDatabase ($tipo) {
     if ($tipo === 0) {
         $signinResult = validateWebCredentials($_POST['username'], $_POST['password']);
 
-        if($signinResult['status'] === "SUCCESS"){
+        if($signinResult['status'] === 'SUCCESS'){
             startSession($signinResult['id'], $signinResult['tipo'], $signinResult['username'], $signinResult['email'], $signinResult['nombre']);
         }
 
@@ -389,6 +392,31 @@ function fetchFromFile ($file)  {
     fclose($myfile);
 }
 
+function getMunicipiosFromFile() {
+    $currentState = 'Aguascalientes';
+    $arrayEstados = array();
+    $arrayMunicipios = array();
+
+    $fileMunicipios = fopen('../src/elements/municipios.txt', 'r');
+
+    while (!feof($fileMunicipios)) {
+        $arrayLineRead = explode('_', fgets($fileMunicipios));
+        $arrayLineRead[1] = trim($arrayLineRead[1], "\n");
+
+        if ($currentState !== $arrayLineRead[0]) {
+            $arrayEstados[$currentState] = $arrayMunicipios;
+            $currentState = $arrayLineRead[0];
+
+            $arrayMunicipios = array();
+        }
+
+        $arrayMunicipios[] = $arrayLineRead[1];
+    }
+    
+    fclose($fileMunicipios);
+    return array('estados' => $arrayEstados);
+}
+
 function sendPushNotification ($message, $deviceToken) {
     $ctx = stream_context_create();
     stream_context_set_option($ctx, 'ssl', 'local_cert', 'FocusPushKey.pem');
@@ -405,7 +433,7 @@ function sendPushNotification ($message, $deviceToken) {
     );
 
     if (!$fp)
-      exit("Failed to connect: $err $errstr" . PHP_EOL);
+      exit('Failed to connect: $err $errstr' . PHP_EOL);
 
     // echo 'Connected to APNS' . PHP_EOL;
 
