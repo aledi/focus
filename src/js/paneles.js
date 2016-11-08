@@ -61,7 +61,7 @@ $(document).on('ready', function () {
                     var result = response.results[i];
 
                     currentHTML += '<tr id="'+ result.id +'">';
-                    currentHTML += '<td><a href="liga-panel-panelista.php?id=' + result.id +'">' + result.nombre +"</a></td>";
+                    currentHTML += '<td><a href="liga-panel-panelista.php?id=' + result.id + '&num=' + result.numParticipantes+'">' + result.nombre +"</a></td>";
                     currentHTML += "<td>" + readableDate(result.fechaInicio) + "</td>";
                     currentHTML += "<td>" + readableDate(result.fechaFin) + "</td>";
                     currentHTML += "<td>" + result.cliente + "</td>";
@@ -144,7 +144,7 @@ $(document).on('ready', function () {
             success: function (response) {
                 if (response.status === 'SUCCESS') {
                     alert('Panel ' + actionText + ' exitosamente.');
-                    location.replace((actionText == 'agregado') ? 'liga-panel-panelista.php?id=' + response.id : 'paneles.php');
+                    location.replace((actionText == 'agregado') ? 'liga-panel-panelista.php?id=' + response.id + '&num=' + response.numParticipantes : 'paneles.php');
                 } else if (response.status === 'RECORD_EXISTS') {
                     $('#feedback').html('El panel ya existe. Por favor, elija un nombre diferente.');
                 } else {

@@ -190,7 +190,7 @@ function registerPanel ($nombre, $descripcion, $fechaInicio, $fechaFin, $numPart
         if ($conn->query($sql) === TRUE) {
             $lastId = mysqli_insert_id($conn);
             $conn->close();
-            return array('status' => 'SUCCESS', 'id' => $lastId, 'numParticipantes' => $numParticipantes);
+            return array('status' => 'SUCCESS', 'id' => $lastId, 'numParticipantes' => (int)$numParticipantes);
         }
 
         $conn->close();
@@ -316,7 +316,7 @@ function fetchPaneles () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, cliente, creador FROM Panel ORDER BY fechaInicio DESC";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, numParticipantes, cliente, creador FROM Panel ORDER BY fechaInicio DESC";
         $result = $conn->query($sql);
 
         $response = array();
@@ -327,7 +327,7 @@ function fetchPaneles () {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
+            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'numParticipantes' => $row['numParticipantes'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
             $response[] = $client;
         }
 
