@@ -10,6 +10,7 @@
     <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
     <script src='js/reportes.js' type='text/javascript'></script>
     <script src='js/encuestas-shared.js' type='text/javascript'></script>
+    <script src='js/states.js' type='text/javascript'></script>
     <script src='js/date-functions.js' type='text/javascript'></script>
     <title> Focus - Reportes</title>
 </head>
@@ -50,7 +51,7 @@
                     <option value='BC'>Baja California</option>
                     <option value='BCS'>Baja California Sur</option>
                     <option value='CAMP'>Campeche</option>
-                    <option value='COAH'>Coahuila</option>
+                    <option value='COAH'>Coahuila de Zaragoza</option>
                     <option value='COL'>Colima</option>
                     <option value='CHIS'>Chiapas</option>
                     <option value='CDMX'>Ciudad de México</option>
@@ -60,7 +61,7 @@
                     <option value='HGO'>Hidalgo</option>
                     <option value='JAL'>Jalisco</option>
                     <option value='EDOMEX'>Estado de México</option>
-                    <option value='MICH'>Michoacán</option>
+                    <option value='MICH'>Michoacán de Ocampo</option>
                     <option value='MOR'>Morelos</option>
                     <option value='NAY'>Nayarit</option>
                     <option value='NL'>Nuevo León</option>
@@ -74,7 +75,7 @@
                     <option value='TAB'>Tabasco</option>
                     <option value='TAM'>Tamaulipas</option>
                     <option value='TLAX'>Tlaxcala</option>
-                    <option value='VER'>Veracruz</option>
+                    <option value='VER'>Veracruz de Ignacio de la Llave</option>
                     <option value='YUC'>Yucatan</option>
                     <option value='ZAC'>Zacatecas</option>
                 </select>

@@ -8,6 +8,7 @@
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
     <script src='js/jquery-1.12.3.js'></script>
     <script src='js/date-functions.js' type='text/javascript'></script>
+    <script src='js/states.js' type='text/javascript'></script>
     <script src='js/panelistas.js' type='text/javascript'></script>
     <title> Focus - Panelistas</title>
 </head>
@@ -78,13 +79,13 @@
                 <div class='input-wrapper'>
                     <label>Estado<span class='required-input'>*</span></label>
                     <select class='form-control' id='estado' name='estado'>
-                        
+
                     </select>
                 </div>
                 <div class='input-wrapper'>
                     <label>Municipio<span class='required-input'>*</span></label>
                     <select class='form-control' id='municipio' name='municipio'>
-                        <option value='0'>Selecciona un estado</option>
+                        <option value='0'>Selecciona un municipio</option>
                     </select>
                 </div>
                 <div class='input-wrapper'>

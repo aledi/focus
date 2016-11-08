@@ -1,5 +1,4 @@
 'use strict';
-var arrEstadosMunicipios = {};
 
 $(document).on('ready', function () {
     $('#panelistas-header-option').addClass('selected');
@@ -105,10 +104,10 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 arrEstadosMunicipios = response.estados;
-                var currentHTML = '<option value=\'0\'>Selecciona un estado</option>';
-                var estado;
-                for(estado in arrEstadosMunicipios){
-                    currentHTML += '<option value=' + stateAbreviations(estado) + '>' + estado + '</option>';
+                var currentHTML = '<option value="0">Selecciona un estado</option>';
+
+                for (var estado in arrEstadosMunicipios) {
+                    currentHTML += '<option value=' + stateShortName(estado) + '>' + estado + '</option>';
                 }
 
                 $('#estado').append(currentHTML);
@@ -242,7 +241,6 @@ $(document).on('ready', function () {
                 var myURL = window.location.href.split('?')[0];
                 myURL += '?id=' + result.id;
                 history.pushState({}, null, myURL);
-                
             },
             error: function (errorMsg) {
                 alert('Error editando panelista.');
@@ -307,128 +305,21 @@ $(document).on('ready', function () {
         }
     });
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Change municipios depending on state
-    ///////////////////////////////////////////////////////////////////////////////
-
     $('#estado').on('change', function() {
         $('#municipio').empty();
         fillMunicipios();
     });
 });
 
-
-function fillMunicipios(){
+function fillMunicipios() {
     var currentState = $('#estado option:selected').text();
-    var currentHTML = '<option value=0>Selecciona un municipio</option>';
+    var currentHTML = '<option value="0">Selecciona un municipio</option>';
 
-    if (currentState != 'Selecciona un estado'){
-        for(var county = 0; county < Object.keys(arrEstadosMunicipios[currentState]).length; county++){
-            currentHTML += '<option value=' + arrEstadosMunicipios[currentState][county] + '>' + arrEstadosMunicipios[currentState][county] + '</option>';
+    if (currentState !== 'Selecciona un estado'){
+        for(var county = 0; county < Object.keys(arrEstadosMunicipios[currentState]).length; county++) {
+            currentHTML += '<option value="' + arrEstadosMunicipios[currentState][county] + '">' + arrEstadosMunicipios[currentState][county] + '</option>';
         }
     }
 
     $('#municipio').append(currentHTML);
-}
-
-
-function stateAbreviations(state){
-    switch(state){
-        case 'Aguascalientes':
-            return 'AGS';
-            break;
-        case 'Baja California':
-            return 'BC';
-            break;
-        case 'Baja California Sur':
-            return 'BCS';
-            break;
-        case 'Campeche':
-            return 'CAMP';
-            break; 
-        case 'Coahuila de Zaragoza':
-            return 'COAH';
-            break; 
-        case 'Colima':
-            return 'COL';
-            break;
-        case 'Chiapas':
-            return 'CHIS';
-            break;
-        case 'Chihuahua':
-            return 'CHI';//Start
-            break;
-        case 'Cuidad de México':
-            return 'CDMX';
-            break; 
-        case 'Durango':
-            return 'DGO';
-            break; 
-        case 'Guanajuato':
-            return 'GTO';
-            break; 
-        case 'Guerrero':
-            return 'GRO';
-            break; 
-        case 'Hidalgo':
-            return 'HGO';
-            break;
-        case 'Jalisco':
-            return 'JAL';
-            break; 
-        case 'México':
-            return 'EDOMEX';
-            break;
-        case 'Michoacán de Ocampo':
-            return 'MICH';
-            break;
-        case 'Morelos':
-            return 'MOR';
-            break;
-        case 'Nayarit':
-            return 'NAY';
-            break;
-        case 'Nuevo León':
-            return 'NL';
-            break;
-        case 'Oaxaca':
-            return 'OAX';
-            break;
-        case 'Puebla':
-            return 'PUE';
-            break;
-        case 'Querétaro':
-            return 'QRO';
-            break;
-        case 'Quintana Roo':
-            return 'QROO';
-            break;
-        case 'San Luis Potosí':
-            return 'SLP';
-            break;
-        case 'Sinaloa':
-            return 'SIN';
-            break;
-        case 'Sonora':
-            return 'SON';
-            break;
-        case 'Tabasco':
-            return 'TAB';
-            break;
-        case 'Tamaulipas':
-            return 'TAM';
-            break;
-        case 'Tlaxcala':
-            return 'TLAX';
-            break;
-        case 'Veracruz de Ignacio de la Llave':
-            return 'VER';
-            break;
-        case 'Yucatán':
-            return 'YUC';
-            break;
-        case 'Zacatecas':
-            return 'ZAC';
-            break;
-    }
 }

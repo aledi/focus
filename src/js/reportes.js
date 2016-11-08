@@ -1,37 +1,5 @@
 'use strict';
 
-var stateObject = {
-    AGS: 'Aguascalientes',
-    BC: 'Baja California',
-    BCS: 'Baja California Sur',
-    CAMP: 'Campeche',
-    COAH: 'Coahuila',
-    COL: 'Colima',
-    CHIS: 'Chiapas',
-    CDMX: 'Ciudad de México',
-    DGO: 'Durango',
-    GTO: 'Guanajuato',
-    HGO: 'Hidalgo',
-    JAL: 'Jalisco',
-    EDOMEX: 'Estado de México',
-    MICH: 'Michoacán',
-    MOR: 'Morelos',
-    NAY: 'Nayarit',
-    NL: 'Nuevo León',
-    OAX: 'Oaxaca',
-    PUE: 'Puebla',
-    QRO: 'Querétaro',
-    QROO: 'Quintana Roo',
-    SLP: 'San Luis Potosí',
-    SIN: 'Sinaloa',
-    TAB: 'Tabasco',
-    TAM: 'Tamaulipas',
-    TLAX: 'Tlaxcala',
-    VER: 'Veracruz',
-    YUC: 'Yucatan',
-    ZAC: 'Zacatecas'
-}
-
 var educationObject = {
     1: 'Primaria',
     2: 'Secundaria',
@@ -204,7 +172,7 @@ function convertAgeRange (edad) {
 
 function convertState (estado) {
     for (var x = 0; x < estado.length; x++) {
-        estado[x] = stateObject[estado[x]];
+        estado[x] = stateName[estado[x]];
     }
 
     return estado;
@@ -466,7 +434,7 @@ $(document).on('ready', function () {
                 } else if (response.opciones.length < 4) {
                     pieChart(getObjectProperties(response.opciones), response.votos, 2, '');
                 } else {
-                    columnChart(getObjectProperties(response.opciones), response.votos, response.porcentajes, 2, '');
+                    columnChart(getObjectProperties(response.opciones), response.porcentajes, 2, '');
                 }
 
                 return;
