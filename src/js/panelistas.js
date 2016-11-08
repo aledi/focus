@@ -346,7 +346,7 @@ function stateAbreviations(state){
         case 'Campeche':
             return 'CAMP';
             break; 
-        case 'Coahuila':
+        case 'Coahuila de Zaragoza':
             return 'COAH';
             break; 
         case 'Colima':
@@ -379,7 +379,7 @@ function stateAbreviations(state){
         case 'México':
             return 'EDOMEX';
             break;
-        case 'Michoacán':
+        case 'Michoacán de Ocampo':
             return 'MICH';
             break;
         case 'Morelos':
@@ -421,7 +421,7 @@ function stateAbreviations(state){
         case 'Tlaxcala':
             return 'TLAX';
             break;
-        case 'Veracruz':
+        case 'Veracruz de Ignacio de la Llave':
             return 'VER';
             break;
         case 'Yucatán':
