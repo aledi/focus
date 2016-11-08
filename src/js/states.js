@@ -30,7 +30,7 @@ var stateName = {
     'TAM': 'Tamaulipas',
     'TLAX': 'Tlaxcala',
     'VER': 'Veracruz de Ignacio de la Llave',
-    'YUC': 'Yucatan',
+    'YUC': 'Yucatán',
     'ZAC': 'Zacatecas'
 }
 

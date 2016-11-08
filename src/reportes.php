@@ -76,7 +76,7 @@
                     <option value='TAM'>Tamaulipas</option>
                     <option value='TLAX'>Tlaxcala</option>
                     <option value='VER'>Veracruz de Ignacio de la Llave</option>
-                    <option value='YUC'>Yucatan</option>
+                    <option value='YUC'>Yucatán</option>
                     <option value='ZAC'>Zacatecas</option>
                 </select>
                 <select id='educacion-select' class='encuestas-select'>
