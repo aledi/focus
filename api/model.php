@@ -171,7 +171,7 @@ function registerPanelista ($username, $password, $nombre, $apellidos, $email, $
     return array('status' => 'DATABASE_ERROR');
 }
 
-function registerPanel ($nombre, $descripcion, $fechaInicio, $fechaFin, $cliente, $creador) {
+function registerPanel ($nombre, $descripcion, $fechaInicio, $fechaFin, $numParticipantes, $cliente, $creador) {
     $conn = connect();
 
     if ($conn != null) {
@@ -185,12 +185,12 @@ function registerPanel ($nombre, $descripcion, $fechaInicio, $fechaFin, $cliente
             return array('status' => 'RECORD_EXISTS', 'id' => (int)$row['id'], 'nombre' => $row['nombre']);
         }
 
-        $sql = "INSERT INTO Panel (nombre, descripcion, fechaInicio, fechaFin, cliente, creador) VALUES ('$nombre', '$descripcion', '$fechaInicio', '$fechaFin', $cliente, '$creador')";
+        $sql = "INSERT INTO Panel (nombre, descripcion, fechaInicio, fechaFin, numParticipantes, cliente, creador) VALUES ('$nombre', '$descripcion', '$fechaInicio', '$fechaFin', '$numParticipantes', $cliente, '$creador')";
 
         if ($conn->query($sql) === TRUE) {
             $lastId = mysqli_insert_id($conn);
             $conn->close();
-            return array('status' => 'SUCCESS', 'id' => $lastId);
+            return array('status' => 'SUCCESS', 'id' => $lastId, 'numParticipantes' => $numParticipantes);
         }
 
         $conn->close();
@@ -875,7 +875,7 @@ function updateUser ($id, $username, $nombre, $apellidos, $email) {
     return array('status' => 'DATABASE_ERROR');
 }
 
-function updatePanel ($id, $nombre, $descripcion, $fechaInicio, $fechaFin, $cliente) {
+function updatePanel ($id, $nombre, $descripcion, $fechaInicio, $fechaFin, $numParticipantes, $cliente) {
     $conn = connect();
 
     if ($conn != null) {
@@ -891,7 +891,7 @@ function updatePanel ($id, $nombre, $descripcion, $fechaInicio, $fechaFin, $clie
             }
         }
 
-        $sql = "UPDATE Panel SET nombre = '$nombre', descripcion = '$descripcion', fechaInicio = '$fechaInicio', fechaFin = '$fechaFin', cliente = '$cliente' WHERE id = '$id'";
+        $sql = "UPDATE Panel SET nombre = '$nombre', descripcion = '$descripcion', fechaInicio = '$fechaInicio', fechaFin = '$fechaFin', numParticipantes = '$numParticipantes', cliente = '$cliente' WHERE id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
             $conn->close();
