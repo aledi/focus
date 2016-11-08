@@ -25,7 +25,12 @@
 
                 <div class='input-wrapper'>
                     <label>Nombre del Panel<span class='required-input'>*</span></label>
-                    <input id='panelName' type='text' />
+                    <input id='panel-name' type='text' />
+                </div>
+
+                <div class='input-wrapper'>
+                    <label>Número de Participantes<span class='required-input'>*</span></label>
+                    <input id='participantes' type='text' />
                 </div>
 
                 <div class='input-wrapper'>
@@ -60,7 +65,7 @@
             <div id='tab-view-paneles' class='tab-content'>
                 <h2>Paneles Disponibles</h2>
 
-                <table id='allPanels'></table>
+                <table id='all-panels'></table>
             </div>
         </div>
     </section>
