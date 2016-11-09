@@ -61,7 +61,7 @@ $(document).on('ready', function () {
                     var result = response.results[i];
 
                     currentHTML += '<tr id="'+ result.id +'">';
-                    currentHTML += '<td><a href="liga-panel-panelista.php?id=' + result.id +'">' + result.nombre +"</a></td>";
+                    currentHTML += '<td><a href="liga-panel-panelista.php?id=' + result.id + '&num=' + result.numParticipantes+'">' + result.nombre +"</a></td>";
                     currentHTML += "<td>" + readableDate(result.fechaInicio) + "</td>";
                     currentHTML += "<td>" + readableDate(result.fechaFin) + "</td>";
                     currentHTML += "<td>" + result.cliente + "</td>";
@@ -69,7 +69,7 @@ $(document).on('ready', function () {
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += "</tr>";
 
-                    $('#allPanels').append(currentHTML);
+                    $('#all-panels').append(currentHTML);
                     currentHTML = '';
                 }
 
@@ -91,7 +91,8 @@ $(document).on('ready', function () {
         var idPanel = window.location.search.substring(1);
         idPanel = idPanel.substring(3);
 
-        var nombre = $('#panelName').val();
+        var nombre = $('#panel-name').val();
+        var numParticipantes = parseInt($('#participantes').val(), 10);
         var descripcion = $('#descripcion').val();
         var fechaInicio = getCompleteDate(1);
         var fechaFin = getCompleteDate(2);
@@ -99,6 +100,11 @@ $(document).on('ready', function () {
 
         if (!nombre || !nombre.trim()) {
             $('#feedback').html('Favor de elegir un nombre');
+            return;
+        }
+
+        if (!numParticipantes || numParticipantes === 0) {
+            $('#feedback').html('El número de participantes debe ser mayor a 0');
             return;
         }
 
@@ -118,6 +124,7 @@ $(document).on('ready', function () {
         var data = {
             action: 'ALTA_PANEL',
             nombre: nombre,
+            numParticipantes: numParticipantes,
             descripcion: descripcion,
             fechaInicio: fechaInicio,
             fechaFin: fechaFin,
@@ -137,7 +144,7 @@ $(document).on('ready', function () {
             success: function (response) {
                 if (response.status === 'SUCCESS') {
                     alert('Panel ' + actionText + ' exitosamente.');
-                    location.replace((actionText == 'agregado') ? 'liga-panel-panelista.php?id=' + response.id : 'paneles.php');
+                    location.replace((actionText == 'agregado') ? 'liga-panel-panelista.php?id=' + response.id + '&num=' + response.numParticipantes : 'paneles.php');
                 } else if (response.status === 'RECORD_EXISTS') {
                     $('#feedback').html('El panel ya existe. Por favor, elija un nombre diferente.');
                 } else {
@@ -154,7 +161,7 @@ $(document).on('ready', function () {
     // Edit Panel
     // -----------------------------------------------------------------------------------------------
 
-    $('#allPanels').on('click', '.edit-button', function () {
+    $('#all-panels').on('click', '.edit-button', function () {
         var idPanel = $(this).parent().attr('id');
 
         $('ul.tabs li').removeClass('current');
@@ -178,7 +185,8 @@ $(document).on('ready', function () {
             success: function (response) {
                 var result = response.result;
 
-                $('#panelName').val(result.nombre);
+                $('#panel-name').val(result.nombre);
+                $('#participantes').val(result.numParticipantes);
                 getDatefromString(result.fechaInicio, 0);
                 getDatefromString(result.fechaFin, 1);
                 $('#select-clientes').val(result.cliente);
@@ -197,7 +205,7 @@ $(document).on('ready', function () {
     // Delete Panel
     // -----------------------------------------------------------------------------------------------
 
-    $('#allPanels').on('click', '.deleteButton', function () {
+    $('#all-panels').on('click', '.deleteButton', function () {
         var self = this;
         var data = {
             'action': 'DELETE_PANEL',
@@ -244,4 +252,15 @@ $(document).on('ready', function () {
     $('#mes-fin, #anio-fin').on('change', function () {
         changeSelect('Fin');
     });
+
+    // -----------------------------------------------------------------------------------------------
+    // Helper Methods
+    // -----------------------------------------------------------------------------------------------
+
+    $('#participantes').keypress(function (event) {
+        if (!event.metaKey && event.charCode !== 13 && (event.charCode < 48 || event.charCode > 57)) {
+            event.preventDefault();
+        }
+    });
+
 });

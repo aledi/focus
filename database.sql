@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 05-11-2016 a las 20:05:32
+-- Tiempo de generación: 08-11-2016 a las 02:59:27
 -- Versión del servidor: 5.5.42
 -- Versión de PHP: 7.0.0
 
@@ -50,6 +50,7 @@ CREATE TABLE `Panel` (
   `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
   `fechaInicio` date NOT NULL,
   `fechaFin` date NOT NULL,
+  `numParticipantes` smallint(6) NOT NULL,
   `cliente` int(11) NOT NULL,
   `creador` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -58,14 +59,14 @@ CREATE TABLE `Panel` (
 -- Volcado de datos para la tabla `Panel`
 --
 
-INSERT INTO `Panel` (`id`, `nombre`, `descripcion`, `fechaInicio`, `fechaFin`, `cliente`, `creador`) VALUES
-(1, 'Margarita Zavala', '', '2016-09-20', '2016-10-10', 2, 1),
-(2, 'Votaciones 2018', '', '2016-09-24', '2016-10-01', 2, 1),
-(3, 'Bronco', '', '2016-09-24', '2016-10-01', 3, 1),
-(4, 'as', '', '2016-01-01', '2020-01-01', 2, 1),
-(5, 'Pollo Loco', '', '2016-09-28', '2016-10-01', 4, 1),
-(6, 'Prueba', '', '2016-01-01', '2018-01-01', 5, 1),
-(7, 'PPEPEPPEPE', '', '2016-01-01', '2018-01-01', 2, 1);
+INSERT INTO `Panel` (`id`, `nombre`, `descripcion`, `fechaInicio`, `fechaFin`, `numParticipantes`, `cliente`, `creador`) VALUES
+(1, 'Margarita Zavala', '', '2016-09-20', '2016-10-10', 0, 2, 1),
+(2, 'Votaciones 2018', '', '2016-09-24', '2016-10-01', 0, 2, 1),
+(3, 'Bronco', '', '2016-09-24', '2016-10-01', 0, 3, 1),
+(4, 'as', '', '2016-01-01', '2020-01-01', 0, 2, 1),
+(5, 'Pollo Loco', '', '2016-09-28', '2016-10-01', 0, 4, 1),
+(6, 'Prueba', '', '2016-01-01', '2018-01-01', 0, 5, 1),
+(7, 'PPEPEPPEPE', '', '2016-01-01', '2018-01-01', 0, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -91,7 +92,7 @@ CREATE TABLE `Panelista` (
   `fechaRegistro` date DEFAULT NULL,
   `deviceToken` text COLLATE utf8_spanish_ci NOT NULL,
   `deviceType` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=460 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=461 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Panelista`
@@ -550,7 +551,8 @@ INSERT INTO `Panelista` (`id`, `username`, `password`, `nombre`, `apellidos`, `e
 (456, 'marcela', 'rios', 'Marcela', 'Rios', 'jdfi@hotmail.com', 1, '1983-07-01', 4, 'Independencia', 'Centro', 'Monterrey', 'NL', 66456, NULL, '', 0),
 (457, 'Felipe Flores', 'w2tqzn2f', 'Felipe', 'Flores', 'felipe@comunicacionpolitica.com.mx', 0, '1975-08-30', 5, 'Rosellino 815', 'Contry La Silla', 'Guadalupe', 'NL', 67173, NULL, '', 0),
 (458, 'Kevinzapata', 'politicas', 'kevin', 'Zapata Celestino', 'kevinzapata2012@gmail.com', 0, '1990-09-28', 5, 'Gustavo Adolfo Becquer 512', 'Anahuac', 'San Nicolas De Los Garza', 'NL', 66450, NULL, '', 0),
-(459, 'anglara', '67176ang', 'Alberto', 'Ang', 'anglara@hotmail.com', 0, '1996-07-16', 4, 'maple 2864', 'Bosques del Contry', 'Guadalupe', 'NL', 67176, NULL, '6ad9314e67373fe738e2f06258b2d32e9b8581d713f68ccc52b49332cd8545cd', 1);
+(459, 'anglara', '67176ang', 'Alberto', 'Ang', 'anglara@hotmail.com', 0, '1996-07-16', 4, 'maple 2864', 'Bosques del Contry', 'Guadalupe', 'NL', 67176, NULL, '6ad9314e67373fe738e2f06258b2d32e9b8581d713f68ccc52b49332cd8545cd', 1),
+(460, 'prueba2', 'prueba2', 'prueba2', 'prueba2', 'prueba2', 0, '1998-01-01', 3, 'prueba', 'prueba', 'prueba', 'AGS', 10, '2016-11-05', '', 0);
 
 -- --------------------------------------------------------
 
@@ -974,7 +976,7 @@ ALTER TABLE `Panel`
 -- AUTO_INCREMENT de la tabla `Panelista`
 --
 ALTER TABLE `Panelista`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=460;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=461;
 --
 -- AUTO_INCREMENT de la tabla `PanelistaEnPanel`
 --

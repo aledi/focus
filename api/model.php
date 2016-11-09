@@ -171,7 +171,7 @@ function registerPanelista ($username, $password, $nombre, $apellidos, $email, $
     return array('status' => 'DATABASE_ERROR');
 }
 
-function registerPanel ($nombre, $descripcion, $fechaInicio, $fechaFin, $cliente, $creador) {
+function registerPanel ($nombre, $descripcion, $fechaInicio, $fechaFin, $numParticipantes, $cliente, $creador) {
     $conn = connect();
 
     if ($conn != null) {
@@ -185,12 +185,12 @@ function registerPanel ($nombre, $descripcion, $fechaInicio, $fechaFin, $cliente
             return array('status' => 'RECORD_EXISTS', 'id' => (int)$row['id'], 'nombre' => $row['nombre']);
         }
 
-        $sql = "INSERT INTO Panel (nombre, descripcion, fechaInicio, fechaFin, cliente, creador) VALUES ('$nombre', '$descripcion', '$fechaInicio', '$fechaFin', $cliente, '$creador')";
+        $sql = "INSERT INTO Panel (nombre, descripcion, fechaInicio, fechaFin, numParticipantes, cliente, creador) VALUES ('$nombre', '$descripcion', '$fechaInicio', '$fechaFin', '$numParticipantes', $cliente, '$creador')";
 
         if ($conn->query($sql) === TRUE) {
             $lastId = mysqli_insert_id($conn);
             $conn->close();
-            return array('status' => 'SUCCESS', 'id' => $lastId);
+            return array('status' => 'SUCCESS', 'id' => $lastId, 'numParticipantes' => (int)$numParticipantes);
         }
 
         $conn->close();
@@ -316,7 +316,7 @@ function fetchPaneles () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, cliente, creador FROM Panel ORDER BY fechaInicio DESC";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, numParticipantes, cliente, creador FROM Panel ORDER BY fechaInicio DESC";
         $result = $conn->query($sql);
 
         $response = array();
@@ -327,7 +327,7 @@ function fetchPaneles () {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
+            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'numParticipantes' => $row['numParticipantes'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
             $response[] = $client;
         }
 
@@ -342,7 +342,7 @@ function fetchPanel ($id) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, descripcion, fechaInicio, fechaFin, cliente, creador FROM Panel WHERE id = '$id'";
+        $sql = "SELECT id, nombre, descripcion, fechaInicio, fechaFin, numParticipantes, cliente, creador FROM Panel WHERE id = '$id'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -352,7 +352,7 @@ function fetchPanel ($id) {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'descripcion' => $row['descripcion'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => (int)$row2['id'], 'creador' => (int)$row['creador']);
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'descripcion' => $row['descripcion'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'numParticipantes' => (int)$row['numParticipantes'], 'cliente' => (int)$row2['id'], 'creador' => (int)$row['creador']);
         }
 
         $conn->close();
@@ -875,7 +875,7 @@ function updateUser ($id, $username, $nombre, $apellidos, $email) {
     return array('status' => 'DATABASE_ERROR');
 }
 
-function updatePanel ($id, $nombre, $descripcion, $fechaInicio, $fechaFin, $cliente) {
+function updatePanel ($id, $nombre, $descripcion, $fechaInicio, $fechaFin, $numParticipantes, $cliente) {
     $conn = connect();
 
     if ($conn != null) {
@@ -891,7 +891,7 @@ function updatePanel ($id, $nombre, $descripcion, $fechaInicio, $fechaFin, $clie
             }
         }
 
-        $sql = "UPDATE Panel SET nombre = '$nombre', descripcion = '$descripcion', fechaInicio = '$fechaInicio', fechaFin = '$fechaFin', cliente = '$cliente' WHERE id = '$id'";
+        $sql = "UPDATE Panel SET nombre = '$nombre', descripcion = '$descripcion', fechaInicio = '$fechaInicio', fechaFin = '$fechaFin', numParticipantes = '$numParticipantes', cliente = '$cliente' WHERE id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
             $conn->close();
