@@ -70,7 +70,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 if (response.results.length === 0) {
-                    $('#available-paneles-feedback').html('Por el momento no hay paneles disponibles');
+                    $('#available-paneles-feedback').html('No hay paneles disponibles');
                     return;
                 }
 

@@ -97,7 +97,6 @@ function validatePanelistaCredentials ($username, $password) {
 
             $conn->close();
             return array('status' => 'SUCCESS', 'id' => (int)$row0['id'], 'username' => $row0['username'], 'genero' => (int)$row0['genero'], 'email' => $row0['email'], 'nombre' => $row0['nombre']." ".$row0['apellidos'], 'paneles' => $paneles);
-
         }
 
         $conn->close();
@@ -282,8 +281,8 @@ function fetchUsers ($tipo) {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $client = array('id' => (int)$row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos']);
-            $response[] = $client;
+            $user = array('id' => (int)$row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos']);
+            $response[] = $user;
         }
 
         $conn->close();
@@ -327,8 +326,8 @@ function fetchPaneles () {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'numParticipantes' => $row['numParticipantes'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
-            $response[] = $client;
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'numParticipantes' => $row['numParticipantes'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
+            $response[] = $panel;
         }
 
         $conn->close();
@@ -353,8 +352,8 @@ function fetchPanelesForCliente ($client) {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'numParticipantes' => $row['numParticipantes'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
-            $response[] = $client;
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'numParticipantes' => $row['numParticipantes'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
+            $response[] = $panel;
         }
 
         $conn->close();
@@ -411,7 +410,8 @@ function fetchPanelista ($id) {
         $sql = "SELECT id, username, nombre, apellidos, email, genero, fechaNacimiento, educacion, calleNumero, colonia, municipio, estado, cp FROM Panelista WHERE id = '$id'";
         $result = $conn->query($sql);
 
-        while ($row = $result->fetch_assoc()) {
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
             $panelista = array('id' => (int)$row['id'], 'username' => $row['username'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos'], 'email' => $row['email'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'fechaNacimiento' => $row['fechaNacimiento'], 'educacion' => (int)$row['educacion'], 'calleNumero' => $row['calleNumero'], 'colonia' => $row['colonia'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cp' => (int)$row['cp']);
         }
 
@@ -437,8 +437,8 @@ function fetchEncuestas () {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
-            $response[] = $panel;
+            $encuesta = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
+            $response[] = $encuesta;
         }
 
         $conn->close();
@@ -463,8 +463,8 @@ function fetchEncuestasForPanel ($panel) {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
-            $response[] = $panel;
+            $encuesta = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
+            $response[] = $encuesta;
         }
 
         $conn->close();
@@ -489,8 +489,8 @@ function fetchEncuestasForCliente ($cliente) {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
-            $response[] = $panel;
+            $encuesta = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
+            $response[] = $encuesta;
         }
 
         $conn->close();
@@ -514,11 +514,11 @@ function fetchEncuesta ($id) {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['id']);
+            $encuesta = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['id']);
         }
 
         $conn->close();
-        return array('result' => $panelista);
+        return array('result' => $encuesta);
     }
 
     return array('status' => 'DATABASE_ERROR');

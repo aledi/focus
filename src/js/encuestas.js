@@ -42,7 +42,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 if (response.results.length === 0) {
-                    $('#selects-feedback').html('Por el momento no hay encuestas disponibles');
+                    $('#selects-feedback').html('No hay encuestas disponibles');
                     return;
                 }
 
