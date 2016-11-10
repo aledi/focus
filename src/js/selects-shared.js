@@ -7,6 +7,11 @@ function fillClientesSelect () {
         data: {'action': 'GET_CLIENTES'},
         dataType: 'json',
         success: function (response) {
+            if (response.results.length === 0) {
+                $('#selects-feedback').html('No hay clientes disponibles');
+                return;
+            }
+
             var currentHTML = '<option value="0"> Selecciona un cliente </option>';
 
             for (var i = 0; i < response.results.length; i++) {
@@ -18,20 +23,16 @@ function fillClientesSelect () {
             }
 
             $('#clientes-filter-select').append(currentHTML);
+            $('#clientes-filter-select').show();
         },
         error: function (error) {
-            $('#feedback').html('Error cargando los clientes');
+            $('#selects-feedback').html('Error cargando los clientes');
         }
     });
 }
 
-function fillPanelesSelect (cliente) {
-    var clienteId = parseInt(cliente, 10);
+function fillPanelesSelect (clienteId) {
     $('#paneles-filter-select').empty();
-
-    if (clienteId === 0) {
-        return;
-    }
 
     $.ajax({
         type: 'POST',
@@ -42,6 +43,11 @@ function fillPanelesSelect (cliente) {
         },
         dataType: 'json',
         success: function (response) {
+            if (response.results.length === 0) {
+                $('#selects-feedback').html('No hay paneles disponibles');
+                return;
+            }
+
             var currentHTML = '<option value="0"> Selecciona un panel </option>';
 
             for (var i = 0; i < response.results.length; i++) {
@@ -53,20 +59,16 @@ function fillPanelesSelect (cliente) {
             }
 
             $('#paneles-filter-select').append(currentHTML);
+            $('#paneles-filter-select').show();
         },
         error: function (error) {
-            $('#feedback').html('Error cargando los paneles');
+            $('#selects-feedback').html('Error cargando los paneles');
         }
     });
 }
 
-function fillEncuestasSelect (panel) {
-    var panelId = parseInt(panel, 10);
+function fillEncuestasSelect (panelId) {
     $('#encuestas-filter-select').empty();
-
-    if (panelId === 0) {
-        return;
-    }
 
     $.ajax({
         type: 'POST',
@@ -77,6 +79,11 @@ function fillEncuestasSelect (panel) {
         },
         dataType: 'json',
         success: function (response) {
+            if (response.results.length === 0) {
+                $('#selects-feedback').html('No hay encuestas disponibles');
+                return;
+            }
+
             var currentHTML = '<option value="0"> Selecciona una encuesta </option>';
 
             for (var i = 0; i < response.results.length; i++) {
@@ -87,10 +94,12 @@ function fillEncuestasSelect (panel) {
                 currentHTML += '</option>';
             }
 
-            $('#encuestas-filter-select').append(currentHTML);
+            $('#encuestas-filter-select').append(currentHTML)
+            $('#encuestas-filter-select').show();
         },
         error: function (error) {
-            $('#feedback').html('Error cargando las encuestas');
+            $('#selects-feedback').html('Error cargando las encuestas');
+            return false;
         }
     });
 }

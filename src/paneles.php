@@ -55,6 +55,7 @@
                 <div class='input-wrapper'>
                     <label>Seleccionar Cliente<span class='required-input'>*</span></label>
                     <select id='select-clientes'></select>
+                    <span id='available-clientes-feedback' class='feedback-text'></span>
                 </div>
 
                 <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
@@ -66,7 +67,6 @@
                 <h2>Paneles Disponibles</h2>
 
                 <div class='input-wrapper'>
-                    <label>Elige un Cliente</label>
                     <select id='clientes-filter-select'></select>
                 </div>
 

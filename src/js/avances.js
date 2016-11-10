@@ -2,29 +2,42 @@
 
 $(document).on('ready', function () {
     $('#avances-header-option').addClass('selected');
+    $('#clientes-filter-select').hide();
+    $('#paneles-filter-select').hide();
+    $('#encuestas-filter-select').hide();
+
     fillClientesSelect();
 
     $('#clientes-filter-select').on('change', function() {
-        $('#encuestas-filter-select').html('<option value="0">Selecciona una encuesta</option>');
+        var value = parseInt($('#clientes-filter-select').val(), 10);
+        $('#paneles-filter-select').hide();
+        $('#encuestas-filter-select').hide();
         $('#avances-table').empty();
         $('#avance-summary').empty();
+        $('#selects-feedback').html('');
 
-        fillPanelesSelect($('#clientes-filter-select').val());
+        if (value > 0) {
+            fillPanelesSelect(value);
+        }
     });
 
     $('#paneles-filter-select').on('change', function() {
+        var value = parseInt($('#paneles-filter-select').val(), 10);
+        $('#encuestas-filter-select').hide();
         $('#avances-table').empty();
         $('#avance-summary').empty();
+        $('#selects-feedback').html('');
 
-        fillEncuestasSelect($('#paneles-filter-select').val());
+        if (value > 0) {
+            fillEncuestasSelect(value);
+        }
     });
 
     $('#encuestas-filter-select').on('change', function () {
         var idEncuesta = parseInt($(this).val(), 10);
-        $('#avance-percentage').empty();
-        $('#avance-panelistas').empty();
         $('#avances-table').empty();
         $('#avance-summary').empty();
+        $('#selects-feedback').html('');
 
         if (idEncuesta < 1) {
             return;
@@ -81,7 +94,7 @@ $(document).on('ready', function () {
                 $('#avances-table').append(currentHTML);
             },
             error: function (errorMsg) {
-                alert('Error obteniendo panelistas.');
+                $('#selects-feedback').html('Error obteniendo panelistas');
             }
         });
     });

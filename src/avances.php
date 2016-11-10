@@ -20,25 +20,18 @@
             <h2 id='header-title'>Avances</h2>
 
             <div class='input-wrapper'>
-                <label>Elige un Cliente</label>
                 <select id='clientes-filter-select'></select>
             </div>
 
             <div class='input-wrapper'>
-                <label>Elige un Panel</label>
-                <select id='paneles-filter-select'>
-                    <option value='0'> Selecciona un panel </option>
-                </select>
+                <select id='paneles-filter-select'></select>
             </div>
 
             <div class='input-wrapper'>
-                <label>Elige una Encuesta</label>
-                <select id='encuestas-filter-select' class='encuestas-select'>
-                    <option value='0'>Selecciona una encuesta</option>
-                </select>
+                <select id='encuestas-filter-select' class='encuestas-select'></select>
             </div>
 
-            <span id='available-encuestas-feedback' class='feedback-text'></span>
+            <span id='selects-feedback' class='feedback-text'></span>
             <p id='avance-summary' class='avance-info'></p>
             <table id='avances-table'></table>
         </div>

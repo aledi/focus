@@ -47,6 +47,7 @@
                 <div class='input-wrapper'>
                     <label>Seleccionar Panel<span class='required-input'>*</span></label>
                     <select id='select-paneles'></select>
+                    <span id='available-paneles-feedback' class='feedback-text'></span>
                 </div>
 
                 <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
@@ -58,19 +59,15 @@
                 <h2>Encuestas Disponibles</h2>
 
                 <div class='input-wrapper'>
-                    <label>Elige un Cliente</label>
                     <select id='clientes-filter-select'></select>
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Elige un Panel</label>
-                    <select id='paneles-filter-select'>
-                        <option value='0'> Selecciona un panel </option>
-                    </select>
+                    <select id='paneles-filter-select'></select>
                 </div>
 
                 <table id='all-encuestas'></table>
-                <span id='available-encuestas-feedback' class='feedback-text'></span>
+                <span id='selects-feedback' class='feedback-text'></span>
             </div>
         </div>
     </section>

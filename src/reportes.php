@@ -26,31 +26,22 @@
 
             <div class='main-selects'>
                 <div class='input-wrapper'>
-                    <label>Elige un Cliente</label>
                     <select id='clientes-filter-select'></select>
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Elige un Panel</label>
-                    <select id='paneles-filter-select'>
-                        <option value='0'> Selecciona un panel </option>
-                    </select>
+                    <select id='paneles-filter-select'></select>
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Elige una Encuesta</label>
-                    <select id='encuestas-filter-select' class='encuestas-select'>
-                        <option value='0'>Selecciona una encuesta</option>
-                    </select>
+                    <select id='encuestas-filter-select' class='encuestas-select'></select>
                 </div>
 
                 <div class='input-wrapper'>
-                    <label>Elige una Pregunta</label>
-                    <select id='preguntas-select' class='encuestas-select'></select>
-                        <option value='0'>Selecciona una pregunta</option>
-                    </select>
+                    <select id='preguntas-filter-select' class='encuestas-select'></select></select>
                 </div>
 
+                <span id='selects-feedback' class='feedback-text'></span>
                 <button type='button' id='download-reportes' class='download-button'>Descargar Reporte</button>
             </div>
 
