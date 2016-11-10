@@ -198,10 +198,9 @@ function getObjectProperties (object) {
 
 $(document).on('ready', function () {
     $('#reportes-header-option').addClass('selected');
+    fillClientesSelect();
 
     setTimeout(function (event) {
-        getEncuestas('reportes');
-
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -224,7 +223,6 @@ $(document).on('ready', function () {
 
     }, 500);
 
-    $('#preguntas-select').hide();
     $('#download-reportes').hide();
     $('#edad-select').hide();
     $('#genero-select').hide();
@@ -232,7 +230,17 @@ $(document).on('ready', function () {
     $('#educacion-select').hide();
     $('#filtros-button').hide();
 
-    $('#reportes-encuestas-select').on('change', function () {
+    $('#clientes-filter-select').on('change', function() {
+        $('#encuestas-filter-select').html('<option value="0">Selecciona una encuesta</option>');
+
+        fillPanelesSelect($('#clientes-filter-select').val());
+    });
+
+    $('#paneles-filter-select').on('change', function() {
+        fillEncuestasSelect($('#paneles-filter-select').val());
+    });
+
+    $('#encuestas-filter-select').on('change', function () {
         var idEncuesta = parseInt($(this).val(), 10);
         $('#preguntas-select').empty();
         $('#download-reportes').hide();
@@ -268,8 +276,6 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                $('#preguntas-select').show();
-
                 if ($('#panelistas-header-option').is(':visible') && $('#usuarios-header-option').is(':visible')) {
                     $('#download-reportes').show();
                 }
@@ -317,7 +323,7 @@ $(document).on('ready', function () {
 
         var data = {
             action: 'REPORT_DATA',
-            encuesta: parseInt($('#reportes-encuestas-select').val(), 10),
+            encuesta: parseInt($('#encuestas-filter-select').val(), 10),
             numPregunta: numPregunta
         };
 
@@ -417,7 +423,7 @@ $(document).on('ready', function () {
 
         var data = {
             action: 'REPORT_DATA',
-            encuesta: parseInt($('#reportes-encuestas-select').val(), 10),
+            encuesta: parseInt($('#encuestas-filter-select').val(), 10),
             numPregunta: parseInt($('#preguntas-select').val(), 10)
         };
 
@@ -491,7 +497,7 @@ $(document).on('ready', function () {
     });
 
     $('#download-reportes').on('click', function () {
-        var encuestaId = parseInt($('#reportes-encuestas-select').val(), 10);
+        var encuestaId = parseInt($('#encuestas-filter-select').val(), 10);
 
         if (encuestaId === -1) {
             return;

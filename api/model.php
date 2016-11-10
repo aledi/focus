@@ -448,7 +448,7 @@ function fetchEncuestas () {
     return array('status' => 'DATABASE_ERROR');
 }
 
-function fetchEncuestaForPanel ($panel) {
+function fetchEncuestasForPanel ($panel) {
     $conn = connect();
 
     if ($conn != null) {

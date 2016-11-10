@@ -271,7 +271,7 @@ function getRecords ($type) {
             }
 
             if (isset($_POST['panel'])) {
-                echo json_encode(fetchEncuestaForPanel($_POST['panel']));
+                echo json_encode(fetchEncuestasForPanel($_POST['panel']));
                 return;
             }
 

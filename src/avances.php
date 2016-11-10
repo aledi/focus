@@ -7,7 +7,6 @@
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
     <script src='js/jquery-1.12.3.js'></script>
     <script src='js/avances.js' type='text/javascript'></script>
-    <script src='js/encuestas-shared.js' type='text/javascript'></script>
     <script src='js/date-functions.js' type='text/javascript'></script>
     <title> Focus - Avances</title>
 </head>
