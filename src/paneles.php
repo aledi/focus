@@ -65,7 +65,13 @@
             <div id='tab-view-paneles' class='tab-content'>
                 <h2>Paneles Disponibles</h2>
 
+                <div class='input-wrapper'>
+                    <label>Elige un Cliente</label>
+                    <select id='clientes-filter-select'></select>
+                </div>
+
                 <table id='all-panels'></table>
+                <span id='available-paneles-feedback' class='feedback-text'></span>
             </div>
         </div>
     </section>
