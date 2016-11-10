@@ -315,7 +315,7 @@ function fetchPaneles () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, numParticipantes, cliente, creador FROM Panel ORDER BY fechaInicio DESC";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, numParticipantes, cliente FROM Panel ORDER BY fechaInicio DESC";
         $result = $conn->query($sql);
 
         $response = array();
@@ -341,7 +341,7 @@ function fetchPanelesForCliente ($client) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, numParticipantes, cliente, creador FROM Panel WHERE cliente = '$client' ORDER BY fechaInicio DESC";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, numParticipantes, cliente FROM Panel WHERE cliente = '$client' ORDER BY fechaInicio DESC";
         $result = $conn->query($sql);
 
         $response = array();
@@ -367,7 +367,7 @@ function fetchPanel ($id) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, descripcion, fechaInicio, fechaFin, numParticipantes, cliente, creador FROM Panel WHERE id = '$id'";
+        $sql = "SELECT id, nombre, descripcion, fechaInicio, fechaFin, numParticipantes, cliente FROM Panel WHERE id = '$id'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
