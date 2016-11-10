@@ -2,12 +2,24 @@
 
 $(document).on('ready', function () {
     $('#avances-header-option').addClass('selected');
+    fillClientesSelect();
 
-    setTimeout(function (event) {
-        getEncuestas('avances');
-    }, 500);
+    $('#clientes-filter-select').on('change', function() {
+        $('#encuestas-filter-select').html('<option value="0">Selecciona una encuesta</option>');
+        $('#avances-table').empty();
+        $('#avance-summary').empty();
 
-    $('#avances-encuestas-select').on('change', function () {
+        fillPanelesSelect($('#clientes-filter-select').val());
+    });
+
+    $('#paneles-filter-select').on('change', function() {
+        $('#avances-table').empty();
+        $('#avance-summary').empty();
+
+        fillEncuestasSelect($('#paneles-filter-select').val());
+    });
+
+    $('#encuestas-filter-select').on('change', function () {
         var idEncuesta = parseInt($(this).val(), 10);
         $('#avance-percentage').empty();
         $('#avance-panelistas').empty();
