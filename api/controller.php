@@ -107,6 +107,9 @@ switch ($_POST['action']) {
     case 'CURRENT_ANSWERS':
         getCurrentAnswers();
         break;
+    case 'CHANGE_PANELISTA_PASSWORD':
+        echo json_encode(changePanelistaPassword($_POST['panelista'], $_POST['old'], $_POST['new']));
+        break;
     case 'LOG_OUT':
         logOut();
         break;
