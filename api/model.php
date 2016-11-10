@@ -1325,7 +1325,7 @@ function currentAnswers ($encuesta) {
         $conn->close();
 
         usort($response, function ($item1, $item2) {
-            return $item2['fechaFin'] <=> $item1['fechaFin'];
+            return $item2['fechaFin'] >= $item1['fechaFin'];
         });
 
         $panelistas = array('panelistas' => $response);
@@ -1486,7 +1486,7 @@ function downloadData ($encuesta) {
         }
 
         usort($filas, function ($item1, $item2) {
-            return $item2['fechaFin'] <=> $item1['fechaFin'];
+            return $item2['fechaFin'] >= $item1['fechaFin'];
         });
 
         $sql = "SELECT pregunta FROM Pregunta WHERE encuesta = '$encuesta'";
