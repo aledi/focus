@@ -267,6 +267,34 @@ function registerResource ($nombre, $tipo) {
     return array('status' => 'DATABASE_ERROR');
 }
 
+function changePanelistaPassword ($panelista, $old, $new) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, password FROM Panelista WHERE id = '$panelista'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows <= 0) {
+            return array('status' => 'WRONG_USER');
+        } else {
+            $row = $result->fetch_assoc();
+
+            if ($old != $row['password']) {
+                return array('status' => 'WRONG_PASSWORD');
+            }
+        }
+
+        $sql2 = "UPDATE Panelista SET password = '$new' WHERE id = '$panelista'";
+
+        if ($conn->query($sql2) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
+        }
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 // -------------------------------
 // Fetch
 // -------------------------------
@@ -326,7 +354,7 @@ function fetchPaneles () {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'numParticipantes' => $row['numParticipantes'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'numParticipantes' => $row['numParticipantes'], 'cliente' => $row2['nombre'].' '.$row2['apellidos']);
             $response[] = $panel;
         }
 
@@ -352,7 +380,7 @@ function fetchPanelesForCliente ($client) {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'numParticipantes' => $row['numParticipantes'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'numParticipantes' => $row['numParticipantes'], 'cliente' => $row2['nombre'].' '.$row2['apellidos']);
             $response[] = $panel;
         }
 
