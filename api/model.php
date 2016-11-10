@@ -338,6 +338,32 @@ function fetchPaneles () {
     return array('status' => 'DATABASE_ERROR');
 }
 
+function fetchPanelesForCliente ($client) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, numParticipantes, cliente, creador FROM Panel WHERE cliente = '$client' ORDER BY fechaInicio DESC";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $cliente = $row['cliente'];
+            $sql2 = "SELECT nombre, apellidos FROM Usuario WHERE id = '$cliente'";
+            $result2 = $conn->query($sql2);
+            $row2 = $result2->fetch_assoc();
+
+            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'numParticipantes' => $row['numParticipantes'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
+            $response[] = $client;
+        }
+
+        $conn->close();
+        return array('results' => $response);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 function fetchPanel ($id) {
     $conn = connect();
 
@@ -347,12 +373,7 @@ function fetchPanel ($id) {
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $cliente = $row['cliente'];
-            $sql2 = "SELECT id FROM Usuario WHERE id = '$cliente'";
-            $result2 = $conn->query($sql2);
-            $row2 = $result2->fetch_assoc();
-
-            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'descripcion' => $row['descripcion'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'numParticipantes' => (int)$row['numParticipantes'], 'cliente' => (int)$row2['id'], 'creador' => (int)$row['creador']);
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'descripcion' => $row['descripcion'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'numParticipantes' => (int)$row['numParticipantes'], 'cliente' => (int)$row['cliente'], 'creador' => (int)$row['creador']);
         }
 
         $conn->close();
@@ -416,8 +437,29 @@ function fetchEncuestas () {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
-            $response[] = $panelista;
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
+            $response[] = $panel;
+        }
+
+        $conn->close();
+        return array('results' => $response);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function fetchEncuestaForPanel ($panel) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel FROM Encuesta WHERE panel = '$panel' ORDER BY fechaInicio DESC";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => (int)$row['panel']);
+            $response[] = $panel;
         }
 
         $conn->close();
@@ -442,8 +484,8 @@ function fetchEncuestasForCliente ($cliente) {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
-            $response[] = $panelista;
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
+            $response[] = $panel;
         }
 
         $conn->close();

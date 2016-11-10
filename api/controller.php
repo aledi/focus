@@ -257,11 +257,21 @@ function getRecords ($type) {
                 return;
             }
 
+            if (isset($_POST['cliente'])) {
+                echo json_encode(fetchPanelesForCliente($_POST['cliente']));
+                return;
+            }
+
             echo json_encode(fetchPaneles());
             break;
         case 'ENCUESTAS':
             if (isset($_POST['id'])) {
                 echo json_encode(fetchEncuesta($_POST['id']));
+                return;
+            }
+
+            if (isset($_POST['panel'])) {
+                echo json_encode(fetchEncuestaForPanel($_POST['panel']));
                 return;
             }
 
@@ -412,7 +422,7 @@ function getMunicipiosFromFile() {
 
         $arrayMunicipios[] = $arrayLineRead[1];
     }
-    
+
     fclose($fileMunicipios);
     return array('estados' => $arrayEstados);
 }
