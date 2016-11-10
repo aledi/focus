@@ -2,48 +2,115 @@
 
 $(document).on('ready', function () {
     $('#encuestas-header-option').addClass('selected');
+    $('#select-paneles').hide();
+    $('#clientes-filter-select').hide();
+    $('#paneles-filter-select').hide();
     $('#cancel-edit').hide();
 
-    // -----------------------------------------------------------------------------------------------
-    // Fetch Paneles
-    // -----------------------------------------------------------------------------------------------
+    fillSelects(1, 0);
+    fillSelects(2, 0);
+    fillSelects(3, 0);
+    fillClientesSelect();
 
-    setTimeout(function (event) {
+    $('#clientes-filter-select').on('change', function() {
+        var value = parseInt($('#clientes-filter-select').val(), 10);
+        $('#paneles-filter-select').hide();
+        $('#all-encuestas').empty();
+        $('#selects-feedback').html('');
+
+        if (value > 0) {
+            fillPanelesSelect(value);
+        }
+    });
+
+    $('#paneles-filter-select').on('change', function() {
+        var panelId = parseInt($('#paneles-filter-select').val(), 10);
+        $('#all-encuestas').empty();
+        $('#selects-feedback').html('');
+
+        if (panelId === 0) {
+            return;
+        }
+
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: {'action': 'GET_PANELES'},
+            data: {
+                'action': 'GET_ENCUESTAS',
+                'panel': panelId
+            },
             dataType: 'json',
             success: function (response) {
-                fillSelects(1, 0);
-                fillSelects(2, 0);
-                fillSelects(3, 0);
+                if (response.results.length === 0) {
+                    $('#selects-feedback').html('No hay encuestas disponibles');
+                    return;
+                }
 
-                var currentHTML = '<option value=0> Selecciona un panel </option>';
+                var currentHTML = '<thead>';
+                currentHTML += '<tr>';
+                currentHTML += '<th>Nombre</th>';
+                currentHTML += '<th>Fecha Inicio</th>';
+                currentHTML += '<th>Fecha Fin</th>';
+                currentHTML += '<th>Panel</th>';
+                currentHTML += '<th columnSpan = "2">Acción</th>';
+                currentHTML += '</tr>';
+                currentHTML += '</thead>';
+                currentHTML += '<tbody>';
 
                 for (var i = 0; i < response.results.length; i++) {
                     var result = response.results[i];
 
-                    currentHTML += '<option value=' + result.id + '>';
-                    currentHTML += result.nombre + "   ---   " + result.cliente;
-                    currentHTML += "</option>";
+                    currentHTML += '<tr id="' + result.id + '">';
+                    currentHTML += '<td><a href="preguntas.php?id=' + result.id + '">' + result.nombre + '</a></td>';
+                    currentHTML += '<td>' + readableDate(result.fechaInicio) + '</td>';
+                    currentHTML += '<td>' + readableDate(result.fechaFin) + '</td>';
+                    currentHTML += '<td>' + result.panel + '</td>';
+                    currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
+                    currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
+                    currentHTML += '</tr>';
                 }
 
-                $('#select-paneles').append(currentHTML);
+                currentHTML += '</tbody>';
+                $('#all-encuestas').append(currentHTML);
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los clientes');
             }
         });
-    }, 500);
+    });
 
     // -----------------------------------------------------------------------------------------------
-    // Fetch Encuestas
+    // Fetch Paneles
     // -----------------------------------------------------------------------------------------------
 
-    setTimeout(function (event) {
-        getEncuestas('encuestas');
-    }, 500);
+    $.ajax({
+        type: 'POST',
+        url: '../api/controller.php',
+        data: {'action': 'GET_PANELES'},
+        dataType: 'json',
+        success: function (response) {
+            if (response.results.length === 0) {
+                $('#available-paneles-feedback').html('No hay paneles disponibles');
+                return;
+            }
+
+            var currentHTML = '<option value=0> Selecciona un panel </option>';
+
+            for (var i = 0; i < response.results.length; i++) {
+                var result = response.results[i];
+
+                currentHTML += '<option value=' + result.id + '>';
+                currentHTML += result.nombre + "   ---   " + result.cliente;
+                currentHTML += "</option>";
+            }
+
+            $('#select-paneles').append(currentHTML);
+            $('#select-paneles').show();
+        },
+        error: function (error) {
+            $('#feedback').html('Error cargando los clientes');
+        }
+    });
 
     // -----------------------------------------------------------------------------------------------
     // Save Encuesta
@@ -116,7 +183,7 @@ $(document).on('ready', function () {
     // Edit Encuesta
     // -----------------------------------------------------------------------------------------------
 
-    $('#allEncuestas').on('click', '.edit-button', function() {
+    $('#all-encuestas').on('click', '.edit-button', function() {
         var idEncuesta = $(this).parent().attr('id');
 
         $('ul.tabs li').removeClass('current');
@@ -159,7 +226,7 @@ $(document).on('ready', function () {
     // Delete Encuesta
     // -----------------------------------------------------------------------------------------------
 
-    $('#allEncuestas').on('click', '.deleteButton', function() {
+    $('#all-encuestas').on('click', '.deleteButton', function() {
         var self = this;
 
         if (confirmDelete('esta Encuesta')){

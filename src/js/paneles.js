@@ -2,7 +2,13 @@
 
 $(document).on('ready', function () {
     $('#paneles-header-option').addClass('selected');
+    $('#select-clientes').hide();
+    $('#clientes-filter-select').hide();
     $('#cancel-edit').hide();
+
+    fillSelects(1, 0);
+    fillSelects(2, 0);
+    fillSelects(3, 0);
 
     // -----------------------------------------------------------------------------------------------
     // Fetch Clientes
@@ -14,17 +20,27 @@ $(document).on('ready', function () {
         data: {'action': 'GET_CLIENTES'},
         dataType: 'json',
         success: function (response) {
-            var currentHTML = '<option value=0> Selecciona un cliente </option>';
+            if (response.results.length === 0) {
+                $('#available-clientes-feedback').html('No hay clientes disponibles');
+                $('#available-paneles-feedback').html('No hay clientes disponibles');
+
+                return;
+            }
+
+            var currentHTML = '<option value="0"> Selecciona un cliente </option>';
 
             for (var i = 0; i < response.results.length; i++) {
                 var result = response.results[i];
 
-                currentHTML += '<option value=' + result.id + '>';
-                currentHTML += result.nombre + " " + result.apellidos;
-                currentHTML += "</option>";
+                currentHTML += '<option value="' + result.id + '">';
+                currentHTML += result.nombre + ' ' + result.apellidos;
+                currentHTML += '</option>';
             }
 
             $('#select-clientes').append(currentHTML);
+            $('#clientes-filter-select').append(currentHTML);
+            $('#select-clientes').show();
+            $('#clientes-filter-select').show();
         },
         error: function (error) {
             $('#feedback').html('Error cargando los clientes');
@@ -35,16 +51,28 @@ $(document).on('ready', function () {
     // Fetch Paneles
     // -----------------------------------------------------------------------------------------------
 
-    setTimeout(function (event) {
+    $('#clientes-filter-select').on('change', function() {
+        var clienteId = parseInt($('#clientes-filter-select').val(), 10);
+        $('#all-panels').empty();
+        $('#available-paneles-feedback').html('');
+
+        if (clienteId === 0) {
+            return;
+        }
+
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: {'action': 'GET_PANELES'},
+            data: {
+                'action': 'GET_PANELES',
+                'cliente': clienteId
+            },
             dataType: 'json',
             success: function (response) {
-                fillSelects(1, 0);
-                fillSelects(2, 0);
-                fillSelects(3, 0);
+                if (response.results.length === 0) {
+                    $('#available-paneles-feedback').html('No hay paneles disponibles');
+                    return;
+                }
 
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
@@ -67,19 +95,17 @@ $(document).on('ready', function () {
                     currentHTML += "<td>" + result.cliente + "</td>";
                     currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
-                    currentHTML += "</tr>";
-
-                    $('#all-panels').append(currentHTML);
-                    currentHTML = '';
+                    currentHTML += '</tr>';
                 }
 
                 currentHTML += '</tbody>';
+                $('#all-panels').append(currentHTML);
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los paneles');
             }
         });
-    }, 500);
+    });
 
     // -----------------------------------------------------------------------------------------------
     // Save Panel

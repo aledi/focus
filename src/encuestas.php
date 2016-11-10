@@ -9,7 +9,7 @@
     <!--<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js'></script>-->
     <script src='js/date-functions.js' type='text/javascript'></script>
     <script src='js/encuestas.js' type='text/javascript'></script>
-    <script src='js/encuestas-shared.js' type='text/javascript'></script>
+    <script src='js/selects-shared.js' type='text/javascript'></script>
     <title> Focus - Encuestas</title>
 </head>
 
@@ -47,6 +47,7 @@
                 <div class='input-wrapper'>
                     <label>Seleccionar Panel<span class='required-input'>*</span></label>
                     <select id='select-paneles'></select>
+                    <span id='available-paneles-feedback' class='feedback-text'></span>
                 </div>
 
                 <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
@@ -57,7 +58,16 @@
             <div id='tab-view-encuestas' class='tab-content'>
                 <h2>Encuestas Disponibles</h2>
 
-                <table id='allEncuestas'></table>
+                <div class='input-wrapper'>
+                    <select id='clientes-filter-select'></select>
+                </div>
+
+                <div class='input-wrapper'>
+                    <select id='paneles-filter-select'></select>
+                </div>
+
+                <table id='all-encuestas'></table>
+                <span id='selects-feedback' class='feedback-text'></span>
             </div>
         </div>
     </section>

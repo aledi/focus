@@ -198,10 +198,9 @@ function getObjectProperties (object) {
 
 $(document).on('ready', function () {
     $('#reportes-header-option').addClass('selected');
+    fillClientesSelect();
 
     setTimeout(function (event) {
-        getEncuestas('reportes');
-
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -218,25 +217,30 @@ $(document).on('ready', function () {
                 $('#estado-select').append(currentHTML);
             },
             error: function (error) {
-                $('#feedback').html('Error cargando los municipios');
+                $('#selects-feedback').html('Error cargando los municipios');
             }
         });
 
     }, 500);
 
-    $('#preguntas-select').hide();
     $('#download-reportes').hide();
     $('#edad-select').hide();
     $('#genero-select').hide();
     $('#estado-select').hide();
     $('#educacion-select').hide();
     $('#filtros-button').hide();
+    $('#clientes-filter-select').hide();
+    $('#paneles-filter-select').hide();
+    $('#encuestas-filter-select').hide();
+    $('#preguntas-filter-select').hide();
 
-    $('#reportes-encuestas-select').on('change', function () {
-        var idEncuesta = parseInt($(this).val(), 10);
-        $('#preguntas-select').empty();
+    $('#clientes-filter-select').on('change', function() {
+        var value = parseInt($('#clientes-filter-select').val(), 10);
+        $('#paneles-filter-select').hide();
+        $('#encuestas-filter-select').hide();
+        $('#preguntas-filter-select').hide();
         $('#download-reportes').hide();
-        $('#preguntas-select').hide();
+        $('#preguntas-filter-select').hide();
         $('#edad-select').hide();
         $('#genero-select').hide();
         $('#estado-select').hide();
@@ -246,14 +250,56 @@ $(document).on('ready', function () {
         $('#chart2').empty();
         $('#chart3').empty();
         $('#chart4').empty();
+        $('#selects-feedback').html('');
+        $('#reportes-feedback').html('')
+        $('#reportes-filtros-feedback').html('')
 
-        if ($('#reportes-feedback').html()) {
-            $('#reportes-feedback').empty();
+        if (value > 0) {
+            fillPanelesSelect(value);
         }
+    });
 
-        if ($('#reportes-filtros-feedback').html()) {
-            $('#reportes-filtros-feedback').empty();
+    $('#paneles-filter-select').on('change', function() {
+        var value = parseInt($('#paneles-filter-select').val(), 10);
+        $('#encuestas-filter-select').hide();
+        $('#preguntas-filter-select').hide();
+        $('#download-reportes').hide();
+        $('#preguntas-filter-select').hide();
+        $('#edad-select').hide();
+        $('#genero-select').hide();
+        $('#estado-select').hide();
+        $('#educacion-select').hide();
+        $('#filtros-button').hide();
+        $('#chart1').empty();
+        $('#chart2').empty();
+        $('#chart3').empty();
+        $('#chart4').empty();
+        $('#selects-feedback').html('');
+        $('#reportes-feedback').html('')
+        $('#reportes-filtros-feedback').html('')
+
+        if (value > 0) {
+            fillEncuestasSelect(value);
         }
+    });
+
+    $('#encuestas-filter-select').on('change', function () {
+        var idEncuesta = parseInt($(this).val(), 10);
+        $('#preguntas-filter-select').empty();
+        $('#download-reportes').hide();
+        $('#preguntas-filter-select').hide();
+        $('#edad-select').hide();
+        $('#genero-select').hide();
+        $('#estado-select').hide();
+        $('#educacion-select').hide();
+        $('#filtros-button').hide();
+        $('#chart1').empty();
+        $('#chart2').empty();
+        $('#chart3').empty();
+        $('#chart4').empty();
+        $('#selects-feedback').html('');
+        $('#reportes-feedback').html('')
+        $('#reportes-filtros-feedback').html('')
 
         if (idEncuesta < 1) {
             return;
@@ -268,8 +314,6 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                $('#preguntas-select').show();
-
                 if ($('#panelistas-header-option').is(':visible') && $('#usuarios-header-option').is(':visible')) {
                     $('#download-reportes').show();
                 }
@@ -282,7 +326,8 @@ $(document).on('ready', function () {
                 }
 
                 currentHTML += '<option value="0">General</option>';
-                $('#preguntas-select').append(currentHTML);
+                $('#preguntas-filter-select').append(currentHTML);
+                $('#preguntas-filter-select').show();
             },
             error: function (errorMsg) {
                 $('#reportes-feedback').html('Ha ocurrido un error. Favor de intentar de nuevo.');
@@ -290,7 +335,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#preguntas-select').on('change', function () {
+    $('#preguntas-filter-select').on('change', function () {
         var numPregunta = parseInt($(this).val(), 10);
         $('#edad-select').hide();
         $('#genero-select').hide();
@@ -317,7 +362,7 @@ $(document).on('ready', function () {
 
         var data = {
             action: 'REPORT_DATA',
-            encuesta: parseInt($('#reportes-encuestas-select').val(), 10),
+            encuesta: parseInt($('#encuestas-filter-select').val(), 10),
             numPregunta: numPregunta
         };
 
@@ -417,8 +462,8 @@ $(document).on('ready', function () {
 
         var data = {
             action: 'REPORT_DATA',
-            encuesta: parseInt($('#reportes-encuestas-select').val(), 10),
-            numPregunta: parseInt($('#preguntas-select').val(), 10)
+            encuesta: parseInt($('#encuestas-filter-select').val(), 10),
+            numPregunta: parseInt($('#preguntas-filter-select').val(), 10)
         };
 
         if (edad > 0) {
@@ -491,7 +536,7 @@ $(document).on('ready', function () {
     });
 
     $('#download-reportes').on('click', function () {
-        var encuestaId = parseInt($('#reportes-encuestas-select').val(), 10);
+        var encuestaId = parseInt($('#encuestas-filter-select').val(), 10);
 
         if (encuestaId === -1) {
             return;

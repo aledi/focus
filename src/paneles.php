@@ -55,6 +55,7 @@
                 <div class='input-wrapper'>
                     <label>Seleccionar Cliente<span class='required-input'>*</span></label>
                     <select id='select-clientes'></select>
+                    <span id='available-clientes-feedback' class='feedback-text'></span>
                 </div>
 
                 <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
@@ -65,7 +66,12 @@
             <div id='tab-view-paneles' class='tab-content'>
                 <h2>Paneles Disponibles</h2>
 
+                <div class='input-wrapper'>
+                    <select id='clientes-filter-select'></select>
+                </div>
+
                 <table id='all-panels'></table>
+                <span id='available-paneles-feedback' class='feedback-text'></span>
             </div>
         </div>
     </section>

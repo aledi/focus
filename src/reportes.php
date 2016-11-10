@@ -9,9 +9,9 @@
     <script src='js/jquery-1.12.3.js'></script>
     <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
     <script src='js/reportes.js' type='text/javascript'></script>
-    <script src='js/encuestas-shared.js' type='text/javascript'></script>
     <script src='js/states.js' type='text/javascript'></script>
     <script src='js/date-functions.js' type='text/javascript'></script>
+    <script src='js/selects-shared.js' type='text/javascript'></script>
     <title> Focus - Reportes</title>
 </head>
 
@@ -23,13 +23,28 @@
             <h2>Reportes</h2>
             <table id='reportes-table' class='hidden'></table>
             <a id='dlink' class='hidden'></a>
+
             <div class='main-selects'>
-                <select id='reportes-encuestas-select' class='encuestas-select'>
-                    <option value='0'>Selecciona una encuesta</option>
-                </select>
-                <select id='preguntas-select' class='encuestas-select'></select>
+                <div class='input-wrapper'>
+                    <select id='clientes-filter-select'></select>
+                </div>
+
+                <div class='input-wrapper'>
+                    <select id='paneles-filter-select'></select>
+                </div>
+
+                <div class='input-wrapper'>
+                    <select id='encuestas-filter-select' class='encuestas-select'></select>
+                </div>
+
+                <div class='input-wrapper'>
+                    <select id='preguntas-filter-select' class='encuestas-select'></select></select>
+                </div>
+
+                <span id='selects-feedback' class='feedback-text'></span>
                 <button type='button' id='download-reportes' class='download-button'>Descargar Reporte</button>
             </div>
+
             <div id='chart1' class='chart1'></div>
             <div class='filter-selects'>
                 <select id='edad-select' class='encuestas-select'>
