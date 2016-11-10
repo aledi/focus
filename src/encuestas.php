@@ -10,6 +10,7 @@
     <script src='js/date-functions.js' type='text/javascript'></script>
     <script src='js/encuestas.js' type='text/javascript'></script>
     <script src='js/encuestas-shared.js' type='text/javascript'></script>
+    <script src='js/selects-shared.js' type='text/javascript'></script>
     <title> Focus - Encuestas</title>
 </head>
 
@@ -57,7 +58,20 @@
             <div id='tab-view-encuestas' class='tab-content'>
                 <h2>Encuestas Disponibles</h2>
 
-                <table id='allEncuestas'></table>
+                <div class='input-wrapper'>
+                    <label>Elige un Cliente</label>
+                    <select id='clientes-filter-select'></select>
+                </div>
+
+                <div class='input-wrapper'>
+                    <label>Elige un Panel</label>
+                    <select id='paneles-filter-select'>
+                        <option value='0'> Selecciona un panel </option>
+                    </select>
+                </div>
+
+                <table id='all-encuestas'></table>
+                <span id='available-encuestas-feedback' class='feedback-text'></span>
             </div>
         </div>
     </section>

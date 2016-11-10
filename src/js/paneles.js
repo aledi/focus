@@ -43,11 +43,12 @@ $(document).on('ready', function () {
     $('#clientes-filter-select').on('change', function() {
         var clienteId = parseInt($('#clientes-filter-select').val(), 10);
         $('#all-panels').empty();
-
+        $('#available-paneles-feedback').html('Por el momento no hay paneles disponibles');
+        
         if (clienteId === 0) {
             return;
         }
-        
+
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',

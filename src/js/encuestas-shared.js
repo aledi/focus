@@ -43,12 +43,10 @@ function getEncuestas (route) {
                     currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
-
-                    $('#allEncuestas').append(currentHTML);
-                    currentHTML = '';
                 }
 
                 currentHTML += '</tbody>';
+                $('#all-encuestas').append(currentHTML);
             }
         },
         error: function (error) {

@@ -458,7 +458,12 @@ function fetchEncuestaForPanel ($panel) {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => (int)$row['panel']);
+            $panel = $row['panel'];
+            $sql2 = "SELECT nombre FROM Panel WHERE id = '$panel'";
+            $result2 = $conn->query($sql2);
+            $row2 = $result2->fetch_assoc();
+
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
             $response[] = $panel;
         }
 
