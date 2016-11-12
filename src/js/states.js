@@ -10,6 +10,7 @@ var stateName = {
     'COAH': 'Coahuila de Zaragoza',
     'COL': 'Colima',
     'CHIS': 'Chiapas',
+    'CHIH': 'Chihuahua',
     'CDMX': 'Ciudad de México',
     'DGO': 'Durango',
     'GTO': 'Guanajuato',
@@ -51,7 +52,7 @@ function stateShortName(state) {
         case 'Chiapas':
             return 'CHIS';
         case 'Chihuahua':
-            return 'CHI';
+            return 'CHIH';
         case 'Ciudad de México':
             return 'CDMX';
         case 'Durango':
