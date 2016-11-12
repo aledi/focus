@@ -52,51 +52,11 @@ function validatePanelistaCredentials ($username, $password) {
             $row0 = $result0->fetch_assoc();
             $panelista = $row0['id'];
 
-            $sql = "SELECT Panel.id, nombre, fechaInicio, fechaFin FROM Panel INNER JOIN PanelistaEnPanel ON Panel.id = PanelistaEnPanel.panel WHERE Panel.fechaInicio <= CURDATE() AND Panel.fechaFin >= CURDATE() AND PanelistaEnPanel.panelista = '$panelista'";
-            $result = $conn->query($sql);
-
-            $paneles = array();
-
-            while ($row = $result->fetch_assoc()) {
-                $panelId = $row['id'];
-                $sql2 = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE panel = '$panelId' AND fechaInicio <= CURDATE() AND fechaFin >= CURDATE()";
-                $result2 = $conn->query($sql2);
-
-                $encuestas = array();
-
-                while ($row2 = $result2->fetch_assoc()) {
-                    $encuestaId = $row2['id'];
-                    $sql3 = "SELECT id, tipo, numPregunta, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Pregunta WHERE encuesta = '$encuestaId'";
-                    $result3 = $conn->query($sql3);
-
-                    $preguntas = array();
-
-                    while ($row3 = $result3->fetch_assoc()) {
-                        $opciones = array($row3['op1'], $row3['op2'], $row3['op3'], $row3['op4'], $row3['op5'], $row3['op6'], $row3['op7'], $row3['op8'], $row3['op9'], $row3['op10']);
-                        $opciones = array_filter($opciones, 'emptyString');
-                        $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'opciones' => $opciones);
-                        $preguntas[] = $pregunta;
-                    }
-
-                    $contestada = FALSE;
-
-                    $sql4 = "SELECT id FROM Respuesta WHERE encuesta = '$encuestaId' AND panelista = '$panelista'";
-                    $result4 = $conn->query($sql4);
-
-                    if ($result4->num_rows > 0) {
-                        $contestada = TRUE;
-                    }
-
-                    $encuesta = array('id' => (int)$row2['id'], 'nombre' => $row2['nombre'], 'fechaInicio' => $row2['fechaInicio'], 'fechaFin' => $row2['fechaFin'], 'contestada' => $contestada, 'preguntas' => $preguntas);
-                    $encuestas[] = $encuesta;
-                }
-
-                $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'encuestas' => $encuestas);
-                $paneles[] = $panel;
-            }
-
             $conn->close();
-            return array('status' => 'SUCCESS', 'id' => (int)$row0['id'], 'username' => $row0['username'], 'genero' => (int)$row0['genero'], 'email' => $row0['email'], 'nombre' => $row0['nombre']." ".$row0['apellidos'], 'paneles' => $paneles);
+            $response = array('status' => 'SUCCESS', 'id' => (int)$row0['id'], 'username' => $row0['username'], 'genero' => (int)$row0['genero'], 'email' => $row0['email'], 'nombre' => $row0['nombre']." ".$row0['apellidos']);
+            $paneles = fetchMobileData($panelista);
+
+            return array_merge($response, $paneles);
         }
 
         $conn->close();
@@ -607,21 +567,21 @@ function fetchMobileData ($panelista) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT Panel.id, nombre, fechaInicio, fechaFin FROM Panel INNER JOIN PanelistaEnPanel ON Panel.id = PanelistaEnPanel.panel WHERE Panel.fechaInicio <= CURDATE() AND Panel.fechaFin >= CURDATE() AND PanelistaEnPanel.panelista = '$panelista'";
+        $sql = "SELECT Panel.id, nombre, fechaInicio, fechaFin FROM Panel INNER JOIN PanelistaEnPanel ON Panel.id = PanelistaEnPanel.panel WHERE Panel.fechaInicio <= CURDATE() AND Panel.fechaFin >= CURDATE() AND PanelistaEnPanel.panelista = '$panelista' ORDER BY fechaFin DESC";
         $result = $conn->query($sql);
 
         $paneles = array();
 
         while ($row = $result->fetch_assoc()) {
             $panelId = $row['id'];
-            $sql2 = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE panel = '$panelId' AND fechaInicio <= CURDATE() AND fechaFin >= CURDATE()";
+            $sql2 = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE panel = '$panelId' AND fechaInicio <= CURDATE() AND fechaFin >= CURDATE() ORDER BY fechaFin DESC";
             $result2 = $conn->query($sql2);
 
             $encuestas = array();
 
             while ($row2 = $result2->fetch_assoc()) {
                 $encuestaId = $row2['id'];
-                $sql3 = "SELECT id, tipo, numPregunta, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Pregunta WHERE encuesta = '$encuestaId'";
+                $sql3 = "SELECT id, tipo, numPregunta, titulo, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Pregunta WHERE encuesta = '$encuestaId'";
                 $result3 = $conn->query($sql3);
 
                 $preguntas = array();
@@ -629,7 +589,7 @@ function fetchMobileData ($panelista) {
                 while ($row3 = $result3->fetch_assoc()) {
                     $opciones = array($row3['op1'], $row3['op2'], $row3['op3'], $row3['op4'], $row3['op5'], $row3['op6'], $row3['op7'], $row3['op8'], $row3['op9'], $row3['op10']);
                     $opciones = array_filter($opciones, 'emptyString');
-                    $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'opciones' => $opciones);
+                    $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'titulo' => $row3['titulo'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'opciones' => $opciones);
                     $preguntas[] = $pregunta;
                 }
 

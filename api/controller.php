@@ -412,6 +412,11 @@ function getMunicipiosFromFile() {
 
     $fileMunicipios = fopen('../src/elements/municipios.txt', 'r');
 
+    // $out = fopen('../src/elements/municipios.json', 'w');
+    // fwrite($out, '[');
+    // fwrite($out, '{"estado": "'.$currentState.'", "abreviacion": ""');
+    // fwrite($out, ', "municipios": [');
+
     while (!feof($fileMunicipios)) {
         $arrayLineRead = explode('_', fgets($fileMunicipios));
         $arrayLineRead[1] = trim($arrayLineRead[1], "\n");
@@ -421,12 +426,22 @@ function getMunicipiosFromFile() {
             $currentState = $arrayLineRead[0];
 
             $arrayMunicipios = array();
+            // fwrite($out, ']}');
+            // fwrite($out, ', {"estado": "'.$currentState.'", "abreviacion": ""');
+            // fwrite($out, ', "municipios": [');
+        } else {
+            // fwrite($out, ', ');
         }
 
         $arrayMunicipios[] = $arrayLineRead[1];
+        // fwrite($out, '"'.$arrayLineRead[1].'"');
     }
 
+    // fwrite($out, ']}]');
+    // fclose($out);
+
     fclose($fileMunicipios);
+
     return array('estados' => $arrayEstados);
 }
 
