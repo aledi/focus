@@ -110,6 +110,9 @@ switch ($_POST['action']) {
     case 'CHANGE_PANELISTA_PASSWORD':
         echo json_encode(changePanelistaPassword($_POST['panelista'], $_POST['old'], $_POST['new']));
         break;
+    case 'FORGOT_PANELISTA_PASSWORD':
+        recoverPasword();
+        break;
     case 'LOG_OUT':
         logOut();
         break;
@@ -390,6 +393,22 @@ function unregisterDevice () {
     $registrationResult = unregisterDeviceToken($_POST['id']);
 
     echo json_encode($registrationResult);
+}
+
+function recoverPasword () {
+    $passwordResult = fetchPanelistaPassword($_POST['username'], $_POST['email']);
+
+    if ($passwordResult['status'] === 'SUCCESS') {
+        sendPassword($passwordResult['email'], $passwordResult['nombre'], $passwordResult['password']);
+        unset($passwordResult['nombre']);
+        unset($passwordResult['password']);
+    }
+
+    echo json_encode($passwordResult);
+}
+
+function sendPassword ($email, $nombre, $password) {
+
 }
 
 function logOut ()  {
