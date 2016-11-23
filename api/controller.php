@@ -407,10 +407,6 @@ function recoverPasword () {
     echo json_encode($passwordResult);
 }
 
-function sendPassword ($email, $nombre, $password) {
-
-}
-
 function logOut ()  {
     destroySession();
 
@@ -462,6 +458,10 @@ function getMunicipiosFromFile() {
     fclose($fileMunicipios);
 
     return array('estados' => $arrayEstados);
+}
+
+function sendPassword ($email, $nombre, $password) {
+
 }
 
 function sendPushNotification ($message, $deviceToken) {
