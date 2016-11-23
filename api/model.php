@@ -581,13 +581,13 @@ function fetchMobileData ($panelista) {
 
             while ($row2 = $result2->fetch_assoc()) {
                 $encuestaId = $row2['id'];
-                $sql3 = "SELECT id, tipo, numPregunta, titulo, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Pregunta WHERE encuesta = '$encuestaId'";
+                $sql3 = "SELECT id, tipo, numPregunta, titulo, pregunta, video, imagen, opciones FROM Pregunta WHERE encuesta = '$encuestaId'";
                 $result3 = $conn->query($sql3);
 
                 $preguntas = array();
 
                 while ($row3 = $result3->fetch_assoc()) {
-                    $opciones = array($row3['op1'], $row3['op2'], $row3['op3'], $row3['op4'], $row3['op5'], $row3['op6'], $row3['op7'], $row3['op8'], $row3['op9'], $row3['op10']);
+                    $opciones = explode('&', $row3['opciones']);
                     $opciones = array_filter($opciones, 'emptyString');
                     $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'titulo' => $row3['titulo'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'opciones' => $opciones);
                     $preguntas[] = $pregunta;
