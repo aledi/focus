@@ -199,6 +199,7 @@ $(document).on('ready', function () {
 
             if (questionObject.tipo !== 1) {
                 var opcion = 1;
+
                 while ($(this).find('#opcion' + opcion).val()) {
                     questionObject.opciones.push($(this).find('#opcion' + opcion).val());
                     opcion++;
@@ -213,7 +214,7 @@ $(document).on('ready', function () {
 
         var idEncuesta = window.location.search.substring(1);
         idEncuesta = idEncuesta.substring(3);
-
+        
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
