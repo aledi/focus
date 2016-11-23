@@ -28,7 +28,7 @@ function appendAnswers (typeQuestion, questionID) {
 
     if (typeQuestion != 1 && typeQuestion != 6) {
         var currentHTML = '';
-        for (var x = 1; x <= 10; x++) {
+        for (var x = 1; x <= 20; x++) {
             currentHTML += '<div class="answer">';
             currentHTML += '<p>Opción ' + x + '</p>';
             currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + '" type="text"/>';
@@ -139,16 +139,11 @@ $(document).on('ready', function () {
                     $('#' + (x + 1) + ' > .input-wrapper > #video' + (x + 1)).val(response.results[x].video);
 
                     if (response.results[x].tipo !== 1) {
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta1').val(response.results[x].op1);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta2').val(response.results[x].op2);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta3').val(response.results[x].op3);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta4').val(response.results[x].op4);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta5').val(response.results[x].op5);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta6').val(response.results[x].op6);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta7').val(response.results[x].op7);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta8').val(response.results[x].op8);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta9').val(response.results[x].op9);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta10').val(response.results[x].op10);
+                        var opciones = response.results[x].opciones;
+
+                        for (var i = 0; i < opciones.length; i++) {
+                            $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta' + (i + 1)).val(opciones[i]);
+                        }
                     }
                 }
             },
@@ -214,7 +209,7 @@ $(document).on('ready', function () {
 
         var idEncuesta = window.location.search.substring(1);
         idEncuesta = idEncuesta.substring(3);
-        
+
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',

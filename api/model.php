@@ -1349,7 +1349,7 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
 
             if ($tipo == 1) {
                 $votes[] = $answers[$numPregunta - 1];
-            } if ($tipo == 2) {
+            } else if ($tipo == 2) {
                 for ($x = 0; $x < count($options); $x++) {
                     if ($answers[$numPregunta - 1] == $options[$x]) {
                         $votes[$x] = $votes[$x] + 1;
