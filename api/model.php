@@ -665,6 +665,25 @@ function emptyString ($string) {
     return($string !== '');
 }
 
+function fetchPanelistaPassword ($username, $email) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, username, email, nombre, password FROM Panelista WHERE username = '$username' OR email = '$email'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows <= 0) {
+            return array('status' => 'WRONG_USER');
+        } else {
+            $row = $result->fetch_assoc();
+
+            return array('status' => 'SUCCESS', 'id' => (int)$row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre'], 'password' => $row['password']);
+        }
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 // -------------------------------
 // Save
 // -------------------------------
