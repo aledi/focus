@@ -1284,7 +1284,7 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT tipo, numOpciones, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Pregunta WHERE encuesta = '$encuesta' AND numPregunta = '$numPregunta'";
+        $sql = "SELECT tipo, numOpciones, opciones FROM Pregunta WHERE encuesta = '$encuesta' AND numPregunta = '$numPregunta'";
         $result = $conn->query($sql);
         $tipo = 0;
         $options = array();
@@ -1293,9 +1293,10 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $tipo = $row['tipo'];
+            $options = explode('&', $row['opciones']);
+            $options = array_filter($options, 'emptyString');
 
             for ($x = 1; $x <= $row['numOpciones']; $x++) {
-                $options[] = $row['op'.$x];
                 $votes[] = 0;
             }
         }
