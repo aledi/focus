@@ -28,6 +28,11 @@ function appendAnswers (typeQuestion, questionID) {
 
     if (typeQuestion != 1 && typeQuestion != 6) {
         var currentHTML = '';
+        if (typeQuestion == 2) {
+            currentHTML += '<label>Mostrar como:</label><br/>' +
+            '<input type="radio" value="0" name="mostrar">Lista</input>' +
+            '<input type="radio" value="1" name="mostrar">Combo</input>';
+        }
         for (var x = 1; x <= 20; x++) {
             currentHTML += '<div class="answer">';
             currentHTML += '<p>Opción ' + x + '</p>';
@@ -71,6 +76,8 @@ function appendQuestions (lastQuestion) {
         '<option value="5">Matriz</option>' +
         '<option value="6">Escala</option>' +
         '</select>' +
+        '</div>';
+    currentHTML += '<div id="list?">' + 
         '</div>';
     currentHTML += '<div id="Answers' + lastQuestion + '"></div>' +
         '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
