@@ -30,8 +30,8 @@ function appendAnswers (typeQuestion, questionID) {
         var currentHTML = '';
         if (typeQuestion == 2) {
             currentHTML += '<label>Mostrar como:</label><br/>' +
-            '<input type="radio" value="0" name="mostrar">Lista</input>' +
-            '<input type="radio" value="1" name="mostrar">Combo</input>';
+            '<input type="radio" value="0" name="mostrar' + questionID + '">Lista</input>' +
+            '<input type="radio" value="1" name="mostrar' + questionID + '">Combo</input>';
         }
         for (var x = 1; x <= 20; x++) {
             currentHTML += '<div class="answer">';
@@ -201,7 +201,10 @@ $(document).on('ready', function () {
 
             if (questionObject.tipo !== 1) {
                 var opcion = 1;
-
+                if (questionObject.tipo == '2'){
+                    questionObject.mostrar = $(this).find('input[name=mostrar' + numeroPregunta + ']:checked').val();
+                    console.log(questionObject.mostrar);
+                }
                 while ($(this).find('#opcion' + opcion).val()) {
                     questionObject.opciones.push($(this).find('#opcion' + opcion).val());
                     opcion++;
@@ -216,7 +219,7 @@ $(document).on('ready', function () {
 
         var idEncuesta = window.location.search.substring(1);
         idEncuesta = idEncuesta.substring(3);
-
+        console.log(questionsArray);
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -228,7 +231,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 alert('Preguntas ligadas exitosamente.');
-                location.replace('encuestas.php');
+                //location.replace('encuestas.php');
             },
             error: function (error) {
                 $('#feedback').html('Preguntas no añadidas. Ha ocurrido un error.');
