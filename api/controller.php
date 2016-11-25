@@ -472,7 +472,7 @@ function sendPassword ($email, $nombre, $password) {
                 'MIME-Version: 1.0.' . "\r\n" .
                 'Content-Type: text/html; charset=UTF-8';
 
-    $message = 'Buenas tardes señor ' . $nombre . "\n\n" . 'Le mandamos un cordial saludo por parte del grupo Focus. Le informamos que su contraseña es <strong>' . $password . '</strong> si usted no solicitó un recordatorio de contraseña, le suplicamos que haga caso omiso a este mensaje.' . "\n\n" . 'Agradecemos sinceramente su preferencia y ¡Le deseamos un excelente día!';
+    $message = 'Buenas tardes ' . $nombre . "\n\n" . 'Le mandamos un cordial saludo por parte del grupo Focus. Le informamos que su contraseña es <strong>' . $password . '</strong> si usted no solicitó un recordatorio de contraseña, le suplicamos que haga caso omiso a este mensaje.' . "\n\n" . 'Agradecemos sinceramente su preferencia y ¡Le deseamos un excelente día!';
 
      $retval = mail ($to, $subject, $message, $headers);
      
