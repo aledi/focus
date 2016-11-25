@@ -461,7 +461,7 @@ function getMunicipiosFromFile() {
 }
 
 function sendPassword ($email, $nombre, $password) {
-    $subject = 'Recupere su Contraseña';
+   $subject = 'Recupere su Contraseña';
     $from = 'atencion@focuscg.com.mx';
 
     $headers =  'From: ' . $from . "\r\n" .
@@ -470,10 +470,10 @@ function sendPassword ($email, $nombre, $password) {
                 'MIME-Version: 1.0.' . "\r\n" .
                 'Content-Type: text/html; charset=UTF-8';
 
-    $message =  'Hola ' . $nombre . ",\n\n" .
-                'Hemos recibido su solicitud para recuperar su contraseña de acceso a la app <strong> Focus </strong>.' . "\n\n" .
-                'Su contraseña es <strong> ' . $password . ' </strong>. Si usted no solicitó este correo, le pedimos haga caso omiso del mismo.' . "\n\n" .
-                'Agradecemos preferencia. ¡Que tenga un excelente día!,' . "\n\n\n" .
+    $message =  'Hola ' . $nombre . ",<br><br>" .
+                'Hemos recibido su solicitud para recuperar su contraseña de acceso a la app Focus.' . "<br><br>" .
+                'Su contraseña es <strong> ' . $password . ' </strong>. Si usted no solicitó este correo, le pedimos haga caso omiso del mismo.' . "<br><br>" .
+                'Agradecemos preferencia. ¡Que tenga un excelente día!,' . "<br><br><br>" .
                 'Focus Consulting Group';
 
     $success = mail($email, $subject, $message, $headers);
