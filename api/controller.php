@@ -399,7 +399,7 @@ function recoverPasword () {
     $passwordResult = fetchPanelistaPassword($_POST['username'], $_POST['email']);
 
     if ($passwordResult['status'] === 'SUCCESS') {
-        sendPassword($passwordResult['email'], $passwordResult['nombre'], $passwordResult['password']);
+        $passwordResult['status'] = sendPassword($passwordResult['email'], $passwordResult['nombre'], $passwordResult['password']);
         unset($passwordResult['nombre']);
         unset($passwordResult['password']);
     }
@@ -461,7 +461,24 @@ function getMunicipiosFromFile() {
 }
 
 function sendPassword ($email, $nombre, $password) {
+    $subject = 'Recupere su Contraseña';
+    $from = 'atencion@focuscg.com.mx';
 
+    $headers =  'From: ' . $from . "\r\n" .
+                'Reply-To:' . $from . "\r\n" .
+                'Return-Path: ' . $from . "\r\n" .
+                'MIME-Version: 1.0.' . "\r\n" .
+                'Content-Type: text/html; charset=UTF-8';
+
+    $message =  'Hola ' . $nombre . ',<br><br>' .
+                'Hemos recibido su solicitud para recuperar su contraseña de acceso a la app Focus.' . '<br><br>' .
+                'Su contraseña es <strong> ' . $password . ' </strong>. Si usted no solicitó este correo, le pedimos haga caso omiso del mismo.' . '<br><br>' .
+                'Agradecemos preferencia. ¡Que tenga un excelente día!,' . '<br><br><br>' .
+                'Focus Consulting Group';
+
+    $success = mail($email, $subject, $message, $headers);
+
+    return $success ? 'SUCCESS' : 'ERROR';
 }
 
 function sendPushNotification ($message, $deviceToken) {
