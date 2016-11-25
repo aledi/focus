@@ -242,8 +242,8 @@ input[type='text'], input[type='password'] {
     padding: 0 5px;
 }
 
-.full-width {
-    width: 100% !important;
+input[type='text'].full-width, input[type='password'].full-width {
+    width: 100%;
 }
 
 textarea {
