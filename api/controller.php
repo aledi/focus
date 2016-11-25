@@ -461,27 +461,24 @@ function getMunicipiosFromFile() {
 }
 
 function sendPassword ($email, $nombre, $password) {
-
-   $to = $email;
-    $subject = 'Focus - Recordatorio de Contraseña';
+    $subject = 'Recupere su Contraseña';
     $from = 'atencion@focuscg.com.mx';
-     
-    $headers = 'From: ' . $from . "\r\n" .
+
+    $headers =  'From: ' . $from . "\r\n" .
                 'Reply-To:' . $from . "\r\n" .
                 'Return-Path: ' . $from . "\r\n" .
                 'MIME-Version: 1.0.' . "\r\n" .
                 'Content-Type: text/html; charset=UTF-8';
 
-    $message = 'Buenas tardes ' . $nombre . "\n\n" . 'Le mandamos un cordial saludo por parte del grupo Focus. Le informamos que su contraseña es <strong>' . $password . '</strong> si usted no solicitó un recordatorio de contraseña, le suplicamos que haga caso omiso a este mensaje.' . "\n\n" . 'Agradecemos sinceramente su preferencia y ¡Le deseamos un excelente día!';
+    $message =  'Hola ' . $nombre . ",\n\n" .
+                'Hemos recibido su solicitud para recuperar su contraseña de acceso a la app <strong> Focus </strong>.' . "\n\n" .
+                'Su contraseña es <strong> ' . $password . ' </strong>. Si usted no solicitó este correo, le pedimos haga caso omiso del mismo.' . "\n\n" .
+                'Agradecemos preferencia. ¡Que tenga un excelente día!,' . "\n\n\n" .
+                'Focus Consulting Group';
 
-     $retval = mail ($to, $subject, $message, $headers);
-     
-     if( $retval == true ) {
-        return "Message sent successfully...";
-     } else {
-        return "Message could not be sent...";
-     }
+    $success = mail($email, $subject, $message, $headers);
 
+    return $success ? "Message sent successfully..." : "Message could not be sent...";
 }
 
 function sendPushNotification ($message, $deviceToken) {
