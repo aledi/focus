@@ -31,7 +31,7 @@ function appendAnswers (typeQuestion, questionID) {
         for (var x = 1; x <= 20; x++) {
             currentHTML += '<div class="answer">';
             currentHTML += '<p>Opción ' + x + '</p>';
-            currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + '" type="text"/>';
+            currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' full-width" type="text"/>';
             currentHTML += "</div><br>";
          }
     }
@@ -45,7 +45,7 @@ function appendQuestions (lastQuestion) {
     currentHTML += '<hr>';
     currentHTML += '<div class="input-wrapper">' +
         '<p>Título</p>' +
-        '<input id="titulo" class="titulo" type="text" />' +
+        '<input id="titulo" class="titulo full-width" type="text" />' +
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
         '<p>Imagen</p>' +
@@ -59,7 +59,7 @@ function appendQuestions (lastQuestion) {
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
         '<p>Pregunta</p>' +
-        '<input id="pregunta" class="pregunta" type="text" />' +
+        '<input id="pregunta" class="pregunta full-width" type="text" />' +
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
         '<p>Tipo de pregunta</p>' +
