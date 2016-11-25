@@ -77,7 +77,7 @@ function appendQuestions (lastQuestion) {
         '<option value="6">Escala</option>' +
         '</select>' +
         '</div>';
-    currentHTML += '<div id="list?">' + 
+    currentHTML += '<div id="list?">' +
         '</div>';
     currentHTML += '<div id="Answers' + lastQuestion + '"></div>' +
         '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
@@ -147,6 +147,10 @@ $(document).on('ready', function () {
 
                     if (response.results[x].tipo !== 1) {
                         var opciones = response.results[x].opciones;
+
+                        if (response.results[x].tipo == 2){
+                            $('input[name="mostrar' + (x + 1) + '"][value="' + response.results[x].mostrar + '"]').prop('checked', true);
+                        }
 
                         for (var i = 0; i < opciones.length; i++) {
                             $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta' + (i + 1)).val(opciones[i]);
