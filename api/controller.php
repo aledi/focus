@@ -399,7 +399,7 @@ function recoverPasword () {
     $passwordResult = fetchPanelistaPassword($_POST['username'], $_POST['email']);
 
     if ($passwordResult['status'] === 'SUCCESS') {
-        sendPassword($passwordResult['email'], $passwordResult['nombre'], $passwordResult['password']);
+        $passwordResult['status'] = sendPassword($passwordResult['email'], $passwordResult['nombre'], $passwordResult['password']);
         unset($passwordResult['nombre']);
         unset($passwordResult['password']);
     }
@@ -478,7 +478,7 @@ function sendPassword ($email, $nombre, $password) {
 
     $success = mail($email, $subject, $message, $headers);
 
-    return $success ? "Message sent successfully..." : "Message could not be sent...";
+    return $success ? "SUCCESS" : "ERROR";
 }
 
 function sendPushNotification ($message, $deviceToken) {
