@@ -554,7 +554,7 @@ function fetchPreguntasEncuesta ($encuesta) {
         while ($row = $result->fetch_assoc()) {
             $opciones = explode('&', $row['opciones']);
             $opciones = array_filter($opciones, 'emptyString');
-            $pregunta = array('id' => (int)$row['id'], 'encuesta' => (int)$encuesta, 'numPregunta' => (int)$row['numPregunta'], 'titulo' => $row['titulo'], 'tipo' => (int)$row['tipo'], 'pregunta' => $row['pregunta'], 'video' => $row['video'], 'imagen' => $row['imagen'], 'opciones' => $opciones);
+            $pregunta = array('id' => (int)$row['id'], 'encuesta' => (int)$encuesta, 'numPregunta' => (int)$row['numPregunta'], 'titulo' => $row['titulo'], 'tipo' => (int)$row['tipo'], 'pregunta' => $row['pregunta'], 'video' => $row['video'], 'imagen' => $row['imagen'], 'combo' => $row['combo'], 'opciones' => $opciones);
             $response[] = $pregunta;
         }
 
@@ -583,7 +583,7 @@ function fetchMobileData ($panelista) {
 
             while ($row2 = $result2->fetch_assoc()) {
                 $encuestaId = $row2['id'];
-                $sql3 = "SELECT id, tipo, numPregunta, titulo, pregunta, video, imagen, opciones FROM Pregunta WHERE encuesta = '$encuestaId'";
+                $sql3 = "SELECT id, tipo, numPregunta, titulo, pregunta, video, imagen, combo, opciones FROM Pregunta WHERE encuesta = '$encuestaId'";
                 $result3 = $conn->query($sql3);
 
                 $preguntas = array();
@@ -591,7 +591,7 @@ function fetchMobileData ($panelista) {
                 while ($row3 = $result3->fetch_assoc()) {
                     $opciones = explode('&', $row3['opciones']);
                     $opciones = array_filter($opciones, 'emptyString');
-                    $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'titulo' => $row3['titulo'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'opciones' => $opciones);
+                    $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'titulo' => $row3['titulo'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'combo' => $row3['combo'], 'opciones' => $opciones);
                     $preguntas[] = $pregunta;
                 }
 
@@ -750,6 +750,7 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
             $preguntaText = $pregunta['pregunta'];
             $video = $pregunta['video'];
             $imagen = $pregunta['imagen'];
+            $combo = $pregunta['combo'];
             $opciones = $pregunta['opciones'];
 
             $opcionesString = "";
@@ -761,7 +762,7 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
 
             $opcionesString = rtrim($opcionesString, "&");
 
-            $sql = "INSERT INTO Pregunta (encuesta, tipo, numPregunta, pregunta, video, imagen, numOpciones, titulo, opciones) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$numOpciones', '$titulo', '$opcionesString')";
+            $sql = "INSERT INTO Pregunta (encuesta, tipo, numPregunta, pregunta, video, imagen, numOpciones, titulo, combo, opciones) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$numOpciones', '$titulo', '$combo', '$opcionesString')";
 
             if ($conn->query($sql) === TRUE) {
                 $inserts = $inserts + 1;

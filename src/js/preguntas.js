@@ -104,7 +104,6 @@ $(document).on('ready', function () {
         },
         dataType: 'json',
         success: function (response) {
-            console.log(response);
             var result = response.results;
 
             for (var x = 0; x < result.length; x++) {
@@ -147,9 +146,10 @@ $(document).on('ready', function () {
 
                     if (response.results[x].tipo !== 1) {
                         var opciones = response.results[x].opciones;
+                        var comboRadio = $('input[name="mostrar' + (x + 1) + '"][value="' + response.results[x].combo + '"]')
 
-                        if (response.results[x].tipo == 2){
-                            $('input[name="mostrar' + (x + 1) + '"][value="' + response.results[x].mostrar + '"]').prop('checked', true);
+                        if (comboRadio) {
+                            comboRadio.prop('checked', true);
                         }
 
                         for (var i = 0; i < opciones.length; i++) {
@@ -167,7 +167,7 @@ $(document).on('ready', function () {
     $(document).on('change', '.tipoPregunta', function () {
         var typeQuestion = $(this).val();
         var questionID = $(this).parent().parent().attr('id');
-        var answersClass = "div#Answers" + questionID;
+        var answersClass = 'div#Answers' + questionID;
 
         appendAnswers(typeQuestion, questionID);
     });
@@ -193,6 +193,7 @@ $(document).on('ready', function () {
         var numeroPregunta = 1;
         var questionsArray = [];
         var questionObject = {};
+
         questionObject.opciones = [];
 
         $('#questions').children().each(function () {
@@ -205,10 +206,10 @@ $(document).on('ready', function () {
 
             if (questionObject.tipo !== 1) {
                 var opcion = 1;
-                if (questionObject.tipo == '2'){
-                    questionObject.mostrar = $(this).find('input[name=mostrar' + numeroPregunta + ']:checked').val();
-                    console.log(questionObject.mostrar);
-                }
+                var asCombo = $(this).find('input[name=mostrar' + numeroPregunta + ']:checked').val();
+
+                questionObject.combo = !asCombo ? 0 : asCombo;
+
                 while ($(this).find('#opcion' + opcion).val()) {
                     questionObject.opciones.push($(this).find('#opcion' + opcion).val());
                     opcion++;
@@ -223,7 +224,7 @@ $(document).on('ready', function () {
 
         var idEncuesta = window.location.search.substring(1);
         idEncuesta = idEncuesta.substring(3);
-        console.log(questionsArray);
+
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -235,7 +236,7 @@ $(document).on('ready', function () {
             dataType: 'json',
             success: function (response) {
                 alert('Preguntas ligadas exitosamente.');
-                //location.replace('encuestas.php');
+                location.replace('encuestas.php');
             },
             error: function (error) {
                 $('#feedback').html('Preguntas no añadidas. Ha ocurrido un error.');
