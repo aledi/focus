@@ -7,7 +7,7 @@ var globalVideo = [];
 // Helper Functions
 // -----------------------------------------------------------------------------------------------
 
-function appendSelect(lastQuestion){
+function appendSelect (lastQuestion){
     var currentHTML = '';
     for(var x = 0; x < globalImages.length; x++) {
         currentHTML += '<option value="' + globalImages[x] + '">' + globalImages[x] + '</option>';
@@ -30,16 +30,18 @@ function appendAnswers (typeQuestion, questionID) {
         var currentHTML = '';
 
         if (typeQuestion == 2) {
-            currentHTML += '<label>Mostrar como:</label><br/>' +
-            '<input type="radio" value="0" name="mostrar' + questionID + '">Lista</input>' +
-            '<input type="radio" value="1" name="mostrar' + questionID + '">Combo</input>';
+            currentHTML += '<div class="input-wrapper">';
+            currentHTML += '<label>Mostrar como</label>';
+            currentHTML += '<input type="radio" value="0" name="mostrar' + questionID + '"> Lista </input>';
+            currentHTML += '<input type="radio" value="1" name="mostrar' + questionID + '"> Combo </input>';
+            currentHTML += '</div>';
         }
 
         for (var x = 1; x <= 20; x++) {
-            currentHTML += '<div class="answer">';
-            currentHTML += '<p>Opción ' + x + '</p>';
+            currentHTML += '<div class="input-wrapper answer">';
+            currentHTML += '<label>Opción ' + x + '</label>';
             currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' full-width" type="text"/>';
-            currentHTML += "</div><br>";
+            currentHTML += '</div>';
          }
     }
 
@@ -111,7 +113,7 @@ $(document).on('ready', function () {
             for (var x = 0; x < result.length; x++) {
                 result[x].tipo == 1 ? globalImages.push(result[x].nombre) : globalVideo.push(result[x].nombre);
             }
-            
+
             appendSelect(1);
         },
         error: function (error) {
