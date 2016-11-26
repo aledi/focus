@@ -7,7 +7,7 @@ var globalVideo = [];
 // Helper Functions
 // -----------------------------------------------------------------------------------------------
 
-function appendSelect (lastQuestion){
+function appendSelect (lastQuestion) {
     var currentHTML = '';
     for(var x = 0; x < globalImages.length; x++) {
         currentHTML += '<option value="' + globalImages[x] + '">' + globalImages[x] + '</option>';
@@ -32,8 +32,8 @@ function appendAnswers (typeQuestion, questionID) {
         if (typeQuestion == 2) {
             currentHTML += '<div class="input-wrapper">';
             currentHTML += '<label>Mostrar como</label>';
-            currentHTML += '<input type="radio" value="0" name="mostrar' + questionID + '"> Lista </input>';
-            currentHTML += '<input type="radio" value="1" name="mostrar' + questionID + '"> Combo </input>';
+            currentHTML += '<input type="radio" value="0" name="combo' + questionID + '" checked="checked"> Lista </input>';
+            currentHTML += '<input type="radio" value="1" name="combo' + questionID + '"> Combo </input>';
             currentHTML += '</div>';
         }
 
@@ -53,25 +53,25 @@ function appendQuestions (lastQuestion) {
     var currentHTML = '<div id="' + lastQuestion + '" class="questionForm">';
     currentHTML += '<hr>';
     currentHTML += '<div class="input-wrapper">' +
-        '<p>Título</p>' +
+        '<label>Título</label>' +
         '<input id="titulo" class="titulo full-width" type="text" />' +
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
-        '<p>Imagen</p>' +
+        '<label>Imagen</label>' +
         '<select id="imagen' + lastQuestion + '" class="imagen" type="text">' +
         '<option value="">Selecciona una Imagen</option></select>' +
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
-        '<p>Video</p>' +
+        '<label>Video</label>' +
         '<select id="video' + lastQuestion + '" class="video" type="text">' +
         '<option value="">Selecciona un video</option></select>' +
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
-        '<p>Pregunta</p>' +
+        '<label>Pregunta</label>' +
         '<input id="pregunta" class="pregunta full-width" type="text" />' +
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
-        '<p>Tipo de pregunta</p>' +
+        '<label>Tipo de pregunta</label>' +
         '<select id="tipo" class="tipoPregunta" required>' +
         '<option value="1">Abiertas</option>' +
         '<option value="2">Selección Única</option>' +
@@ -80,8 +80,6 @@ function appendQuestions (lastQuestion) {
         '<option value="5">Matriz</option>' +
         '<option value="6">Escala</option>' +
         '</select>' +
-        '</div>';
-    currentHTML += '<div id="list?">' +
         '</div>';
     currentHTML += '<div id="Answers' + lastQuestion + '"></div>' +
         '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
@@ -151,7 +149,7 @@ $(document).on('ready', function () {
 
                     if (response.results[x].tipo !== 1) {
                         var opciones = response.results[x].opciones;
-                        var comboRadio = $('input[name="mostrar' + (x + 1) + '"][value="' + response.results[x].combo + '"]')
+                        var comboRadio = $('input[name="combo' + (x + 1) + '"][value="' + response.results[x].combo + '"]')
 
                         if (comboRadio) {
                             comboRadio.prop('checked', true);
@@ -177,7 +175,7 @@ $(document).on('ready', function () {
         appendAnswers(typeQuestion, questionID);
     });
 
-    $('#addQuestion').on('click', function(){
+    $('#addQuestion').on('click', function() {
         var lastQuestion = $('#questions').children().length;
         lastQuestion = parseInt(lastQuestion) + 1;
 
@@ -185,7 +183,7 @@ $(document).on('ready', function () {
     });
 
     $('#questions').on('click', '#removeQuestion', function () {
-        if (confirmDelete('esta Pregunta')){
+        if (confirmDelete('esta Pregunta')) {
             if ($(this).parent().attr('id') === 'questions') {
                 return;
             }
@@ -211,7 +209,7 @@ $(document).on('ready', function () {
 
             if (questionObject.tipo !== 1) {
                 var opcion = 1;
-                var asCombo = $(this).find('input[name=mostrar' + numeroPregunta + ']:checked').val();
+                var asCombo = $(this).find('input[name=combo' + numeroPregunta + ']:checked').val();
 
                 questionObject.combo = !asCombo ? 0 : asCombo;
 

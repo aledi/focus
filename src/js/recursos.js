@@ -48,7 +48,7 @@ $(document).on('ready', function () {
                 processData: false,
                 data: form_data,
                 type: 'post',
-                success: function(response){
+                success: function(response) {
                     if (response.status == 'ERROR') {
                         $('#feedback').html(response.reason);
                     } else {
@@ -115,7 +115,7 @@ $(document).on('ready', function () {
         var self = this;
         var data = $(this).parent().attr('id').split('&');
 
-        if (confirmDelete('este Recurso')){
+        if (confirmDelete('este Recurso')) {
             $.ajax({
                 url: '../api/controller.php',
                 type: 'POST',

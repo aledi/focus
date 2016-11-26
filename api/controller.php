@@ -158,7 +158,7 @@ function signinToDatabase ($tipo) {
     if ($tipo === 0) {
         $signinResult = validateWebCredentials($_POST['username'], $_POST['password']);
 
-        if($signinResult['status'] === 'SUCCESS'){
+        if ($signinResult['status'] === 'SUCCESS') {
             startSession($signinResult['id'], $signinResult['tipo'], $signinResult['username'], $signinResult['email'], $signinResult['nombre']);
         }
 

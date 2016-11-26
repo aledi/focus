@@ -259,7 +259,7 @@ $(document).on('ready', function () {
             id: $(this).parent().attr('id')
         }
 
-        if(confirmDelete('este Panelista')) {
+        if (confirmDelete('este Panelista')) {
             $.ajax({
                 url: '../api/controller.php',
                 type: 'POST',
@@ -316,7 +316,7 @@ function fillMunicipios() {
 
     $('#municipio').empty();
 
-    if (currentState !== 'Selecciona un estado'){
+    if (currentState !== 'Selecciona un estado') {
         for(var county = 0; county < Object.keys(arrEstadosMunicipios[currentState]).length; county++) {
             currentHTML += '<option value="' + arrEstadosMunicipios[currentState][county] + '">' + arrEstadosMunicipios[currentState][county] + '</option>';
         }

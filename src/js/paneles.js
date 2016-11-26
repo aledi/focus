@@ -238,7 +238,7 @@ $(document).on('ready', function () {
             'id': $(this).parent().attr('id')
         }
 
-        if (confirmDelete('este Panel')){
+        if (confirmDelete('este Panel')) {
             $.ajax({
                 url: '../api/controller.php',
                 type: 'POST',

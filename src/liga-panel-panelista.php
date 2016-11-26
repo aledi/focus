@@ -18,9 +18,11 @@
         <div class='liga-panel-wrapper'>
             <h2>Ligar Panelistas</h2>
             <div id='panelista'>
-                <p>Buscar: <input id='filteringText' type='text' /></p>
-                <p>Número de Muestra: <span id='current-checked'> 0 / 0</span></p>
+                <label>Buscar: <input id='filteringText' type='text' /></label>
+
+                <p>Número de Muestra: <span id='current-checked'>0 / 0</span></p>
                 <p class='alert'>*Los panelistas marcados en rojo no cuentan con información suficiente para responder encuestas</p>
+
                 <table id='tablaPanelistas' class='padding-bottom'></table>
             </div>
             <button type='button' id='ligar-panelistas'>Ligar Panelistas</button>
