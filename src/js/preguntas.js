@@ -28,11 +28,13 @@ function appendAnswers (typeQuestion, questionID) {
 
     if (typeQuestion != 1 && typeQuestion != 6) {
         var currentHTML = '';
+
         if (typeQuestion == 2) {
             currentHTML += '<label>Mostrar como:</label><br/>' +
             '<input type="radio" value="0" name="mostrar' + questionID + '">Lista</input>' +
             '<input type="radio" value="1" name="mostrar' + questionID + '">Combo</input>';
         }
+
         for (var x = 1; x <= 20; x++) {
             currentHTML += '<div class="answer">';
             currentHTML += '<p>Opción ' + x + '</p>';
@@ -109,6 +111,7 @@ $(document).on('ready', function () {
             for (var x = 0; x < result.length; x++) {
                 result[x].tipo == 1 ? globalImages.push(result[x].nombre) : globalVideo.push(result[x].nombre);
             }
+            
             appendSelect(1);
         },
         error: function (error) {
