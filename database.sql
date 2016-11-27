@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 08-11-2016 a las 02:59:27
+-- Tiempo de generación: 26-11-2016 a las 01:46:23
 -- Versión del servidor: 5.5.42
 -- Versión de PHP: 7.0.0
 
@@ -26,7 +26,7 @@ CREATE TABLE `Encuesta` (
   `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `fechaInicio` date NOT NULL,
   `fechaFin` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Encuesta`
@@ -36,7 +36,8 @@ INSERT INTO `Encuesta` (`id`, `panel`, `nombre`, `fechaInicio`, `fechaFin`) VALU
 (1, 1, 'Encuesta', '2016-08-06', '2016-12-31'),
 (7, 3, 'Bronco', '2016-09-01', '2017-01-01'),
 (9, 5, 'Encuesta de satisfacción del cliente', '2016-09-01', '2017-01-01'),
-(10, 6, 'Prueba 2', '2016-01-01', '2017-01-01');
+(10, 6, 'Prueba 2', '2016-01-01', '2017-01-01'),
+(11, 5, 'PRUEBA CAMBIOS', '2016-01-01', '2024-01-01');
 
 -- --------------------------------------------------------
 
@@ -53,20 +54,24 @@ CREATE TABLE `Panel` (
   `numParticipantes` smallint(6) NOT NULL,
   `cliente` int(11) NOT NULL,
   `creador` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Panel`
 --
 
 INSERT INTO `Panel` (`id`, `nombre`, `descripcion`, `fechaInicio`, `fechaFin`, `numParticipantes`, `cliente`, `creador`) VALUES
-(1, 'Margarita Zavala', '', '2016-09-20', '2016-10-10', 0, 2, 1),
-(2, 'Votaciones 2018', '', '2016-09-24', '2016-10-01', 0, 2, 1),
-(3, 'Bronco', '', '2016-09-24', '2016-10-01', 0, 3, 1),
+(1, 'Margarita Zavala', '', '2016-09-20', '2017-01-27', 0, 2, 1),
+(2, 'Votaciones 2018', '', '2016-09-24', '2017-03-10', 0, 2, 1),
+(3, 'Bronco', '', '2016-09-24', '2017-03-24', 0, 3, 1),
 (4, 'as', '', '2016-01-01', '2020-01-01', 0, 2, 1),
-(5, 'Pollo Loco', '', '2016-09-28', '2016-10-01', 0, 4, 1),
+(5, 'Pollo Loco', '', '2016-09-28', '2017-04-20', 0, 4, 1),
 (6, 'Prueba', '', '2016-01-01', '2018-01-01', 0, 5, 1),
-(7, 'PPEPEPPEPE', '', '2016-01-01', '2018-01-01', 0, 2, 1);
+(7, 'PPEPEPPEPE', '', '2016-01-01', '2018-01-01', 0, 2, 1),
+(8, 'asas', '', '2016-01-01', '2018-01-01', 91, 3, 1),
+(9, '123', '', '2016-01-01', '2017-01-01', 123, 3, 1),
+(10, 'adsfg', '', '2016-01-01', '2017-01-01', 1234, 2, 1),
+(11, '00', '', '2016-01-01', '2017-01-01', 1000, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -501,7 +506,7 @@ INSERT INTO `Panelista` (`id`, `username`, `password`, `nombre`, `apellidos`, `e
 (399, 'Filiberto', 'pass', 'Filiberto', 'Zazueta Cordoba', 'filizazc7890@hotmail.com', 0, '1954-05-30', 2, '', '', 'Monterrey', 'NL', 0, NULL, '', 1),
 (400, 'Fernando', 'pass', 'Fernando', 'Portes Zambrano', 'ferpat0713@hotmail.com', 0, '1966-12-29', 4, '', '', 'San Pedro', 'NL', 0, NULL, '', 1),
 (405, 'flyflyerson', 'apple123', 'John', 'Snow', 'flyflyerson@gmail.com', 0, '1996-09-24', 2, '1 flyerson 1', 'test', 'test', 'BCS', 94356, NULL, '', 0),
-(406, 'ecristerna', 'password', 'Eduardo', 'Cristenra', 'ec@c.com', 0, '1994-09-04', 4, 'Calle', 'Colonia', 'Mty', 'NL', 12345, NULL, '1fc5dbe6bd3f9dd3c467f0b0ef5046cac2cb5353caa43b9e1496e04141d462cb', 1),
+(406, 'ecristerna', 'pass', 'Eduardo', 'Cristenra', 'ec@c.com', 0, '1994-09-04', 4, 'Calle', 'Colonia', 'Mty', 'NL', 12345, NULL, '', 0),
 (408, 'prueba', '', 'Prueba', 'p', 'kjfj@hotmail.com', 0, '1998-01-01', 2, 'jdfnj', 'cjakg', 'monterrey', 'NL', 66546, NULL, '', 0),
 (409, 'Enrique Silva', '3232', 'Enrique', 'Silva', 'enriquesilva@focuscg.com.mx', 0, '1998-09-28', 4, 'ee dd', 'de', 'dd', 'NL', 66230, NULL, '', 0),
 (410, 'juane', 'juane1', 'Juan', 'Saenz', 'saenz@me.com', 0, '1997-09-29', 5, 'luis 15', 'francia', 'monterrey', 'NL', 66230, NULL, 'b36831f9edee1f14120b035eaef45ce3227c204fc88b762aafbcf8d841a50065', 1),
@@ -552,7 +557,7 @@ INSERT INTO `Panelista` (`id`, `username`, `password`, `nombre`, `apellidos`, `e
 (457, 'Felipe Flores', 'w2tqzn2f', 'Felipe', 'Flores', 'felipe@comunicacionpolitica.com.mx', 0, '1975-08-30', 5, 'Rosellino 815', 'Contry La Silla', 'Guadalupe', 'NL', 67173, NULL, '', 0),
 (458, 'Kevinzapata', 'politicas', 'kevin', 'Zapata Celestino', 'kevinzapata2012@gmail.com', 0, '1990-09-28', 5, 'Gustavo Adolfo Becquer 512', 'Anahuac', 'San Nicolas De Los Garza', 'NL', 66450, NULL, '', 0),
 (459, 'anglara', '67176ang', 'Alberto', 'Ang', 'anglara@hotmail.com', 0, '1996-07-16', 4, 'maple 2864', 'Bosques del Contry', 'Guadalupe', 'NL', 67176, NULL, '6ad9314e67373fe738e2f06258b2d32e9b8581d713f68ccc52b49332cd8545cd', 1),
-(460, 'prueba2', 'prueba2', 'prueba2', 'prueba2', 'prueba2', 0, '1998-01-01', 3, 'prueba', 'prueba', 'prueba', 'AGS', 10, '2016-11-05', '', 0);
+(460, 'prueba2', 'prueba2', 'prueba2', 'prueba2', 'prueba2', 0, '1998-01-01', 3, 'prueba', 'prueba', 'Ensenada', 'BC', 10, '2016-11-05', '', 0);
 
 -- --------------------------------------------------------
 
@@ -564,7 +569,7 @@ CREATE TABLE `PanelistaEnPanel` (
   `id` int(11) NOT NULL,
   `panelista` int(11) NOT NULL,
   `panel` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=889 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=891 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `PanelistaEnPanel`
@@ -590,6 +595,7 @@ INSERT INTO `PanelistaEnPanel` (`id`, `panelista`, `panel`) VALUES
 (829, 126, 1),
 (830, 170, 1),
 (831, 260, 1),
+(890, 285, 11),
 (174, 399, 2),
 (832, 400, 1),
 (833, 405, 1),
@@ -731,7 +737,8 @@ INSERT INTO `PanelistaEnPanel` (`id`, `panelista`, `panel`) VALUES
 (748, 457, 5),
 (880, 457, 1),
 (749, 458, 5),
-(881, 458, 1);
+(881, 458, 1),
+(889, 460, 11);
 
 -- --------------------------------------------------------
 
@@ -744,61 +751,54 @@ CREATE TABLE `Pregunta` (
   `titulo` text COLLATE utf8_spanish_ci NOT NULL,
   `encuesta` int(11) NOT NULL,
   `tipo` int(11) NOT NULL,
+  `combo` tinyint(1) NOT NULL,
   `numPregunta` int(11) NOT NULL,
   `pregunta` text COLLATE utf8_spanish_ci NOT NULL,
   `video` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `imagen` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `numOpciones` tinyint(4) NOT NULL,
-  `op1` text COLLATE utf8_spanish_ci NOT NULL,
-  `op2` text COLLATE utf8_spanish_ci NOT NULL,
-  `op3` text COLLATE utf8_spanish_ci NOT NULL,
-  `op4` text COLLATE utf8_spanish_ci NOT NULL,
-  `op5` text COLLATE utf8_spanish_ci NOT NULL,
-  `op6` text COLLATE utf8_spanish_ci NOT NULL,
-  `op7` text COLLATE utf8_spanish_ci NOT NULL,
-  `op8` text COLLATE utf8_spanish_ci NOT NULL,
-  `op9` text COLLATE utf8_spanish_ci NOT NULL,
-  `op10` text COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `opciones` text COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=195 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Pregunta`
 --
 
-INSERT INTO `Pregunta` (`id`, `titulo`, `encuesta`, `tipo`, `numPregunta`, `pregunta`, `video`, `imagen`, `numOpciones`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`) VALUES
-(101, '', 9, 2, 1, '¿Es la primera vez que visita Pollo Loco?', '', '', 2, 'Sí', 'No', '', '', '', '', '', '', '', ''),
-(102, '', 9, 3, 2, '¿Que fue lo que ordenó en esta visita?', '', '', 5, 'Combo', 'Piezas de pollo', 'Complementos', 'Postre', 'Bebida', '', '', '', '', ''),
-(103, '', 9, 2, 3, '¿Qué le pareció la comida de hoy?', '', '', 5, 'Excelente', 'Buena', 'Regular', 'Mala', 'Pésima', '', '', '', '', ''),
-(104, '', 9, 2, 4, 'Del 1 al 10, donde 1 es la más baja calificación y 10 la más alta, ¿Cómo califica la calidad del producto que consumió hoy?', '', '', 10, '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'),
-(105, '', 9, 2, 5, 'Del 1 al 10, donde 1 es la más baja calificación y 10 la más alta, ¿Cómo califica la atención del personal el día de hoy?', '', '', 10, '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'),
-(106, '', 9, 2, 6, 'Del 1 al 10, donde 1 es la más baja calificación y 10 la más alta, ¿Cómo califica las instalaciones, limpieza, orden, temperatura, etc?', '', '', 10, '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'),
-(107, '', 9, 1, 7, '¿Qué fue lo que más le gusto de su visita el día de hoy?', '', '', 0, '', '', '', '', '', '', '', '', '', ''),
-(108, '', 9, 1, 8, '¿Qué mejoraría en Pollo loco?', '', '', 0, '', '', '', '', '', '', '', '', '', ''),
-(109, '', 9, 2, 9, '¿Volvería a comprar en Pollo Loco?', '', '', 2, 'Sí', 'No', '', '', '', '', '', '', '', ''),
-(110, '', 9, 1, 10, '¿Qué le gustaría que hubiera o que cambiaría en Pollo Loco?', '', '', 0, '', '', '', '', '', '', '', '', '', ''),
-(111, '', 9, 2, 11, 'Ahora le pedimos que vea este video y nos diga si le gusto.', 'PolloLoco.mp4', '', 2, 'Sí', 'No', '', '', '', '', '', '', '', ''),
-(112, '', 9, 2, 12, '¿Le pareció creíble?', '', '', 2, 'Sí', 'No', '', '', '', '', '', '', '', ''),
-(113, '', 9, 1, 13, '¿Qué le cambiaría?', '', '', 0, '', '', '', '', '', '', '', '', '', ''),
-(114, '', 9, 2, 14, 'Por último, ¿recomendaría Pollo Loco a algun familiar o amigo?', '', '', 2, 'Sí', 'No', '', '', '', '', '', '', '', ''),
-(115, '', 1, 1, 1, '¿Qué cosas ha escuchado recientemente de Margarita Zavala?', '', '', 0, '', '', '', '', '', '', '', '', '', ''),
-(116, '', 1, 2, 2, '¿Su opinión sobre Margarita Zavala es?', '', '', 3, 'Positiva', 'Neutra', 'Negativa', '', '', '', '', '', '', ''),
-(117, '', 1, 2, 3, '¿Conoce la asociación que promueve Margarita Zavala?', '', '', 2, 'Sí', 'No', '', '', '', '', '', '', '', ''),
-(118, '', 1, 2, 4, '¿Sabe usted qué promueve dicha asociación?', '', '', 2, 'Sí', 'No', '', '', '', '', '', '', '', ''),
-(119, '', 1, 2, 5, 'Después de ver el video, su opinión sobre MZ...', 'MZ.mp4', '', 3, 'Mejoró', 'Empeoró', 'Sigue igual', '', '', '', '', '', '', ''),
-(120, '', 1, 2, 6, '¿Cree usted que tiene posibilidades para ser Presidenta de México?', '', '', 4, 'Sí', 'No', 'Aún es muy pronto para dar una opinión', 'Tal vez', '', '', '', '', '', ''),
-(121, '', 10, 2, 1, 'gfdgfdgfdfdgf', '', '', 0, '', '', '', '', '', '', '', '', '', ''),
-(122, '', 10, 3, 2, '', '', '', 0, '', '', '', '', '', '', '', '', '', ''),
-(123, 'TITULO', 7, 2, 1, 'El primer año del “El Bronco”, ¿cumplió con sus expectativas? ', '', '', 4, 'Sí las cumplió', 'Las superó', 'Estuvo por debajo', 'No sé', '', '', '', '', '', ''),
-(124, 'TITULO 2', 7, 2, 2, '¿Cómo califica el primer año de gobierno de Jaime Rodríguez?', '', '', 10, '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'),
-(125, '', 7, 1, 3, 'Diga en una palabra ¿cómo califica su gobierno? ', '', '', 0, '', '', '', '', '', '', '', '', '', ''),
-(126, '', 7, 2, 4, '¿Qué opina de las propuestas del gobernador, como la invitación a los ciudadanos a tapar baches en las calles de sus colonias?', '', '', 3, 'No me agradan, y no participaría.', 'Sí me agradan, y sí participaría.', 'Me es indiferente.', '', '', '', '', '', '', ''),
-(127, '', 7, 3, 5, '¿Elija algunos temas en el que considera que el gobernador ha realizado un mal trabajo?', '', '', 10, 'Seguridad', 'Inversión en obra pública', 'Acciones en contra del ex gobernador Rodrigo Medina.', 'Restructura de la deuda de NL y en el gobierno en general.', 'Nuevos programas de apoyo a la comunidad.', 'Reducción gradual del pago de la Tenencia.', 'Transparencia.', 'Rendición de Cuentas.', 'Combate a la corrupción.', 'No sé'),
-(128, '', 7, 2, 6, '¿Elija un tema en el que considera que el gobernador ha hecho un buen trabajo?', '', '', 10, 'Seguridad', 'Inversión en obra pública', 'Acciones en contra del ex gobernador Rodrigo Medina.', 'Restructura de la deuda de NL y en el gobierno en general.', 'Nuevos programas de apoyo a la comunidad.', 'Reducción gradual del pago de la Tenencia.', 'Transparencia.', 'Rendición de Cuentas.', 'Combate a la corrupción.', 'No sé'),
-(129, '', 7, 2, 7, '¿Percibe una mejoría al tener un gobierno independiente en Nuevo León?', '', '', 4, 'Sí', 'No', 'Igual', 'No sé', '', '', '', '', '', ''),
-(130, '', 7, 3, 8, '¿En qué rubros considera que “El Bronco” tiene retos para su siguiente año de gobierno?', '', '', 9, 'Seguridad', 'Inversión en obra pública ', 'Concluir la Línea 3 del Metro', 'Combate a la Corrupción', 'Definir si se realizará la obra del Monterrey VI', 'Transparencia', 'Rendición de Cuentas', 'Impulso en la generación de empleo', 'No sé', ''),
-(131, '', 7, 1, 9, 'En una palabra, ¿cómo define el primer año de gobierno de “El Bronco”?', '', '', 0, '', '', '', '', '', '', '', '', '', ''),
-(132, '', 7, 2, 10, '¿Qué expectativas tiene del primer “informe de gobierno”, sobre algún anuncio para los ciudadanos?', '', '', 4, 'Positivo.', 'Negativo.', 'Sin afectar a los ciudadanos.', 'No sé.', '', '', '', '', '', ''),
-(133, '', 7, 2, 11, 'Si las elecciones para Gobernador fueran hoy, votaría nuevamente por Jaime Rodríguez', '', '', 3, 'Sí', 'No', 'No sé', '', '', '', '', '', '', '');
+INSERT INTO `Pregunta` (`id`, `titulo`, `encuesta`, `tipo`, `combo`, `numPregunta`, `pregunta`, `video`, `imagen`, `numOpciones`, `opciones`) VALUES
+(101, '', 9, 2, 0, 1, '¿Es la primera vez que visita Pollo Loco?', '', '', 2, 'Sí&No'),
+(102, '', 9, 3, 0, 2, '¿Que fue lo que ordenó en esta visita?', '', '', 5, 'Combo&Piezas de pollo&Complementos&Postre&Bebida'),
+(103, '', 9, 2, 0, 3, '¿Qué le pareció la comida de hoy?', '', '', 5, 'Excelente&Buena&Regular&Mala&Pésima&'),
+(104, '', 9, 2, 0, 4, 'Del 1 al 10, donde 1 es la más baja calificación y 10 la más alta, ¿Cómo califica la calidad del producto que consumió hoy?', '', '', 10, '1&2&3&4&5&6&7&8&9&10'),
+(105, '', 9, 2, 0, 5, 'Del 1 al 10, donde 1 es la más baja calificación y 10 la más alta, ¿Cómo califica la atención del personal el día de hoy?', '', '', 10, '1&2&3&4&5&6&7&8&9&10'),
+(106, '', 9, 2, 0, 6, 'Del 1 al 10, donde 1 es la más baja calificación y 10 la más alta, ¿Cómo califica las instalaciones, limpieza, orden, temperatura, etc?', '', '', 10, '1&2&3&4&5&6&7&8&9&10'),
+(107, '', 9, 1, 0, 7, '¿Qué fue lo que más le gusto de su visita el día de hoy?', '', '', 0, ''),
+(108, '', 9, 1, 0, 8, '¿Qué mejoraría en Pollo loco?', '', '', 0, ''),
+(109, '', 9, 2, 0, 9, '¿Volvería a comprar en Pollo Loco?', '', '', 2, 'Sí&No'),
+(110, '', 9, 1, 0, 10, '¿Qué le gustaría que hubiera o que cambiaría en Pollo Loco?', '', '', 0, ''),
+(111, '', 9, 2, 0, 11, 'Ahora le pedimos que vea este video y nos diga si le gusto.', 'PolloLoco.mp4', '', 2, 'Sí&No'),
+(112, '', 9, 2, 0, 12, '¿Le pareció creíble?', '', '', 2, 'Sí&No'),
+(113, '', 9, 1, 0, 13, '¿Qué le cambiaría?', '', '', 0, ''),
+(114, '', 9, 2, 0, 14, 'Por último, ¿recomendaría Pollo Loco a algun familiar o amigo?', '', '', 2, 'Sí&No'),
+(115, '', 1, 1, 0, 1, '¿Qué cosas ha escuchado recientemente de Margarita Zavala?', '', '', 0, ''),
+(116, '', 1, 2, 0, 2, '¿Su opinión sobre Margarita Zavala es?', '', '', 3, 'Positiva&Neutra&Negativa'),
+(117, '', 1, 2, 0, 3, '¿Conoce la asociación que promueve Margarita Zavala?', '', '', 2, 'Sí&No'),
+(118, '', 1, 2, 0, 4, '¿Sabe usted qué promueve dicha asociación?', '', '', 2, 'Sí&No'),
+(119, 'Título', 1, 2, 0, 5, 'Después de ver el video, su opinión sobre MZ...', 'MZ.mp4', '', 3, 'Mejoró&Empeoró&Sigue igual'),
+(120, '', 1, 2, 0, 6, '¿Cree usted que tiene posibilidades para ser Presidenta de México?', '', '', 4, 'Sí&No&Aún es muy pronto para dar una opinión&Tal vez'),
+(121, '', 10, 2, 0, 1, 'gfdgfdgfdfdgf', '', '', 0, ''),
+(122, '', 10, 3, 0, 2, '', '', '', 0, ''),
+(139, 'PRUEBA CAMBIOS12345', 11, 2, 0, 1, 'PRUEBA CAMBIOS1234', '', '', 17, 'OP1121212&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2'),
+(184, 'TITULO', 7, 2, 0, 1, 'El primer año del “El Bronco”, ¿cumplió con sus expectativas? ', '', '', 4, 'Sí las cumplió&Las superó&Estuvo por debajo&No sé'),
+(185, 'TITULO 2', 7, 2, 0, 2, '¿Cómo califica el primer año de gobierno de Jaime Rodríguez?', '', '', 10, '1&2&3&4&5&6&7&8&9&10'),
+(186, '', 7, 1, 0, 3, 'Diga en una palabra ¿cómo califica su gobierno? ', '', '', 0, ''),
+(187, '', 7, 2, 0, 4, '¿Qué opina de las propuestas del gobernador, como la invitación a los ciudadanos a tapar baches en las calles de sus colonias?', '', '', 3, 'No me agradan, y no participaría.&Sí me agradan, y sí participaría.&Me es indiferente.'),
+(188, '', 7, 3, 0, 5, '¿Elija algunos temas en el que considera que el gobernador ha realizado un mal trabajo?', '', '', 10, 'Seguridad&Inversión en obra pública&Acciones en contra del ex gobernador Rodrigo Medina.&Restructura de la deuda de NL y en el gobierno en general.&Nuevos programas de apoyo a la comunidad.&Reducción gradual del pago de la Tenencia.&Transparencia.&Rendición de Cuentas.&Combate a la corrupción.&No sé'),
+(189, '', 7, 2, 0, 6, '¿Elija un tema en el que considera que el gobernador ha hecho un buen trabajo?', '', '', 10, 'Seguridad&Inversión en obra pública&Acciones en contra del ex gobernador Rodrigo Medina.&Restructura de la deuda de NL y en el gobierno en general.&Nuevos programas de apoyo a la comunidad.&Reducción gradual del pago de la Tenencia.&Transparencia.&Rendición de Cuentas.&Combate a la corrupción.&No sé'),
+(190, '', 7, 2, 0, 7, '¿Percibe una mejoría al tener un gobierno independiente en Nuevo León?', '', '', 4, 'Sí&No&Igual&No sé'),
+(191, '', 7, 3, 0, 8, '¿En qué rubros considera que “El Bronco” tiene retos para su siguiente año de gobierno?', '', '', 9, 'Seguridad&Inversión en obra pública &Concluir la Línea 3 del Metro&Combate a la Corrupción&Definir si se realizará la obra del Monterrey VI&Transparencia&Rendición de Cuentas&Impulso en la generación de empleo&No sé'),
+(192, '', 7, 1, 0, 9, 'En una palabra, ¿cómo define el primer año de gobierno de “El Bronco”?', '', '', 0, ''),
+(193, '', 7, 2, 0, 10, '¿Qué expectativas tiene del primer “informe de gobierno”, sobre algún anuncio para los ciudadanos?', '', '', 4, 'Positivo.&Negativo.&Sin afectar a los ciudadanos.&No sé.'),
+(194, '', 7, 2, 1, 11, 'Si las elecciones para Gobernador fueran hoy, votaría nuevamente por Jaime Rodríguez', '', '', 3, 'Sí&No&No sé');
 
 -- --------------------------------------------------------
 
@@ -810,23 +810,7 @@ CREATE TABLE `Recurso` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `tipo` tinyint(4) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `Recurso`
---
-
-INSERT INTO `Recurso` (`id`, `nombre`, `tipo`) VALUES
-(21, 'imagen.jpg', 1),
-(23, 'test.mp4', 2),
-(24, 'carros.mp4', 2),
-(25, 'prueba.jpg', 1),
-(26, 'Haus.jpg', 1),
-(30, 'video.mp4', 2),
-(31, 'video2.mp4', 2),
-(32, 'image0.jpg', 1),
-(33, 'MZ.mp4', 2),
-(34, 'PolloLoco.mp4', 2);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -884,7 +868,7 @@ CREATE TABLE `Usuario` (
   `apellidos` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `email` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `tipo` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Usuario`
@@ -895,7 +879,8 @@ INSERT INTO `Usuario` (`id`, `username`, `password`, `nombre`, `apellidos`, `ema
 (2, 'mzavala', 'pass', 'Margarita', 'Zavala', 'mzavala@pan.com', 1),
 (3, 'jrodriguez', 'focuscg233', 'Jaime ', 'Rodriguez', '', 1),
 (4, 'polloloco', 'pollo', 'Pollo Loco', 'Apellidos', 'email', 1),
-(5, 'Prueba2', 'Prueba', 'Prueba 2', '', '', 1);
+(5, 'Prueba2', 'Prueba', 'Prueba 2', '', '', 1),
+(6, 'nuevo', 'cliente', 'Nuevo', 'Cliente', '', 1);
 
 --
 -- Índices para tablas volcadas
@@ -966,12 +951,12 @@ ALTER TABLE `Usuario`
 -- AUTO_INCREMENT de la tabla `Encuesta`
 --
 ALTER TABLE `Encuesta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `Panel`
 --
 ALTER TABLE `Panel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `Panelista`
 --
@@ -981,17 +966,17 @@ ALTER TABLE `Panelista`
 -- AUTO_INCREMENT de la tabla `PanelistaEnPanel`
 --
 ALTER TABLE `PanelistaEnPanel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=889;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=891;
 --
 -- AUTO_INCREMENT de la tabla `Pregunta`
 --
 ALTER TABLE `Pregunta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=134;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=195;
 --
 -- AUTO_INCREMENT de la tabla `Recurso`
 --
 ALTER TABLE `Recurso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `Respuesta`
 --
@@ -1001,7 +986,7 @@ ALTER TABLE `Respuesta`
 -- AUTO_INCREMENT de la tabla `Usuario`
 --
 ALTER TABLE `Usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- Restricciones para tablas volcadas
 --

@@ -165,7 +165,7 @@ $(document).on('ready', function () {
 
     $('#allUsers').on('click', '.deleteButton', function () {
         var self = this;
-        if(confirmDelete('este Cliente')){
+        if (confirmDelete('este Cliente')) {
             $.ajax({
                 url: '../api/controller.php',
                 type: 'POST',

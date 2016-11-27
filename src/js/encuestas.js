@@ -229,7 +229,7 @@ $(document).on('ready', function () {
     $('#all-encuestas').on('click', '.deleteButton', function() {
         var self = this;
 
-        if (confirmDelete('esta Encuesta')){
+        if (confirmDelete('esta Encuesta')) {
             $.ajax({
                 url: '../api/controller.php',
                 type: 'POST',

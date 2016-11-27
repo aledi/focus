@@ -552,7 +552,9 @@ function fetchPreguntasEncuesta ($encuesta) {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $pregunta = array('id' => (int)$row['id'], 'encuesta' => (int)$encuesta, 'numPregunta' => (int)$row['numPregunta'], 'titulo' => $row['titulo'], 'tipo' => (int)$row['tipo'], 'pregunta' => $row['pregunta'], 'video' => $row['video'], 'imagen' => $row['imagen'], 'op1' => $row['op1'], 'op2' => $row['op2'], 'op3' => $row['op3'], 'op4' => $row['op4'], 'op5' => $row['op5'], 'op6' => $row['op6'], 'op7' => $row['op7'], 'op8' => $row['op8'], 'op9' => $row['op9'], 'op10' => $row['op10']);
+            $opciones = explode('&', $row['opciones']);
+            $opciones = array_filter($opciones, 'emptyString');
+            $pregunta = array('id' => (int)$row['id'], 'encuesta' => (int)$encuesta, 'numPregunta' => (int)$row['numPregunta'], 'titulo' => $row['titulo'], 'tipo' => (int)$row['tipo'], 'pregunta' => $row['pregunta'], 'video' => $row['video'], 'imagen' => $row['imagen'], 'combo' => $row['combo'], 'opciones' => $opciones);
             $response[] = $pregunta;
         }
 
@@ -581,15 +583,15 @@ function fetchMobileData ($panelista) {
 
             while ($row2 = $result2->fetch_assoc()) {
                 $encuestaId = $row2['id'];
-                $sql3 = "SELECT id, tipo, numPregunta, titulo, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Pregunta WHERE encuesta = '$encuestaId'";
+                $sql3 = "SELECT id, tipo, numPregunta, titulo, pregunta, video, imagen, combo, opciones FROM Pregunta WHERE encuesta = '$encuestaId'";
                 $result3 = $conn->query($sql3);
 
                 $preguntas = array();
 
                 while ($row3 = $result3->fetch_assoc()) {
-                    $opciones = array($row3['op1'], $row3['op2'], $row3['op3'], $row3['op4'], $row3['op5'], $row3['op6'], $row3['op7'], $row3['op8'], $row3['op9'], $row3['op10']);
+                    $opciones = explode('&', $row3['opciones']);
                     $opciones = array_filter($opciones, 'emptyString');
-                    $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'titulo' => $row3['titulo'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'opciones' => $opciones);
+                    $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'titulo' => $row3['titulo'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'combo' => $row3['combo'], 'opciones' => $opciones);
                     $preguntas[] = $pregunta;
                 }
 
@@ -748,63 +750,19 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
             $preguntaText = $pregunta['pregunta'];
             $video = $pregunta['video'];
             $imagen = $pregunta['imagen'];
-
+            $combo = $pregunta['combo'];
             $opciones = $pregunta['opciones'];
 
-            $op1 = '';
-            $op2 = '';
-            $op3 = '';
-            $op4 = '';
-            $op5 = '';
-            $op6 = '';
-            $op7 = '';
-            $op8 = '';
-            $op9 = '';
-            $op10 = '';
+            $opcionesString = "";
+            $numOpciones = count($opciones);
 
-            $count = count($opciones);
-
-            if ($count > 0) {
-                $op1 = $opciones[0];
+            for ($x = 0; $x < $numOpciones; $x++) {
+                $opcionesString = $opcionesString.$opciones[$x]."&";
             }
 
-            if ($count > 1) {
-                $op2 = $opciones[1];
-            }
+            $opcionesString = rtrim($opcionesString, "&");
 
-            if ($count > 2) {
-                $op3 = $opciones[2];
-            }
-
-            if ($count > 3) {
-                $op4 = $opciones[3];
-            }
-
-            if ($count > 4) {
-                $op5 = $opciones[4];
-            }
-
-            if ($count > 5) {
-                $op6 = $opciones[5];
-            }
-
-            if ($count > 6) {
-                $op7 = $opciones[6];
-            }
-
-            if ($count > 7) {
-                $op8 = $opciones[7];
-            }
-
-            if ($count > 8) {
-                $op9 = $opciones[8];
-            }
-
-            if ($count > 9) {
-                $op10 = $opciones[9];
-            }
-
-            $sql = "INSERT INTO Pregunta (encuesta, tipo, numPregunta, pregunta, video, imagen, numOpciones, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10, titulo) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$count', '$op1', '$op2', '$op3', '$op4', '$op5', '$op6', '$op7', '$op8', '$op9', '$op10', '$titulo')";
+            $sql = "INSERT INTO Pregunta (encuesta, tipo, numPregunta, pregunta, video, imagen, numOpciones, titulo, combo, opciones) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$numOpciones', '$titulo', '$combo', '$opcionesString')";
 
             if ($conn->query($sql) === TRUE) {
                 $inserts = $inserts + 1;
@@ -1346,7 +1304,7 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT tipo, numOpciones, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Pregunta WHERE encuesta = '$encuesta' AND numPregunta = '$numPregunta'";
+        $sql = "SELECT tipo, numOpciones, opciones FROM Pregunta WHERE encuesta = '$encuesta' AND numPregunta = '$numPregunta'";
         $result = $conn->query($sql);
         $tipo = 0;
         $options = array();
@@ -1355,9 +1313,10 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $tipo = $row['tipo'];
+            $options = explode('&', $row['opciones']);
+            $options = array_filter($options, 'emptyString');
 
             for ($x = 1; $x <= $row['numOpciones']; $x++) {
-                $options[] = $row['op'.$x];
                 $votes[] = 0;
             }
         }
@@ -1410,7 +1369,7 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
 
             if ($tipo == 1) {
                 $votes[] = $answers[$numPregunta - 1];
-            } if ($tipo == 2) {
+            } else if ($tipo == 2) {
                 for ($x = 0; $x < count($options); $x++) {
                     if ($answers[$numPregunta - 1] == $options[$x]) {
                         $votes[$x] = $votes[$x] + 1;

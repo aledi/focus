@@ -25,7 +25,7 @@
                     <div id='1' class='questionForm'>
                         <div class='input-wrapper'>
                             <label>Título</label>
-                            <input id='titulo' class='titulo' type='text' />
+                            <input id='titulo' class='titulo full-width' type='text' />
                         </div>
                         <div class='input-wrapper'>
                             <label>Imagen</label>
@@ -41,7 +41,7 @@
                         </div>
                         <div class='input-wrapper'>
                             <label>Pregunta</label>
-                            <input id='pregunta' class='pregunta' type='text' />
+                            <input id='pregunta' class='pregunta full-width' type='text' />
                         </div>
                         <div class='input-wrapper'>
                             <label>Tipo de pregunta</label>

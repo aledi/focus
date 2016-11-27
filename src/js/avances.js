@@ -52,9 +52,9 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                var summaryHTLM = readableDate(response.fechaInicio) + ' - ' + readableDate(response.fechaFin) + ' (' + (response.dias < 0 ? 0 : response.dias) + ' días restantes)';
-                summaryHTLM += '<br><br>';
-                summaryHTLM += 'Respuestas: ' + response.respuestas + '  (' + (response.porcentaje * 100).toFixed(2) + '%)';
+                var summaryHTLM = 'Respuestas: ' + response.respuestas + ' (' + (response.porcentaje * 100).toFixed(2) + '%)';
+                summaryHTLM += '<br>';
+                summaryHTLM += readableDate(response.fechaInicio) + ' - ' + readableDate(response.fechaFin) + ' (' + (response.dias < 0 ? 0 : response.dias) + ' días restantes)';
                 $('#avance-summary').html(summaryHTLM);
 
                 var currentHTML = '<thead>';
