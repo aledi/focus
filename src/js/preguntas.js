@@ -24,10 +24,10 @@ function appendSelect (lastQuestion) {
 }
 
 function appendAnswers (typeQuestion, questionID) {
+    var currentHTML = '';
     $('#Answers' + questionID).empty();
 
     if (typeQuestion != 1 && typeQuestion != 6) {
-        var currentHTML = '';
 
         if (typeQuestion == 2) {
             currentHTML += '<div class="input-wrapper">';
@@ -43,6 +43,14 @@ function appendAnswers (typeQuestion, questionID) {
             currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' full-width" type="text"/>';
             currentHTML += '</div>';
          }
+    }
+    else if (typeQuestion == 6){
+        currentHTML += '<div class="input-wrapper answer">';
+        currentHTML += '<label>Desde:</label>';
+        currentHTML += '<input type="number" id="escalaDesde" type="text"/>';
+        currentHTML += '<label>Hasta:</label>';
+        currentHTML += '<input type="number" id="escalaHasta" type="text"/>';
+        currentHTML += '</div>';
     }
 
     $('#Answers' + questionID).append(currentHTML);

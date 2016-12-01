@@ -298,13 +298,6 @@ $(document).on('ready', function () {
         changeSelect('Inicio');
     });
 
-    // Listen to keypress & restrict input to numeric value
-    $('#cp').keypress(function (event) {
-        if (!event.metaKey && event.charCode !== 13 && (event.charCode < 48 || event.charCode > 57)) {
-            event.preventDefault();
-        }
-    });
-
     $('#estado').on('change', function() {
         fillMunicipios();
     });
