@@ -554,7 +554,11 @@ function fetchPreguntasEncuesta ($encuesta) {
         while ($row = $result->fetch_assoc()) {
             $opciones = explode('&', $row['opciones']);
             $opciones = array_filter($opciones, 'emptyString');
-            $pregunta = array('id' => (int)$row['id'], 'encuesta' => (int)$encuesta, 'numPregunta' => (int)$row['numPregunta'], 'titulo' => $row['titulo'], 'tipo' => (int)$row['tipo'], 'pregunta' => $row['pregunta'], 'video' => $row['video'], 'imagen' => $row['imagen'], 'combo' => $row['combo'], 'opciones' => $opciones);
+
+            $subPreguntas = explode('&', $row['subPreguntas']);
+            $subPreguntas = array_filter($subPreguntas, 'emptyString');
+
+            $pregunta = array('id' => (int)$row['id'], 'encuesta' => (int)$encuesta, 'numPregunta' => (int)$row['numPregunta'], 'titulo' => $row['titulo'], 'tipo' => (int)$row['tipo'], 'pregunta' => $row['pregunta'], 'video' => $row['video'], 'imagen' => $row['imagen'], 'combo' => $row['combo'], 'opciones' => $opciones, 'subPreguntas' => $subPreguntas);
             $response[] = $pregunta;
         }
 
