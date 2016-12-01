@@ -1362,7 +1362,6 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
         $result = $conn->query($sql);
         $values = array();
         $total = 0;
-        $average = 0;
 
         while ($row = $result->fetch_assoc()) {
             $total = $total + 1;

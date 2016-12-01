@@ -48,7 +48,8 @@ function appendAnswers (typeQuestion, questionID) {
         currentHTML += '<div class="input-wrapper answer">';
         currentHTML += '<label>Escala</label>';
         currentHTML += '<input type="number" class="respuesta1 required-input" id="opcion1" type="text"/>';
-        currentHTML += ' - <input type="number" class="respuesta2 required-input" id="opcion2" type="text"/>';
+        currentHTML += ' - ';
+        currentHTML += '<input type="number" class="respuesta2 required-input" id="opcion2" type="text"/>';
         currentHTML += '</div>';
     }
 
@@ -166,9 +167,6 @@ $(document).on('ready', function () {
                             $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta' + (i + 1)).val(opciones[i]);
                         }
                     }
-                    else if (response.results[x].tipo === 6){
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta' + (i + 1)).val(opciones[i]);
-                    }
                 }
             },
             error: function (errorMsg) {
@@ -217,13 +215,12 @@ $(document).on('ready', function () {
             questionObject.pregunta = $(this).find('#pregunta').val();
             questionObject.tipo = $(this).find('#tipo').val();
 
-            if(questionObject.tipo == 6){
-                if (parseInt($(this).find('#opcion1').val()) == 0 || parseInt($(this).find('#opcion2').val()) == 0){
+            if (questionObject.tipo == 6) {
+                if (parseInt($(this).find('#opcion1').val()) == 0 || parseInt($(this).find('#opcion2').val()) == 0) {
                     alert("Los valores de la pregunta escala #" + questionObject.numPregunta + " deben ser mayor a cero.");
                     questionValidated = false;
-                }
-                else if(parseInt($(this).find('#opcion1').val()) >= parseInt($(this).find('#opcion2').val())){
-                    alert("El valor desde de la pregunta escala #" + questionObject.numPregunta + " deben ser menor al valor hasta.");
+                } else if (parseInt($(this).find('#opcion1').val()) >= parseInt($(this).find('#opcion2').val())) {
+                    alert("El valor inicial de la escala de la pregunta #" + questionObject.numPregunta + " deben ser menor al valor final.");
                     questionValidated = false;
                 }
             }
@@ -246,7 +243,7 @@ $(document).on('ready', function () {
             questionObject.opciones = [];
         });
 
-        if (!questionValidated){
+        if (!questionValidated) {
             return;
         }
 
