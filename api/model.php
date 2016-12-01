@@ -1398,6 +1398,8 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
                         }
                     }
                 }
+            } else if ($tipo == 6) {
+                $votes[0] = $votes[0] + (int)$answers[$numPregunta - 1];
             }
         }
 

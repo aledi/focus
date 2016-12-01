@@ -24,10 +24,11 @@ function appendSelect (lastQuestion) {
 }
 
 function appendAnswers (typeQuestion, questionID) {
+    var currentHTML = '';
+
     $('#Answers' + questionID).empty();
 
     if (typeQuestion != 1 && typeQuestion != 6) {
-        var currentHTML = '';
 
         if (typeQuestion == 2) {
             currentHTML += '<div class="input-wrapper">';
@@ -43,6 +44,13 @@ function appendAnswers (typeQuestion, questionID) {
             currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' full-width" type="text"/>';
             currentHTML += '</div>';
          }
+    } else if (typeQuestion == 6){
+        currentHTML += '<div class="input-wrapper answer">';
+        currentHTML += '<label>Escala</label>';
+        currentHTML += '<input type="number" class="respuesta1 required-input" id="opcion1" type="text"/>';
+        currentHTML += ' - ';
+        currentHTML += '<input type="number" class="respuesta2 required-input" id="opcion2" type="text"/>';
+        currentHTML += '</div>';
     }
 
     $('#Answers' + questionID).append(currentHTML);
@@ -196,7 +204,7 @@ $(document).on('ready', function () {
         var numeroPregunta = 1;
         var questionsArray = [];
         var questionObject = {};
-
+        var questionValidated = true;
         questionObject.opciones = [];
 
         $('#questions').children().each(function () {
@@ -206,6 +214,16 @@ $(document).on('ready', function () {
             questionObject.video = $(this).find('.video').val();
             questionObject.pregunta = $(this).find('#pregunta').val();
             questionObject.tipo = $(this).find('#tipo').val();
+
+            if (questionObject.tipo == 6) {
+                if (parseInt($(this).find('#opcion1').val()) == 0 || parseInt($(this).find('#opcion2').val()) == 0) {
+                    alert("Los valores de la pregunta escala #" + questionObject.numPregunta + " deben ser mayor a cero.");
+                    questionValidated = false;
+                } else if (parseInt($(this).find('#opcion1').val()) >= parseInt($(this).find('#opcion2').val())) {
+                    alert("El valor inicial de la escala de la pregunta #" + questionObject.numPregunta + " deben ser menor al valor final.");
+                    questionValidated = false;
+                }
+            }
 
             if (questionObject.tipo !== 1) {
                 var opcion = 1;
@@ -224,6 +242,10 @@ $(document).on('ready', function () {
             questionObject = {};
             questionObject.opciones = [];
         });
+
+        if (!questionValidated) {
+            return;
+        }
 
         var idEncuesta = window.location.search.substring(1);
         idEncuesta = idEncuesta.substring(3);

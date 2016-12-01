@@ -121,6 +121,40 @@ function columnChart (opciones, percent, chartNumber, title) {
     }
 }
 
+function averageChart(min, max, value, chartNumber) {
+    google.charts.setOnLoadCallback(drawStuff);
+
+    function drawStuff () {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '');
+        data.addColumn('number', '');
+        data.addColumn({type: 'string', role: 'tooltip'});
+
+        var label = 'Promedio' + '\n(' + String(value.toFixed(2)) + ')';
+        data.addRows([[label, value, label]]);
+
+        var options = {
+            width: 800,
+            height: 400,
+            bar: {
+                width: '40%'
+            },
+            vAxis: {
+                viewWindow : {
+                    min: min,
+                    max: max
+                }
+            },
+            legend: {position: 'none'}
+        };
+
+        var chart = document.getElementById('chart' + chartNumber);
+        chart.className += ' column-chart';
+        var googleChart = new google.visualization.ColumnChart(chart);
+        googleChart.draw(data, options);
+    }
+}
+
 // -----------------------------------------------------------------------------------------------
 // Helper Functions
 // -----------------------------------------------------------------------------------------------
@@ -434,11 +468,13 @@ $(document).on('ready', function () {
 
                         $('#abiertas-table').append(html);
                     } else if (response.tipo === 4) {
-                        barChart(getObjectProperties(response.opciones), response.porcentajes, 1, '');
+                        barChart(response.opciones, response.porcentajes, 1, '');
+                    } else if (response.tipo === 6) {
+                        averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 1);
                     } else if (response.opciones.length < 4) {
-                        pieChart(getObjectProperties(response.opciones), response.votos, 1, '');
+                        pieChart(response.opciones, response.votos, 1, '');
                     } else {
-                        columnChart(getObjectProperties(response.opciones), response.porcentajes, 1, '');
+                        columnChart(response.opciones, response.porcentajes, 1, '');
                     }
                 }
             },
@@ -496,11 +532,13 @@ $(document).on('ready', function () {
                 }
 
                 if (response.tipo === 4) {
-                    barChart(getObjectProperties(response.opciones), response.porcentajes, 2, '');
+                    barChart(response.opciones, response.porcentajes, 2, '');
+                } else if (response.tipo === 6) {
+                    averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 2);
                 } else if (response.opciones.length < 4) {
-                    pieChart(getObjectProperties(response.opciones), response.votos, 2, '');
+                    pieChart(response.opciones, response.votos, 2, '');
                 } else {
-                    columnChart(getObjectProperties(response.opciones), response.porcentajes, 2, '');
+                    columnChart(response.opciones, response.porcentajes, 2, '');
                 }
 
                 return;
