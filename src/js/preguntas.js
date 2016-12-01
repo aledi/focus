@@ -47,9 +47,9 @@ function appendAnswers (typeQuestion, questionID) {
     else if (typeQuestion == 6){
         currentHTML += '<div class="input-wrapper answer">';
         currentHTML += '<label>Desde:</label>';
-        currentHTML += '<input type="number" class="required-input" id="opcion1" type="text"/>';
+        currentHTML += '<input type="number" class="respuesta1 required-input" id="opcion1" type="text"/>';
         currentHTML += '<label>Hasta:</label>';
-        currentHTML += '<input type="number" class="required-input" id="opcion2" type="text"/>';
+        currentHTML += '<input type="number" class="respuesta2 required-input" id="opcion2" type="text"/>';
         currentHTML += '</div>';
     }
 
@@ -168,7 +168,7 @@ $(document).on('ready', function () {
                         }
                     }
                     else if (response.results[x].tipo === 6){
-                        
+                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta' + (i + 1)).val(opciones[i]);
                     }
                 }
             },
