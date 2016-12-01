@@ -278,15 +278,4 @@ $(document).on('ready', function () {
     $('#mes-fin, #anio-fin').on('change', function () {
         changeSelect('Fin');
     });
-
-    // -----------------------------------------------------------------------------------------------
-    // Helper Methods
-    // -----------------------------------------------------------------------------------------------
-
-    $('#participantes').keypress(function (event) {
-        if (!event.metaKey && event.charCode !== 13 && (event.charCode < 48 || event.charCode > 57)) {
-            event.preventDefault();
-        }
-    });
-
 });
