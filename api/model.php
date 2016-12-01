@@ -752,17 +752,25 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
             $imagen = $pregunta['imagen'];
             $combo = $pregunta['combo'];
             $opciones = $pregunta['opciones'];
+            $subPreguntas = $pregunta['subPreguntas'];
 
             $opcionesString = "";
+            $subPreguntasString = "";
             $numOpciones = count($opciones);
+            $numSubPreguntas = count($subPreguntas);
 
             for ($x = 0; $x < $numOpciones; $x++) {
                 $opcionesString = $opcionesString.$opciones[$x]."&";
             }
 
-            $opcionesString = rtrim($opcionesString, "&");
+            for ($x = 0; $x < $numSubPreguntas; $x++) {
+                $subPreguntasString = $subPreguntasString.$subPreguntas[$x]."&";
+            }
 
-            $sql = "INSERT INTO Pregunta (encuesta, tipo, numPregunta, pregunta, video, imagen, numOpciones, titulo, combo, opciones) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$numOpciones', '$titulo', '$combo', '$opcionesString')";
+            $opcionesString = rtrim($opcionesString, "&");
+            $subPreguntasString = rtrim($subPreguntasString, "&");
+
+            $sql = "INSERT INTO Pregunta (encuesta, tipo, numPregunta, pregunta, video, imagen, numOpciones, titulo, combo, opciones, subPreguntas) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$numOpciones', '$titulo', '$combo', '$opcionesString', '$subPreguntasString')";
 
             if ($conn->query($sql) === TRUE) {
                 $inserts = $inserts + 1;

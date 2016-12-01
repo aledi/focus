@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 26-11-2016 a las 01:46:23
+-- Tiempo de generación: 01-12-2016 a las 04:18:34
 -- Versión del servidor: 5.5.42
 -- Versión de PHP: 7.0.0
 
@@ -757,48 +757,52 @@ CREATE TABLE `Pregunta` (
   `video` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `imagen` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `numOpciones` tinyint(4) NOT NULL,
-  `opciones` text COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=195 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `numSubPreguntas` tinyint(4) NOT NULL,
+  `opciones` text COLLATE utf8_spanish_ci NOT NULL,
+  `subPreguntas` text COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=221 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Pregunta`
 --
 
-INSERT INTO `Pregunta` (`id`, `titulo`, `encuesta`, `tipo`, `combo`, `numPregunta`, `pregunta`, `video`, `imagen`, `numOpciones`, `opciones`) VALUES
-(101, '', 9, 2, 0, 1, '¿Es la primera vez que visita Pollo Loco?', '', '', 2, 'Sí&No'),
-(102, '', 9, 3, 0, 2, '¿Que fue lo que ordenó en esta visita?', '', '', 5, 'Combo&Piezas de pollo&Complementos&Postre&Bebida'),
-(103, '', 9, 2, 0, 3, '¿Qué le pareció la comida de hoy?', '', '', 5, 'Excelente&Buena&Regular&Mala&Pésima&'),
-(104, '', 9, 2, 0, 4, 'Del 1 al 10, donde 1 es la más baja calificación y 10 la más alta, ¿Cómo califica la calidad del producto que consumió hoy?', '', '', 10, '1&2&3&4&5&6&7&8&9&10'),
-(105, '', 9, 2, 0, 5, 'Del 1 al 10, donde 1 es la más baja calificación y 10 la más alta, ¿Cómo califica la atención del personal el día de hoy?', '', '', 10, '1&2&3&4&5&6&7&8&9&10'),
-(106, '', 9, 2, 0, 6, 'Del 1 al 10, donde 1 es la más baja calificación y 10 la más alta, ¿Cómo califica las instalaciones, limpieza, orden, temperatura, etc?', '', '', 10, '1&2&3&4&5&6&7&8&9&10'),
-(107, '', 9, 1, 0, 7, '¿Qué fue lo que más le gusto de su visita el día de hoy?', '', '', 0, ''),
-(108, '', 9, 1, 0, 8, '¿Qué mejoraría en Pollo loco?', '', '', 0, ''),
-(109, '', 9, 2, 0, 9, '¿Volvería a comprar en Pollo Loco?', '', '', 2, 'Sí&No'),
-(110, '', 9, 1, 0, 10, '¿Qué le gustaría que hubiera o que cambiaría en Pollo Loco?', '', '', 0, ''),
-(111, '', 9, 2, 0, 11, 'Ahora le pedimos que vea este video y nos diga si le gusto.', 'PolloLoco.mp4', '', 2, 'Sí&No'),
-(112, '', 9, 2, 0, 12, '¿Le pareció creíble?', '', '', 2, 'Sí&No'),
-(113, '', 9, 1, 0, 13, '¿Qué le cambiaría?', '', '', 0, ''),
-(114, '', 9, 2, 0, 14, 'Por último, ¿recomendaría Pollo Loco a algun familiar o amigo?', '', '', 2, 'Sí&No'),
-(115, '', 1, 1, 0, 1, '¿Qué cosas ha escuchado recientemente de Margarita Zavala?', '', '', 0, ''),
-(116, '', 1, 2, 0, 2, '¿Su opinión sobre Margarita Zavala es?', '', '', 3, 'Positiva&Neutra&Negativa'),
-(117, '', 1, 2, 0, 3, '¿Conoce la asociación que promueve Margarita Zavala?', '', '', 2, 'Sí&No'),
-(118, '', 1, 2, 0, 4, '¿Sabe usted qué promueve dicha asociación?', '', '', 2, 'Sí&No'),
-(119, 'Título', 1, 2, 0, 5, 'Después de ver el video, su opinión sobre MZ...', 'MZ.mp4', '', 3, 'Mejoró&Empeoró&Sigue igual'),
-(120, '', 1, 2, 0, 6, '¿Cree usted que tiene posibilidades para ser Presidenta de México?', '', '', 4, 'Sí&No&Aún es muy pronto para dar una opinión&Tal vez'),
-(121, '', 10, 2, 0, 1, 'gfdgfdgfdfdgf', '', '', 0, ''),
-(122, '', 10, 3, 0, 2, '', '', '', 0, ''),
-(139, 'PRUEBA CAMBIOS12345', 11, 2, 0, 1, 'PRUEBA CAMBIOS1234', '', '', 17, 'OP1121212&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2'),
-(184, 'TITULO', 7, 2, 0, 1, 'El primer año del “El Bronco”, ¿cumplió con sus expectativas? ', '', '', 4, 'Sí las cumplió&Las superó&Estuvo por debajo&No sé'),
-(185, 'TITULO 2', 7, 2, 0, 2, '¿Cómo califica el primer año de gobierno de Jaime Rodríguez?', '', '', 10, '1&2&3&4&5&6&7&8&9&10'),
-(186, '', 7, 1, 0, 3, 'Diga en una palabra ¿cómo califica su gobierno? ', '', '', 0, ''),
-(187, '', 7, 2, 0, 4, '¿Qué opina de las propuestas del gobernador, como la invitación a los ciudadanos a tapar baches en las calles de sus colonias?', '', '', 3, 'No me agradan, y no participaría.&Sí me agradan, y sí participaría.&Me es indiferente.'),
-(188, '', 7, 3, 0, 5, '¿Elija algunos temas en el que considera que el gobernador ha realizado un mal trabajo?', '', '', 10, 'Seguridad&Inversión en obra pública&Acciones en contra del ex gobernador Rodrigo Medina.&Restructura de la deuda de NL y en el gobierno en general.&Nuevos programas de apoyo a la comunidad.&Reducción gradual del pago de la Tenencia.&Transparencia.&Rendición de Cuentas.&Combate a la corrupción.&No sé'),
-(189, '', 7, 2, 0, 6, '¿Elija un tema en el que considera que el gobernador ha hecho un buen trabajo?', '', '', 10, 'Seguridad&Inversión en obra pública&Acciones en contra del ex gobernador Rodrigo Medina.&Restructura de la deuda de NL y en el gobierno en general.&Nuevos programas de apoyo a la comunidad.&Reducción gradual del pago de la Tenencia.&Transparencia.&Rendición de Cuentas.&Combate a la corrupción.&No sé'),
-(190, '', 7, 2, 0, 7, '¿Percibe una mejoría al tener un gobierno independiente en Nuevo León?', '', '', 4, 'Sí&No&Igual&No sé'),
-(191, '', 7, 3, 0, 8, '¿En qué rubros considera que “El Bronco” tiene retos para su siguiente año de gobierno?', '', '', 9, 'Seguridad&Inversión en obra pública &Concluir la Línea 3 del Metro&Combate a la Corrupción&Definir si se realizará la obra del Monterrey VI&Transparencia&Rendición de Cuentas&Impulso en la generación de empleo&No sé'),
-(192, '', 7, 1, 0, 9, 'En una palabra, ¿cómo define el primer año de gobierno de “El Bronco”?', '', '', 0, ''),
-(193, '', 7, 2, 0, 10, '¿Qué expectativas tiene del primer “informe de gobierno”, sobre algún anuncio para los ciudadanos?', '', '', 4, 'Positivo.&Negativo.&Sin afectar a los ciudadanos.&No sé.'),
-(194, '', 7, 2, 1, 11, 'Si las elecciones para Gobernador fueran hoy, votaría nuevamente por Jaime Rodríguez', '', '', 3, 'Sí&No&No sé');
+INSERT INTO `Pregunta` (`id`, `titulo`, `encuesta`, `tipo`, `combo`, `numPregunta`, `pregunta`, `video`, `imagen`, `numOpciones`, `numSubPreguntas`, `opciones`, `subPreguntas`) VALUES
+(101, '', 9, 2, 0, 1, '¿Es la primera vez que visita Pollo Loco?', '', '', 2, 0, 'Sí&No', ''),
+(102, '', 9, 3, 0, 2, '¿Que fue lo que ordenó en esta visita?', '', '', 5, 0, 'Combo&Piezas de pollo&Complementos&Postre&Bebida', ''),
+(103, '', 9, 2, 0, 3, '¿Qué le pareció la comida de hoy?', '', '', 5, 0, 'Excelente&Buena&Regular&Mala&Pésima&', ''),
+(104, '', 9, 2, 0, 4, 'Del 1 al 10, donde 1 es la más baja calificación y 10 la más alta, ¿Cómo califica la calidad del producto que consumió hoy?', '', '', 10, 0, '1&2&3&4&5&6&7&8&9&10', ''),
+(105, '', 9, 2, 0, 5, 'Del 1 al 10, donde 1 es la más baja calificación y 10 la más alta, ¿Cómo califica la atención del personal el día de hoy?', '', '', 10, 0, '1&2&3&4&5&6&7&8&9&10', ''),
+(106, '', 9, 2, 0, 6, 'Del 1 al 10, donde 1 es la más baja calificación y 10 la más alta, ¿Cómo califica las instalaciones, limpieza, orden, temperatura, etc?', '', '', 10, 0, '1&2&3&4&5&6&7&8&9&10', ''),
+(107, '', 9, 1, 0, 7, '¿Qué fue lo que más le gusto de su visita el día de hoy?', '', '', 0, 0, '', ''),
+(108, '', 9, 1, 0, 8, '¿Qué mejoraría en Pollo loco?', '', '', 0, 0, '', ''),
+(109, '', 9, 2, 0, 9, '¿Volvería a comprar en Pollo Loco?', '', '', 2, 0, 'Sí&No', ''),
+(110, '', 9, 1, 0, 10, '¿Qué le gustaría que hubiera o que cambiaría en Pollo Loco?', '', '', 0, 0, '', ''),
+(111, '', 9, 2, 0, 11, 'Ahora le pedimos que vea este video y nos diga si le gusto.', 'PolloLoco.mp4', '', 2, 0, 'Sí&No', ''),
+(112, '', 9, 2, 0, 12, '¿Le pareció creíble?', '', '', 2, 0, 'Sí&No', ''),
+(113, '', 9, 1, 0, 13, '¿Qué le cambiaría?', '', '', 0, 0, '', ''),
+(114, '', 9, 2, 0, 14, 'Por último, ¿recomendaría Pollo Loco a algun familiar o amigo?', '', '', 2, 0, 'Sí&No', ''),
+(115, '', 1, 1, 0, 1, '¿Qué cosas ha escuchado recientemente de Margarita Zavala?', '', '', 0, 0, '', ''),
+(116, '', 1, 2, 0, 2, '¿Su opinión sobre Margarita Zavala es?', '', '', 3, 0, 'Positiva&Neutra&Negativa', ''),
+(117, '', 1, 2, 0, 3, '¿Conoce la asociación que promueve Margarita Zavala?', '', '', 2, 0, 'Sí&No', ''),
+(118, '', 1, 2, 0, 4, '¿Sabe usted qué promueve dicha asociación?', '', '', 2, 0, 'Sí&No', ''),
+(119, 'Título', 1, 2, 0, 5, 'Después de ver el video, su opinión sobre MZ...', 'MZ.mp4', '', 3, 0, 'Mejoró&Empeoró&Sigue igual', ''),
+(120, '', 1, 2, 0, 6, '¿Cree usted que tiene posibilidades para ser Presidenta de México?', '', '', 4, 0, 'Sí&No&Aún es muy pronto para dar una opinión&Tal vez', ''),
+(121, '', 10, 2, 0, 1, 'gfdgfdgfdfdgf', '', '', 0, 0, '', ''),
+(122, '', 10, 3, 0, 2, '', '', '', 0, 0, '', ''),
+(139, 'PRUEBA CAMBIOS12345', 11, 2, 0, 1, 'PRUEBA CAMBIOS1234', '', '', 17, 0, 'OP1121212&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2', ''),
+(208, 'TITULO', 7, 2, 0, 1, 'El primer año del “El Bronco”, ¿cumplió con sus expectativas? ', '', '', 4, 0, 'Sí las cumplió&Las superó&Estuvo por debajo&No sé', ''),
+(209, 'TITULO 2', 7, 2, 0, 2, '¿Cómo califica el primer año de gobierno de Jaime Rodríguez?', '', '', 10, 0, '1&2&3&4&5&6&7&8&9&10', ''),
+(210, '', 7, 1, 0, 3, 'Diga en una palabra ¿cómo califica su gobierno? ', '', '', 0, 0, '', ''),
+(211, '', 7, 2, 0, 4, '¿Qué opina de las propuestas del gobernador, como la invitación a los ciudadanos a tapar baches en las calles de sus colonias?', '', '', 3, 0, 'No me agradan, y no participaría.&Sí me agradan, y sí participaría.&Me es indiferente.', ''),
+(212, '', 7, 3, 0, 5, '¿Elija algunos temas en el que considera que el gobernador ha realizado un mal trabajo?', '', '', 10, 0, 'Seguridad&Inversión en obra pública&Acciones en contra del ex gobernador Rodrigo Medina.&Restructura de la deuda de NL y en el gobierno en general.&Nuevos programas de apoyo a la comunidad.&Reducción gradual del pago de la Tenencia.&Transparencia.&Rendición de Cuentas.&Combate a la corrupción.&No sé', ''),
+(213, '', 7, 2, 0, 6, '¿Elija un tema en el que considera que el gobernador ha hecho un buen trabajo?', '', '', 10, 0, 'Seguridad&Inversión en obra pública&Acciones en contra del ex gobernador Rodrigo Medina.&Restructura de la deuda de NL y en el gobierno en general.&Nuevos programas de apoyo a la comunidad.&Reducción gradual del pago de la Tenencia.&Transparencia.&Rendición de Cuentas.&Combate a la corrupción.&No sé', ''),
+(214, '', 7, 2, 0, 7, '¿Percibe una mejoría al tener un gobierno independiente en Nuevo León?', '', '', 4, 0, 'Sí&No&Igual&No sé', ''),
+(215, '', 7, 3, 0, 8, '¿En qué rubros considera que “El Bronco” tiene retos para su siguiente año de gobierno?', '', '', 9, 0, 'Seguridad&Inversión en obra pública &Concluir la Línea 3 del Metro&Combate a la Corrupción&Definir si se realizará la obra del Monterrey VI&Transparencia&Rendición de Cuentas&Impulso en la generación de empleo&No sé', ''),
+(216, '', 7, 1, 0, 9, 'En una palabra, ¿cómo define el primer año de gobierno de “El Bronco”?', '', '', 0, 0, '', ''),
+(217, '', 7, 2, 0, 10, '¿Qué expectativas tiene del primer “informe de gobierno”, sobre algún anuncio para los ciudadanos?', '', '', 4, 0, 'Positivo.&Negativo.&Sin afectar a los ciudadanos.&No sé.', ''),
+(218, '', 7, 2, 1, 11, 'Si las elecciones para Gobernador fueran hoy, votaría nuevamente por Jaime Rodríguez', '', '', 3, 0, 'Sí&No&No sé', ''),
+(219, '', 7, 6, 0, 12, 'PREGUNTA ESCALA', '', '', 2, 0, '1&10', ''),
+(220, '', 7, 6, 0, 13, 'PREGUNTA ESCALA 2', '', '', 2, 0, '1&100', '');
 
 -- --------------------------------------------------------
 
@@ -844,11 +848,11 @@ INSERT INTO `Respuesta` (`id`, `encuesta`, `panelista`, `respuestas`, `fechaIni`
 (17, 1, 9, 'Más,más fuerte|Muy Buena&|No|Sí|Empeoró|Tal vez|', NULL, NULL, '2016-09-15', NULL),
 (18, 1, 5, 'betoooo|Muy Mala&|No|No|Sigue igual|Tal vez|', NULL, NULL, '2016-09-15', NULL),
 (19, 1, 10, 'Cobb |Neutra&Muy Mala&Muy Buena&|Sí|No|Mejoró|Aún es muy pronto para dar una opinión|', NULL, NULL, '2016-09-15', NULL),
-(53, 7, 409, 'Estuvo por debajo|3|Mal gobierno |No me agradan, y no participaría.|Seguridad&Inversión en obra pública&Nuevos programas de apoyo a la comunidad.&Reducción gradual del pago de la Tenencia.&Combate a la corrupción.&|Nuevos programas de apoyo a la comunidad.|No|Inversión en obra pública &|Pésimo|Negativo.|No|', NULL, NULL, '2016-09-29', '13:22:33'),
+(53, 7, 409, 'Estuvo por debajo|3|Mal gobierno |No me agradan, y no participaría.|Seguridad&Inversión en obra pública&Nuevos programas de apoyo a la comunidad.&Reducción gradual del pago de la Tenencia.&Combate a la corrupción.&|Nuevos programas de apoyo a la comunidad.|No|Inversión en obra pública &|Pésimo|Negativo.|No|10|78|', NULL, NULL, '2016-09-29', '13:22:33'),
 (56, 9, 409, 'Sí|Piezas de pollo&|Regular|8|6|6|La rapidez del servicio |La limpieza del baño |Sí|Más limpieza|Sí|Sí|Nada|Sí|', NULL, NULL, '2016-09-29', '13:58:01'),
 (58, 1, 409, 'Esta en campaña|Positiva|No|Sí|Empeoró|No|', NULL, NULL, '2016-09-29', '14:56:12'),
 (60, 1, 410, 'Gghgjghhh|Positiva|Sí|Sí|Empeoró|Sí|', NULL, NULL, '2016-09-30', '16:48:49'),
-(61, 7, 410, 'Las superó|2|Abajarse|No me agradan, y no participaría.|Inversión en obra pública&|No sé|Igual|Definir si se realizará la obra del Monterrey VI&|Haga|Negativo.|No sé|', NULL, NULL, '2016-09-30', '16:50:12'),
+(61, 7, 410, 'Las superó|2|Abajarse|No me agradan, y no participaría.|Inversión en obra pública&|No sé|Igual|Definir si se realizará la obra del Monterrey VI&|Haga|Negativo.|No sé|7|89|', NULL, NULL, '2016-09-30', '16:50:12'),
 (62, 9, 411, 'Sí|Combo&|Excelente|7|9|9|Hghgghh|Fgfgggg|Sí|Gggggggg|Sí|Sí|Hhhhhh|Sí|', NULL, NULL, '2016-09-30', '16:54:14'),
 (63, 1, 411, 'Dhshshs|Neutra|No|Sí|Empeoró|Sí|', NULL, NULL, '2016-10-03', '09:55:40'),
 (65, 1, 454, 'Va para la presidencia |Neutra|Sí|No|Sigue igual|Sí|', NULL, NULL, '2016-10-04', '10:53:26'),
@@ -971,7 +975,7 @@ ALTER TABLE `PanelistaEnPanel`
 -- AUTO_INCREMENT de la tabla `Pregunta`
 --
 ALTER TABLE `Pregunta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=195;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=221;
 --
 -- AUTO_INCREMENT de la tabla `Recurso`
 --
