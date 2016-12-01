@@ -207,7 +207,7 @@ $(document).on('ready', function () {
         var numeroPregunta = 1;
         var questionsArray = [];
         var questionObject = {};
-
+        var questionValidated = true;
         questionObject.opciones = [];
 
         $('#questions').children().each(function () {
@@ -217,6 +217,17 @@ $(document).on('ready', function () {
             questionObject.video = $(this).find('.video').val();
             questionObject.pregunta = $(this).find('#pregunta').val();
             questionObject.tipo = $(this).find('#tipo').val();
+
+            if(questionObject.tipo == 6){
+                if (parseInt($(this).find('#opcion1').val()) == 0 || parseInt($(this).find('#opcion2').val()) == 0){
+                    alert("Los valores de la pregunta escala #" + questionObject.numPregunta + " deben ser mayor a cero.");
+                    questionValidated = false;
+                }
+                else if(parseInt($(this).find('#opcion1').val()) >= parseInt($(this).find('#opcion2').val())){
+                    alert("El valor desde de la pregunta escala #" + questionObject.numPregunta + " deben ser menor al valor hasta.");
+                    questionValidated = false;
+                }
+            }
 
             if (questionObject.tipo !== 1) {
                 var opcion = 1;
@@ -235,6 +246,10 @@ $(document).on('ready', function () {
             questionObject = {};
             questionObject.opciones = [];
         });
+
+        if (!questionValidated){
+            return;
+        }
 
         var idEncuesta = window.location.search.substring(1);
         idEncuesta = idEncuesta.substring(3);
