@@ -47,9 +47,9 @@ function appendAnswers (typeQuestion, questionID) {
     else if (typeQuestion == 6){
         currentHTML += '<div class="input-wrapper answer">';
         currentHTML += '<label>Desde:</label>';
-        currentHTML += '<input type="number" id="escalaDesde" type="text"/>';
+        currentHTML += '<input type="number" id="opcion1" type="text"/>';
         currentHTML += '<label>Hasta:</label>';
-        currentHTML += '<input type="number" id="escalaHasta" type="text"/>';
+        currentHTML += '<input type="number" id="opcion2" type="text"/>';
         currentHTML += '</div>';
     }
 
@@ -167,6 +167,9 @@ $(document).on('ready', function () {
                             $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta' + (i + 1)).val(opciones[i]);
                         }
                     }
+                    else if (response.results[x].tipo === 6){
+                        
+                    }
                 }
             },
             error: function (errorMsg) {
@@ -245,9 +248,10 @@ $(document).on('ready', function () {
                 preguntas : questionsArray
             },
             dataType: 'json',
-            success: function (response) {
+            success: function (response) {  
+                console.log(questionsArray);
                 alert('Preguntas ligadas exitosamente.');
-                location.replace('encuestas.php');
+                //location.replace('encuestas.php');
             },
             error: function (error) {
                 $('#feedback').html('Preguntas no añadidas. Ha ocurrido un error.');
