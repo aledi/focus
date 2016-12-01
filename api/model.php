@@ -1362,6 +1362,7 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
         $result = $conn->query($sql);
         $values = array();
         $total = 0;
+        $average = 0;
 
         while ($row = $result->fetch_assoc()) {
             $total = $total + 1;
@@ -1398,6 +1399,8 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
                         }
                     }
                 }
+            } else if ($tipo == 6) {
+                $average = $average + (int)$answers[$numPregunta - 1];
             }
         }
 
@@ -1410,8 +1413,10 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
             $values[] = $votes[$x] / $total;
         }
 
+        $average = $average / $total;
+
         $conn->close();
-        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'votos' => $votes, 'porcentajes' => $values);
+        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'votos' => $votes, 'porcentajes' => $values, 'promedio' => $average);
     }
 
     return array('status' => 'DATABASE_ERROR');
