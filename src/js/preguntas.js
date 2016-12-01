@@ -25,6 +25,7 @@ function appendSelect (lastQuestion) {
 
 function appendAnswers (typeQuestion, questionID) {
     var currentHTML = '';
+
     $('#Answers' + questionID).empty();
 
     if (typeQuestion != 1 && typeQuestion != 6) {
@@ -43,13 +44,11 @@ function appendAnswers (typeQuestion, questionID) {
             currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' full-width" type="text"/>';
             currentHTML += '</div>';
          }
-    }
-    else if (typeQuestion == 6){
+    } else if (typeQuestion == 6){
         currentHTML += '<div class="input-wrapper answer">';
-        currentHTML += '<label>Desde:</label>';
+        currentHTML += '<label>Escala</label>';
         currentHTML += '<input type="number" class="respuesta1 required-input" id="opcion1" type="text"/>';
-        currentHTML += '<label>Hasta:</label>';
-        currentHTML += '<input type="number" class="respuesta2 required-input" id="opcion2" type="text"/>';
+        currentHTML += ' - <input type="number" class="respuesta2 required-input" id="opcion2" type="text"/>';
         currentHTML += '</div>';
     }
 
@@ -263,10 +262,9 @@ $(document).on('ready', function () {
                 preguntas : questionsArray
             },
             dataType: 'json',
-            success: function (response) {  
-                console.log(questionsArray);
+            success: function (response) {
                 alert('Preguntas ligadas exitosamente.');
-                //location.replace('encuestas.php');
+                location.replace('encuestas.php');
             },
             error: function (error) {
                 $('#feedback').html('Preguntas no añadidas. Ha ocurrido un error.');

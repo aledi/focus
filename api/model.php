@@ -1400,7 +1400,7 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
                     }
                 }
             } else if ($tipo == 6) {
-                $average = $average + (int)$answers[$numPregunta - 1];
+                $votes[0] = $votes[0] + (int)$answers[$numPregunta - 1];
             }
         }
 
@@ -1413,10 +1413,8 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
             $values[] = $votes[$x] / $total;
         }
 
-        $average = $average / $total;
-
         $conn->close();
-        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'votos' => $votes, 'porcentajes' => $values, 'promedio' => $average);
+        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'votos' => $votes, 'porcentajes' => $values);
     }
 
     return array('status' => 'DATABASE_ERROR');

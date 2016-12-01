@@ -470,7 +470,7 @@ $(document).on('ready', function () {
                     } else if (response.tipo === 4) {
                         barChart(response.opciones, response.porcentajes, 1, '');
                     } else if (response.tipo === 6) {
-                        averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.promedio, 1);
+                        averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 1);
                     } else if (response.opciones.length < 4) {
                         pieChart(response.opciones, response.votos, 1, '');
                     } else {
@@ -534,7 +534,7 @@ $(document).on('ready', function () {
                 if (response.tipo === 4) {
                     barChart(response.opciones, response.porcentajes, 2, '');
                 } else if (response.tipo === 6) {
-                    averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.promedio, 2);
+                    averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 2);
                 } else if (response.opciones.length < 4) {
                     pieChart(response.opciones, response.votos, 2, '');
                 } else {
