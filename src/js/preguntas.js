@@ -146,6 +146,7 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
+                console.log(response);
                 for (var x = 2; x <= response.results.length; x++) {
                     appendQuestions(x);
                 }
@@ -166,6 +167,7 @@ $(document).on('ready', function () {
 
                     if (response.results[x].tipo !== 1) {
                         var opciones = response.results[x].opciones;
+                        var subPreguntas = response.results[x].subPreguntas;
                         var comboRadio = $('input[name="combo' + (x + 1) + '"][value="' + response.results[x].combo + '"]')
 
                         if (comboRadio) {
@@ -174,7 +176,15 @@ $(document).on('ready', function () {
 
                         for (var i = 0; i < opciones.length; i++) {
                             $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta' + (i + 1)).val(opciones[i]);
+
                         }
+
+                        if(response.results[x].tipo == 5){
+                            for (var i = 0; i < subPreguntas.length; i++) {
+                                $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .subpregunta' + (i + 1)).val(subPreguntas[i]);
+                            }
+                        }
+
                     }
                 }
             },
@@ -278,9 +288,8 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                console.log(questionsArray);
                 alert('Preguntas ligadas exitosamente.');
-                //location.replace('encuestas.php');
+                location.replace('encuestas.php');
             },
             error: function (error) {
                 $('#feedback').html('Preguntas no añadidas. Ha ocurrido un error.');
