@@ -38,22 +38,13 @@ function appendAnswers (typeQuestion, questionID) {
             currentHTML += '</div>';
         }
 
-        if (typeQuestion != 5){
-            for (var x = 1; x <= 20; x++) {
-                currentHTML += '<div class="input-wrapper answer">';
-                currentHTML += '<label>Opción ' + x + '</label>';
-                currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' full-width" type="text"/>';
-                currentHTML += '</div>';
-             }
-        } 
-        else if (typeQuestion == 5){
-            for (var x = 1; x <= 20; x++) {
-                currentHTML += '<div class="input-wrapper answer">';
-                currentHTML += '<label>Pregunta ' + x + '</label>';
-                currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' full-width" type="text"/>';
-                currentHTML += '</div>';
-            }
-
+        for (var x = 1; x <= 20; x++) {
+            currentHTML += '<div class="input-wrapper answer">';
+            currentHTML += '<label>Opción ' + x + '</label>';
+            currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' full-width" type="text"/>';
+            currentHTML += '</div>';
+        }
+        if (typeQuestion == 5){
             for (var x = 1; x <= 20; x++) {
                 currentHTML += '<div class="input-wrapper answer">';
                 currentHTML += '<label>Subpregunta ' + x + '</label>';
@@ -224,6 +215,7 @@ $(document).on('ready', function () {
         var questionObject = {};
         var questionValidated = true;
         questionObject.opciones = [];
+        questionObject.subPreguntas = [];
 
         $('#questions').children().each(function () {
             questionObject.numPregunta = numeroPregunta;
@@ -253,12 +245,20 @@ $(document).on('ready', function () {
                     questionObject.opciones.push($(this).find('#opcion' + opcion).val());
                     opcion++;
                 }
+                if(questionObject.tipo == 5){
+                    opcion = 1;
+                    while ($(this).find('#subpregunta' + opcion).val()) {
+                        questionObject.subPreguntas.push($(this).find('#subpregunta' + opcion).val());
+                        opcion++;
+                    }
+                }
             }
 
             questionsArray.push(questionObject);
             numeroPregunta++;
             questionObject = {};
             questionObject.opciones = [];
+            questionObject.subPreguntas = [];
         });
 
         if (!questionValidated) {
@@ -278,8 +278,9 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
+                console.log(questionsArray);
                 alert('Preguntas ligadas exitosamente.');
-                location.replace('encuestas.php');
+                //location.replace('encuestas.php');
             },
             error: function (error) {
                 $('#feedback').html('Preguntas no añadidas. Ha ocurrido un error.');
