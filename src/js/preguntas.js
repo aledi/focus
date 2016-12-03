@@ -38,13 +38,31 @@ function appendAnswers (typeQuestion, questionID) {
             currentHTML += '</div>';
         }
 
-        for (var x = 1; x <= 20; x++) {
-            currentHTML += '<div class="input-wrapper answer">';
-            currentHTML += '<label>Opción ' + x + '</label>';
-            currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' full-width" type="text"/>';
-            currentHTML += '</div>';
+        if (typeQuestion != 5){
+            for (var x = 1; x <= 20; x++) {
+                currentHTML += '<div class="input-wrapper answer">';
+                currentHTML += '<label>Opción ' + x + '</label>';
+                currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' full-width" type="text"/>';
+                currentHTML += '</div>';
+             }
+        } 
+        else if (typeQuestion == 5){
+            for (var x = 1; x <= 20; x++) {
+                currentHTML += '<div class="input-wrapper answer">';
+                currentHTML += '<label>Pregunta ' + x + '</label>';
+                currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' full-width" type="text"/>';
+                currentHTML += '</div>';
+            }
+
+            for (var x = 1; x <= 20; x++) {
+                currentHTML += '<div class="input-wrapper answer">';
+                currentHTML += '<label>Subpregunta ' + x + '</label>';
+                currentHTML += '<input id="subpregunta' + x + '" class="subpregunta' + x + ' full-width" type="text"/>';
+                currentHTML += '</div>';
+            }
          }
-    } else if (typeQuestion == 6){
+    } 
+    else if (typeQuestion == 6){
         currentHTML += '<div class="input-wrapper answer">';
         currentHTML += '<label>Escala</label>';
         currentHTML += '<input type="number" class="respuesta1 required-input" id="opcion1" type="text"/>';
