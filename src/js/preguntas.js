@@ -29,7 +29,6 @@ function appendAnswers (typeQuestion, questionID) {
     $('#Answers' + questionID).empty();
 
     if (typeQuestion != 1 && typeQuestion != 6) {
-
         if (typeQuestion == 2) {
             currentHTML += '<div class="input-wrapper">';
             currentHTML += '<label>Mostrar como</label>';
@@ -44,7 +43,8 @@ function appendAnswers (typeQuestion, questionID) {
             currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' full-width" type="text"/>';
             currentHTML += '</div>';
         }
-        if (typeQuestion == 5){
+
+        if (typeQuestion == 5) {
             for (var x = 1; x <= 20; x++) {
                 currentHTML += '<div class="input-wrapper answer">';
                 currentHTML += '<label>Subpregunta ' + x + '</label>';
@@ -52,8 +52,7 @@ function appendAnswers (typeQuestion, questionID) {
                 currentHTML += '</div>';
             }
          }
-    } 
-    else if (typeQuestion == 6){
+    } else if (typeQuestion == 6) {
         currentHTML += '<div class="input-wrapper answer">';
         currentHTML += '<label>Escala</label>';
         currentHTML += '<input type="number" class="respuesta1 required-input" id="opcion1" type="text"/>';
@@ -146,7 +145,6 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                console.log(response);
                 for (var x = 2; x <= response.results.length; x++) {
                     appendQuestions(x);
                 }
@@ -176,7 +174,6 @@ $(document).on('ready', function () {
 
                         for (var i = 0; i < opciones.length; i++) {
                             $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta' + (i + 1)).val(opciones[i]);
-
                         }
 
                         if(response.results[x].tipo == 5){
@@ -255,11 +252,13 @@ $(document).on('ready', function () {
                     questionObject.opciones.push($(this).find('#opcion' + opcion).val());
                     opcion++;
                 }
-                if(questionObject.tipo == 5){
-                    opcion = 1;
-                    while ($(this).find('#subpregunta' + opcion).val()) {
-                        questionObject.subPreguntas.push($(this).find('#subpregunta' + opcion).val());
-                        opcion++;
+
+                if (questionObject.tipo == 5) {
+                    var subPregunta = 1;
+
+                    while ($(this).find('#subpregunta' + subPregunta).val()) {
+                        questionObject.subPreguntas.push($(this).find('#subpregunta' + subPregunta).val());
+                        subPregunta++;
                     }
                 }
             }
