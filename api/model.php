@@ -587,7 +587,7 @@ function fetchMobileData ($panelista) {
 
             while ($row2 = $result2->fetch_assoc()) {
                 $encuestaId = $row2['id'];
-                $sql3 = "SELECT id, tipo, numPregunta, titulo, pregunta, video, imagen, combo, opciones FROM Pregunta WHERE encuesta = '$encuestaId'";
+                $sql3 = "SELECT id, tipo, numPregunta, titulo, pregunta, video, imagen, combo, opciones, subPreguntas FROM Pregunta WHERE encuesta = '$encuestaId'";
                 $result3 = $conn->query($sql3);
 
                 $preguntas = array();
@@ -595,7 +595,13 @@ function fetchMobileData ($panelista) {
                 while ($row3 = $result3->fetch_assoc()) {
                     $opciones = explode('&', $row3['opciones']);
                     $opciones = array_filter($opciones, 'emptyString');
-                    $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'titulo' => $row3['titulo'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'combo' => $row3['combo'], 'opciones' => $opciones);
+
+                    $subPreguntas = explode('&', $row3['subPreguntas']);
+                    $subPreguntas = array_filter($subPreguntas, 'emptyString');
+
+                    $asCombo = (int)$row3['combo'] === 0 ? FALSE : TRUE;
+
+                    $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'titulo' => $row3['titulo'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'combo' => $asCombo, 'opciones' => $opciones, 'subPreguntas' => $subPreguntas);
                     $preguntas[] = $pregunta;
                 }
 
