@@ -9,6 +9,13 @@ var educationObject = {
     6: 'Ninguno'
 }
 
+//http://www.w3schools.com/colors/colors_shades.asp
+var colorArray = ['#505160', '#68829E', '#AEBD38', '#598234',
+                  '#2E5600', '#486B00', '#A2C523', '#7D4427',
+                  '#021C1E', '#004445', '#2C7873', '#6FB98F',
+                  '#375E97', '#FB6542', '#FFBB00', '#3F681C',
+                  '#8D230F', '#1E343C', '#9B4F0F', '#C99E10'];
+
 google.charts.load('current', {'packages': ['corechart', 'bar']});
 
 // -----------------------------------------------------------------------------------------------
@@ -30,6 +37,7 @@ function pieChart (opciones, votes, chartNumber, title) {
         var options = {
             width: 700,
             height: 350,
+            colors: colorArray,
             sliceVisibilityThreshold: 0,
             tooltip: { text: 'percentage' }
         };
@@ -58,6 +66,7 @@ function barChart (opciones, votes, chartNumber, title) {
         var options = {
             width: 800,
             height: 500,
+            colors: arrayChartColors,
             bar: {
                 groupWidth: '61.48%',
                 width: '20%'
@@ -87,8 +96,6 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber, 
     function drawChartStacked() {
         var arrayOpciones = [];
         var arraySubPreguntas = [];
-        var arraySubPreguntasTemporal = [];
-        var arrayData = [];
 
         opciones.unshift('SubPregunta');
         arrayOpciones.push(opciones);
@@ -108,6 +115,7 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber, 
             isStacked: 'percent',
             width: 800,
             height: 500,
+            colors: colorArray,
             hAxis: {
                 minValue: 0,
                 ticks: [0, .25, .50, .75, 1]
@@ -142,6 +150,7 @@ function columnChart (opciones, percent, chartNumber, title) {
         var options = {
             width: 800,
             height: 400,
+            colors: colorArray,
             bar: {
                 width: opciones.length > 1 ? '80%' : '40%'
             },
@@ -179,6 +188,7 @@ function averageChart(min, max, value, chartNumber) {
         var options = {
             width: 800,
             height: 400,
+            colors: colorArray,
             bar: {
                 width: '40%'
             },
