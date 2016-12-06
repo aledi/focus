@@ -1382,7 +1382,7 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
                     $sql = $sql." AND Panelista.fechaNacimiento >= '$date55' AND Panelista.fechaNacimiento < '$date45'";
                 } else if ($edad == 100) {
                     $sql = $sql." AND Panelista.fechaNacimiento < '$date55'";
-                }
+                }   
             }
 
             if ($estado !== null) {
@@ -1458,9 +1458,9 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
             for ($x = 0; $x < count($subPreguntas); $x++) {
                 $valuesInner = array();
                 $votesInner = $votes[$x];
-                
+
                 for ($y = 0; $y < count($options); $y++) {
-                    
+
                     $valuesInner[] = $votesInner[$y] / $total;
                 }
 

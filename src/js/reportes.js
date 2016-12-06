@@ -43,7 +43,7 @@ function pieChart (opciones, votes, chartNumber, title) {
     }
 }
 
-function barChart (opciones, votes, chartNumber, title, stackBar) {
+function barChart (opciones, votes, chartNumber, title) {
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
@@ -60,8 +60,7 @@ function barChart (opciones, votes, chartNumber, title, stackBar) {
             height: 500,
             bar: {
                 groupWidth: '61.48%',
-                width: '20%',
-                isStacked: stackBar
+                width: '20%'
             },
             hAxis: {
                 format: '#',
@@ -81,6 +80,57 @@ function barChart (opciones, votes, chartNumber, title, stackBar) {
         googleChart.draw(data, options);
     }
 }
+
+function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber, title) {
+    google.charts.setOnLoadCallback(drawChartStacked);
+
+    function drawChartStacked() {
+        var arrayOpciones = [];
+        var arraySubPreguntas = [];
+        var arraySubPreguntasTemporal = [];
+        var arrayData = [];
+
+        opciones.unshift('SubPregunta');
+        arrayOpciones.push(opciones);
+
+        for (var subPregunta = 0; subPregunta < subPreguntas.length; subPregunta++) {
+            arraySubPreguntas.push(subPreguntas[subPregunta]);
+            for (var votes = 0; votes < opciones.length - 1; votes++) {
+                arraySubPreguntas.push(votesPercentage[subPregunta][votes]);
+            }
+            arrayOpciones.push(arraySubPreguntas);
+            arraySubPreguntas = [];
+        }
+        console.log(arrayOpciones);
+        var data = new google.visualization.arrayToDataTable(arrayOpciones);
+
+        var options = {
+            width: 800,
+            height: 500,
+            bar: {
+                groupWidth: '61.48%',
+                width: '20%'
+            },
+            hAxis: {
+                format: '#',
+                ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                viewWindow : {
+                    min: 0,
+                    max: 10
+                }
+            },
+            isStacked: true
+        };
+
+        options.title = title;
+
+        var chart = document.getElementById('chart' + chartNumber);
+        chart.className += ' bar-chart';
+        var googleChart = new google.visualization.BarChart(chart);
+        googleChart.draw(data, options);
+    }
+}
+
 
 function columnChart (opciones, percent, chartNumber, title) {
     google.charts.setOnLoadCallback(drawStuff);
@@ -469,11 +519,12 @@ $(document).on('ready', function () {
 
                         $('#abiertas-table').append(html);
                     } else if (response.tipo === 4) {
-                        barChart(response.opciones, response.porcentajes, 1, '', false);
+                        barChart(response.opciones, response.porcentajes, 1, '');
                     } else if (response.tipo === 6) {
                         averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 1);
                     } else if(response.tipo === 5){
-                        console.log("Entra Matriz");
+                        console.log(response);
+                        barChartStacked(response.opciones, response.porcentajes, response.subPreguntas, 1, '');
                     } else if (response.opciones.length < 4) {
                         pieChart(response.opciones, response.votos, 1, '');
                     } else {
@@ -535,11 +586,11 @@ $(document).on('ready', function () {
                 }
 
                 if (response.tipo === 4) {
-                    barChart(response.opciones, response.porcentajes, 2, '', false);
+                    barChart(response.opciones, response.porcentajes, 2, '');
                 } else if (response.tipo === 6) {
                     averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 2);
                 } else if (response.tipo === 5){
-                    console.log("Entra Matriz");
+                    barChartStacked(response.opciones, response.porcentajes, response.subPreguntas, 2, '');
                 }
                 else if (response.opciones.length < 4) {
                     pieChart(response.opciones, response.votos, 2, '');
