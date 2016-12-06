@@ -43,7 +43,7 @@ function pieChart (opciones, votes, chartNumber, title) {
     }
 }
 
-function barChart (opciones, votes, chartNumber, title) {
+function barChart (opciones, votes, chartNumber, title, stackBar) {
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
@@ -60,7 +60,8 @@ function barChart (opciones, votes, chartNumber, title) {
             height: 500,
             bar: {
                 groupWidth: '61.48%',
-                width: '20%'
+                width: '20%',
+                isStacked: stackBar
             },
             hAxis: {
                 format: '#',
@@ -468,9 +469,11 @@ $(document).on('ready', function () {
 
                         $('#abiertas-table').append(html);
                     } else if (response.tipo === 4) {
-                        barChart(response.opciones, response.porcentajes, 1, '');
+                        barChart(response.opciones, response.porcentajes, 1, '', false);
                     } else if (response.tipo === 6) {
                         averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 1);
+                    } else if(response.tipo === 5){
+                        console.log("Entra Matriz");
                     } else if (response.opciones.length < 4) {
                         pieChart(response.opciones, response.votos, 1, '');
                     } else {
@@ -532,10 +535,13 @@ $(document).on('ready', function () {
                 }
 
                 if (response.tipo === 4) {
-                    barChart(response.opciones, response.porcentajes, 2, '');
+                    barChart(response.opciones, response.porcentajes, 2, '', false);
                 } else if (response.tipo === 6) {
                     averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 2);
-                } else if (response.opciones.length < 4) {
+                } else if (response.tipo === 5){
+                    console.log("Entra Matriz");
+                }
+                else if (response.opciones.length < 4) {
                     pieChart(response.opciones, response.votos, 2, '');
                 } else {
                     columnChart(response.opciones, response.porcentajes, 2, '');
