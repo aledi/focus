@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-12-2016 a las 01:05:37
+-- Tiempo de generación: 06-12-2016 a las 02:06:30
 -- Versión del servidor: 5.5.42
 -- Versión de PHP: 7.0.0
 
@@ -803,7 +803,7 @@ INSERT INTO `Pregunta` (`id`, `titulo`, `encuesta`, `tipo`, `combo`, `numPregunt
 (231, '', 7, 2, 1, 11, 'Si las elecciones para Gobernador fueran hoy, votaría nuevamente por Jaime Rodríguez', '', '', 3, 0, 'Sí&No&No sé', ''),
 (232, '', 7, 6, 0, 12, 'PREGUNTA ESCALA', '', '', 2, 0, '1&10', ''),
 (233, '', 7, 6, 0, 13, 'PREGUNTA ESCALA 2', '', '', 2, 0, '1&100', ''),
-(234, 'TITULO MATRIZ', 7, 5, 0, 14, 'PREGUNTA MATRIZ', '', '', 3, 0, 'op1&op2&op3', 'sub1&sub2&sub3');
+(234, 'TITULO MATRIZ', 7, 5, 0, 14, 'PREGUNTA MATRIZ', '', '', 3, 5, 'Op1&Op2&Op3', 'sub1&sub2&sub3&sub4&sub5');
 
 -- --------------------------------------------------------
 
@@ -850,12 +850,12 @@ INSERT INTO `Respuesta` (`id`, `encuesta`, `panelista`, `respuestas`, `fechaIni`
 (18, 1, 5, 'betoooo|Muy Mala&|No|No|Sigue igual|Tal vez|', NULL, NULL, '2016-09-15', NULL),
 (19, 1, 10, 'Cobb |Neutra&Muy Mala&Muy Buena&|Sí|No|Mejoró|Aún es muy pronto para dar una opinión|', NULL, NULL, '2016-09-15', NULL),
 (60, 1, 410, 'Gghgjghhh|Positiva|Sí|Sí|Empeoró|Sí|', NULL, NULL, '2016-09-30', '16:48:49'),
-(61, 7, 410, 'Las superó|2|Abajarse|No me agradan, y no participaría.|Inversión en obra pública&|No sé|Igual|Definir si se realizará la obra del Monterrey VI&|Haga|Negativo.|No sé|7|89|', NULL, NULL, '2016-09-30', '16:50:12'),
+(61, 7, 410, 'Las superó|2|Abajarse|No me agradan, y no participaría.|Inversión en obra pública&|No sé|Igual|Definir si se realizará la obra del Monterrey VI&|Haga|Negativo.|No sé|7|89|Op1&Op2&Op3&Op1&Op2&', NULL, NULL, '2016-09-30', '16:50:12'),
 (62, 9, 411, 'Sí|Combo&|Excelente|7|9|9|Hghgghh|Fgfgggg|Sí|Gggggggg|Sí|Sí|Hhhhhh|Sí|', NULL, NULL, '2016-09-30', '16:54:14'),
 (63, 1, 411, 'Dhshshs|Neutra|No|Sí|Empeoró|Sí|', NULL, NULL, '2016-10-03', '09:55:40'),
 (65, 1, 454, 'Va para la presidencia |Neutra|Sí|No|Sigue igual|Sí|', NULL, NULL, '2016-10-04', '10:53:26'),
 (66, 1, 455, 'Busca la presidencia |Positiva|Sí|No|Sigue igual|Sí|', NULL, NULL, '2016-10-04', '15:32:34'),
-(81, 7, 409, '', '2016-12-04', '19:52:06', NULL, NULL);
+(81, 7, 409, 'Las superó|2|Abajarse|No me agradan, y no participaría.|Inversión en obra pública&|No sé|Igual|Definir si se realizará la obra del Monterrey VI&|Haga|Negativo.|Sí|7|89|Op2&Op3&Op1&Op2&Op3&', '2016-12-04', '19:52:06', NULL, NULL);
 
 -- --------------------------------------------------------
 
