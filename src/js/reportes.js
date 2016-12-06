@@ -105,21 +105,13 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber, 
         var data = new google.visualization.arrayToDataTable(arrayOpciones);
 
         var options = {
+            isStacked: 'percent',
             width: 800,
             height: 500,
-            bar: {
-                groupWidth: '61.48%',
-                width: '20%'
-            },
             hAxis: {
-                format: '#',
-                ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                viewWindow : {
-                    min: 0,
-                    max: 10
-                }
-            },
-            isStacked: true
+                minValue: 0,
+                ticks: [0, .25, .50, .75, 1]
+            }
         };
 
         options.title = title;
