@@ -516,7 +516,7 @@ $(document).on('ready', function () {
                         averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 1);
                     } else if(response.tipo === 5){
                         console.log(response);
-                        barChartStacked(response.opciones, response.porcentajes, response.subPreguntas, 1, '');
+                        barChartStacked(response.opciones, response.votos, response.subPreguntas, 1, '');
                     } else if (response.opciones.length < 4) {
                         pieChart(response.opciones, response.votos, 1, '');
                     } else {
@@ -582,7 +582,7 @@ $(document).on('ready', function () {
                 } else if (response.tipo === 6) {
                     averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 2);
                 } else if (response.tipo === 5){
-                    barChartStacked(response.opciones, response.porcentajes, response.subPreguntas, 2, '');
+                    barChartStacked(response.opciones, response.votos, response.subPreguntas, 2, '');
                 }
                 else if (response.opciones.length < 4) {
                     pieChart(response.opciones, response.votos, 2, '');
