@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 01-12-2016 a las 04:18:34
+-- Tiempo de generación: 06-12-2016 a las 01:05:37
 -- Versión del servidor: 5.5.42
 -- Versión de PHP: 7.0.0
 
@@ -508,7 +508,7 @@ INSERT INTO `Panelista` (`id`, `username`, `password`, `nombre`, `apellidos`, `e
 (405, 'flyflyerson', 'apple123', 'John', 'Snow', 'flyflyerson@gmail.com', 0, '1996-09-24', 2, '1 flyerson 1', 'test', 'test', 'BCS', 94356, NULL, '', 0),
 (406, 'ecristerna', 'pass', 'Eduardo', 'Cristenra', 'ec@c.com', 0, '1994-09-04', 4, 'Calle', 'Colonia', 'Mty', 'NL', 12345, NULL, '', 0),
 (408, 'prueba', '', 'Prueba', 'p', 'kjfj@hotmail.com', 0, '1998-01-01', 2, 'jdfnj', 'cjakg', 'monterrey', 'NL', 66546, NULL, '', 0),
-(409, 'Enrique Silva', '3232', 'Enrique', 'Silva', 'enriquesilva@focuscg.com.mx', 0, '1998-09-28', 4, 'ee dd', 'de', 'dd', 'NL', 66230, NULL, '', 0),
+(409, 'esilva', '3232', 'Enrique', 'Silva', 'enriquesilva@focuscg.com.mx', 0, '1998-09-28', 4, 'ee dd', 'de', 'dd', 'NL', 66230, NULL, '', 0),
 (410, 'juane', 'juane1', 'Juan', 'Saenz', 'saenz@me.com', 0, '1997-09-29', 5, 'luis 15', 'francia', 'monterrey', 'NL', 66230, NULL, 'b36831f9edee1f14120b035eaef45ce3227c204fc88b762aafbcf8d841a50065', 1),
 (411, 'carlosz', 'zazueta', 'Carlos', 'Zazueta', 'carlos@hotmail.com', 0, '1992-01-01', 3, 'independencia', 'Centro', 'San Pedro', 'NL', 66230, NULL, '', 0),
 (412, 'mariap', 'perez', 'María', 'Pérez', 'perez@hotmail.com', 1, '1994-06-01', 2, 'Aldama', 'Centro', 'Monterrey', 'NL', 66234, NULL, '', 0),
@@ -760,7 +760,7 @@ CREATE TABLE `Pregunta` (
   `numSubPreguntas` tinyint(4) NOT NULL,
   `opciones` text COLLATE utf8_spanish_ci NOT NULL,
   `subPreguntas` text COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=221 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=235 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Pregunta`
@@ -790,19 +790,20 @@ INSERT INTO `Pregunta` (`id`, `titulo`, `encuesta`, `tipo`, `combo`, `numPregunt
 (121, '', 10, 2, 0, 1, 'gfdgfdgfdfdgf', '', '', 0, 0, '', ''),
 (122, '', 10, 3, 0, 2, '', '', '', 0, 0, '', ''),
 (139, 'PRUEBA CAMBIOS12345', 11, 2, 0, 1, 'PRUEBA CAMBIOS1234', '', '', 17, 0, 'OP1121212&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2&OP2', ''),
-(208, 'TITULO', 7, 2, 0, 1, 'El primer año del “El Bronco”, ¿cumplió con sus expectativas? ', '', '', 4, 0, 'Sí las cumplió&Las superó&Estuvo por debajo&No sé', ''),
-(209, 'TITULO 2', 7, 2, 0, 2, '¿Cómo califica el primer año de gobierno de Jaime Rodríguez?', '', '', 10, 0, '1&2&3&4&5&6&7&8&9&10', ''),
-(210, '', 7, 1, 0, 3, 'Diga en una palabra ¿cómo califica su gobierno? ', '', '', 0, 0, '', ''),
-(211, '', 7, 2, 0, 4, '¿Qué opina de las propuestas del gobernador, como la invitación a los ciudadanos a tapar baches en las calles de sus colonias?', '', '', 3, 0, 'No me agradan, y no participaría.&Sí me agradan, y sí participaría.&Me es indiferente.', ''),
-(212, '', 7, 3, 0, 5, '¿Elija algunos temas en el que considera que el gobernador ha realizado un mal trabajo?', '', '', 10, 0, 'Seguridad&Inversión en obra pública&Acciones en contra del ex gobernador Rodrigo Medina.&Restructura de la deuda de NL y en el gobierno en general.&Nuevos programas de apoyo a la comunidad.&Reducción gradual del pago de la Tenencia.&Transparencia.&Rendición de Cuentas.&Combate a la corrupción.&No sé', ''),
-(213, '', 7, 2, 0, 6, '¿Elija un tema en el que considera que el gobernador ha hecho un buen trabajo?', '', '', 10, 0, 'Seguridad&Inversión en obra pública&Acciones en contra del ex gobernador Rodrigo Medina.&Restructura de la deuda de NL y en el gobierno en general.&Nuevos programas de apoyo a la comunidad.&Reducción gradual del pago de la Tenencia.&Transparencia.&Rendición de Cuentas.&Combate a la corrupción.&No sé', ''),
-(214, '', 7, 2, 0, 7, '¿Percibe una mejoría al tener un gobierno independiente en Nuevo León?', '', '', 4, 0, 'Sí&No&Igual&No sé', ''),
-(215, '', 7, 3, 0, 8, '¿En qué rubros considera que “El Bronco” tiene retos para su siguiente año de gobierno?', '', '', 9, 0, 'Seguridad&Inversión en obra pública &Concluir la Línea 3 del Metro&Combate a la Corrupción&Definir si se realizará la obra del Monterrey VI&Transparencia&Rendición de Cuentas&Impulso en la generación de empleo&No sé', ''),
-(216, '', 7, 1, 0, 9, 'En una palabra, ¿cómo define el primer año de gobierno de “El Bronco”?', '', '', 0, 0, '', ''),
-(217, '', 7, 2, 0, 10, '¿Qué expectativas tiene del primer “informe de gobierno”, sobre algún anuncio para los ciudadanos?', '', '', 4, 0, 'Positivo.&Negativo.&Sin afectar a los ciudadanos.&No sé.', ''),
-(218, '', 7, 2, 1, 11, 'Si las elecciones para Gobernador fueran hoy, votaría nuevamente por Jaime Rodríguez', '', '', 3, 0, 'Sí&No&No sé', ''),
-(219, '', 7, 6, 0, 12, 'PREGUNTA ESCALA', '', '', 2, 0, '1&10', ''),
-(220, '', 7, 6, 0, 13, 'PREGUNTA ESCALA 2', '', '', 2, 0, '1&100', '');
+(221, 'TITULO', 7, 2, 0, 1, 'El primer año del “El Bronco”, ¿cumplió con sus expectativas? ', '', '', 4, 0, 'Sí las cumplió&Las superó&Estuvo por debajo&No sé', ''),
+(222, 'TITULO 2', 7, 3, 0, 2, '¿Cómo califica el primer año de gobierno de Jaime Rodríguez?', '', '', 20, 0, '1&2&3&4&5&6&7&8&9&10&1&2&3&4&5&6&7&8&9&10', ''),
+(223, '', 7, 1, 0, 3, 'Diga en una palabra ¿cómo califica su gobierno? ', '', '', 0, 0, '', ''),
+(224, '', 7, 2, 1, 4, '¿Qué opina de las propuestas del gobernador, como la invitación a los ciudadanos a tapar baches en las calles de sus colonias?', '', '', 3, 0, 'No me agradan, y no participaría.&Sí me agradan, y sí participaría.&Me es indiferente.', ''),
+(225, '', 7, 3, 0, 5, '¿Elija algunos temas en el que considera que el gobernador ha realizado un mal trabajo?', '', '', 10, 0, 'Seguridad&Inversión en obra pública&Acciones en contra del ex gobernador Rodrigo Medina.&Restructura de la deuda de NL y en el gobierno en general.&Nuevos programas de apoyo a la comunidad.&Reducción gradual del pago de la Tenencia.&Transparencia.&Rendición de Cuentas.&Combate a la corrupción.&No sé', ''),
+(226, '', 7, 2, 0, 6, '¿Elija un tema en el que considera que el gobernador ha hecho un buen trabajo?', '', '', 10, 0, 'Seguridad&Inversión en obra pública&Acciones en contra del ex gobernador Rodrigo Medina.&Restructura de la deuda de NL y en el gobierno en general.&Nuevos programas de apoyo a la comunidad.&Reducción gradual del pago de la Tenencia.&Transparencia.&Rendición de Cuentas.&Combate a la corrupción.&No sé', ''),
+(227, '', 7, 2, 0, 7, '¿Percibe una mejoría al tener un gobierno independiente en Nuevo León?', '', '', 4, 0, 'Sí&No&Igual&No sé', ''),
+(228, '', 7, 3, 0, 8, '¿En qué rubros considera que “El Bronco” tiene retos para su siguiente año de gobierno?', '', '', 9, 0, 'Seguridad&Inversión en obra pública &Concluir la Línea 3 del Metro&Combate a la Corrupción&Definir si se realizará la obra del Monterrey VI&Transparencia&Rendición de Cuentas&Impulso en la generación de empleo&No sé', ''),
+(229, '', 7, 1, 0, 9, 'En una palabra, ¿cómo define el primer año de gobierno de “El Bronco”?', '', '', 0, 0, '', ''),
+(230, '', 7, 2, 0, 10, '¿Qué expectativas tiene del primer “informe de gobierno”, sobre algún anuncio para los ciudadanos?', '', '', 4, 0, 'Positivo.&Negativo.&Sin afectar a los ciudadanos.&No sé.', ''),
+(231, '', 7, 2, 1, 11, 'Si las elecciones para Gobernador fueran hoy, votaría nuevamente por Jaime Rodríguez', '', '', 3, 0, 'Sí&No&No sé', ''),
+(232, '', 7, 6, 0, 12, 'PREGUNTA ESCALA', '', '', 2, 0, '1&10', ''),
+(233, '', 7, 6, 0, 13, 'PREGUNTA ESCALA 2', '', '', 2, 0, '1&100', ''),
+(234, 'TITULO MATRIZ', 7, 5, 0, 14, 'PREGUNTA MATRIZ', '', '', 3, 0, 'op1&op2&op3', 'sub1&sub2&sub3');
 
 -- --------------------------------------------------------
 
@@ -831,7 +832,7 @@ CREATE TABLE `Respuesta` (
   `horaIni` time DEFAULT NULL,
   `fechaFin` date DEFAULT NULL,
   `horaFin` time DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `Respuesta`
@@ -848,15 +849,13 @@ INSERT INTO `Respuesta` (`id`, `encuesta`, `panelista`, `respuestas`, `fechaIni`
 (17, 1, 9, 'Más,más fuerte|Muy Buena&|No|Sí|Empeoró|Tal vez|', NULL, NULL, '2016-09-15', NULL),
 (18, 1, 5, 'betoooo|Muy Mala&|No|No|Sigue igual|Tal vez|', NULL, NULL, '2016-09-15', NULL),
 (19, 1, 10, 'Cobb |Neutra&Muy Mala&Muy Buena&|Sí|No|Mejoró|Aún es muy pronto para dar una opinión|', NULL, NULL, '2016-09-15', NULL),
-(53, 7, 409, 'Estuvo por debajo|3|Mal gobierno |No me agradan, y no participaría.|Seguridad&Inversión en obra pública&Nuevos programas de apoyo a la comunidad.&Reducción gradual del pago de la Tenencia.&Combate a la corrupción.&|Nuevos programas de apoyo a la comunidad.|No|Inversión en obra pública &|Pésimo|Negativo.|No|10|78|', NULL, NULL, '2016-09-29', '13:22:33'),
-(56, 9, 409, 'Sí|Piezas de pollo&|Regular|8|6|6|La rapidez del servicio |La limpieza del baño |Sí|Más limpieza|Sí|Sí|Nada|Sí|', NULL, NULL, '2016-09-29', '13:58:01'),
-(58, 1, 409, 'Esta en campaña|Positiva|No|Sí|Empeoró|No|', NULL, NULL, '2016-09-29', '14:56:12'),
 (60, 1, 410, 'Gghgjghhh|Positiva|Sí|Sí|Empeoró|Sí|', NULL, NULL, '2016-09-30', '16:48:49'),
 (61, 7, 410, 'Las superó|2|Abajarse|No me agradan, y no participaría.|Inversión en obra pública&|No sé|Igual|Definir si se realizará la obra del Monterrey VI&|Haga|Negativo.|No sé|7|89|', NULL, NULL, '2016-09-30', '16:50:12'),
 (62, 9, 411, 'Sí|Combo&|Excelente|7|9|9|Hghgghh|Fgfgggg|Sí|Gggggggg|Sí|Sí|Hhhhhh|Sí|', NULL, NULL, '2016-09-30', '16:54:14'),
 (63, 1, 411, 'Dhshshs|Neutra|No|Sí|Empeoró|Sí|', NULL, NULL, '2016-10-03', '09:55:40'),
 (65, 1, 454, 'Va para la presidencia |Neutra|Sí|No|Sigue igual|Sí|', NULL, NULL, '2016-10-04', '10:53:26'),
-(66, 1, 455, 'Busca la presidencia |Positiva|Sí|No|Sigue igual|Sí|', NULL, NULL, '2016-10-04', '15:32:34');
+(66, 1, 455, 'Busca la presidencia |Positiva|Sí|No|Sigue igual|Sí|', NULL, NULL, '2016-10-04', '15:32:34'),
+(81, 7, 409, '', '2016-12-04', '19:52:06', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -975,7 +974,7 @@ ALTER TABLE `PanelistaEnPanel`
 -- AUTO_INCREMENT de la tabla `Pregunta`
 --
 ALTER TABLE `Pregunta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=221;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=235;
 --
 -- AUTO_INCREMENT de la tabla `Recurso`
 --
@@ -985,7 +984,7 @@ ALTER TABLE `Recurso`
 -- AUTO_INCREMENT de la tabla `Respuesta`
 --
 ALTER TABLE `Respuesta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=67;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=82;
 --
 -- AUTO_INCREMENT de la tabla `Usuario`
 --
