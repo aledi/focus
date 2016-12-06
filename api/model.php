@@ -1322,20 +1322,37 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT tipo, numOpciones, opciones FROM Pregunta WHERE encuesta = '$encuesta' AND numPregunta = '$numPregunta'";
+        $sql = "SELECT tipo, numOpciones, opciones, numSubPreguntas, subPreguntas FROM Pregunta WHERE encuesta = '$encuesta' AND numPregunta = '$numPregunta'";
         $result = $conn->query($sql);
         $tipo = 0;
         $options = array();
+        $subPreguntas = array();
         $votes = array();
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $tipo = $row['tipo'];
+
             $options = explode('&', $row['opciones']);
             $options = array_filter($options, 'emptyString');
 
-            for ($x = 1; $x <= $row['numOpciones']; $x++) {
-                $votes[] = 0;
+            if ($tipo == 5) {
+                $subPreguntas = explode('&', $row['subPreguntas']);
+                $subPreguntas = array_filter($subPreguntas, 'emptyString');
+
+                for ($x = 1; $x <= $row['numSubPreguntas']; $x++) {
+                    $votosInner = array();
+
+                    for ($y = 1; $y <= $row['numOpciones']; $y++) {
+                        $votosInner[] = 0;
+                    }
+
+                    $votes[] = $votosInner;
+                }
+            } else {
+                for ($x = 1; $x <= $row['numOpciones']; $x++) {
+                    $votes[] = 0;
+                }
             }
         }
 
@@ -1416,6 +1433,17 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
                         }
                     }
                 }
+            } else if ($tipo == 5) {
+                $multipleAnswers = explode('&', $answers[$numPregunta - 1]);
+
+                for ($x = 0; $x < count($multipleAnswers); $x++) {
+                    for ($y = 0; $y < count($options); $y++) {
+                        if ($multipleAnswers[$x] == $options[$y]) {
+                            $votes[$x][$y] = $votes[$x][$y] + 1;
+                            break;
+                        }
+                    }
+                }
             } else if ($tipo == 6) {
                 $votes[0] = $votes[0] + (int)$answers[$numPregunta - 1];
             }
@@ -1426,12 +1454,26 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
             return array('status' => 'NO_DATA');
         }
 
-        for ($x = 0; $x < count($options); $x++) {
-            $values[] = $votes[$x] / $total;
+        if ($tipo == 5) {
+            for ($x = 0; $x < count($subPreguntas); $x++) {
+                $valuesInner = array();
+                $votesInner = $votes[$x];
+                
+                for ($y = 0; $y < count($options); $y++) {
+                    
+                    $valuesInner[] = $votesInner[$y] / $total;
+                }
+
+                $values[] = $valuesInner;
+            }
+        } else {
+            for ($x = 0; $x < count($options); $x++) {
+                $values[] = $votes[$x] / $total;
+            }
         }
 
         $conn->close();
-        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'votos' => $votes, 'porcentajes' => $values);
+        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'subPreguntas' => $subPreguntas, 'votos' => $votes, 'porcentajes' => $values);
     }
 
     return array('status' => 'DATABASE_ERROR');
