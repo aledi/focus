@@ -66,7 +66,7 @@ function barChart (opciones, votes, chartNumber, title) {
         var options = {
             width: 800,
             height: 500,
-            colors: arrayChartColors,
+            colors: colorArray,
             bar: {
                 groupWidth: '61.48%',
                 width: '20%'
@@ -90,7 +90,7 @@ function barChart (opciones, votes, chartNumber, title) {
     }
 }
 
-function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber, title) {
+function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber) {
     google.charts.setOnLoadCallback(drawChartStacked);
 
     function drawChartStacked() {
@@ -102,9 +102,11 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber, 
 
         for (var subPregunta = 0; subPregunta < subPreguntas.length; subPregunta++) {
             arraySubPreguntas.push(subPreguntas[subPregunta]);
+
             for (var votes = 0; votes < opciones.length - 1; votes++) {
                 arraySubPreguntas.push(votesPercentage[subPregunta][votes]);
             }
+
             arrayOpciones.push(arraySubPreguntas);
             arraySubPreguntas = [];
         }
@@ -122,15 +124,12 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber, 
             }
         };
 
-        options.title = title;
-
         var chart = document.getElementById('chart' + chartNumber);
         chart.className += ' bar-chart';
         var googleChart = new google.visualization.BarChart(chart);
         googleChart.draw(data, options);
     }
 }
-
 
 function columnChart (opciones, percent, chartNumber, title) {
     google.charts.setOnLoadCallback(drawStuff);
@@ -524,8 +523,8 @@ $(document).on('ready', function () {
                         barChart(response.opciones, response.porcentajes, 1, '');
                     } else if (response.tipo === 6) {
                         averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 1);
-                    } else if(response.tipo === 5){
-                        barChartStacked(response.opciones, response.votos, response.subPreguntas, 1, '');
+                    } else if (response.tipo === 5) {
+                        barChartStacked(response.opciones, response.votos, response.subPreguntas, 1);
                     } else if (response.opciones.length < 4) {
                         pieChart(response.opciones, response.votos, 1, '');
                     } else {
@@ -590,10 +589,9 @@ $(document).on('ready', function () {
                     barChart(response.opciones, response.porcentajes, 2, '');
                 } else if (response.tipo === 6) {
                     averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 2);
-                } else if (response.tipo === 5){
-                    barChartStacked(response.opciones, response.votos, response.subPreguntas, 2, '');
-                }
-                else if (response.opciones.length < 4) {
+                } else if (response.tipo === 5) {
+                    barChartStacked(response.opciones, response.votos, response.subPreguntas, 2);
+                } else if (response.opciones.length < 4) {
                     pieChart(response.opciones, response.votos, 2, '');
                 } else {
                     columnChart(response.opciones, response.porcentajes, 2, '');

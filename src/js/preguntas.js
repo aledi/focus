@@ -176,12 +176,11 @@ $(document).on('ready', function () {
                             $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta' + (i + 1)).val(opciones[i]);
                         }
 
-                        if(response.results[x].tipo == 5){
+                        if (response.results[x].tipo == 5) {
                             for (var i = 0; i < subPreguntas.length; i++) {
                                 $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .subpregunta' + (i + 1)).val(subPreguntas[i]);
                             }
                         }
-
                     }
                 }
             },
