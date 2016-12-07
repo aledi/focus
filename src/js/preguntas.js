@@ -29,7 +29,6 @@ function appendAnswers (typeQuestion, questionID) {
     $('#Answers' + questionID).empty();
 
     if (typeQuestion != 1 && typeQuestion != 6) {
-
         if (typeQuestion == 2) {
             currentHTML += '<div class="input-wrapper">';
             currentHTML += '<label>Mostrar como</label>';
@@ -43,8 +42,17 @@ function appendAnswers (typeQuestion, questionID) {
             currentHTML += '<label>Opción ' + x + '</label>';
             currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' full-width" type="text"/>';
             currentHTML += '</div>';
+        }
+
+        if (typeQuestion == 5) {
+            for (var x = 1; x <= 20; x++) {
+                currentHTML += '<div class="input-wrapper answer">';
+                currentHTML += '<label>Subpregunta ' + x + '</label>';
+                currentHTML += '<input id="subpregunta' + x + '" class="subpregunta' + x + ' full-width" type="text"/>';
+                currentHTML += '</div>';
+            }
          }
-    } else if (typeQuestion == 6){
+    } else if (typeQuestion == 6) {
         currentHTML += '<div class="input-wrapper answer">';
         currentHTML += '<label>Escala</label>';
         currentHTML += '<input type="number" class="respuesta1 required-input" id="opcion1" type="text"/>';
@@ -157,6 +165,7 @@ $(document).on('ready', function () {
 
                     if (response.results[x].tipo !== 1) {
                         var opciones = response.results[x].opciones;
+                        var subPreguntas = response.results[x].subPreguntas;
                         var comboRadio = $('input[name="combo' + (x + 1) + '"][value="' + response.results[x].combo + '"]')
 
                         if (comboRadio) {
@@ -165,6 +174,12 @@ $(document).on('ready', function () {
 
                         for (var i = 0; i < opciones.length; i++) {
                             $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta' + (i + 1)).val(opciones[i]);
+                        }
+
+                        if (response.results[x].tipo == 5) {
+                            for (var i = 0; i < subPreguntas.length; i++) {
+                                $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .subpregunta' + (i + 1)).val(subPreguntas[i]);
+                            }
                         }
                     }
                 }
@@ -206,6 +221,7 @@ $(document).on('ready', function () {
         var questionObject = {};
         var questionValidated = true;
         questionObject.opciones = [];
+        questionObject.subPreguntas = [];
 
         $('#questions').children().each(function () {
             questionObject.numPregunta = numeroPregunta;
@@ -235,12 +251,22 @@ $(document).on('ready', function () {
                     questionObject.opciones.push($(this).find('#opcion' + opcion).val());
                     opcion++;
                 }
+
+                if (questionObject.tipo == 5) {
+                    var subPregunta = 1;
+
+                    while ($(this).find('#subpregunta' + subPregunta).val()) {
+                        questionObject.subPreguntas.push($(this).find('#subpregunta' + subPregunta).val());
+                        subPregunta++;
+                    }
+                }
             }
 
             questionsArray.push(questionObject);
             numeroPregunta++;
             questionObject = {};
             questionObject.opciones = [];
+            questionObject.subPreguntas = [];
         });
 
         if (!questionValidated) {

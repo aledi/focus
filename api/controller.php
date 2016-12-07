@@ -359,7 +359,7 @@ function verifyActiveSession () {
 
 function getReportData () {
     $reportData = $_POST['numPregunta'] == 0 ? generalReportData($_POST['encuesta']) : reportData($_POST['encuesta'], $_POST['numPregunta'], $_POST['genero'], $_POST['edad'], $_POST['estado'], $_POST['educacion']);
-    
+
     echo json_encode($reportData);
 }
 
@@ -469,7 +469,7 @@ function sendPassword ($email, $nombre, $password) {
     $message =  'Hola ' . $nombre . ',<br><br>' .
                 'Hemos recibido su solicitud para recuperar su contraseña de acceso a la app Focus.' . '<br><br>' .
                 'Su contraseña es <strong> ' . $password . ' </strong>. Si usted no solicitó este correo, le pedimos haga caso omiso del mismo.' . '<br><br>' .
-                'Agradecemos preferencia. ¡Que tenga un excelente día!,' . '<br><br><br>' .
+                'Agradecemos su preferencia. ¡Que tenga un excelente día!,' . '<br><br><br>' .
                 'Focus Consulting Group';
 
     $success = mail($email, $subject, $message, $headers);

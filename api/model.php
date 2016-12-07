@@ -554,7 +554,11 @@ function fetchPreguntasEncuesta ($encuesta) {
         while ($row = $result->fetch_assoc()) {
             $opciones = explode('&', $row['opciones']);
             $opciones = array_filter($opciones, 'emptyString');
-            $pregunta = array('id' => (int)$row['id'], 'encuesta' => (int)$encuesta, 'numPregunta' => (int)$row['numPregunta'], 'titulo' => $row['titulo'], 'tipo' => (int)$row['tipo'], 'pregunta' => $row['pregunta'], 'video' => $row['video'], 'imagen' => $row['imagen'], 'combo' => $row['combo'], 'opciones' => $opciones);
+
+            $subPreguntas = explode('&', $row['subPreguntas']);
+            $subPreguntas = array_filter($subPreguntas, 'emptyString');
+
+            $pregunta = array('id' => (int)$row['id'], 'encuesta' => (int)$encuesta, 'numPregunta' => (int)$row['numPregunta'], 'titulo' => $row['titulo'], 'tipo' => (int)$row['tipo'], 'pregunta' => $row['pregunta'], 'video' => $row['video'], 'imagen' => $row['imagen'], 'combo' => $row['combo'], 'opciones' => $opciones, 'subPreguntas' => $subPreguntas);
             $response[] = $pregunta;
         }
 
@@ -583,7 +587,7 @@ function fetchMobileData ($panelista) {
 
             while ($row2 = $result2->fetch_assoc()) {
                 $encuestaId = $row2['id'];
-                $sql3 = "SELECT id, tipo, numPregunta, titulo, pregunta, video, imagen, combo, opciones FROM Pregunta WHERE encuesta = '$encuestaId'";
+                $sql3 = "SELECT id, tipo, numPregunta, titulo, pregunta, video, imagen, combo, opciones, subPreguntas FROM Pregunta WHERE encuesta = '$encuestaId'";
                 $result3 = $conn->query($sql3);
 
                 $preguntas = array();
@@ -591,7 +595,13 @@ function fetchMobileData ($panelista) {
                 while ($row3 = $result3->fetch_assoc()) {
                     $opciones = explode('&', $row3['opciones']);
                     $opciones = array_filter($opciones, 'emptyString');
-                    $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'titulo' => $row3['titulo'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'combo' => $row3['combo'], 'opciones' => $opciones);
+
+                    $subPreguntas = explode('&', $row3['subPreguntas']);
+                    $subPreguntas = array_filter($subPreguntas, 'emptyString');
+
+                    $asCombo = (int)$row3['combo'] === 0 ? FALSE : TRUE;
+
+                    $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'titulo' => $row3['titulo'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'combo' => $asCombo, 'opciones' => $opciones, 'subPreguntas' => $subPreguntas);
                     $preguntas[] = $pregunta;
                 }
 
@@ -752,17 +762,25 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
             $imagen = $pregunta['imagen'];
             $combo = $pregunta['combo'];
             $opciones = $pregunta['opciones'];
+            $subPreguntas = $pregunta['subPreguntas'];
 
             $opcionesString = "";
+            $subPreguntasString = "";
             $numOpciones = count($opciones);
+            $numSubPreguntas = count($subPreguntas);
 
             for ($x = 0; $x < $numOpciones; $x++) {
                 $opcionesString = $opcionesString.$opciones[$x]."&";
             }
 
-            $opcionesString = rtrim($opcionesString, "&");
+            for ($x = 0; $x < $numSubPreguntas; $x++) {
+                $subPreguntasString = $subPreguntasString.$subPreguntas[$x]."&";
+            }
 
-            $sql = "INSERT INTO Pregunta (encuesta, tipo, numPregunta, pregunta, video, imagen, numOpciones, titulo, combo, opciones) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$numOpciones', '$titulo', '$combo', '$opcionesString')";
+            $opcionesString = rtrim($opcionesString, "&");
+            $subPreguntasString = rtrim($subPreguntasString, "&");
+
+            $sql = "INSERT INTO Pregunta (encuesta, tipo, numPregunta, pregunta, video, imagen, numOpciones, titulo, combo, opciones, subPreguntas) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$numOpciones', '$titulo', '$combo', '$opcionesString', '$subPreguntasString')";
 
             if ($conn->query($sql) === TRUE) {
                 $inserts = $inserts + 1;
@@ -1304,20 +1322,37 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT tipo, numOpciones, opciones FROM Pregunta WHERE encuesta = '$encuesta' AND numPregunta = '$numPregunta'";
+        $sql = "SELECT tipo, numOpciones, opciones, numSubPreguntas, subPreguntas FROM Pregunta WHERE encuesta = '$encuesta' AND numPregunta = '$numPregunta'";
         $result = $conn->query($sql);
         $tipo = 0;
         $options = array();
+        $subPreguntas = array();
         $votes = array();
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $tipo = $row['tipo'];
+
             $options = explode('&', $row['opciones']);
             $options = array_filter($options, 'emptyString');
 
-            for ($x = 1; $x <= $row['numOpciones']; $x++) {
-                $votes[] = 0;
+            if ($tipo == 5) {
+                $subPreguntas = explode('&', $row['subPreguntas']);
+                $subPreguntas = array_filter($subPreguntas, 'emptyString');
+
+                for ($x = 1; $x <= $row['numSubPreguntas']; $x++) {
+                    $votosInner = array();
+
+                    for ($y = 1; $y <= $row['numOpciones']; $y++) {
+                        $votosInner[] = 0;
+                    }
+
+                    $votes[] = $votosInner;
+                }
+            } else {
+                for ($x = 1; $x <= $row['numOpciones']; $x++) {
+                    $votes[] = 0;
+                }
             }
         }
 
@@ -1347,7 +1382,7 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
                     $sql = $sql." AND Panelista.fechaNacimiento >= '$date55' AND Panelista.fechaNacimiento < '$date45'";
                 } else if ($edad == 100) {
                     $sql = $sql." AND Panelista.fechaNacimiento < '$date55'";
-                }
+                }   
             }
 
             if ($estado !== null) {
@@ -1398,6 +1433,17 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
                         }
                     }
                 }
+            } else if ($tipo == 5) {
+                $multipleAnswers = explode('&', $answers[$numPregunta - 1]);
+
+                for ($x = 0; $x < count($multipleAnswers); $x++) {
+                    for ($y = 0; $y < count($options); $y++) {
+                        if ($multipleAnswers[$x] == $options[$y]) {
+                            $votes[$x][$y] = $votes[$x][$y] + 1;
+                            break;
+                        }
+                    }
+                }
             } else if ($tipo == 6) {
                 $votes[0] = $votes[0] + (int)$answers[$numPregunta - 1];
             }
@@ -1408,12 +1454,26 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
             return array('status' => 'NO_DATA');
         }
 
-        for ($x = 0; $x < count($options); $x++) {
-            $values[] = $votes[$x] / $total;
+        if ($tipo == 5) {
+            for ($x = 0; $x < count($subPreguntas); $x++) {
+                $valuesInner = array();
+                $votesInner = $votes[$x];
+
+                for ($y = 0; $y < count($options); $y++) {
+
+                    $valuesInner[] = $votesInner[$y] / $total;
+                }
+
+                $values[] = $valuesInner;
+            }
+        } else {
+            for ($x = 0; $x < count($options); $x++) {
+                $values[] = $votes[$x] / $total;
+            }
         }
 
         $conn->close();
-        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'votos' => $votes, 'porcentajes' => $values);
+        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'subPreguntas' => $subPreguntas, 'votos' => $votes, 'porcentajes' => $values);
     }
 
     return array('status' => 'DATABASE_ERROR');

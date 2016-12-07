@@ -9,6 +9,13 @@ var educationObject = {
     6: 'Ninguno'
 }
 
+//http://www.w3schools.com/colors/colors_shades.asp
+var colorArray = ['#505160', '#68829E', '#AEBD38', '#598234',
+                  '#2E5600', '#486B00', '#A2C523', '#7D4427',
+                  '#021C1E', '#004445', '#2C7873', '#6FB98F',
+                  '#375E97', '#FB6542', '#FFBB00', '#3F681C',
+                  '#8D230F', '#1E343C', '#9B4F0F', '#C99E10'];
+
 google.charts.load('current', {'packages': ['corechart', 'bar']});
 
 // -----------------------------------------------------------------------------------------------
@@ -30,6 +37,7 @@ function pieChart (opciones, votes, chartNumber, title) {
         var options = {
             width: 700,
             height: 350,
+            colors: colorArray,
             sliceVisibilityThreshold: 0,
             tooltip: { text: 'percentage' }
         };
@@ -58,6 +66,7 @@ function barChart (opciones, votes, chartNumber, title) {
         var options = {
             width: 800,
             height: 500,
+            colors: colorArray,
             bar: {
                 groupWidth: '61.48%',
                 width: '20%'
@@ -73,6 +82,47 @@ function barChart (opciones, votes, chartNumber, title) {
         };
 
         options.title = title;
+
+        var chart = document.getElementById('chart' + chartNumber);
+        chart.className += ' bar-chart';
+        var googleChart = new google.visualization.BarChart(chart);
+        googleChart.draw(data, options);
+    }
+}
+
+function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber) {
+    google.charts.setOnLoadCallback(drawChartStacked);
+
+    function drawChartStacked() {
+        var arrayOpciones = [];
+        var arraySubPreguntas = [];
+
+        opciones.unshift('SubPregunta');
+        arrayOpciones.push(opciones);
+
+        for (var subPregunta = 0; subPregunta < subPreguntas.length; subPregunta++) {
+            arraySubPreguntas.push(subPreguntas[subPregunta]);
+
+            for (var votes = 0; votes < opciones.length - 1; votes++) {
+                arraySubPreguntas.push(votesPercentage[subPregunta][votes]);
+            }
+
+            arrayOpciones.push(arraySubPreguntas);
+            arraySubPreguntas = [];
+        }
+
+        var data = new google.visualization.arrayToDataTable(arrayOpciones);
+
+        var options = {
+            isStacked: 'percent',
+            width: 800,
+            height: 500,
+            colors: colorArray,
+            hAxis: {
+                minValue: 0,
+                ticks: [0, .25, .50, .75, 1]
+            }
+        };
 
         var chart = document.getElementById('chart' + chartNumber);
         chart.className += ' bar-chart';
@@ -99,6 +149,7 @@ function columnChart (opciones, percent, chartNumber, title) {
         var options = {
             width: 800,
             height: 400,
+            colors: colorArray,
             bar: {
                 width: opciones.length > 1 ? '80%' : '40%'
             },
@@ -136,6 +187,7 @@ function averageChart(min, max, value, chartNumber) {
         var options = {
             width: 800,
             height: 400,
+            colors: colorArray,
             bar: {
                 width: '40%'
             },
@@ -471,6 +523,8 @@ $(document).on('ready', function () {
                         barChart(response.opciones, response.porcentajes, 1, '');
                     } else if (response.tipo === 6) {
                         averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 1);
+                    } else if (response.tipo === 5) {
+                        barChartStacked(response.opciones, response.votos, response.subPreguntas, 1);
                     } else if (response.opciones.length < 4) {
                         pieChart(response.opciones, response.votos, 1, '');
                     } else {
@@ -535,6 +589,8 @@ $(document).on('ready', function () {
                     barChart(response.opciones, response.porcentajes, 2, '');
                 } else if (response.tipo === 6) {
                     averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 2);
+                } else if (response.tipo === 5) {
+                    barChartStacked(response.opciones, response.votos, response.subPreguntas, 2);
                 } else if (response.opciones.length < 4) {
                     pieChart(response.opciones, response.votos, 2, '');
                 } else {
