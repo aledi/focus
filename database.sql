@@ -1,26 +1,26 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.10
+-- version 4.4.15.5
 -- http://www.phpmyadmin.net
 --
--- Servidor: localhost
--- Tiempo de generación: 06-12-2016 a las 02:06:30
--- Versión del servidor: 5.5.42
--- Versión de PHP: 7.0.0
+-- Host: localhost:3306
+-- Generation Time: Dec 07, 2016 at 07:36 PM
+-- Server version: 5.5.49-log
+-- PHP Version: 7.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 --
--- Base de datos: `focus`
+-- Database: `focus`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Encuesta`
+-- Table structure for table `encuesta`
 --
 
-CREATE TABLE `Encuesta` (
+CREATE TABLE IF NOT EXISTS `encuesta` (
   `id` int(11) NOT NULL,
   `panel` int(11) NOT NULL,
   `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
@@ -29,10 +29,10 @@ CREATE TABLE `Encuesta` (
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `Encuesta`
+-- Dumping data for table `encuesta`
 --
 
-INSERT INTO `Encuesta` (`id`, `panel`, `nombre`, `fechaInicio`, `fechaFin`) VALUES
+INSERT INTO `encuesta` (`id`, `panel`, `nombre`, `fechaInicio`, `fechaFin`) VALUES
 (1, 1, 'Encuesta', '2016-08-06', '2016-12-31'),
 (7, 3, 'Bronco', '2016-09-01', '2017-01-01'),
 (9, 5, 'Encuesta de satisfacción del cliente', '2016-09-01', '2017-01-01'),
@@ -42,10 +42,30 @@ INSERT INTO `Encuesta` (`id`, `panel`, `nombre`, `fechaInicio`, `fechaFin`) VALU
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Panel`
+-- Table structure for table `historial`
 --
 
-CREATE TABLE `Panel` (
+CREATE TABLE IF NOT EXISTS `historial` (
+  `id` int(11) NOT NULL,
+  `idPanelista` int(11) NOT NULL,
+  `nombrePanelista` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `nombrePanel` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `fechaInicioPanel` date NOT NULL,
+  `fechaFinPanel` date NOT NULL,
+  `nombreEncuesta` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `fechaInicioEncuesta` date NOT NULL,
+  `fechaFinEncuesta` date NOT NULL,
+  `fechaRespuesta` date NOT NULL,
+  `horaRespuesta` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `panel`
+--
+
+CREATE TABLE IF NOT EXISTS `panel` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
@@ -57,10 +77,10 @@ CREATE TABLE `Panel` (
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `Panel`
+-- Dumping data for table `panel`
 --
 
-INSERT INTO `Panel` (`id`, `nombre`, `descripcion`, `fechaInicio`, `fechaFin`, `numParticipantes`, `cliente`, `creador`) VALUES
+INSERT INTO `panel` (`id`, `nombre`, `descripcion`, `fechaInicio`, `fechaFin`, `numParticipantes`, `cliente`, `creador`) VALUES
 (1, 'Margarita Zavala', '', '2016-09-20', '2017-01-27', 0, 2, 1),
 (2, 'Votaciones 2018', '', '2016-09-24', '2017-03-10', 0, 2, 1),
 (3, 'Bronco', '', '2016-09-24', '2017-03-24', 0, 3, 1),
@@ -76,10 +96,10 @@ INSERT INTO `Panel` (`id`, `nombre`, `descripcion`, `fechaInicio`, `fechaFin`, `
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Panelista`
+-- Table structure for table `panelista`
 --
 
-CREATE TABLE `Panelista` (
+CREATE TABLE IF NOT EXISTS `panelista` (
   `id` int(11) NOT NULL,
   `username` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `password` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
@@ -100,10 +120,10 @@ CREATE TABLE `Panelista` (
 ) ENGINE=InnoDB AUTO_INCREMENT=461 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `Panelista`
+-- Dumping data for table `panelista`
 --
 
-INSERT INTO `Panelista` (`id`, `username`, `password`, `nombre`, `apellidos`, `email`, `genero`, `fechaNacimiento`, `educacion`, `calleNumero`, `colonia`, `municipio`, `estado`, `cp`, `fechaRegistro`, `deviceToken`, `deviceType`) VALUES
+INSERT INTO `panelista` (`id`, `username`, `password`, `nombre`, `apellidos`, `email`, `genero`, `fechaNacimiento`, `educacion`, `calleNumero`, `colonia`, `municipio`, `estado`, `cp`, `fechaRegistro`, `deviceToken`, `deviceType`) VALUES
 (1, 'Carlos', 'pass', 'Carlos', 'Mayo Rodriguez', 'carlosmay@hotmail.com', 0, '1979-04-13', 4, 'Calle y número', 'Colonia', 'Monterrey', 'NL', 0, NULL, '', 0),
 (2, 'Alejandra', 'pass', 'Alejandra', 'Sandoval Ramirez', 'alesanra23@hotmail.com', 1, '1979-08-24', 4, '', '', 'Monterrey', 'NL', 0, NULL, '', 0),
 (3, 'María', 'pass', 'María', 'Zazueta López', 'mariazaz802@hotmail.com', 1, '1977-03-26', 3, '', '', 'Guadalupe', 'CAMP', 0, NULL, '', 0),
@@ -439,7 +459,7 @@ INSERT INTO `Panelista` (`id`, `username`, `password`, `nombre`, `apellidos`, `e
 (333, 'Fernando', 'pass', 'Fernando', 'Portes Zambrano', 'ferpat0713@hotmail.com', 0, '1996-06-06', 4, '', '', 'San Pedro', 'NL', 0, NULL, '', 1),
 (334, 'Natalia Paulina', 'pass', 'Natalia Paulina', 'Jasso León', 'natapa2815@hotmail.com', 1, '1982-07-21', 4, '', '', 'San Pedro', 'NL', 0, NULL, '', 1),
 (335, 'Ana Lourdes', 'pass', 'Ana Lourdes', 'Valenzuela López', 'anilu_248090@hotmail.com', 1, '1976-08-24', 4, '', '', 'Guadalupe', 'NL', 0, NULL, '', 1);
-INSERT INTO `Panelista` (`id`, `username`, `password`, `nombre`, `apellidos`, `email`, `genero`, `fechaNacimiento`, `educacion`, `calleNumero`, `colonia`, `municipio`, `estado`, `cp`, `fechaRegistro`, `deviceToken`, `deviceType`) VALUES
+INSERT INTO `panelista` (`id`, `username`, `password`, `nombre`, `apellidos`, `email`, `genero`, `fechaNacimiento`, `educacion`, `calleNumero`, `colonia`, `municipio`, `estado`, `cp`, `fechaRegistro`, `deviceToken`, `deviceType`) VALUES
 (336, 'Fernando', 'pass', 'Fernando', 'Portes Zambrano', 'ferpat0713@hotmail.com', 0, '1954-09-30', 4, '', '', 'Santa Catarina', 'NL', 0, NULL, '', 1),
 (337, 'Fernando', 'pass', 'Fernando', 'Portes Zambrano', 'ferpat0713@hotmail.com', 0, '1959-10-10', 4, '', '', 'García', 'NL', 0, NULL, '', 1),
 (338, 'Ariadna', 'pass', 'Ariadna', 'Corral López', 'ariadnacor8024@hotmail.com', 1, '1998-10-05', 3, '', '', 'Escobedo', 'NL', 0, NULL, '', 1),
@@ -562,20 +582,20 @@ INSERT INTO `Panelista` (`id`, `username`, `password`, `nombre`, `apellidos`, `e
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `PanelistaEnPanel`
+-- Table structure for table `panelistaenpanel`
 --
 
-CREATE TABLE `PanelistaEnPanel` (
+CREATE TABLE IF NOT EXISTS `panelistaenpanel` (
   `id` int(11) NOT NULL,
   `panelista` int(11) NOT NULL,
   `panel` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=891 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `PanelistaEnPanel`
+-- Dumping data for table `panelistaenpanel`
 --
 
-INSERT INTO `PanelistaEnPanel` (`id`, `panelista`, `panel`) VALUES
+INSERT INTO `panelistaenpanel` (`id`, `panelista`, `panel`) VALUES
 (814, 1, 1),
 (815, 2, 1),
 (816, 3, 1),
@@ -743,10 +763,10 @@ INSERT INTO `PanelistaEnPanel` (`id`, `panelista`, `panel`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Pregunta`
+-- Table structure for table `pregunta`
 --
 
-CREATE TABLE `Pregunta` (
+CREATE TABLE IF NOT EXISTS `pregunta` (
   `id` int(11) NOT NULL,
   `titulo` text COLLATE utf8_spanish_ci NOT NULL,
   `encuesta` int(11) NOT NULL,
@@ -763,10 +783,10 @@ CREATE TABLE `Pregunta` (
 ) ENGINE=InnoDB AUTO_INCREMENT=235 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `Pregunta`
+-- Dumping data for table `pregunta`
 --
 
-INSERT INTO `Pregunta` (`id`, `titulo`, `encuesta`, `tipo`, `combo`, `numPregunta`, `pregunta`, `video`, `imagen`, `numOpciones`, `numSubPreguntas`, `opciones`, `subPreguntas`) VALUES
+INSERT INTO `pregunta` (`id`, `titulo`, `encuesta`, `tipo`, `combo`, `numPregunta`, `pregunta`, `video`, `imagen`, `numOpciones`, `numSubPreguntas`, `opciones`, `subPreguntas`) VALUES
 (101, '', 9, 2, 0, 1, '¿Es la primera vez que visita Pollo Loco?', '', '', 2, 0, 'Sí&No', ''),
 (102, '', 9, 3, 0, 2, '¿Que fue lo que ordenó en esta visita?', '', '', 5, 0, 'Combo&Piezas de pollo&Complementos&Postre&Bebida', ''),
 (103, '', 9, 2, 0, 3, '¿Qué le pareció la comida de hoy?', '', '', 5, 0, 'Excelente&Buena&Regular&Mala&Pésima&', ''),
@@ -808,10 +828,10 @@ INSERT INTO `Pregunta` (`id`, `titulo`, `encuesta`, `tipo`, `combo`, `numPregunt
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Recurso`
+-- Table structure for table `recurso`
 --
 
-CREATE TABLE `Recurso` (
+CREATE TABLE IF NOT EXISTS `recurso` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `tipo` tinyint(4) NOT NULL
@@ -820,10 +840,10 @@ CREATE TABLE `Recurso` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Respuesta`
+-- Table structure for table `respuesta`
 --
 
-CREATE TABLE `Respuesta` (
+CREATE TABLE IF NOT EXISTS `respuesta` (
   `id` int(11) NOT NULL,
   `encuesta` int(11) NOT NULL,
   `panelista` int(11) NOT NULL,
@@ -835,10 +855,10 @@ CREATE TABLE `Respuesta` (
 ) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `Respuesta`
+-- Dumping data for table `respuesta`
 --
 
-INSERT INTO `Respuesta` (`id`, `encuesta`, `panelista`, `respuestas`, `fechaIni`, `horaIni`, `fechaFin`, `horaFin`) VALUES
+INSERT INTO `respuesta` (`id`, `encuesta`, `panelista`, `respuestas`, `fechaIni`, `horaIni`, `fechaFin`, `horaFin`) VALUES
 (10, 1, 1, 'shido|Positiva&|Sí|Sí|Sigue igual|Tal vez|', NULL, NULL, '0000-00-00', NULL),
 (11, 1, 2, 'no me quejo|Neutra&|No|Sí|Empeoró|Aún es muy pronto para dar una opinión|', NULL, NULL, '2016-09-15', NULL),
 (12, 1, 6, 'Respuesta|Positiva&Negativa&Neutra&|Sí|No|Empeoró|Aún es muy pronto para dar una opinión|', NULL, NULL, '2016-09-15', NULL),
@@ -860,10 +880,10 @@ INSERT INTO `Respuesta` (`id`, `encuesta`, `panelista`, `respuestas`, `fechaIni`
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Usuario`
+-- Table structure for table `usuario`
 --
 
-CREATE TABLE `Usuario` (
+CREATE TABLE IF NOT EXISTS `usuario` (
   `id` int(11) NOT NULL,
   `username` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
   `password` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
@@ -874,10 +894,10 @@ CREATE TABLE `Usuario` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `Usuario`
+-- Dumping data for table `usuario`
 --
 
-INSERT INTO `Usuario` (`id`, `username`, `password`, `nombre`, `apellidos`, `email`, `tipo`) VALUES
+INSERT INTO `usuario` (`id`, `username`, `password`, `nombre`, `apellidos`, `email`, `tipo`) VALUES
 (1, 'admin', 'focuscg', 'Administrador', '', '', 0),
 (2, 'mzavala', 'pass', 'Margarita', 'Zavala', 'mzavala@pan.com', 1),
 (3, 'jrodriguez', 'focuscg233', 'Jaime ', 'Rodriguez', '', 1),
@@ -886,143 +906,154 @@ INSERT INTO `Usuario` (`id`, `username`, `password`, `nombre`, `apellidos`, `ema
 (6, 'nuevo', 'cliente', 'Nuevo', 'Cliente', '', 1);
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `Encuesta`
+-- Indexes for table `encuesta`
 --
-ALTER TABLE `Encuesta`
+ALTER TABLE `encuesta`
   ADD PRIMARY KEY (`id`),
   ADD KEY `panel` (`panel`);
 
 --
--- Indices de la tabla `Panel`
+-- Indexes for table `historial`
 --
-ALTER TABLE `Panel`
+ALTER TABLE `historial`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `panel`
+--
+ALTER TABLE `panel`
   ADD PRIMARY KEY (`id`),
   ADD KEY `cliente` (`cliente`,`creador`),
   ADD KEY `cliente_2` (`cliente`),
   ADD KEY `creador` (`creador`);
 
 --
--- Indices de la tabla `Panelista`
+-- Indexes for table `panelista`
 --
-ALTER TABLE `Panelista`
+ALTER TABLE `panelista`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `PanelistaEnPanel`
+-- Indexes for table `panelistaenpanel`
 --
-ALTER TABLE `PanelistaEnPanel`
+ALTER TABLE `panelistaenpanel`
   ADD PRIMARY KEY (`id`,`panelista`,`panel`),
   ADD KEY `panelista` (`panelista`),
   ADD KEY `panel` (`panel`);
 
 --
--- Indices de la tabla `Pregunta`
+-- Indexes for table `pregunta`
 --
-ALTER TABLE `Pregunta`
+ALTER TABLE `pregunta`
   ADD PRIMARY KEY (`id`),
   ADD KEY `encuesta` (`encuesta`);
 
 --
--- Indices de la tabla `Recurso`
+-- Indexes for table `recurso`
 --
-ALTER TABLE `Recurso`
+ALTER TABLE `recurso`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `Respuesta`
+-- Indexes for table `respuesta`
 --
-ALTER TABLE `Respuesta`
+ALTER TABLE `respuesta`
   ADD PRIMARY KEY (`id`),
   ADD KEY `encuesta` (`encuesta`),
   ADD KEY `panelista` (`panelista`);
 
 --
--- Indices de la tabla `Usuario`
+-- Indexes for table `usuario`
 --
-ALTER TABLE `Usuario`
+ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `Encuesta`
+-- AUTO_INCREMENT for table `encuesta`
 --
-ALTER TABLE `Encuesta`
+ALTER TABLE `encuesta`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
--- AUTO_INCREMENT de la tabla `Panel`
+-- AUTO_INCREMENT for table `historial`
 --
-ALTER TABLE `Panel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT de la tabla `Panelista`
---
-ALTER TABLE `Panelista`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=461;
---
--- AUTO_INCREMENT de la tabla `PanelistaEnPanel`
---
-ALTER TABLE `PanelistaEnPanel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=891;
---
--- AUTO_INCREMENT de la tabla `Pregunta`
---
-ALTER TABLE `Pregunta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=235;
---
--- AUTO_INCREMENT de la tabla `Recurso`
---
-ALTER TABLE `Recurso`
+ALTER TABLE `historial`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `Respuesta`
+-- AUTO_INCREMENT for table `panel`
 --
-ALTER TABLE `Respuesta`
+ALTER TABLE `panel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT for table `panelista`
+--
+ALTER TABLE `panelista`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=461;
+--
+-- AUTO_INCREMENT for table `panelistaenpanel`
+--
+ALTER TABLE `panelistaenpanel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=891;
+--
+-- AUTO_INCREMENT for table `pregunta`
+--
+ALTER TABLE `pregunta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=235;
+--
+-- AUTO_INCREMENT for table `recurso`
+--
+ALTER TABLE `recurso`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `respuesta`
+--
+ALTER TABLE `respuesta`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=82;
 --
--- AUTO_INCREMENT de la tabla `Usuario`
+-- AUTO_INCREMENT for table `usuario`
 --
-ALTER TABLE `Usuario`
+ALTER TABLE `usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `Encuesta`
+-- Constraints for table `encuesta`
 --
-ALTER TABLE `Encuesta`
-  ADD CONSTRAINT `Encuesta_ibfk_1` FOREIGN KEY (`panel`) REFERENCES `Panel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `encuesta`
+  ADD CONSTRAINT `Encuesta_ibfk_1` FOREIGN KEY (`panel`) REFERENCES `panel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `Panel`
+-- Constraints for table `panel`
 --
-ALTER TABLE `Panel`
-  ADD CONSTRAINT `Panel_ibfk_1` FOREIGN KEY (`cliente`) REFERENCES `Usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `Panel_ibfk_2` FOREIGN KEY (`creador`) REFERENCES `Usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `panel`
+  ADD CONSTRAINT `Panel_ibfk_1` FOREIGN KEY (`cliente`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Panel_ibfk_2` FOREIGN KEY (`creador`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `PanelistaEnPanel`
+-- Constraints for table `panelistaenpanel`
 --
-ALTER TABLE `PanelistaEnPanel`
-  ADD CONSTRAINT `PanelistaEnPanel_ibfk_1` FOREIGN KEY (`panelista`) REFERENCES `Panelista` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `PanelistaEnPanel_ibfk_2` FOREIGN KEY (`panel`) REFERENCES `Panel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `panelistaenpanel`
+  ADD CONSTRAINT `PanelistaEnPanel_ibfk_1` FOREIGN KEY (`panelista`) REFERENCES `panelista` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `PanelistaEnPanel_ibfk_2` FOREIGN KEY (`panel`) REFERENCES `panel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `Pregunta`
+-- Constraints for table `pregunta`
 --
-ALTER TABLE `Pregunta`
-  ADD CONSTRAINT `Pregunta_ibfk_1` FOREIGN KEY (`encuesta`) REFERENCES `Encuesta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `pregunta`
+  ADD CONSTRAINT `Pregunta_ibfk_1` FOREIGN KEY (`encuesta`) REFERENCES `encuesta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `Respuesta`
+-- Constraints for table `respuesta`
 --
-ALTER TABLE `Respuesta`
-  ADD CONSTRAINT `Respuesta_ibfk_1` FOREIGN KEY (`encuesta`) REFERENCES `Encuesta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `Respuesta_ibfk_2` FOREIGN KEY (`panelista`) REFERENCES `Panelista` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `respuesta`
+  ADD CONSTRAINT `Respuesta_ibfk_1` FOREIGN KEY (`encuesta`) REFERENCES `encuesta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Respuesta_ibfk_2` FOREIGN KEY (`panelista`) REFERENCES `panelista` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
