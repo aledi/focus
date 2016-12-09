@@ -11,7 +11,10 @@ var educationObject = {
 
 //http://www.w3schools.com/colors/colors_shades.asp
 var colorArray = ['#202382', '#707070', '#6265A7', '#A6A6A6',
-                  '#A6A7CD', '#BCBCBC', '#BCBDD9', '#C7C7C7'];
+                  '#A6A7CD', '#BCBCBC', '#BCBDD9', '#C7C7C7',
+                  '#505160', '#68829E', '#AEBD38', '#598234',
+                  '#2E5600', '#486B00', '#A2C523', '#7D4427',
+                  '#021C1E', '#004445', '#2C7873', '#6FB98F'];
 
 google.charts.load('current', {'packages': ['corechart', 'bar']});
 
