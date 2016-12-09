@@ -3,10 +3,12 @@
 
 <html lang='en'>
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel='icon' href='img/focusicon.ico' type='image/x-icon'>
+    <meta http-equiv='content-type' content='text/html; charset=UTF-8' />
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
     <script src='js/jquery-1.12.3.js'></script>
     <script src='js/date-functions.js' type='text/javascript'></script>
+    <script src='js/states.js' type='text/javascript'></script>
     <script src='js/panelistas.js' type='text/javascript'></script>
     <title> Focus - Panelistas</title>
 </head>
@@ -75,61 +77,32 @@
                     <input id='colonia' type='text' />
                 </div>
                 <div class='input-wrapper'>
-                    <label>Municipio<span class='required-input'>*</span></label>
-                    <input id='municipio' type='text' />
-                </div>
-                <div class='input-wrapper'>
                     <label>Estado<span class='required-input'>*</span></label>
                     <select class='form-control' id='estado' name='estado'>
-                        <option value='0'>Selecciona un estado</option>
-                        <option value='AGS'>Aguascalientes</option>
-                        <option value='BC'>Baja California</option>
-                        <option value='BCS'>Baja California Sur</option>
-                        <option value='CAMP'>Campeche</option>
-                        <option value='COAH'>Coahuila</option>
-                        <option value='COL'>Colima</option>
-                        <option value='CHIS'>Chiapas</option>
-                        <option value='CDMX'>Ciudad de México</option>
-                        <option value='DGO'>Durango</option>
-                        <option value='GTO'>Guanajuato</option>
-                        <option value='GRO'>Guerrero</option>
-                        <option value='HGO'>Hidalgo</option>
-                        <option value='JAL'>Jalisco</option>
-                        <option value='EDOMEX'>Estado de México</option>
-                        <option value='MICH'>Michoacán</option>
-                        <option value='MOR'>Morelos</option>
-                        <option value='NAY'>Nayarit</option>
-                        <option value='NL'>Nuevo León</option>
-                        <option value='OAX'>Oaxaca</option>
-                        <option value='PUE'>Puebla</option>
-                        <option value='QRO'>Querétaro</option>
-                        <option value='QROO'>Quintana Roo</option>
-                        <option value='SLP'>San Luis Potosí</option>
-                        <option value='SIN'>Sinaloa</option>
-                        <option value='SON'>Sonora</option>
-                        <option value='TAB'>Tabasco</option>
-                        <option value='TAM'>Tamaulipas</option>
-                        <option value='TLAX'>Tlaxcala</option>
-                        <option value='VER'>Veracruz</option>
-                        <option value='YUC'>Yucatan</option>
-                        <option value='ZAC'>Zacatecas</option>
+
+                    </select>
+                </div>
+                <div class='input-wrapper'>
+                    <label>Municipio<span class='required-input'>*</span></label>
+                    <select class='form-control' id='municipio' name='municipio'>
+                        <option value='0'>Selecciona un municipio</option>
                     </select>
                 </div>
                 <div class='input-wrapper'>
                     <label>Código Postal<span class='required-input'>*</span></label>
-                    <input id='cp' type='text' />
+                    <input type='number' id='cp' type='text' />
                 </div>
 
                 <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
-                <button type='submit' id='savePanelista'>Agregar</button>
+                <button type='submit' id='save-panelista'>Agregar</button>
                 <span id='feedback' class='feedback-text'></span>
             </div>
 
             <div id='tab-view-panelistas' class='tab-content'>
                 <h2>Panelistas Disponibles</h2>
-                <p>Buscar: <input id='filteringText' type='text' /></p>
+                <label>Buscar: <input id='filteringText' type='text' /></label>
                 <p class='alert'>*Los panelistas marcados en rojo no cuentan con información suficiente para responder encuestas</p>
-                <table id='allPanelistas'></table>
+                <table id='all-panelistas'></table>
                 <div id='feedback'></div>
             </div>
         </div>

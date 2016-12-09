@@ -3,7 +3,11 @@
 var globalImages = [];
 var globalVideo = [];
 
-function appendSelect(lastQuestion){
+// -----------------------------------------------------------------------------------------------
+// Helper Functions
+// -----------------------------------------------------------------------------------------------
+
+function appendSelect (lastQuestion) {
     var currentHTML = '';
     for(var x = 0; x < globalImages.length; x++) {
         currentHTML += '<option value="' + globalImages[x] + '">' + globalImages[x] + '</option>';
@@ -19,10 +23,96 @@ function appendSelect(lastQuestion){
     $('#video' + lastQuestion).append(currentHTML);
 }
 
+function appendAnswers (typeQuestion, questionID) {
+    var currentHTML = '';
+
+    $('#Answers' + questionID).empty();
+
+    if (typeQuestion != 1 && typeQuestion != 6) {
+        if (typeQuestion == 2) {
+            currentHTML += '<div class="input-wrapper">';
+            currentHTML += '<label>Mostrar como</label>';
+            currentHTML += '<input type="radio" value="0" name="combo' + questionID + '" checked="checked"> Lista </input>';
+            currentHTML += '<input type="radio" value="1" name="combo' + questionID + '"> Combo </input>';
+            currentHTML += '</div>';
+        }
+
+        for (var x = 1; x <= 20; x++) {
+            currentHTML += '<div class="input-wrapper answer">';
+            currentHTML += '<label>Opción ' + x + '</label>';
+            currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' full-width" type="text"/>';
+            currentHTML += '</div>';
+        }
+
+        if (typeQuestion == 5) {
+            for (var x = 1; x <= 20; x++) {
+                currentHTML += '<div class="input-wrapper answer">';
+                currentHTML += '<label>Subpregunta ' + x + '</label>';
+                currentHTML += '<input id="subpregunta' + x + '" class="subpregunta' + x + ' full-width" type="text"/>';
+                currentHTML += '</div>';
+            }
+         }
+    } else if (typeQuestion == 6) {
+        currentHTML += '<div class="input-wrapper answer">';
+        currentHTML += '<label>Escala</label>';
+        currentHTML += '<input type="number" class="respuesta1 required-input" id="opcion1" type="text"/>';
+        currentHTML += ' - ';
+        currentHTML += '<input type="number" class="respuesta2 required-input" id="opcion2" type="text"/>';
+        currentHTML += '</div>';
+    }
+
+    $('#Answers' + questionID).append(currentHTML);
+    currentHTML = '';
+}
+
+function appendQuestions (lastQuestion) {
+    var currentHTML = '<div id="' + lastQuestion + '" class="questionForm">';
+    currentHTML += '<hr>';
+    currentHTML += '<div class="input-wrapper">' +
+        '<label>Título</label>' +
+        '<input id="titulo" class="titulo full-width" type="text" />' +
+        '</div>';
+    currentHTML += '<div class="input-wrapper">' +
+        '<label>Imagen</label>' +
+        '<select id="imagen' + lastQuestion + '" class="imagen" type="text">' +
+        '<option value="">Selecciona una Imagen</option></select>' +
+        '</div>';
+    currentHTML += '<div class="input-wrapper">' +
+        '<label>Video</label>' +
+        '<select id="video' + lastQuestion + '" class="video" type="text">' +
+        '<option value="">Selecciona un video</option></select>' +
+        '</div>';
+    currentHTML += '<div class="input-wrapper">' +
+        '<label>Pregunta</label>' +
+        '<input id="pregunta" class="pregunta full-width" type="text" />' +
+        '</div>';
+    currentHTML += '<div class="input-wrapper">' +
+        '<label>Tipo de pregunta</label>' +
+        '<select id="tipo" class="tipoPregunta" required>' +
+        '<option value="1">Abiertas</option>' +
+        '<option value="2">Selección Única</option>' +
+        '<option value="3">Selección Múltiple</option>' +
+        '<option value="4">Ordenamiento</option>' +
+        '<option value="5">Matriz</option>' +
+        '<option value="6">Escala</option>' +
+        '</select>' +
+        '</div>';
+    currentHTML += '<div id="Answers' + lastQuestion + '"></div>' +
+        '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
+        '</div>';
+
+    $('#questions').append(currentHTML);
+    appendSelect(lastQuestion);
+    appendAnswers(1, lastQuestion);
+}
+
+// -----------------------------------------------------------------------------------------------
+// Fetch Recursos and Questions, if needed
+// -----------------------------------------------------------------------------------------------
+
 $(document).on('ready', function () {
     var idEncuesta = window.location.search.substring(1);
     idEncuesta = idEncuesta.substring(3);
-
 
     $.ajax({
         type: 'POST',
@@ -32,70 +122,18 @@ $(document).on('ready', function () {
         },
         dataType: 'json',
         success: function (response) {
-            console.log(response);
             var result = response.results;
 
             for (var x = 0; x < result.length; x++) {
                 result[x].tipo == 1 ? globalImages.push(result[x].nombre) : globalVideo.push(result[x].nombre);
             }
+
             appendSelect(1);
         },
         error: function (error) {
             $('#feedback').html('Preguntas no añadidas. Ha ocurrido un error.');
         }
     });
-
-    function appendAnswers (typeQuestion, questionID) {
-        $('#Answers' + questionID).empty();
-
-        if (typeQuestion != 1) {
-            var currentHTML = '';
-            for (var x = 1; x <= 10; x++) {
-                currentHTML += '<div class="answer">';
-                currentHTML += '<p>Opción ' + x + '</p>';
-                currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + '" name="respuesta' + questionID + '" type="text"/>';
-                currentHTML += "</div>";
-             }
-        }
-
-        $('#Answers' + questionID).append(currentHTML);
-        currentHTML = '';
-    }
-
-    function appendQuestions (lastQuestion) {
-        var currentHTML = '<div id="' + lastQuestion + '" class="questionForm">';
-        currentHTML += '<hr>';
-        currentHTML += '<div class="input-wrapper">' +
-            '<p>Pregunta</p>' +
-            '<input id="pregunta" class="pregunta" name="respuesta" type="text" />' +
-            '</div>';
-        currentHTML += '<div class="input-wrapper">' +
-            '<p>Tipo de pregunta</p>' +
-            '<select id="tipo" class="tipoPregunta" name="respuesta" required>' +
-            '<option value="1">Abiertas</option>' +
-            '<option value="2">Selección Única</option>' +
-            '<option value="3">Selección Múltiple</option>' +
-            '<option value="4">Ordenamiento</option>' +
-            '</select>' +
-            '</div>';
-        currentHTML += '<div class="input-wrapper">' +
-            '<p>Imagen</p>' +
-            '<select id="imagen' + lastQuestion + '" class="imagen" name="respuesta" type="text">' +
-            '<option value="">Selecciona una Imagen</option></select>' +
-            '</div>';
-        currentHTML += '<div class="input-wrapper">' +
-            '<p>Video</p>' +
-            '<select id="video' + lastQuestion + '" class="video" name="respuesta" type="text">' +
-            '<option value="">Selecciona un video</option></select>' +
-            '</div>';
-        currentHTML += '<div id="Answers' + lastQuestion + '"></div>' +
-            '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
-            '</div>';
-
-        $('#questions').append(currentHTML);
-        appendSelect(lastQuestion);
-        appendAnswers(1, lastQuestion);
-    }
 
     if (idEncuesta !== '') {
         $.ajax({
@@ -118,6 +156,7 @@ $(document).on('ready', function () {
 
                     $('#' + (x + 1) + ' > .input-wrapper > #pregunta').val(response.results[x].pregunta);
                     $('#' + (x + 1) + ' > .input-wrapper > #tipo').val(response.results[x].tipo);
+                    $('#' + (x + 1) + ' > .input-wrapper > #titulo').val(response.results[x].titulo);
 
                     appendAnswers(response.results[x].tipo, (x + 1));
 
@@ -125,16 +164,23 @@ $(document).on('ready', function () {
                     $('#' + (x + 1) + ' > .input-wrapper > #video' + (x + 1)).val(response.results[x].video);
 
                     if (response.results[x].tipo !== 1) {
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta1').val(response.results[x].op1);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta2').val(response.results[x].op2);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta3').val(response.results[x].op3);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta4').val(response.results[x].op4);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta5').val(response.results[x].op5);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta6').val(response.results[x].op6);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta7').val(response.results[x].op7);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta8').val(response.results[x].op8);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta9').val(response.results[x].op9);
-                        $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta10').val(response.results[x].op10);
+                        var opciones = response.results[x].opciones;
+                        var subPreguntas = response.results[x].subPreguntas;
+                        var comboRadio = $('input[name="combo' + (x + 1) + '"][value="' + response.results[x].combo + '"]')
+
+                        if (comboRadio) {
+                            comboRadio.prop('checked', true);
+                        }
+
+                        for (var i = 0; i < opciones.length; i++) {
+                            $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta' + (i + 1)).val(opciones[i]);
+                        }
+
+                        if (response.results[x].tipo == 5) {
+                            for (var i = 0; i < subPreguntas.length; i++) {
+                                $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .subpregunta' + (i + 1)).val(subPreguntas[i]);
+                            }
+                        }
                     }
                 }
             },
@@ -147,12 +193,12 @@ $(document).on('ready', function () {
     $(document).on('change', '.tipoPregunta', function () {
         var typeQuestion = $(this).val();
         var questionID = $(this).parent().parent().attr('id');
-        var answersClass = "div#Answers" + questionID;
+        var answersClass = 'div#Answers' + questionID;
 
         appendAnswers(typeQuestion, questionID);
     });
 
-    $('#addQuestion').on('click', function(){
+    $('#addQuestion').on('click', function() {
         var lastQuestion = $('#questions').children().length;
         lastQuestion = parseInt(lastQuestion) + 1;
 
@@ -160,31 +206,59 @@ $(document).on('ready', function () {
     });
 
     $('#questions').on('click', '#removeQuestion', function () {
-        if ($(this).parent().attr('id') === 'questions') {
-            return;
-        }
+        if (confirmDelete('esta Pregunta')) {
+            if ($(this).parent().attr('id') === 'questions') {
+                return;
+            }
 
-        $(this).parent().remove();
+            $(this).parent().remove();
+        }
     });
 
     $('#submitQuestions').on('click', function () {
         var numeroPregunta = 1;
         var questionsArray = [];
         var questionObject = {};
+        var questionValidated = true;
         questionObject.opciones = [];
+        questionObject.subPreguntas = [];
 
         $('#questions').children().each(function () {
             questionObject.numPregunta = numeroPregunta;
-            questionObject.pregunta = $(this).find('#pregunta').val();
-            questionObject.tipo = $(this).find('#tipo').val();
+            questionObject.titulo = $(this).find('#titulo').val();
             questionObject.imagen = $(this).find('.imagen').val();
             questionObject.video = $(this).find('.video').val();
+            questionObject.pregunta = $(this).find('#pregunta').val();
+            questionObject.tipo = $(this).find('#tipo').val();
+
+            if (questionObject.tipo == 6) {
+                if (parseInt($(this).find('#opcion1').val()) == 0 || parseInt($(this).find('#opcion2').val()) == 0) {
+                    alert("Los valores de la pregunta escala #" + questionObject.numPregunta + " deben ser mayor a cero.");
+                    questionValidated = false;
+                } else if (parseInt($(this).find('#opcion1').val()) >= parseInt($(this).find('#opcion2').val())) {
+                    alert("El valor inicial de la escala de la pregunta #" + questionObject.numPregunta + " deben ser menor al valor final.");
+                    questionValidated = false;
+                }
+            }
 
             if (questionObject.tipo !== 1) {
                 var opcion = 1;
+                var asCombo = $(this).find('input[name=combo' + numeroPregunta + ']:checked').val();
+
+                questionObject.combo = !asCombo ? 0 : asCombo;
+
                 while ($(this).find('#opcion' + opcion).val()) {
                     questionObject.opciones.push($(this).find('#opcion' + opcion).val());
                     opcion++;
+                }
+
+                if (questionObject.tipo == 5) {
+                    var subPregunta = 1;
+
+                    while ($(this).find('#subpregunta' + subPregunta).val()) {
+                        questionObject.subPreguntas.push($(this).find('#subpregunta' + subPregunta).val());
+                        subPregunta++;
+                    }
                 }
             }
 
@@ -192,7 +266,12 @@ $(document).on('ready', function () {
             numeroPregunta++;
             questionObject = {};
             questionObject.opciones = [];
+            questionObject.subPreguntas = [];
         });
+
+        if (!questionValidated) {
+            return;
+        }
 
         var idEncuesta = window.location.search.substring(1);
         idEncuesta = idEncuesta.substring(3);

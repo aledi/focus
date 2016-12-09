@@ -1,37 +1,5 @@
 'use strict';
 
-var stateObject = {
-    AGS: 'Aguascalientes',
-    BC: 'Baja California',
-    BCS: 'Baja California Sur',
-    CAMP: 'Campeche',
-    COAH: 'Coahuila',
-    COL: 'Colima',
-    CHIS: 'Chiapas',
-    CDMX: 'Ciudad de México',
-    DGO: 'Durango',
-    GTO: 'Guanajuato',
-    HGO: 'Hidalgo',
-    JAL: 'Jalisco',
-    EDOMEX: 'Estado de México',
-    MICH: 'Michoacán',
-    MOR: 'Morelos',
-    NAY: 'Nayarit',
-    NL: 'Nuevo León',
-    OAX: 'Oaxaca',
-    PUE: 'Puebla',
-    QRO: 'Querétaro',
-    QROO: 'Quintana Roo',
-    SLP: 'San Luis Potosí',
-    SIN: 'Sinaloa',
-    TAB: 'Tabasco',
-    TAM: 'Tamaulipas',
-    TLAX: 'Tlaxcala',
-    VER: 'Veracruz',
-    YUC: 'Yucatan',
-    ZAC: 'Zacatecas'
-}
-
 var educationObject = {
     1: 'Primaria',
     2: 'Secundaria',
@@ -40,6 +8,13 @@ var educationObject = {
     5: 'Posgrado',
     6: 'Ninguno'
 }
+
+//http://www.w3schools.com/colors/colors_shades.asp
+var colorArray = ['#202382', '#707070', '#6265A7', '#A6A6A6',
+                  '#A6A7CD', '#BCBCBC', '#BCBDD9', '#C7C7C7',
+                  '#505160', '#68829E', '#AEBD38', '#598234',
+                  '#2E5600', '#486B00', '#A2C523', '#7D4427',
+                  '#021C1E', '#004445', '#2C7873', '#6FB98F'];
 
 google.charts.load('current', {'packages': ['corechart', 'bar']});
 
@@ -62,6 +37,7 @@ function pieChart (opciones, votes, chartNumber, title) {
         var options = {
             width: 700,
             height: 350,
+            colors: colorArray,
             sliceVisibilityThreshold: 0,
             tooltip: { text: 'percentage' }
         };
@@ -90,6 +66,7 @@ function barChart (opciones, votes, chartNumber, title) {
         var options = {
             width: 800,
             height: 500,
+            colors: colorArray,
             bar: {
                 groupWidth: '61.48%',
                 width: '20%'
@@ -105,6 +82,47 @@ function barChart (opciones, votes, chartNumber, title) {
         };
 
         options.title = title;
+
+        var chart = document.getElementById('chart' + chartNumber);
+        chart.className += ' bar-chart';
+        var googleChart = new google.visualization.BarChart(chart);
+        googleChart.draw(data, options);
+    }
+}
+
+function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber) {
+    google.charts.setOnLoadCallback(drawChartStacked);
+
+    function drawChartStacked() {
+        var arrayOpciones = [];
+        var arraySubPreguntas = [];
+
+        opciones.unshift('SubPregunta');
+        arrayOpciones.push(opciones);
+
+        for (var subPregunta = 0; subPregunta < subPreguntas.length; subPregunta++) {
+            arraySubPreguntas.push(subPreguntas[subPregunta]);
+
+            for (var votes = 0; votes < opciones.length - 1; votes++) {
+                arraySubPreguntas.push(votesPercentage[subPregunta][votes]);
+            }
+
+            arrayOpciones.push(arraySubPreguntas);
+            arraySubPreguntas = [];
+        }
+
+        var data = new google.visualization.arrayToDataTable(arrayOpciones);
+
+        var options = {
+            isStacked: 'percent',
+            width: 800,
+            height: 500,
+            colors: colorArray,
+            hAxis: {
+                minValue: 0,
+                ticks: [0, .25, .50, .75, 1]
+            }
+        };
 
         var chart = document.getElementById('chart' + chartNumber);
         chart.className += ' bar-chart';
@@ -131,6 +149,7 @@ function columnChart (opciones, percent, chartNumber, title) {
         var options = {
             width: 800,
             height: 400,
+            colors: colorArray,
             bar: {
                 width: opciones.length > 1 ? '80%' : '40%'
             },
@@ -145,6 +164,41 @@ function columnChart (opciones, percent, chartNumber, title) {
         };
 
         options.title = title;
+
+        var chart = document.getElementById('chart' + chartNumber);
+        chart.className += ' column-chart';
+        var googleChart = new google.visualization.ColumnChart(chart);
+        googleChart.draw(data, options);
+    }
+}
+
+function averageChart(min, max, value, chartNumber) {
+    google.charts.setOnLoadCallback(drawStuff);
+
+    function drawStuff () {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '');
+        data.addColumn('number', '');
+        data.addColumn({type: 'string', role: 'tooltip'});
+
+        var label = 'Promedio' + '\n(' + String(value.toFixed(2)) + ')';
+        data.addRows([[label, value, label]]);
+
+        var options = {
+            width: 800,
+            height: 400,
+            colors: colorArray,
+            bar: {
+                width: '40%'
+            },
+            vAxis: {
+                viewWindow : {
+                    min: min,
+                    max: max
+                }
+            },
+            legend: {position: 'none'}
+        };
 
         var chart = document.getElementById('chart' + chartNumber);
         chart.className += ' column-chart';
@@ -204,7 +258,7 @@ function convertAgeRange (edad) {
 
 function convertState (estado) {
     for (var x = 0; x < estado.length; x++) {
-        estado[x] = stateObject[estado[x]];
+        estado[x] = stateName[estado[x]];
     }
 
     return estado;
@@ -230,24 +284,49 @@ function getObjectProperties (object) {
 
 $(document).on('ready', function () {
     $('#reportes-header-option').addClass('selected');
+    fillClientesSelect();
 
     setTimeout(function (event) {
-        getEncuestas('reportes');
+        $.ajax({
+            type: 'POST',
+            url: '../api/controller.php',
+            data: {'action': 'GET_MUNICIPIOS'},
+            dataType: 'json',
+            success: function (response) {
+                arrEstadosMunicipios = response.estados;
+                var currentHTML = '<option value="0">Selecciona un estado</option>';
+
+                for (var estado in arrEstadosMunicipios) {
+                    currentHTML += '<option value="' + stateShortName(estado) + '">' + estado + '</option>';
+                }
+
+                $('#estado-select').append(currentHTML);
+            },
+            error: function (error) {
+                $('#selects-feedback').html('Error cargando los municipios');
+            }
+        });
+
     }, 500);
 
-    $('#preguntas-select').hide();
     $('#download-reportes').hide();
     $('#edad-select').hide();
     $('#genero-select').hide();
     $('#estado-select').hide();
     $('#educacion-select').hide();
     $('#filtros-button').hide();
+    $('#clientes-filter-select').hide();
+    $('#paneles-filter-select').hide();
+    $('#encuestas-filter-select').hide();
+    $('#preguntas-filter-select').hide();
 
-    $('#reportes-encuestas-select').on('change', function () {
-        var idEncuesta = parseInt($(this).val(), 10);
-        $('#preguntas-select').empty();
+    $('#clientes-filter-select').on('change', function() {
+        var value = parseInt($('#clientes-filter-select').val(), 10);
+        $('#paneles-filter-select').hide();
+        $('#encuestas-filter-select').hide();
+        $('#preguntas-filter-select').hide();
         $('#download-reportes').hide();
-        $('#preguntas-select').hide();
+        $('#preguntas-filter-select').hide();
         $('#edad-select').hide();
         $('#genero-select').hide();
         $('#estado-select').hide();
@@ -257,14 +336,56 @@ $(document).on('ready', function () {
         $('#chart2').empty();
         $('#chart3').empty();
         $('#chart4').empty();
+        $('#selects-feedback').html('');
+        $('#reportes-feedback').html('')
+        $('#reportes-filtros-feedback').html('')
 
-        if ($('#reportes-feedback').html()) {
-            $('#reportes-feedback').empty();
+        if (value > 0) {
+            fillPanelesSelect(value);
         }
+    });
 
-        if ($('#reportes-filtros-feedback').html()) {
-            $('#reportes-filtros-feedback').empty();
+    $('#paneles-filter-select').on('change', function() {
+        var value = parseInt($('#paneles-filter-select').val(), 10);
+        $('#encuestas-filter-select').hide();
+        $('#preguntas-filter-select').hide();
+        $('#download-reportes').hide();
+        $('#preguntas-filter-select').hide();
+        $('#edad-select').hide();
+        $('#genero-select').hide();
+        $('#estado-select').hide();
+        $('#educacion-select').hide();
+        $('#filtros-button').hide();
+        $('#chart1').empty();
+        $('#chart2').empty();
+        $('#chart3').empty();
+        $('#chart4').empty();
+        $('#selects-feedback').html('');
+        $('#reportes-feedback').html('')
+        $('#reportes-filtros-feedback').html('')
+
+        if (value > 0) {
+            fillEncuestasSelect(value);
         }
+    });
+
+    $('#encuestas-filter-select').on('change', function () {
+        var idEncuesta = parseInt($(this).val(), 10);
+        $('#preguntas-filter-select').empty();
+        $('#download-reportes').hide();
+        $('#preguntas-filter-select').hide();
+        $('#edad-select').hide();
+        $('#genero-select').hide();
+        $('#estado-select').hide();
+        $('#educacion-select').hide();
+        $('#filtros-button').hide();
+        $('#chart1').empty();
+        $('#chart2').empty();
+        $('#chart3').empty();
+        $('#chart4').empty();
+        $('#selects-feedback').html('');
+        $('#reportes-feedback').html('')
+        $('#reportes-filtros-feedback').html('')
 
         if (idEncuesta < 1) {
             return;
@@ -279,8 +400,6 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                $('#preguntas-select').show();
-
                 if ($('#panelistas-header-option').is(':visible') && $('#usuarios-header-option').is(':visible')) {
                     $('#download-reportes').show();
                 }
@@ -293,7 +412,8 @@ $(document).on('ready', function () {
                 }
 
                 currentHTML += '<option value="0">General</option>';
-                $('#preguntas-select').append(currentHTML);
+                $('#preguntas-filter-select').append(currentHTML);
+                $('#preguntas-filter-select').show();
             },
             error: function (errorMsg) {
                 $('#reportes-feedback').html('Ha ocurrido un error. Favor de intentar de nuevo.');
@@ -301,7 +421,7 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#preguntas-select').on('change', function () {
+    $('#preguntas-filter-select').on('change', function () {
         var numPregunta = parseInt($(this).val(), 10);
         $('#edad-select').hide();
         $('#genero-select').hide();
@@ -328,7 +448,7 @@ $(document).on('ready', function () {
 
         var data = {
             action: 'REPORT_DATA',
-            encuesta: parseInt($('#reportes-encuestas-select').val(), 10),
+            encuesta: parseInt($('#encuestas-filter-select').val(), 10),
             numPregunta: numPregunta
         };
 
@@ -400,11 +520,15 @@ $(document).on('ready', function () {
 
                         $('#abiertas-table').append(html);
                     } else if (response.tipo === 4) {
-                        barChart(getObjectProperties(response.opciones), response.porcentajes, 1, '');
+                        barChart(response.opciones, response.porcentajes, 1, '');
+                    } else if (response.tipo === 6) {
+                        averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 1);
+                    } else if (response.tipo === 5) {
+                        barChartStacked(response.opciones, response.votos, response.subPreguntas, 1);
                     } else if (response.opciones.length < 4) {
-                        pieChart(getObjectProperties(response.opciones), response.votos, 1, '');
+                        pieChart(response.opciones, response.votos, 1, '');
                     } else {
-                        columnChart(getObjectProperties(response.opciones), response.porcentajes, 1, '');
+                        columnChart(response.opciones, response.porcentajes, 1, '');
                     }
                 }
             },
@@ -428,8 +552,8 @@ $(document).on('ready', function () {
 
         var data = {
             action: 'REPORT_DATA',
-            encuesta: parseInt($('#reportes-encuestas-select').val(), 10),
-            numPregunta: parseInt($('#preguntas-select').val(), 10)
+            encuesta: parseInt($('#encuestas-filter-select').val(), 10),
+            numPregunta: parseInt($('#preguntas-filter-select').val(), 10)
         };
 
         if (edad > 0) {
@@ -462,11 +586,15 @@ $(document).on('ready', function () {
                 }
 
                 if (response.tipo === 4) {
-                    barChart(getObjectProperties(response.opciones), response.porcentajes, 2, '');
+                    barChart(response.opciones, response.porcentajes, 2, '');
+                } else if (response.tipo === 6) {
+                    averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 2);
+                } else if (response.tipo === 5) {
+                    barChartStacked(response.opciones, response.votos, response.subPreguntas, 2);
                 } else if (response.opciones.length < 4) {
-                    pieChart(getObjectProperties(response.opciones), response.votos, 2, '');
+                    pieChart(response.opciones, response.votos, 2, '');
                 } else {
-                    columnChart(getObjectProperties(response.opciones), response.votos, response.porcentajes, 2, '');
+                    columnChart(response.opciones, response.porcentajes, 2, '');
                 }
 
                 return;
@@ -502,7 +630,7 @@ $(document).on('ready', function () {
     });
 
     $('#download-reportes').on('click', function () {
-        var encuestaId = parseInt($('#reportes-encuestas-select').val(), 10);
+        var encuestaId = parseInt($('#encuestas-filter-select').val(), 10);
 
         if (encuestaId === -1) {
             return;
@@ -540,8 +668,10 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + convertEducacion(fila.educacion) + '</td>';
                     currentHTML += '<td>' + fila.municipio + '</td>';
                     currentHTML += '<td>' + fila.estado + '</td>';
-                    currentHTML += '<td>' + fila.fechaRespuesta + '</td>';
-                    currentHTML += '<td>' + fila.horaRespuesta + '</td>';
+                    currentHTML += '<td>' + readableDate(fila.fechaIni) + '</td>';
+                    currentHTML += '<td>' + validateHour(fila.horaIni) + '</td>';
+                    currentHTML += '<td>' + readableDate(fila.fechaFin) + '</td>';
+                    currentHTML += '<td>' + validateHour(fila.horaFin) + '</td>';
 
                     for (var k = 0; k < fila.respuestas.length; k++) {
                         currentHTML += '<td>' + fila.respuestas[k] + '</td>';

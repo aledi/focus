@@ -2,7 +2,8 @@
 
 <html lang='en'>
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel='icon' href='img/focusicon.ico' type='image/x-icon'>
+    <meta http-equiv='content-type' content='text/html; charset=UTF-8' />
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
     <script src='js/jquery-1.12.3.js'></script>
     <script src='js/date-functions.js' type='text/javascript'></script>
@@ -24,7 +25,12 @@
 
                 <div class='input-wrapper'>
                     <label>Nombre del Panel<span class='required-input'>*</span></label>
-                    <input id='panelName' type='text' />
+                    <input id='panel-name' type='text' />
+                </div>
+
+                <div class='input-wrapper'>
+                    <label>Número de Participantes<span class='required-input'>*</span></label>
+                    <input id='participantes' type='number' />
                 </div>
 
                 <div class='input-wrapper'>
@@ -48,7 +54,8 @@
 
                 <div class='input-wrapper'>
                     <label>Seleccionar Cliente<span class='required-input'>*</span></label>
-                    <table id='table-clientes'></table>
+                    <select id='select-clientes'></select>
+                    <span id='available-clientes-feedback' class='feedback-text'></span>
                 </div>
 
                 <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
@@ -59,7 +66,12 @@
             <div id='tab-view-paneles' class='tab-content'>
                 <h2>Paneles Disponibles</h2>
 
-                <table id='allPanels'></table>
+                <div class='input-wrapper'>
+                    <select id='clientes-filter-select'></select>
+                </div>
+
+                <table id='all-panels'></table>
+                <span id='available-paneles-feedback' class='feedback-text'></span>
             </div>
         </div>
     </section>

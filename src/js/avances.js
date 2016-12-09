@@ -2,16 +2,42 @@
 
 $(document).on('ready', function () {
     $('#avances-header-option').addClass('selected');
+    $('#clientes-filter-select').hide();
+    $('#paneles-filter-select').hide();
+    $('#encuestas-filter-select').hide();
 
-    setTimeout(function (event) {
-        getEncuestas('avances');
-    }, 500);
+    fillClientesSelect();
 
-    $('#avances-encuestas-select').on('change', function () {
-        var idEncuesta = parseInt($(this).val(), 10);
-        $('#avance-percentage').empty();
-        $('#avance-panelistas').empty();
+    $('#clientes-filter-select').on('change', function() {
+        var value = parseInt($('#clientes-filter-select').val(), 10);
+        $('#paneles-filter-select').hide();
+        $('#encuestas-filter-select').hide();
         $('#avances-table').empty();
+        $('#avance-summary').empty();
+        $('#selects-feedback').html('');
+
+        if (value > 0) {
+            fillPanelesSelect(value);
+        }
+    });
+
+    $('#paneles-filter-select').on('change', function() {
+        var value = parseInt($('#paneles-filter-select').val(), 10);
+        $('#encuestas-filter-select').hide();
+        $('#avances-table').empty();
+        $('#avance-summary').empty();
+        $('#selects-feedback').html('');
+
+        if (value > 0) {
+            fillEncuestasSelect(value);
+        }
+    });
+
+    $('#encuestas-filter-select').on('change', function () {
+        var idEncuesta = parseInt($(this).val(), 10);
+        $('#avances-table').empty();
+        $('#avance-summary').empty();
+        $('#selects-feedback').html('');
 
         if (idEncuesta < 1) {
             return;
@@ -26,7 +52,10 @@ $(document).on('ready', function () {
             },
             dataType: 'json',
             success: function (response) {
-                $('#avance-summary').html('Respuestas: ' + response.respuestas + '  (' + (response.porcentaje * 100).toFixed(2) + '%)');
+                var summaryHTLM = 'Respuestas: ' + response.respuestas + ' (' + (response.porcentaje * 100).toFixed(2) + '%)';
+                summaryHTLM += '<br>';
+                summaryHTLM += readableDate(response.fechaInicio) + ' - ' + readableDate(response.fechaFin) + ' (' + (response.dias < 0 ? 0 : response.dias) + ' días restantes)';
+                $('#avance-summary').html(summaryHTLM);
 
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
@@ -36,28 +65,28 @@ $(document).on('ready', function () {
                 currentHTML += '<th>Educación</th>';
                 currentHTML += '<th>Municipio</th>';
                 currentHTML += '<th>Estado</th>';
-                currentHTML += '<th>Fecha</th>';
-                currentHTML += '<th>Hora</th>';
+                currentHTML += '<th>Fecha Inicio</th>';
+                currentHTML += '<th>Hora Inicio</th>';
+                currentHTML += '<th>Fecha Fin</th>';
+                currentHTML += '<th>Hora Fin</th>';
                 currentHTML += '</tr>';
                 currentHTML += '</thead>';
                 currentHTML += '<tbody>';
 
                 for (var i = 0; i < response.panelistas.length; i++) {
                     var panelista = response.panelistas[i];
-                    if (panelista.fecha) {
-                        var date = panelista.fecha.split('-');
-                        var formattedDate = date[2] + ' de ' + convertMonth(parseInt(date[1], 10)) + ', ' + date[0];
-                    }
 
-                    currentHTML += '<tr class="' + (panelista.fecha ? '' : 'red') + '">';
+                    currentHTML += '<tr class="' + (panelista.fechaFin ? '' : 'red') + '">';
                     currentHTML += '<td>' + panelista.nombre + '</td>';
                     currentHTML += '<td>' + convertGenero(panelista.genero) + '</td>';
                     currentHTML += '<td class="centered">' + panelista.edad + '</td>';
                     currentHTML += '<td>' + convertEducacion(panelista.educacion) + '</td>';
                     currentHTML += '<td>' + panelista.municipio + '</td>';
                     currentHTML += '<td class="centered">' + panelista.estado + '</td>';
-                    currentHTML += '<td>' + (panelista.fecha ? formattedDate : '') + '</td>';
-                    currentHTML += '<td>' + panelista.hora + '</td>';
+                    currentHTML += '<td>' + readableDate(panelista.fechaIni) + '</td>';
+                    currentHTML += '<td>' + validateHour(panelista.horaIni) + '</td>';
+                    currentHTML += '<td>' + readableDate(panelista.fechaFin) + '</td>';
+                    currentHTML += '<td>' + validateHour(panelista.horaFin) + '</td>';
                     currentHTML += '</tr>';
                 }
 
@@ -65,7 +94,7 @@ $(document).on('ready', function () {
                 $('#avances-table').append(currentHTML);
             },
             error: function (errorMsg) {
-                alert('Error obteniendo panelistas.');
+                $('#selects-feedback').html('Error obteniendo panelistas');
             }
         });
     });

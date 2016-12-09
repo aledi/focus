@@ -14,7 +14,7 @@ function uploadFile($name, $tipo) {
         return array('status' => 'ERROR', 'reason' => 'El archivo es muy grande!.');
     }
 
-    if($fileType != 'jpg' && $fileType != 'png' && $fileType != 'mp4' ) {
+    if ($fileType != 'jpg' && $fileType != 'png' && $fileType != 'mp4' ) {
         return array('status' => 'ERROR', 'reason' => 'Formato no disponible, favor de usar solamente .jpg, .png, o .mp4');
     }
 

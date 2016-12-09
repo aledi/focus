@@ -52,52 +52,11 @@ function validatePanelistaCredentials ($username, $password) {
             $row0 = $result0->fetch_assoc();
             $panelista = $row0['id'];
 
-            $sql = "SELECT Panel.id, nombre, fechaInicio, fechaFin FROM Panel INNER JOIN PanelistaEnPanel ON Panel.id = PanelistaEnPanel.panel WHERE Panel.fechaInicio <= CURDATE() AND Panel.fechaFin >= CURDATE() AND PanelistaEnPanel.panelista = '$panelista'";
-            $result = $conn->query($sql);
-
-            $paneles = array();
-
-            while ($row = $result->fetch_assoc()) {
-                $panelId = $row['id'];
-                $sql2 = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE panel = '$panelId' AND fechaInicio <= CURDATE() AND fechaFin >= CURDATE()";
-                $result2 = $conn->query($sql2);
-
-                $encuestas = array();
-
-                while ($row2 = $result2->fetch_assoc()) {
-                    $encuestaId = $row2['id'];
-                    $sql3 = "SELECT id, tipo, numPregunta, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Pregunta WHERE encuesta = '$encuestaId'";
-                    $result3 = $conn->query($sql3);
-
-                    $preguntas = array();
-
-                    while ($row3 = $result3->fetch_assoc()) {
-                        $opciones = array($row3['op1'], $row3['op2'], $row3['op3'], $row3['op4'], $row3['op5'], $row3['op6'], $row3['op7'], $row3['op8'], $row3['op9'], $row3['op10']);
-                        $opciones = array_filter($opciones, 'emptyString');
-                        $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'opciones' => $opciones);
-                        $preguntas[] = $pregunta;
-                    }
-
-                    $contestada = FALSE;
-
-                    $sql4 = "SELECT id FROM Respuesta WHERE encuesta = '$encuestaId' AND panelista = '$panelista'";
-                    $result4 = $conn->query($sql4);
-
-                    if ($result4->num_rows > 0) {
-                        $contestada = TRUE;
-                    }
-
-                    $encuesta = array('id' => (int)$row2['id'], 'nombre' => $row2['nombre'], 'fechaInicio' => $row2['fechaInicio'], 'fechaFin' => $row2['fechaFin'], 'contestada' => $contestada, 'preguntas' => $preguntas);
-                    $encuestas[] = $encuesta;
-                }
-
-                $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'encuestas' => $encuestas);
-                $paneles[] = $panel;
-            }
-
             $conn->close();
-            return array('status' => 'SUCCESS', 'id' => (int)$row0['id'], 'username' => $row0['username'], 'genero' => (int)$row0['genero'], 'email' => $row0['email'], 'nombre' => $row0['nombre']." ".$row0['apellidos'], 'paneles' => $paneles);
+            $response = array('status' => 'SUCCESS', 'id' => (int)$row0['id'], 'username' => $row0['username'], 'genero' => (int)$row0['genero'], 'email' => $row0['email'], 'nombre' => $row0['nombre']." ".$row0['apellidos']);
+            $paneles = fetchMobileData($panelista);
 
+            return array_merge($response, $paneles);
         }
 
         $conn->close();
@@ -154,7 +113,9 @@ function registerPanelista ($username, $password, $nombre, $apellidos, $email, $
             return array('status' => 'USER_EXISTS', 'id' => (int)$row['id'], 'username' => $row['username'], 'email' => $row['email']);
         }
 
-        $sql = "INSERT INTO Panelista (username, password, nombre, apellidos, email, genero, fechaNacimiento, educacion, calleNumero, colonia, municipio, estado, cp) VALUES ('$username', '$password', '$nombre', '$apellidos', '$email', '$genero', '$fechaNacimiento', '$educacion', '$calleNumero', '$colonia', '$municipio', '$estado', '$cp')";
+        $date = date('Y-m-d');
+
+        $sql = "INSERT INTO Panelista (username, password, nombre, apellidos, email, genero, fechaNacimiento, educacion, calleNumero, colonia, municipio, estado, cp, fechaRegistro) VALUES ('$username', '$password', '$nombre', '$apellidos', '$email', '$genero', '$fechaNacimiento', '$educacion', '$calleNumero', '$colonia', '$municipio', '$estado', '$cp', '$date')";
 
         if ($conn->query($sql) === TRUE) {
             $lastId = mysqli_insert_id($conn);
@@ -169,7 +130,7 @@ function registerPanelista ($username, $password, $nombre, $apellidos, $email, $
     return array('status' => 'DATABASE_ERROR');
 }
 
-function registerPanel ($nombre, $descripcion, $fechaInicio, $fechaFin, $cliente, $creador) {
+function registerPanel ($nombre, $descripcion, $fechaInicio, $fechaFin, $numParticipantes, $cliente, $creador) {
     $conn = connect();
 
     if ($conn != null) {
@@ -183,12 +144,12 @@ function registerPanel ($nombre, $descripcion, $fechaInicio, $fechaFin, $cliente
             return array('status' => 'RECORD_EXISTS', 'id' => (int)$row['id'], 'nombre' => $row['nombre']);
         }
 
-        $sql = "INSERT INTO Panel (nombre, descripcion, fechaInicio, fechaFin, cliente, creador) VALUES ('$nombre', '$descripcion', '$fechaInicio', '$fechaFin', $cliente, '$creador')";
+        $sql = "INSERT INTO Panel (nombre, descripcion, fechaInicio, fechaFin, numParticipantes, cliente, creador) VALUES ('$nombre', '$descripcion', '$fechaInicio', '$fechaFin', '$numParticipantes', $cliente, '$creador')";
 
         if ($conn->query($sql) === TRUE) {
             $lastId = mysqli_insert_id($conn);
             $conn->close();
-            return array('status' => 'SUCCESS', 'id' => $lastId);
+            return array('status' => 'SUCCESS', 'id' => $lastId, 'numParticipantes' => (int)$numParticipantes);
         }
 
         $conn->close();
@@ -266,6 +227,34 @@ function registerResource ($nombre, $tipo) {
     return array('status' => 'DATABASE_ERROR');
 }
 
+function changePanelistaPassword ($panelista, $old, $new) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, password FROM Panelista WHERE id = '$panelista'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows <= 0) {
+            return array('status' => 'WRONG_USER');
+        } else {
+            $row = $result->fetch_assoc();
+
+            if ($old != $row['password']) {
+                return array('status' => 'WRONG_PASSWORD');
+            }
+        }
+
+        $sql2 = "UPDATE Panelista SET password = '$new' WHERE id = '$panelista'";
+
+        if ($conn->query($sql2) === TRUE) {
+            $conn->close();
+            return array('status' => 'SUCCESS');
+        }
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 // -------------------------------
 // Fetch
 // -------------------------------
@@ -280,8 +269,8 @@ function fetchUsers ($tipo) {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $client = array('id' => (int)$row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos']);
-            $response[] = $client;
+            $user = array('id' => (int)$row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos']);
+            $response[] = $user;
         }
 
         $conn->close();
@@ -314,7 +303,7 @@ function fetchPaneles () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, cliente, creador FROM Panel";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, numParticipantes, cliente FROM Panel ORDER BY fechaInicio DESC";
         $result = $conn->query($sql);
 
         $response = array();
@@ -325,8 +314,34 @@ function fetchPaneles () {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $client = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => $row2['nombre'].' '.$row2['apellidos'], 'creador' => (int)$row['creador']);
-            $response[] = $client;
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'numParticipantes' => $row['numParticipantes'], 'cliente' => $row2['nombre'].' '.$row2['apellidos']);
+            $response[] = $panel;
+        }
+
+        $conn->close();
+        return array('results' => $response);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function fetchPanelesForCliente ($client) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, numParticipantes, cliente FROM Panel WHERE cliente = '$client' ORDER BY fechaInicio DESC";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $cliente = $row['cliente'];
+            $sql2 = "SELECT nombre, apellidos FROM Usuario WHERE id = '$cliente'";
+            $result2 = $conn->query($sql2);
+            $row2 = $result2->fetch_assoc();
+
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'numParticipantes' => $row['numParticipantes'], 'cliente' => $row2['nombre'].' '.$row2['apellidos']);
+            $response[] = $panel;
         }
 
         $conn->close();
@@ -340,17 +355,12 @@ function fetchPanel ($id) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, descripcion, fechaInicio, fechaFin, cliente, creador FROM Panel WHERE id = '$id'";
+        $sql = "SELECT id, nombre, descripcion, fechaInicio, fechaFin, numParticipantes, cliente FROM Panel WHERE id = '$id'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $cliente = $row['cliente'];
-            $sql2 = "SELECT id FROM Usuario WHERE id = '$cliente'";
-            $result2 = $conn->query($sql2);
-            $row2 = $result2->fetch_assoc();
-
-            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'descripcion' => $row['descripcion'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'cliente' => (int)$row2['id'], 'creador' => (int)$row['creador']);
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'descripcion' => $row['descripcion'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'numParticipantes' => (int)$row['numParticipantes'], 'cliente' => (int)$row['cliente'], 'creador' => (int)$row['creador']);
         }
 
         $conn->close();
@@ -364,13 +374,13 @@ function fetchPanelistas () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, username, nombre, apellidos, email, genero, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, educacion, calleNumero, colonia, municipio, estado, cp FROM Panelista";
+        $sql = "SELECT id, nombre, apellidos, email, username, genero, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, educacion, calleNumero, colonia, municipio, estado, cp, fechaRegistro FROM Panelista ORDER BY fechaRegistro DESC";
         $result = $conn->query($sql);
 
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $panelista = array('id' => (int)$row['id'], 'username' => $row['username'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos'], 'email' => $row['email'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'calleNumero' => $row['calleNumero'], 'colonia' => $row['colonia'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cp' => (int)$row['cp']);
+            $panelista = array('id' => (int)$row['id'], 'username' => $row['username'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos'], 'email' => $row['email'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'calleNumero' => $row['calleNumero'], 'colonia' => $row['colonia'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cp' => (int)$row['cp'], 'fechaRegistro' => $row['fechaRegistro']);
             $response[] = $panelista;
         }
 
@@ -388,7 +398,8 @@ function fetchPanelista ($id) {
         $sql = "SELECT id, username, nombre, apellidos, email, genero, fechaNacimiento, educacion, calleNumero, colonia, municipio, estado, cp FROM Panelista WHERE id = '$id'";
         $result = $conn->query($sql);
 
-        while ($row = $result->fetch_assoc()) {
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
             $panelista = array('id' => (int)$row['id'], 'username' => $row['username'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos'], 'email' => $row['email'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'fechaNacimiento' => $row['fechaNacimiento'], 'educacion' => (int)$row['educacion'], 'calleNumero' => $row['calleNumero'], 'colonia' => $row['colonia'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cp' => (int)$row['cp']);
         }
 
@@ -403,7 +414,7 @@ function fetchEncuestas () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel FROM Encuesta";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel FROM Encuesta ORDER BY fechaInicio DESC";
         $result = $conn->query($sql);
 
         $response = array();
@@ -414,8 +425,34 @@ function fetchEncuestas () {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
-            $response[] = $panelista;
+            $encuesta = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
+            $response[] = $encuesta;
+        }
+
+        $conn->close();
+        return array('results' => $response);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function fetchEncuestasForPanel ($panel) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel FROM Encuesta WHERE panel = '$panel' ORDER BY fechaInicio DESC";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $panel = $row['panel'];
+            $sql2 = "SELECT nombre FROM Panel WHERE id = '$panel'";
+            $result2 = $conn->query($sql2);
+            $row2 = $result2->fetch_assoc();
+
+            $encuesta = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
+            $response[] = $encuesta;
         }
 
         $conn->close();
@@ -440,8 +477,8 @@ function fetchEncuestasForCliente ($cliente) {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
-            $response[] = $panelista;
+            $encuesta = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
+            $response[] = $encuesta;
         }
 
         $conn->close();
@@ -465,11 +502,11 @@ function fetchEncuesta ($id) {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['id']);
+            $encuesta = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['id']);
         }
 
         $conn->close();
-        return array('result' => $panelista);
+        return array('result' => $encuesta);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -479,7 +516,7 @@ function fetchPanelistasPanel ($panel) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, apellidos, genero, educacion, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, estado, municipio FROM Panelista";
+        $sql = "SELECT id, nombre, apellidos, genero, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, educacion, fechaRegistro, municipio, estado FROM Panelista ORDER BY fechaRegistro DESC";
         $result = $conn->query($sql);
 
         $response = array();
@@ -494,7 +531,7 @@ function fetchPanelistasPanel ($panel) {
                 $checked = TRUE;
             }
 
-            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos'], 'edad' => (int)$row['edad'], 'genero' => (int)$row['genero'], 'educacion' => (int)$row['educacion'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'checked' => $checked);
+            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'] . ' ' . $row['apellidos'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'fechaRegistro' => $row['fechaRegistro'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'checked' => $checked);
             $response[] = $panelista;
         }
 
@@ -515,7 +552,13 @@ function fetchPreguntasEncuesta ($encuesta) {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $pregunta = array('id' => (int)$row['id'], 'encuesta' => (int)$encuesta, 'numPregunta' => (int)$row['numPregunta'], 'tipo' => (int)$row['tipo'], 'pregunta' => $row['pregunta'], 'video' => $row['video'], 'imagen' => $row['imagen'], 'op1' => $row['op1'], 'op2' => $row['op2'], 'op3' => $row['op3'], 'op4' => $row['op4'], 'op5' => $row['op5'], 'op6' => $row['op6'], 'op7' => $row['op7'], 'op8' => $row['op8'], 'op9' => $row['op9'], 'op10' => $row['op10']);
+            $opciones = explode('&', $row['opciones']);
+            $opciones = array_filter($opciones, 'emptyString');
+
+            $subPreguntas = explode('&', $row['subPreguntas']);
+            $subPreguntas = array_filter($subPreguntas, 'emptyString');
+
+            $pregunta = array('id' => (int)$row['id'], 'encuesta' => (int)$encuesta, 'numPregunta' => (int)$row['numPregunta'], 'titulo' => $row['titulo'], 'tipo' => (int)$row['tipo'], 'pregunta' => $row['pregunta'], 'video' => $row['video'], 'imagen' => $row['imagen'], 'combo' => $row['combo'], 'opciones' => $opciones, 'subPreguntas' => $subPreguntas);
             $response[] = $pregunta;
         }
 
@@ -530,29 +573,35 @@ function fetchMobileData ($panelista) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT Panel.id, nombre, fechaInicio, fechaFin FROM Panel INNER JOIN PanelistaEnPanel ON Panel.id = PanelistaEnPanel.panel WHERE Panel.fechaInicio <= CURDATE() AND Panel.fechaFin >= CURDATE() AND PanelistaEnPanel.panelista = '$panelista'";
+        $sql = "SELECT Panel.id, nombre, fechaInicio, fechaFin FROM Panel INNER JOIN PanelistaEnPanel ON Panel.id = PanelistaEnPanel.panel WHERE Panel.fechaInicio <= CURDATE() AND Panel.fechaFin >= CURDATE() AND PanelistaEnPanel.panelista = '$panelista' ORDER BY nombre";
         $result = $conn->query($sql);
 
         $paneles = array();
 
         while ($row = $result->fetch_assoc()) {
             $panelId = $row['id'];
-            $sql2 = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE panel = '$panelId' AND fechaInicio <= CURDATE() AND fechaFin >= CURDATE()";
+            $sql2 = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE panel = '$panelId' AND fechaInicio <= CURDATE() AND fechaFin >= CURDATE() ORDER BY fechaFin DESC";
             $result2 = $conn->query($sql2);
 
             $encuestas = array();
 
             while ($row2 = $result2->fetch_assoc()) {
                 $encuestaId = $row2['id'];
-                $sql3 = "SELECT id, tipo, numPregunta, pregunta, video, imagen, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Pregunta WHERE encuesta = '$encuestaId'";
+                $sql3 = "SELECT id, tipo, numPregunta, titulo, pregunta, video, imagen, combo, opciones, subPreguntas FROM Pregunta WHERE encuesta = '$encuestaId'";
                 $result3 = $conn->query($sql3);
 
                 $preguntas = array();
 
                 while ($row3 = $result3->fetch_assoc()) {
-                    $opciones = array($row3['op1'], $row3['op2'], $row3['op3'], $row3['op4'], $row3['op5'], $row3['op6'], $row3['op7'], $row3['op8'], $row3['op9'], $row3['op10']);
+                    $opciones = explode('&', $row3['opciones']);
                     $opciones = array_filter($opciones, 'emptyString');
-                    $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'opciones' => $opciones);
+
+                    $subPreguntas = explode('&', $row3['subPreguntas']);
+                    $subPreguntas = array_filter($subPreguntas, 'emptyString');
+
+                    $asCombo = (int)$row3['combo'] === 0 ? FALSE : TRUE;
+
+                    $pregunta = array('id' => (int)$row3['id'], 'tipo' => (int)$row3['tipo'], 'numPregunta' => (int)$row3['numPregunta'], 'titulo' => $row3['titulo'], 'pregunta' => $row3['pregunta'], 'video' => $row3['video'], 'imagen' => $row3['imagen'], 'combo' => $asCombo, 'opciones' => $opciones, 'subPreguntas' => $subPreguntas);
                     $preguntas[] = $pregunta;
                 }
 
@@ -626,6 +675,25 @@ function emptyString ($string) {
     return($string !== '');
 }
 
+function fetchPanelistaPassword ($username, $email) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT id, username, email, nombre, password FROM Panelista WHERE username = '$username' OR email = '$email'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows <= 0) {
+            return array('status' => 'WRONG_USER');
+        } else {
+            $row = $result->fetch_assoc();
+
+            return array('status' => 'SUCCESS', 'id' => (int)$row['id'], 'username' => $row['username'], 'email' => $row['email'], 'nombre' => $row['nombre'], 'password' => $row['password']);
+        }
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 // -------------------------------
 // Save
 // -------------------------------
@@ -686,68 +754,33 @@ function savePreguntasEncuesta ($encuesta, $preguntas) {
         $result = $conn->query($sql);
 
         foreach ($preguntas as &$pregunta) {
+            $titulo = $pregunta['titulo'];
             $tipo = $pregunta['tipo'];
             $numPregunta = $pregunta['numPregunta'];
             $preguntaText = $pregunta['pregunta'];
             $video = $pregunta['video'];
             $imagen = $pregunta['imagen'];
-
+            $combo = $pregunta['combo'];
             $opciones = $pregunta['opciones'];
+            $subPreguntas = $pregunta['subPreguntas'];
 
-            $op1 = '';
-            $op2 = '';
-            $op3 = '';
-            $op4 = '';
-            $op5 = '';
-            $op6 = '';
-            $op7 = '';
-            $op8 = '';
-            $op9 = '';
-            $op10 = '';
+            $opcionesString = "";
+            $subPreguntasString = "";
+            $numOpciones = count($opciones);
+            $numSubPreguntas = count($subPreguntas);
 
-            $count = count($opciones);
-
-            if ($count > 0) {
-                $op1 = $opciones[0];
+            for ($x = 0; $x < $numOpciones; $x++) {
+                $opcionesString = $opcionesString.$opciones[$x]."&";
             }
 
-            if ($count > 1) {
-                $op2 = $opciones[1];
+            for ($x = 0; $x < $numSubPreguntas; $x++) {
+                $subPreguntasString = $subPreguntasString.$subPreguntas[$x]."&";
             }
 
-            if ($count > 2) {
-                $op3 = $opciones[2];
-            }
+            $opcionesString = rtrim($opcionesString, "&");
+            $subPreguntasString = rtrim($subPreguntasString, "&");
 
-            if ($count > 3) {
-                $op4 = $opciones[3];
-            }
-
-            if ($count > 4) {
-                $op5 = $opciones[4];
-            }
-
-            if ($count > 5) {
-                $op6 = $opciones[5];
-            }
-
-            if ($count > 6) {
-                $op7 = $opciones[6];
-            }
-
-            if ($count > 7) {
-                $op8 = $opciones[7];
-            }
-
-            if ($count > 8) {
-                $op9 = $opciones[8];
-            }
-
-            if ($count > 9) {
-                $op10 = $opciones[9];
-            }
-
-            $sql = "INSERT INTO Pregunta (encuesta, tipo, numPregunta, pregunta, video, imagen, numOpciones, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$count', '$op1', '$op2', '$op3', '$op4', '$op5', '$op6', '$op7', '$op8', '$op9', '$op10')";
+            $sql = "INSERT INTO Pregunta (encuesta, tipo, numPregunta, pregunta, video, imagen, numOpciones, titulo, combo, opciones, subPreguntas) VALUES ('$encuesta', $tipo, '$numPregunta', '$preguntaText', '$video', '$imagen', '$numOpciones', '$titulo', '$combo', '$opcionesString', '$subPreguntasString')";
 
             if ($conn->query($sql) === TRUE) {
                 $inserts = $inserts + 1;
@@ -769,7 +802,10 @@ function startEncuesta ($encuesta, $panelista) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "INSERT INTO Respuesta (encuesta, panelista) VALUES ('$encuesta', '$panelista')";
+        $date = date('Y-m-d');
+        $hour = date('H:i:s');
+
+        $sql = "INSERT INTO Respuesta (encuesta, panelista, fechaIni, horaIni) VALUES ('$encuesta', '$panelista', '$date', '$hour')";
 
         if ($conn->query($sql) === TRUE) {
             $lastId = mysqli_insert_id($conn);
@@ -791,7 +827,7 @@ function saveRespuestas ($id, $respuestas) {
         $date = date('Y-m-d');
         $hour = date('H:i:s');
 
-        $sql = "UPDATE Respuesta SET respuestas = '$respuestas', fecha = '$date', hora = '$hour' WHERE id = '$id'";
+        $sql = "UPDATE Respuesta SET respuestas = '$respuestas', fechaFin = '$date', horaFin = '$hour' WHERE id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
             $conn->close();
@@ -869,7 +905,7 @@ function updateUser ($id, $username, $nombre, $apellidos, $email) {
     return array('status' => 'DATABASE_ERROR');
 }
 
-function updatePanel ($id, $nombre, $descripcion, $fechaInicio, $fechaFin, $cliente) {
+function updatePanel ($id, $nombre, $descripcion, $fechaInicio, $fechaFin, $numParticipantes, $cliente) {
     $conn = connect();
 
     if ($conn != null) {
@@ -885,7 +921,7 @@ function updatePanel ($id, $nombre, $descripcion, $fechaInicio, $fechaFin, $clie
             }
         }
 
-        $sql = "UPDATE Panel SET nombre = '$nombre', descripcion = '$descripcion', fechaInicio = '$fechaInicio', fechaFin = '$fechaFin', cliente = '$cliente' WHERE id = '$id'";
+        $sql = "UPDATE Panel SET nombre = '$nombre', descripcion = '$descripcion', fechaInicio = '$fechaInicio', fechaFin = '$fechaFin', numParticipantes = '$numParticipantes', cliente = '$cliente' WHERE id = '$id'";
 
         if ($conn->query($sql) === TRUE) {
             $conn->close();
@@ -1014,7 +1050,7 @@ function getSummary ($encuesta) {
             return array('status' => 'NO_DATA');
         }
 
-        $sql = "SELECT COUNT(*) as answers FROM Respuesta WHERE encuesta = '$encuesta' AND respuestas != ''";
+        $sql = "SELECT COUNT(*) as answers, Encuesta.fechaInicio, Encuesta.fechaFin, TIMESTAMPDIFF(DAY, CURDATE(), Encuesta.fechaFin) AS dias FROM Respuesta INNER JOIN Encuesta ON Respuesta.encuesta = Encuesta.id WHERE Respuesta.encuesta = '$encuesta' AND Respuesta.respuestas != ''";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -1022,7 +1058,7 @@ function getSummary ($encuesta) {
             $answers = (int)$row['answers'];
         }
 
-        return array('status' => 'SUCCESS', 'respuestas' => $answers, 'porcentaje' => $answers / $total);
+        return array('status' => 'SUCCESS', 'respuestas' => $answers, 'porcentaje' => $answers / $total, 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'dias' => (int)$row['dias']);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -1249,22 +1285,32 @@ function currentAnswers ($encuesta) {
 
         while ($row = $result->fetch_assoc()) {
             $panelistaId = $row['id'];
-            $fecha = '';
-            $hora = '';
-            $sql2 = "SELECT fecha, hora, respuestas FROM Respuesta WHERE panelista = '$panelistaId' AND encuesta = '$encuesta' AND respuestas != ''";
+            $fechaIni = NULL;
+            $horaIni = NULL;
+            $fechaFin = NULL;
+            $horaFin = NULL;
+
+            $sql2 = "SELECT fechaIni, horaIni, fechaFin, horaFin FROM Respuesta WHERE panelista = '$panelistaId' AND encuesta = '$encuesta' AND respuestas != ''";
             $result2 = $conn->query($sql2);
 
             if ($result2->num_rows > 0) {
                 $row2 = $result2->fetch_assoc();
-                $fecha = $row2['fecha'];
-                $hora = $row2['hora'];
+                $fechaIni = $row2['fechaIni'];
+                $horaIni = $row2['horaIni'];
+                $fechaFin = $row2['fechaFin'];
+                $horaFin = $row2['horaFin'];
             }
 
-            $panelista = array('nombre' => $row['nombre'].' '.$row['apellidos'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'fecha' => $fecha, 'hora' => $hora);
+            $panelista = array('nombre' => $row['nombre'].' '.$row['apellidos'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'fechaIni' => $fechaIni, 'horaIni' => $horaIni, 'fechaFin' => $fechaFin, 'horaFin' => $horaFin);
             $response[] = $panelista;
         }
 
         $conn->close();
+
+        usort($response, function ($item1, $item2) {
+            return $item2['fechaFin'] >= $item1['fechaFin'];
+        });
+
         $panelistas = array('panelistas' => $response);
         return array_merge(getSummary($encuesta), $panelistas);
     }
@@ -1276,19 +1322,37 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT tipo, numOpciones, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10 FROM Pregunta WHERE encuesta = '$encuesta' AND numPregunta = '$numPregunta'";
+        $sql = "SELECT tipo, numOpciones, opciones, numSubPreguntas, subPreguntas FROM Pregunta WHERE encuesta = '$encuesta' AND numPregunta = '$numPregunta'";
         $result = $conn->query($sql);
         $tipo = 0;
         $options = array();
+        $subPreguntas = array();
         $votes = array();
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $tipo = $row['tipo'];
 
-            for ($x = 1; $x <= $row['numOpciones']; $x++) {
-                $options[] = $row['op'.$x];
-                $votes[] = 0;
+            $options = explode('&', $row['opciones']);
+            $options = array_filter($options, 'emptyString');
+
+            if ($tipo == 5) {
+                $subPreguntas = explode('&', $row['subPreguntas']);
+                $subPreguntas = array_filter($subPreguntas, 'emptyString');
+
+                for ($x = 1; $x <= $row['numSubPreguntas']; $x++) {
+                    $votosInner = array();
+
+                    for ($y = 1; $y <= $row['numOpciones']; $y++) {
+                        $votosInner[] = 0;
+                    }
+
+                    $votes[] = $votosInner;
+                }
+            } else {
+                for ($x = 1; $x <= $row['numOpciones']; $x++) {
+                    $votes[] = 0;
+                }
             }
         }
 
@@ -1318,7 +1382,7 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
                     $sql = $sql." AND Panelista.fechaNacimiento >= '$date55' AND Panelista.fechaNacimiento < '$date45'";
                 } else if ($edad == 100) {
                     $sql = $sql." AND Panelista.fechaNacimiento < '$date55'";
-                }
+                }   
             }
 
             if ($estado !== null) {
@@ -1340,7 +1404,7 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
 
             if ($tipo == 1) {
                 $votes[] = $answers[$numPregunta - 1];
-            } if ($tipo == 2) {
+            } else if ($tipo == 2) {
                 for ($x = 0; $x < count($options); $x++) {
                     if ($answers[$numPregunta - 1] == $options[$x]) {
                         $votes[$x] = $votes[$x] + 1;
@@ -1369,6 +1433,19 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
                         }
                     }
                 }
+            } else if ($tipo == 5) {
+                $multipleAnswers = explode('&', $answers[$numPregunta - 1]);
+
+                for ($x = 0; $x < count($multipleAnswers); $x++) {
+                    for ($y = 0; $y < count($options); $y++) {
+                        if ($multipleAnswers[$x] == $options[$y]) {
+                            $votes[$x][$y] = $votes[$x][$y] + 1;
+                            break;
+                        }
+                    }
+                }
+            } else if ($tipo == 6) {
+                $votes[0] = $votes[0] + (int)$answers[$numPregunta - 1];
             }
         }
 
@@ -1377,12 +1454,26 @@ function reportData ($encuesta, $numPregunta, $genero, $edad, $estado, $educacio
             return array('status' => 'NO_DATA');
         }
 
-        for ($x = 0; $x < count($options); $x++) {
-            $values[] = $votes[$x] / $total;
+        if ($tipo == 5) {
+            for ($x = 0; $x < count($subPreguntas); $x++) {
+                $valuesInner = array();
+                $votesInner = $votes[$x];
+
+                for ($y = 0; $y < count($options); $y++) {
+
+                    $valuesInner[] = $votesInner[$y] / $total;
+                }
+
+                $values[] = $valuesInner;
+            }
+        } else {
+            for ($x = 0; $x < count($options); $x++) {
+                $values[] = $votes[$x] / $total;
+            }
         }
 
         $conn->close();
-        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'votos' => $votes, 'porcentajes' => $values);
+        return array('status' => 'SUCCESS', 'tipo' => (int)$tipo, 'opciones' => $options, 'subPreguntas' => $subPreguntas, 'votos' => $votes, 'porcentajes' => $values);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -1400,13 +1491,15 @@ function downloadData ($encuesta) {
             $fila = array('nombre' => $row['nombre'].' '.$row['apellidos'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'municipio' => $row['municipio'], 'estado' => $row['estado']);
             $id = $row['id'];
 
-            $sql = "SELECT respuestas, fecha, hora FROM Respuesta WHERE encuesta = '$encuesta' AND respuestas != '' AND panelista = '$id'";
+            $sql = "SELECT respuestas, fechaIni, horaIni, fechaFin, horaFin FROM Respuesta WHERE encuesta = '$encuesta' AND respuestas != '' AND panelista = '$id'";
             $result2 = $conn->query($sql);
 
             if ($result2->num_rows > 0) {
                 $row2 = $result2->fetch_assoc();
-                $fila['fechaRespuesta'] = $row2['fecha'];
-                $fila['horaRespuesta'] = $row2['hora'];
+                $fila['fechaIni'] = $row2['fechaIni'];
+                $fila['horaIni'] = $row2['horaIni'];
+                $fila['fechaFin'] = $row2['fechaFin'];
+                $fila['horaFin'] = $row2['horaFin'];
 
                 $answer = str_replace('&', ', ', rtrim($row2['respuestas'], '|'));
                 $answers = explode('|', $answer);
@@ -1420,9 +1513,13 @@ function downloadData ($encuesta) {
             }
         }
 
+        usort($filas, function ($item1, $item2) {
+            return $item2['fechaFin'] >= $item1['fechaFin'];
+        });
+
         $sql = "SELECT pregunta FROM Pregunta WHERE encuesta = '$encuesta'";
         $result = $conn->query($sql);
-        $columnas = array('Nombre', 'Género', 'Edad', 'Educación', 'Municipio', 'Estado', 'Fecha de Respuesta', 'Hora de Respuesta');
+        $columnas = array('Nombre', 'Género', 'Edad', 'Educación', 'Municipio', 'Estado', 'Fecha de Inicio', 'Hora de Inicio', 'Fecha de Fin', 'Hora de Fin');
 
         while ($row = $result->fetch_assoc()) {
             $columnas[] = $row['pregunta'];

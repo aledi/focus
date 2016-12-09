@@ -65,6 +65,7 @@ $(document).on('ready', function () {
                 currentHTML += '<th>Edad</th>';
                 currentHTML += '<th>Municipio</th>';
                 currentHTML += '<th>Estado</th>';
+                currentHTML += '<th>Fecha Registro</th>';
                 currentHTML += '<th colspan="2">Acción</th>';
                 currentHTML += '</tr>';
                 currentHTML += '</thead>';
@@ -80,11 +81,12 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + result.edad + '</td>';
                     currentHTML += '<td>' + result.municipio + '</td>';
                     currentHTML += '<td>' + result.estado + '</td>';
+                    currentHTML += '<td>' + readableDate(result.fechaRegistro) + '</td>';
                     currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
 
-                    $('#allPanelistas').append(currentHTML);
+                    $('#all-panelistas').append(currentHTML);
                     currentHTML = '';
                 }
 
@@ -94,13 +96,34 @@ $(document).on('ready', function () {
                 $('#feedback').html('Error cargando los clientes');
             }
         });
+
+        $.ajax({
+            type: 'POST',
+            url: '../api/controller.php',
+            data: {'action': 'GET_MUNICIPIOS'},
+            dataType: 'json',
+            success: function (response) {
+                arrEstadosMunicipios = response.estados;
+                var currentHTML = '<option value="0">Selecciona un estado</option>';
+
+                for (var estado in arrEstadosMunicipios) {
+                    currentHTML += '<option value="' + stateShortName(estado) + '">' + estado + '</option>';
+                }
+
+                $('#estado').append(currentHTML);
+            },
+            error: function (error) {
+                $('#feedback').html('Error cargando los municipios');
+            }
+        });
+
     }, 500);
 
     // -----------------------------------------------------------------------------------------------
     // Save Panelista
     // -----------------------------------------------------------------------------------------------
 
-    $('#savePanelista').on('click', function (event) {
+    $('#save-panelista').on('click', function (event) {
         var idPanelista = window.location.search.substring(1);
         idPanelista = idPanelista.substring(3);
 
@@ -120,7 +143,7 @@ $(document).on('ready', function () {
         var cp = $('#cp').val();
 
         if (firstName === '' || lastName === '' || email === '' || username === '' || (!editing && password === '') ||
-            fechaNacimiento === '' || educacion === '0' || calleNumero === '' || colonia === '' || municipio === '' ||
+            fechaNacimiento === '' || educacion === '0' || calleNumero === '' || colonia === '' || municipio === '0' ||
             estado === '0' || cp === '') {
                 $('#feedback').html('Favor de llenar todos los campos');
                 return;
@@ -176,7 +199,7 @@ $(document).on('ready', function () {
     // Edit Panelista
     // -----------------------------------------------------------------------------------------------
 
-    $('#allPanelistas').on('click', '.edit-button', function () {
+    $('#all-panelistas').on('click', '.edit-button', function () {
         var idPanelista = $(this).parent().attr('id');
 
         $('ul.tabs li').removeClass('current');
@@ -186,7 +209,7 @@ $(document).on('ready', function () {
         $('#tab-agregar-panelista').addClass('current');
 
         $('#header-title').text('Editar Panelista');
-        $('#savePanelista').text('Editar');
+        $('#save-panelista').text('Editar');
 
         $('#panelista-password').hide();
         $('#cancel-edit').show();
@@ -210,8 +233,9 @@ $(document).on('ready', function () {
                 $('#educacion').val(result.educacion + '');
                 $('#calleNumero').val(result.calleNumero);
                 $('#colonia').val(result.colonia);
-                $('#municipio').val(result.municipio);
                 $('#estado').val(result.estado);
+                fillMunicipios();
+                $('#municipio').val(result.municipio);
                 $('#cp').val(result.cp);
 
                 var myURL = window.location.href.split('?')[0];
@@ -228,26 +252,28 @@ $(document).on('ready', function () {
     // Delete Panelista
     // -----------------------------------------------------------------------------------------------
 
-    $('#allPanelistas').on('click', '.deleteButton', function () {
+    $('#all-panelistas').on('click', '.deleteButton', function () {
         var self = this;
         var data = {
             action: 'DELETE_PANELISTA',
             id: $(this).parent().attr('id')
         }
 
-        $.ajax({
-            url: '../api/controller.php',
-            type: 'POST',
-            data: data,
-            dataType: 'json',
-            success: function (response) {
-                alert('Panelista eliminado exitosamente.');
-                $(self).parent().remove();
-            },
-            error: function (errorMsg) {
-                alert('Error eliminando panelista.');
-            }
-        });
+        if (confirmDelete('este Panelista')) {
+            $.ajax({
+                url: '../api/controller.php',
+                type: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (response) {
+                    alert('Panelista eliminado exitosamente.');
+                    $(self).parent().remove();
+                },
+                error: function (errorMsg) {
+                    alert('Error eliminando panelista.');
+                }
+            });
+        }
     });
 
     $('#cancel-edit').on('click', function (event) {
@@ -272,10 +298,22 @@ $(document).on('ready', function () {
         changeSelect('Inicio');
     });
 
-    // Listen to keypress & restrict input to numeric value
-    $('#cp').keypress(function (event) {
-        if (!event.metaKey && event.charCode !== 13 && (event.charCode < 48 || event.charCode > 57)) {
-            event.preventDefault();
-        }
+    $('#estado').on('change', function() {
+        fillMunicipios();
     });
 });
+
+function fillMunicipios() {
+    var currentState = $('#estado option:selected').text();
+    var currentHTML = '<option value="0">Selecciona un municipio</option>';
+
+    $('#municipio').empty();
+
+    if (currentState !== 'Selecciona un estado') {
+        for(var county = 0; county < Object.keys(arrEstadosMunicipios[currentState]).length; county++) {
+            currentHTML += '<option value="' + arrEstadosMunicipios[currentState][county] + '">' + arrEstadosMunicipios[currentState][county] + '</option>';
+        }
+    }
+
+    $('#municipio').append(currentHTML);
+}

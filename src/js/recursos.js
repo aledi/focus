@@ -48,7 +48,7 @@ $(document).on('ready', function () {
                 processData: false,
                 data: form_data,
                 type: 'post',
-                success: function(response){
+                success: function(response) {
                     if (response.status == 'ERROR') {
                         $('#feedback').html(response.reason);
                     } else {
@@ -115,24 +115,26 @@ $(document).on('ready', function () {
         var self = this;
         var data = $(this).parent().attr('id').split('&');
 
-        $.ajax({
-            url: '../api/controller.php',
-            type: 'POST',
-            data: {
-                action: 'DELETE_RECURSO',
-                id: data[0],
-                nombre: data[1],
-                tipo: data[2]
-            },
-            dataType: 'json',
-            success: function (response) {
-                alert('Recurso eliminado exitosamente.');
-                $(self).parent().remove();
-            },
-            error: function (errorMsg) {
-                alert('Error eliminando recurso.');
-            }
-        });
+        if (confirmDelete('este Recurso')) {
+            $.ajax({
+                url: '../api/controller.php',
+                type: 'POST',
+                data: {
+                    action: 'DELETE_RECURSO',
+                    id: data[0],
+                    nombre: data[1],
+                    tipo: data[2]
+                },
+                dataType: 'json',
+                success: function (response) {
+                    alert('Recurso eliminado exitosamente.');
+                    $(self).parent().remove();
+                },
+                error: function (errorMsg) {
+                    alert('Error eliminando recurso.');
+                }
+            });
+        }
     });
 
 });

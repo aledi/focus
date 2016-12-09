@@ -53,6 +53,9 @@ switch ($_POST['action']) {
     case 'GET_RECURSOS':
         getRecords('RESOURCES');
         break;
+    case 'GET_MUNICIPIOS':
+        echo json_encode(getMunicipiosFromFile(), JSON_UNESCAPED_UNICODE);
+        break;
     case 'SET_PANELISTAS_PANEL':
         setPanelistasPanel();
         break;
@@ -104,6 +107,12 @@ switch ($_POST['action']) {
     case 'CURRENT_ANSWERS':
         getCurrentAnswers();
         break;
+    case 'CHANGE_PANELISTA_PASSWORD':
+        echo json_encode(changePanelistaPassword($_POST['panelista'], $_POST['old'], $_POST['new']));
+        break;
+    case 'FORGOT_PANELISTA_PASSWORD':
+        recoverPasword();
+        break;
     case 'LOG_OUT':
         logOut();
         break;
@@ -149,7 +158,7 @@ function signinToDatabase ($tipo) {
     if ($tipo === 0) {
         $signinResult = validateWebCredentials($_POST['username'], $_POST['password']);
 
-        if($signinResult['status'] === "SUCCESS"){
+        if ($signinResult['status'] === 'SUCCESS') {
             startSession($signinResult['id'], $signinResult['tipo'], $signinResult['username'], $signinResult['email'], $signinResult['nombre']);
         }
 
@@ -182,10 +191,10 @@ function newUser ($tipo) {
 
 function newPanel () {
     if (isset($_POST['id'])) {
-        $registrationResult = updatePanel($_POST['id'], $_POST['nombre'], $_POST['descripcion'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente']);
+        $registrationResult = updatePanel($_POST['id'], $_POST['nombre'], $_POST['descripcion'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['numParticipantes'], $_POST['cliente']);
     } else {
         session_start();
-        $registrationResult = registerPanel($_POST['nombre'], $_POST['descripcion'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['cliente'], $_SESSION['id']);
+        $registrationResult = registerPanel($_POST['nombre'], $_POST['descripcion'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['numParticipantes'], $_POST['cliente'], $_SESSION['id']);
     }
 
     echo json_encode($registrationResult);
@@ -254,11 +263,21 @@ function getRecords ($type) {
                 return;
             }
 
+            if (isset($_POST['cliente'])) {
+                echo json_encode(fetchPanelesForCliente($_POST['cliente']));
+                return;
+            }
+
             echo json_encode(fetchPaneles());
             break;
         case 'ENCUESTAS':
             if (isset($_POST['id'])) {
                 echo json_encode(fetchEncuesta($_POST['id']));
+                return;
+            }
+
+            if (isset($_POST['panel'])) {
+                echo json_encode(fetchEncuestasForPanel($_POST['panel']));
                 return;
             }
 
@@ -339,11 +358,7 @@ function verifyActiveSession () {
 }
 
 function getReportData () {
-    if ($_POST['numPregunta'] == 0) {
-        $reportData = generalReportData($_POST['encuesta']);
-    } else {
-        $reportData = reportData($_POST['encuesta'], $_POST['numPregunta'], $_POST['genero'], $_POST['edad'], $_POST['estado'], $_POST['educacion']);
-    }
+    $reportData = $_POST['numPregunta'] == 0 ? generalReportData($_POST['encuesta']) : reportData($_POST['encuesta'], $_POST['numPregunta'], $_POST['genero'], $_POST['edad'], $_POST['estado'], $_POST['educacion']);
 
     echo json_encode($reportData);
 }
@@ -376,6 +391,18 @@ function unregisterDevice () {
     echo json_encode($registrationResult);
 }
 
+function recoverPasword () {
+    $passwordResult = fetchPanelistaPassword($_POST['username'], $_POST['email']);
+
+    if ($passwordResult['status'] === 'SUCCESS') {
+        $passwordResult['status'] = sendPassword($passwordResult['email'], $passwordResult['nombre'], $passwordResult['password']);
+        unset($passwordResult['nombre']);
+        unset($passwordResult['password']);
+    }
+
+    echo json_encode($passwordResult);
+}
+
 function logOut ()  {
     destroySession();
 
@@ -387,6 +414,67 @@ function fetchFromFile ($file)  {
     $myfile = fopen($path.$file, 'r') or die('Unable to open file!');
     echo json_encode(array('content' => fread($myfile, filesize($path.$file))));
     fclose($myfile);
+}
+
+function getMunicipiosFromFile() {
+    $currentState = 'Aguascalientes';
+    $arrayEstados = array();
+    $arrayMunicipios = array();
+
+    $fileMunicipios = fopen('../src/elements/municipios.txt', 'r');
+
+    // $out = fopen('../src/elements/municipios.json', 'w');
+    // fwrite($out, '[');
+    // fwrite($out, '{"estado": "'.$currentState.'", "abreviacion": ""');
+    // fwrite($out, ', "municipios": [');
+
+    while (!feof($fileMunicipios)) {
+        $arrayLineRead = explode('_', fgets($fileMunicipios));
+        $arrayLineRead[1] = trim($arrayLineRead[1], "\n");
+
+        if ($currentState !== $arrayLineRead[0]) {
+            $arrayEstados[$currentState] = $arrayMunicipios;
+            $currentState = $arrayLineRead[0];
+
+            $arrayMunicipios = array();
+            // fwrite($out, ']}');
+            // fwrite($out, ', {"estado": "'.$currentState.'", "abreviacion": ""');
+            // fwrite($out, ', "municipios": [');
+        } else {
+            // fwrite($out, ', ');
+        }
+
+        $arrayMunicipios[] = $arrayLineRead[1];
+        // fwrite($out, '"'.$arrayLineRead[1].'"');
+    }
+
+    // fwrite($out, ']}]');
+    // fclose($out);
+
+    fclose($fileMunicipios);
+
+    return array('estados' => $arrayEstados);
+}
+
+function sendPassword ($email, $nombre, $password) {
+    $subject = 'Recupere su Contraseña';
+    $from = 'atencion@focuscg.com.mx';
+
+    $headers =  'From: ' . $from . "\r\n" .
+                'Reply-To:' . $from . "\r\n" .
+                'Return-Path: ' . $from . "\r\n" .
+                'MIME-Version: 1.0.' . "\r\n" .
+                'Content-Type: text/html; charset=UTF-8';
+
+    $message =  'Hola ' . $nombre . ',<br><br>' .
+                'Hemos recibido su solicitud para recuperar su contraseña de acceso a la app Focus.' . '<br><br>' .
+                'Su contraseña es <strong> ' . $password . ' </strong>. Si usted no solicitó este correo, le pedimos haga caso omiso del mismo.' . '<br><br>' .
+                'Agradecemos su preferencia. ¡Que tenga un excelente día!,' . '<br><br><br>' .
+                'Focus Consulting Group';
+
+    $success = mail($email, $subject, $message, $headers);
+
+    return $success ? 'SUCCESS' : 'ERROR';
 }
 
 function sendPushNotification ($message, $deviceToken) {
@@ -405,7 +493,7 @@ function sendPushNotification ($message, $deviceToken) {
     );
 
     if (!$fp)
-      exit("Failed to connect: $err $errstr" . PHP_EOL);
+      exit('Failed to connect: $err $errstr' . PHP_EOL);
 
     // echo 'Connected to APNS' . PHP_EOL;
 

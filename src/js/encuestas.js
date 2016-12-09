@@ -2,30 +2,57 @@
 
 $(document).on('ready', function () {
     $('#encuestas-header-option').addClass('selected');
+    $('#select-paneles').hide();
+    $('#clientes-filter-select').hide();
+    $('#paneles-filter-select').hide();
     $('#cancel-edit').hide();
-    
-    // -----------------------------------------------------------------------------------------------
-    // Fetch Paneles
-    // -----------------------------------------------------------------------------------------------
 
-    setTimeout(function (event) {
+    fillSelects(1, 0);
+    fillSelects(2, 0);
+    fillSelects(3, 0);
+    fillClientesSelect();
+
+    $('#clientes-filter-select').on('change', function() {
+        var value = parseInt($('#clientes-filter-select').val(), 10);
+        $('#paneles-filter-select').hide();
+        $('#all-encuestas').empty();
+        $('#selects-feedback').html('');
+
+        if (value > 0) {
+            fillPanelesSelect(value);
+        }
+    });
+
+    $('#paneles-filter-select').on('change', function() {
+        var panelId = parseInt($('#paneles-filter-select').val(), 10);
+        $('#all-encuestas').empty();
+        $('#selects-feedback').html('');
+
+        if (panelId === 0) {
+            return;
+        }
+
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: {'action': 'GET_PANELES'},
+            data: {
+                'action': 'GET_ENCUESTAS',
+                'panel': panelId
+            },
             dataType: 'json',
             success: function (response) {
-                fillSelects(1, 0);
-                fillSelects(2, 0);
-                fillSelects(3, 0);
+                if (response.results.length === 0) {
+                    $('#selects-feedback').html('No hay encuestas disponibles');
+                    return;
+                }
 
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
-                currentHTML += '<th class="left">Nombre</th>';
-                currentHTML += '<th class="left">Fecha Inicio</th>';
-                currentHTML += '<th class="left">Fecha Fin</th>';
-                currentHTML += '<th class="left">Cliente</th>';
-                currentHTML += '<th>Seleccionar</th>';
+                currentHTML += '<th>Nombre</th>';
+                currentHTML += '<th>Fecha Inicio</th>';
+                currentHTML += '<th>Fecha Fin</th>';
+                currentHTML += '<th>Panel</th>';
+                currentHTML += '<th columnSpan = "2">Acción</th>';
                 currentHTML += '</tr>';
                 currentHTML += '</thead>';
                 currentHTML += '<tbody>';
@@ -34,32 +61,56 @@ $(document).on('ready', function () {
                     var result = response.results[i];
 
                     currentHTML += '<tr id="' + result.id + '">';
-                    currentHTML += '<td>' + result.nombre + '</td>';
-                    currentHTML += '<td>' + result.fechaInicio + '</td>';
-                    currentHTML += '<td>' + result.fechaFin + '</td>';
-                    currentHTML += '<td>' + result.cliente + '</td>';
-                    currentHTML += '<td class="centered"><input type="radio" value=' + result.id + ' name="id"></td>';
+                    currentHTML += '<td><a href="preguntas.php?id=' + result.id + '">' + result.nombre + '</a></td>';
+                    currentHTML += '<td>' + readableDate(result.fechaInicio) + '</td>';
+                    currentHTML += '<td>' + readableDate(result.fechaFin) + '</td>';
+                    currentHTML += '<td>' + result.panel + '</td>';
+                    currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
+                    currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';
-
-                    $('#allPanels').append(currentHTML);
-                    currentHTML = '';
                 }
 
                 currentHTML += '</tbody>';
+                $('#all-encuestas').append(currentHTML);
             },
             error: function (error) {
                 $('#feedback').html('Error cargando los clientes');
             }
         });
-    }, 500);
+    });
 
     // -----------------------------------------------------------------------------------------------
-    // Fetch Encuestas
+    // Fetch Paneles
     // -----------------------------------------------------------------------------------------------
 
-    setTimeout(function (event) {
-        getEncuestas('encuestas');
-    }, 500);
+    $.ajax({
+        type: 'POST',
+        url: '../api/controller.php',
+        data: {'action': 'GET_PANELES'},
+        dataType: 'json',
+        success: function (response) {
+            if (response.results.length === 0) {
+                $('#available-paneles-feedback').html('No hay paneles disponibles');
+                return;
+            }
+
+            var currentHTML = '<option value=0> Selecciona un panel </option>';
+
+            for (var i = 0; i < response.results.length; i++) {
+                var result = response.results[i];
+
+                currentHTML += '<option value=' + result.id + '>';
+                currentHTML += result.nombre + "   ---   " + result.cliente;
+                currentHTML += "</option>";
+            }
+
+            $('#select-paneles').append(currentHTML);
+            $('#select-paneles').show();
+        },
+        error: function (error) {
+            $('#feedback').html('Error cargando los clientes');
+        }
+    });
 
     // -----------------------------------------------------------------------------------------------
     // Save Encuesta
@@ -74,14 +125,14 @@ $(document).on('ready', function () {
         var nombre = $('#nombre').val();
         var fechaInicio = getCompleteDate(1);
         var fechaFin = getCompleteDate(2);
-        var panel = $('input[name=id]:checked').val();
+        var panel = parseInt($('#select-paneles').val());
 
         if (!nombre || !nombre.trim()) {
             $('#feedback').html('Favor de elegir un nombre');
             return;
         }
 
-        if (!panel) {
+        if (!panel || panel === 0) {
             $('#feedback').html('Favor de seleccionar un panel');
             return;
         }
@@ -132,7 +183,7 @@ $(document).on('ready', function () {
     // Edit Encuesta
     // -----------------------------------------------------------------------------------------------
 
-    $('#allEncuestas').on('click', '.edit-button', function() {
+    $('#all-encuestas').on('click', '.edit-button', function() {
         var idEncuesta = $(this).parent().attr('id');
 
         $('ul.tabs li').removeClass('current');
@@ -159,7 +210,7 @@ $(document).on('ready', function () {
                 $('#nombre').val(result.nombre);
                 getDatefromString(result.fechaInicio, 0);
                 getDatefromString(result.fechaFin, 1);
-                $('input[name=id][value="' + result.panel + '"]').prop('checked', true);
+                $('#select-paneles').val(result.panel);
 
                 var myURL = window.location.href.split('?')[0];
                 myURL += '?id=' + result.id;
@@ -175,24 +226,27 @@ $(document).on('ready', function () {
     // Delete Encuesta
     // -----------------------------------------------------------------------------------------------
 
-    $('#allEncuestas').on('click', '.deleteButton', function() {
+    $('#all-encuestas').on('click', '.deleteButton', function() {
         var self = this;
-        $.ajax({
-            url: '../api/controller.php',
-            type: 'POST',
-            data: {
-                action: 'DELETE_ENCUESTA',
-                id: $(this).parent().attr('id')
-            },
-            dataType: 'json',
-            success: function (response) {
-                alert('Encuesta eliminada exitosamente.');
-                $(self).parent().remove();
-            },
-            error: function (errorMsg) {
-                alert('Error eliminando encuesta.');
-            }
-        });
+
+        if (confirmDelete('esta Encuesta')) {
+            $.ajax({
+                url: '../api/controller.php',
+                type: 'POST',
+                data: {
+                    action: 'DELETE_ENCUESTA',
+                    id: $(this).parent().attr('id')
+                },
+                dataType: 'json',
+                success: function (response) {
+                    alert('Encuesta eliminada exitosamente.');
+                    $(self).parent().remove();
+                },
+                error: function (errorMsg) {
+                    alert('Error eliminando encuesta.');
+                }
+            });
+        }
     });
 
     $('#cancel-edit').on('click', function (event) {

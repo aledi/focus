@@ -2,13 +2,16 @@
 
 <html lang='en'>
 <head>
+    <link rel='icon' href='img/focusicon.ico' type='image/x-icon'>
     <meta http-equiv='content-type' content='text/html; charset=UTF-8' />
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
     <link href='css/reportes.css' type='text/css' rel='stylesheet'/>
-    <script src="js/jquery-1.12.3.js"></script>
+    <script src='js/jquery-1.12.3.js'></script>
     <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
     <script src='js/reportes.js' type='text/javascript'></script>
-    <script src='js/encuestas-shared.js' type='text/javascript'></script>
+    <script src='js/states.js' type='text/javascript'></script>
+    <script src='js/date-functions.js' type='text/javascript'></script>
+    <script src='js/selects-shared.js' type='text/javascript'></script>
     <title> Focus - Reportes</title>
 </head>
 
@@ -20,13 +23,28 @@
             <h2>Reportes</h2>
             <table id='reportes-table' class='hidden'></table>
             <a id='dlink' class='hidden'></a>
+
             <div class='main-selects'>
-                <select id='reportes-encuestas-select' class='encuestas-select'>
-                    <option value='0'>Selecciona una encuesta</option>
-                </select>
-                <select id='preguntas-select' class='encuestas-select'></select>
+                <div class='input-wrapper'>
+                    <select id='clientes-filter-select'></select>
+                </div>
+
+                <div class='input-wrapper'>
+                    <select id='paneles-filter-select'></select>
+                </div>
+
+                <div class='input-wrapper'>
+                    <select id='encuestas-filter-select' class='encuestas-select'></select>
+                </div>
+
+                <div class='input-wrapper'>
+                    <select id='preguntas-filter-select' class='encuestas-select'></select></select>
+                </div>
+
+                <span id='selects-feedback' class='feedback-text'></span>
                 <button type='button' id='download-reportes' class='download-button'>Descargar Reporte</button>
             </div>
+
             <div id='chart1' class='chart1'></div>
             <div class='filter-selects'>
                 <select id='edad-select' class='encuestas-select'>
@@ -43,38 +61,6 @@
                     <option value='1'>Femenino</option>
                 </select>
                 <select id='estado-select' class='encuestas-select'>
-                    <option value='0'>Selecciona un estado</option>
-                    <option value='AGS'>Aguascalientes</option>
-                    <option value='BC'>Baja California</option>
-                    <option value='BCS'>Baja California Sur</option>
-                    <option value='CAMP'>Campeche</option>
-                    <option value='COAH'>Coahuila</option>
-                    <option value='COL'>Colima</option>
-                    <option value='CHIS'>Chiapas</option>
-                    <option value='CDMX'>Ciudad de México</option>
-                    <option value='DGO'>Durango</option>
-                    <option value='GTO'>Guanajuato</option>
-                    <option value='GRO'>Guerrero</option>
-                    <option value='HGO'>Hidalgo</option>
-                    <option value='JAL'>Jalisco</option>
-                    <option value='EDOMEX'>Estado de México</option>
-                    <option value='MICH'>Michoacán</option>
-                    <option value='MOR'>Morelos</option>
-                    <option value='NAY'>Nayarit</option>
-                    <option value='NL'>Nuevo León</option>
-                    <option value='OAX'>Oaxaca</option>
-                    <option value='PUE'>Puebla</option>
-                    <option value='QRO'>Querétaro</option>
-                    <option value='QROO'>Quintana Roo</option>
-                    <option value='SLP'>San Luis Potosí</option>
-                    <option value='SIN'>Sinaloa</option>
-                    <option value='SON'>Sonora</option>
-                    <option value='TAB'>Tabasco</option>
-                    <option value='TAM'>Tamaulipas</option>
-                    <option value='TLAX'>Tlaxcala</option>
-                    <option value='VER'>Veracruz</option>
-                    <option value='YUC'>Yucatan</option>
-                    <option value='ZAC'>Zacatecas</option>
                 </select>
                 <select id='educacion-select' class='encuestas-select'>
                     <option value='0'>Selecciona un nivel de educación</option>

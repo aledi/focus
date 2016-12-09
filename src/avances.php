@@ -2,12 +2,13 @@
 
 <html lang='en'>
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel='icon' href='img/focusicon.ico' type='image/x-icon'>
+    <meta http-equiv='content-type' content='text/html; charset=UTF-8' />
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
     <script src='js/jquery-1.12.3.js'></script>
     <script src='js/avances.js' type='text/javascript'></script>
-    <script src='js/encuestas-shared.js' type='text/javascript'></script>
     <script src='js/date-functions.js' type='text/javascript'></script>
+    <script src='js/selects-shared.js' type='text/javascript'></script>
     <title> Focus - Avances</title>
 </head>
 
@@ -17,10 +18,20 @@
     <section>
         <div class='avances-wrapper'>
             <h2 id='header-title'>Avances</h2>
-            <select id='avances-encuestas-select' class='encuestas-select'>
-                <option value='0'>Selecciona una encuesta</option>
-            </select>
-            <span id='available-encuestas-feedback' class='feedback-text'></span>
+
+            <div class='input-wrapper'>
+                <select id='clientes-filter-select'></select>
+            </div>
+
+            <div class='input-wrapper'>
+                <select id='paneles-filter-select'></select>
+            </div>
+
+            <div class='input-wrapper'>
+                <select id='encuestas-filter-select' class='encuestas-select'></select>
+            </div>
+
+            <span id='selects-feedback' class='feedback-text'></span>
             <p id='avance-summary' class='avance-info'></p>
             <table id='avances-table'></table>
         </div>

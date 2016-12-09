@@ -1,5 +1,8 @@
 'use strict';
 
+var currentChecked = 0;
+var limit = 0;
+
 function getCheckedCheckboxesFor (checkboxName) {
     var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
     Array.prototype.forEach.call(checkboxes, function(el) {
@@ -9,23 +12,42 @@ function getCheckedCheckboxesFor (checkboxName) {
     return values;
 }
 
+function checkNumberPanelistas (checkedBox) {
+    if (currentChecked + 1 > limit && checkedBox.checked) {
+        alert('Cantidad de panelistas seleccionados exceden el límite de ' + limit + ' panelistas permitidos.');
+        checkedBox.checked = false;
+
+        return;
+    }
+
+    currentChecked += checkedBox.checked ? 1 : -1;
+    $('#current-checked').html(currentChecked + ' / ' + limit);
+}
+
 function checkAll (checkedBox) {
+    var tableSize = $('#fbody > tr').length;
     var checkboxes = document.getElementsByName('panelista-checkbox');
+
+    if (tableSize > limit && checkedBox.checked) {
+        alert('Cantidad de panelistas seleccionados exceden el límite de ' + limit + ' panelistas permitidos.');
+        checkedBox.checked = false;
+
+        return;
+    }
+
+    currentChecked = checkedBox.checked ? tableSize : 0;
+
     for (var i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].className !== 'hidden') {
             checkboxes[i].checked = checkedBox.checked;
         }
     }
+
+    $('#current-checked').html(currentChecked + ' / ' + limit);
 }
 
 $(document).on('ready', function () {
     $('#paneles-header-option').addClass('selected');
-
-    /*
-    *   Función tomada de internet, funciona bien, pero aparentemente
-    *   pueda llegar a tener problemas de ineficiencia dado a que es
-    *   un objeto dependiente de la tabla y la cantidad de panelistas.
-    */
 
     $('#filteringText').keyup(function () {
         //split the current value of searchInput
@@ -63,8 +85,11 @@ $(document).on('ready', function () {
     var flagLoadingPanelist = 0;
     event.preventDefault();
 
-    var id = window.location.search.substring(1);
-    id = id.substring(3);
+    var urlParameters = window.location.search.substring(1);
+    urlParameters = urlParameters.split('&')
+
+    var id = urlParameters[0].substring(3);
+    limit = urlParameters[1].substring(4);
 
     $.ajax({
         type: 'POST',
@@ -82,6 +107,7 @@ $(document).on('ready', function () {
                 currentHTML += '<th>Género</th>';
                 currentHTML += '<th>Edad</th>';
                 currentHTML += '<th>Educación</th>';
+                currentHTML += '<th>Fecha Registro</th>';
                 currentHTML += '<th>Municipio</th>';
                 currentHTML += '<th>Estado</th>';
                 currentHTML += '<th><input type="checkbox" onclick="checkAll(this)"/></th>';
@@ -94,14 +120,17 @@ $(document).on('ready', function () {
                     var elegible = (result.genero !== -1 && result.edad !== 0 && result.estado !== '');
 
                     currentHTML += '<tr value="' + result.id + '" class="' + (elegible ? '' : 'red') + '">';
-                    currentHTML += '<td>' + result.nombre + ' ' + result.apellidos + '</td>';
+                    currentHTML += '<td>' + result.nombre + '</td>';
                     currentHTML += '<td>' + convertGenero(result.genero) + '</td>';
                     currentHTML += '<td class="centered">' + result.edad + '</td>';
                     currentHTML += '<td>' + convertEducacion(result.educacion) + '</td>';
+                    currentHTML += '<td>' + readableDate(result.fechaRegistro) + '</td>';
                     currentHTML += '<td>' + result.municipio + '</td>';
                     currentHTML += '<td class="centered">' + result.estado + '</td>';
-                    currentHTML += '<td class="centered"><input type="checkbox" value=' + result.id + ' name="panelista-checkbox"' + (result.checked ?  ' checked' : '') + ' class="' + (elegible ? '' : 'hidden') + '"></td>';
+                    currentHTML += '<td class="centered"><input type="checkbox" onclick="checkNumberPanelistas(this)" value=' + result.id + ' name="panelista-checkbox"' + (result.checked ?  ' checked' : '') + ' class="' + (elegible ? '' : 'hidden') + '"></td>';
                     currentHTML += '</tr>';
+
+                    currentChecked += result.checked ? 1 : 0;
 
                     $('#tablaPanelistas').append(currentHTML);
                     currentHTML = '';
@@ -110,19 +139,8 @@ $(document).on('ready', function () {
                 flagLoadingPanelist = 1;
             }
 
+            $('#current-checked').html(currentChecked + ' / ' + limit);
             currentHTML += '</tbody>';
-
-            $('tablaPanelistas').tablesorter({
-                // pass the headers argument and assing an object
-                headers: {
-                    // assign the secound column (we start counting zero)
-                    4: {
-                        // disable it by setting the property sorter to false
-                        sorter: false
-                    },
-                    // assign the third column (we start counting zero)
-                }
-            });
         },
         error: function (error) {
             $('#feedback').html('Error cargando los clientes');

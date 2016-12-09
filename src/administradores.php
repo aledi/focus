@@ -2,7 +2,8 @@
 
 <html lang='en'>
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel='icon' href='img/focusicon.ico' type='image/x-icon'>
+    <meta http-equiv='content-type' content='text/html; charset=UTF-8' />
     <link href='css/template.css' type='text/css' rel='stylesheet' />
     <script src='js/jquery-1.12.3.js'></script>
     <script src='js/administradores.js' type='text/javascript'></script>
@@ -59,7 +60,7 @@
             <div id='tab-view-administradores' class='tab-content'>
                 <h2>Administradores Disponibles</h2>
 
-                <table id="allAdmins"></table>
+                <table id='allAdmins'></table>
             </div>
         </div>
     </section>

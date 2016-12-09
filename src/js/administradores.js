@@ -3,7 +3,7 @@
 $(document).on('ready', function () {
     $('#usuarios-header-option').addClass('selected');
     $('#cancel-edit').hide();
-    
+
     // -----------------------------------------------------------------------------------------------
     // Fetch Administradores
     // -----------------------------------------------------------------------------------------------
@@ -166,22 +166,24 @@ $(document).on('ready', function () {
 
     $('#allAdmins').on('click', '.deleteButton', function () {
         var self = this;
-        $.ajax({
-            url: '../api/controller.php',
-            type: 'POST',
-            data: {
-                action: 'DELETE_ADMIN',
-                id: $(this).parent().attr('id')
-            },
-            dataType: 'json',
-            success: function (response) {
-                alert('Administrador eliminado exitosamente.');
-                $(self).parent().remove();
-            },
-            error: function (errorMsg) {
-                alert('Error eliminando administrador.');
-            }
-        });
+        if (confirmDelete('este Administrador')) {
+          $.ajax({
+              url: '../api/controller.php',
+              type: 'POST',
+              data: {
+                  action: 'DELETE_ADMIN',
+                  id: $(this).parent().attr('id')
+              },
+              dataType: 'json',
+              success: function (response) {
+                  alert('Administrador eliminado exitosamente.');
+                  $(self).parent().remove();
+              },
+              error: function (errorMsg) {
+                  alert('Error eliminando administrador.');
+              }
+          });
+        }
     });
 
     $('#cancel-edit').on('click', function (event) {

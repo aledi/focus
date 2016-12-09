@@ -154,8 +154,9 @@ section {
 }
 
 .avance-info {
-    display: inline-block;
+    text-align: right;
     margin-right: 20px;
+    color: #6265A7;
 }
 
 .panelistas-wrapper, .paneles-wrapper, .encuestas-wrapper, .liga-panel-wrapper {
@@ -239,6 +240,10 @@ input[type='text'], input[type='password'] {
     height: 30px;
     width: 250px;
     padding: 0 5px;
+}
+
+input[type='text'].full-width, input[type='password'].full-width {
+    width: 100%;
 }
 
 textarea {
