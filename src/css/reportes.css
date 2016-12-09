@@ -53,3 +53,7 @@ select {
 .feedback-text {
     margin-bottom: 20px;
 }
+
+.button-wrapper button{
+    display: inline;
+}

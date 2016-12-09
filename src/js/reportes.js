@@ -310,6 +310,7 @@ $(document).on('ready', function () {
     }, 500);
 
     $('#download-reportes').hide();
+    $('#refresh').hide();
     $('#edad-select').hide();
     $('#genero-select').hide();
     $('#estado-select').hide();
@@ -326,6 +327,7 @@ $(document).on('ready', function () {
         $('#encuestas-filter-select').hide();
         $('#preguntas-filter-select').hide();
         $('#download-reportes').hide();
+        $('#refresh').hide();
         $('#preguntas-filter-select').hide();
         $('#edad-select').hide();
         $('#genero-select').hide();
@@ -350,6 +352,7 @@ $(document).on('ready', function () {
         $('#encuestas-filter-select').hide();
         $('#preguntas-filter-select').hide();
         $('#download-reportes').hide();
+        $('#refresh').hide();
         $('#preguntas-filter-select').hide();
         $('#edad-select').hide();
         $('#genero-select').hide();
@@ -373,6 +376,7 @@ $(document).on('ready', function () {
         var idEncuesta = parseInt($(this).val(), 10);
         $('#preguntas-filter-select').empty();
         $('#download-reportes').hide();
+        $('#refresh').hide();
         $('#preguntas-filter-select').hide();
         $('#edad-select').hide();
         $('#genero-select').hide();
@@ -402,6 +406,7 @@ $(document).on('ready', function () {
             success: function (response) {
                 if ($('#panelistas-header-option').is(':visible') && $('#usuarios-header-option').is(':visible')) {
                     $('#download-reportes').show();
+                    $('#refresh').show();
                 }
 
                 var currentHTML = '<option value="-1">Selecciona una pregunta</option>';
