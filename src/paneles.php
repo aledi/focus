@@ -30,7 +30,7 @@
 
                 <div class='input-wrapper'>
                     <label>Número de Participantes<span class='required-input'>*</span></label>
-                    <input id='participantes' type='number' />
+                    <input id='participantes'/>
                 </div>
 
                 <div class='input-wrapper'>

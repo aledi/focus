@@ -90,7 +90,7 @@
                 </div>
                 <div class='input-wrapper'>
                     <label>Código Postal<span class='required-input'>*</span></label>
-                    <input type='number' id='cp' type='text' />
+                    <input id='cp' type='text' />
                 </div>
 
                 <button type='button' id='cancel-edit' class='no-background'>Cancelar</button>
