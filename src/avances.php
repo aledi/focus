@@ -31,6 +31,10 @@
                 <select id='encuestas-filter-select' class='encuestas-select'></select>
             </div>
 
+            <div class='input-wrapper'>
+                <button type='button' id='refresh'>Refresh</button>
+            </div>
+
             <span id='selects-feedback' class='feedback-text'></span>
             <p id='avance-summary' class='avance-info'></p>
             <table id='avances-table'></table>
