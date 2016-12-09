@@ -291,8 +291,6 @@ function ajaxReportCall(data, numPregunta){
         data: data,
         dataType: 'json',
         success: function (response) {
-            console.log(data);
-            console.log(response);
             if (response.status === 'NO_DATA') {
                 $('#reportes-feedback').html('No hay información para la encuesta y pregunta seleccionadas');
                 return;
