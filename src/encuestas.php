@@ -64,6 +64,7 @@
 
                 <div class='input-wrapper'>
                     <select id='paneles-filter-select'></select>
+                    <button type='button' id='refresh'>Refresh</button>
                 </div>
 
                 <table id='all-encuestas'></table>
