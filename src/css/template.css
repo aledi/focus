@@ -17,7 +17,6 @@ body {
 .alert {
    color: #E05858;
 }
-
 /* -----------------------------------------------------------------------------------------------
 / Header
 / ----------------------------------------------------------------------------------------------- */
@@ -330,4 +329,9 @@ table tbody tr td button {
     background-color: transparent;
     font-size: 11px;
     color: #4D4F9B;
+}
+
+.button-wrapper > button{
+    display: inline;
+    align-items: center;
 }
