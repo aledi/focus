@@ -1,5 +1,57 @@
 'use strict';
 
+function ajaxFillPanelistas(){
+    $.ajax({
+        type: 'POST',
+        url: '../api/controller.php',
+        data: {'action': 'GET_PANELISTAS'},
+        dataType: 'json',
+        success: function (response) {
+            fillSelects(1, 1);
+            fillSelects(2, 1);
+            fillSelects(3, 1);
+
+            var currentHTML = '<thead>';
+            currentHTML += '<tr>';
+            currentHTML += '<th class="left">Nombre</th>';
+            currentHTML += '<th>Género</th>';
+            currentHTML += '<th>Edad</th>';
+            currentHTML += '<th>Municipio</th>';
+            currentHTML += '<th>Estado</th>';
+            currentHTML += '<th>Fecha Registro</th>';
+            currentHTML += '<th colspan="2">Acción</th>';
+            currentHTML += '</tr>';
+            currentHTML += '</thead>';
+            currentHTML += '<tbody id="fbody">';
+
+            for (var i = 0; i < response.results.length; i++) {
+                var result = response.results[i];
+                var elegible = (result.genero !== -1 && result.edad !== 0 && result.estado !== '');
+
+                currentHTML += '<tr id="' + result.id + '" class="' +  (elegible ? '' : 'red') + '">';
+                currentHTML += '<td>' + result.nombre + " " + result.apellidos + '</td>';
+                currentHTML += '<td>' + convertGenero(result.genero) + '</td>';
+                currentHTML += '<td>' + result.edad + '</td>';
+                currentHTML += '<td>' + result.municipio + '</td>';
+                currentHTML += '<td>' + result.estado + '</td>';
+                currentHTML += '<td>' + readableDate(result.fechaRegistro) + '</td>';
+                currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
+                currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
+                currentHTML += '</tr>';
+
+                $('#all-panelistas').append(currentHTML);
+                currentHTML = '';
+            }
+
+            currentHTML += '</tbody>';
+        },
+        error: function (error) {
+            $('#feedback').html('Error cargando los clientes');
+        }
+    });
+}
+
+
 $(document).on('ready', function () {
     $('#panelistas-header-option').addClass('selected');
     $('#cancel-edit').hide();
@@ -48,54 +100,7 @@ $(document).on('ready', function () {
     // -----------------------------------------------------------------------------------------------
 
     setTimeout(function (event) {
-        $.ajax({
-            type: 'POST',
-            url: '../api/controller.php',
-            data: {'action': 'GET_PANELISTAS'},
-            dataType: 'json',
-            success: function (response) {
-                fillSelects(1, 1);
-                fillSelects(2, 1);
-                fillSelects(3, 1);
-
-                var currentHTML = '<thead>';
-                currentHTML += '<tr>';
-                currentHTML += '<th class="left">Nombre</th>';
-                currentHTML += '<th>Género</th>';
-                currentHTML += '<th>Edad</th>';
-                currentHTML += '<th>Municipio</th>';
-                currentHTML += '<th>Estado</th>';
-                currentHTML += '<th>Fecha Registro</th>';
-                currentHTML += '<th colspan="2">Acción</th>';
-                currentHTML += '</tr>';
-                currentHTML += '</thead>';
-                currentHTML += '<tbody id="fbody">';
-
-                for (var i = 0; i < response.results.length; i++) {
-                    var result = response.results[i];
-                    var elegible = (result.genero !== -1 && result.edad !== 0 && result.estado !== '');
-
-                    currentHTML += '<tr id="' + result.id + '" class="' +  (elegible ? '' : 'red') + '">';
-                    currentHTML += '<td>' + result.nombre + " " + result.apellidos + '</td>';
-                    currentHTML += '<td>' + convertGenero(result.genero) + '</td>';
-                    currentHTML += '<td>' + result.edad + '</td>';
-                    currentHTML += '<td>' + result.municipio + '</td>';
-                    currentHTML += '<td>' + result.estado + '</td>';
-                    currentHTML += '<td>' + readableDate(result.fechaRegistro) + '</td>';
-                    currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
-                    currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
-                    currentHTML += '</tr>';
-
-                    $('#all-panelistas').append(currentHTML);
-                    currentHTML = '';
-                }
-
-                currentHTML += '</tbody>';
-            },
-            error: function (error) {
-                $('#feedback').html('Error cargando los clientes');
-            }
-        });
+        ajaxFillPanelistas();
 
         $.ajax({
             type: 'POST',
@@ -292,6 +297,11 @@ $(document).on('ready', function () {
 
         $('ul.tabs li').last().addClass('current');
         $('#tab-view-panelistas').addClass('current');
+    });
+
+    $('#refresh').on('click', function (){
+        $('#all-panelistas').empty();
+        ajaxFillPanelistas();
     });
 
     $('#mes, #anio').on('change', function() {
