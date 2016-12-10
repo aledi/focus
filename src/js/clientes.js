@@ -1,5 +1,46 @@
 'use strict';
 
+function ajaxFillClientes(){
+    $.ajax({
+        type: 'POST',
+        url: '../api/controller.php',
+        data: {'action': 'GET_CLIENTES'},
+        dataType: 'json',
+        success: function (response) {
+            var currentHTML = '<thead>';
+            currentHTML += '<tr>';
+            currentHTML += '<th>Username</th>';
+            currentHTML += '<th>Nombre</th>';
+            currentHTML += '<th>Correo</th>';
+            currentHTML += '<th colspan="2">Acción</th>';
+            currentHTML += '</tr>';
+            currentHTML += '</thead>';
+            currentHTML += '<tbody>';
+
+            for (var i = 0; i < response.results.length; i++) {
+                var result = response.results[i];
+
+                currentHTML += '<tr id="'+ result.id + '">';
+                currentHTML += '<td>' + result.username+'</td>';
+                currentHTML += '<td>' + result.nombre + " " + result.apellidos+'</td>';
+                currentHTML += '<td>' + result.email+'</td>';
+                currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
+                currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
+                currentHTML += '</tr>';
+
+                $('#allUsers').append(currentHTML);
+                currentHTML = '';
+            }
+
+            currentHTML += '</tbody>';
+        },
+        error: function (error) {
+            $('#feedback').html('Error cargando los clientes');
+        }
+    });
+}
+
+
 $(document).on('ready', function () {
     $('#usuarios-header-option').addClass('selected');
     $('#cancel-edit').hide();
@@ -9,43 +50,7 @@ $(document).on('ready', function () {
     // -----------------------------------------------------------------------------------------------
 
     setTimeout(function (event) {
-        $.ajax({
-            type: 'POST',
-            url: '../api/controller.php',
-            data: {'action': 'GET_CLIENTES'},
-            dataType: 'json',
-            success: function (response) {
-                var currentHTML = '<thead>';
-                currentHTML += '<tr>';
-                currentHTML += '<th>Username</th>';
-                currentHTML += '<th>Nombre</th>';
-                currentHTML += '<th>Correo</th>';
-                currentHTML += '<th colspan="2">Acción</th>';
-                currentHTML += '</tr>';
-                currentHTML += '</thead>';
-                currentHTML += '<tbody>';
-
-                for (var i = 0; i < response.results.length; i++) {
-                    var result = response.results[i];
-
-                    currentHTML += '<tr id="'+ result.id + '">';
-                    currentHTML += '<td>' + result.username+'</td>';
-                    currentHTML += '<td>' + result.nombre + " " + result.apellidos+'</td>';
-                    currentHTML += '<td>' + result.email+'</td>';
-                    currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
-                    currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
-                    currentHTML += '</tr>';
-
-                    $('#allUsers').append(currentHTML);
-                    currentHTML = '';
-                }
-
-                currentHTML += '</tbody>';
-            },
-            error: function (error) {
-                $('#feedback').html('Error cargando los clientes');
-            }
-        });
+        ajaxFillClientes();
     }, 500);
 
     // -----------------------------------------------------------------------------------------------
@@ -201,5 +206,10 @@ $(document).on('ready', function () {
 
         $('ul.tabs li').last().addClass('current');
         $('#tab-view-clientes').addClass('current');
+    });
+
+    $('#refresh').on('click', function (){
+        $('#allUsers').empty();
+        ajaxFillClientes();
     });
 });
