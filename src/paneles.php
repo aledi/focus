@@ -68,6 +68,7 @@
 
                 <div class='input-wrapper'>
                     <select id='clientes-filter-select'></select>
+                    <button type='button' id='refresh'>Refresh</button>
                 </div>
 
                 <table id='all-panels'></table>
