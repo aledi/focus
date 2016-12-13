@@ -100,10 +100,7 @@
 
             <div id='tab-view-panelistas' class='tab-content'>
                 <h2>Panelistas Disponibles</h2>
-                <div class='input-wrapper'>
-                    <label>Buscar: <input id='filteringText' type='text' /></label>
-                    <button type='button' id='refresh'>Refresh</button>
-                </div>
+                <label>Buscar: <input id='filteringText' type='text' /></label>
                 <p class='alert'>*Los panelistas marcados en rojo no cuentan con información suficiente para responder encuestas</p>
                 <table id='all-panelistas'></table>
                 <div id='feedback'></div>
