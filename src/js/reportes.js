@@ -9,7 +9,7 @@ var educationObject = {
     6: 'Ninguno'
 }
 
-//http://www.w3schools.com/colors/colors_shades.asp
+var currentPregunta = 0;
 var colorArray = ['#202382', '#707070', '#6265A7', '#A6A6A6',
                   '#A6A7CD', '#BCBCBC', '#BCBDD9', '#C7C7C7',
                   '#505160', '#68829E', '#AEBD38', '#598234',
@@ -172,7 +172,7 @@ function columnChart (opciones, percent, chartNumber, title) {
     }
 }
 
-function averageChart(min, max, value, chartNumber) {
+function averageChart (min, max, value, chartNumber) {
     google.charts.setOnLoadCallback(drawStuff);
 
     function drawStuff () {
@@ -282,6 +282,108 @@ function getObjectProperties (object) {
     return properties;
 }
 
+function getData () {
+    if (currentPregunta < 0) {
+        $('#abiertas-table').empty();
+        $('#chart1').empty();
+        $('#chart2').empty();
+        $('#chart3').empty();
+        $('#chart4').empty();
+        return;
+    }
+
+    var data = {
+        action: 'REPORT_DATA',
+        encuesta: parseInt($('#encuestas-filter-select').val(), 10),
+        numPregunta: currentPregunta
+    };
+
+    $.ajax({
+        url: '../api/controller.php',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function (response) {
+            if (response.status === 'NO_DATA') {
+                $('#reportes-feedback').html('No hay información para la encuesta y pregunta seleccionadas');
+                return;
+            }
+
+            $('#abiertas-table').empty();
+            $('#chart1').empty();
+            $('#chart2').empty();
+            $('#chart3').empty();
+            $('#chart4').empty();
+
+            // Show filter options with default values
+            if (response.tipo !== 1) {
+                $('#edad-select').show();
+                $('#edad-select').val('0');
+
+                $('#genero-select').show();
+                $('#genero-select').val('-1');
+
+                $('#estado-select').show();
+                $('#estado-select').val('0');
+
+                $('#educacion-select').show();
+                $('#educacion-select').val('0');
+
+                $('#filtros-button').show();
+
+                $('#abiertas-table').hide();
+            }
+
+            //General
+            if (currentPregunta === 0) {
+                $('#edad-select').hide();
+                $('#genero-select').hide();
+                $('#estado-select').hide();
+                $('#educacion-select').hide();
+                $('#filtros-button').hide();
+
+                pieChart(convertGenderArray(Object.keys(response.genero)),
+                        getObjectProperties(response.genero),
+                        1, 'Género');
+                pieChart(convertAgeRange(Object.keys(response.edad)),
+                        getObjectProperties(response.edad),
+                        2, 'Edad');
+                pieChart(convertEducation(Object.keys(response.educacion)),
+                        getObjectProperties(response.educacion),
+                        3, 'Educación');
+                columnChart(convertState(Object.keys(response.estado)),
+                        getObjectProperties(response.estadoPercentage),
+                        4, 'Estado');
+
+            } else {
+                if (response.tipo === 1) {
+                    var html = '';
+                    $('#abiertas-table').show();
+                    for (var i = 0; i < response.votos.length; i++) {
+                        var even = i % 2 === 0;
+                        html += (even ? '<tr>' : '') + '<td>' + response.votos[i] + '</td>' + (even ? '' : '</tr>');
+                    }
+
+                    $('#abiertas-table').append(html);
+                } else if (response.tipo === 4) {
+                    barChart(response.opciones, response.porcentajes, 1, '');
+                } else if (response.tipo === 6) {
+                    averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 1);
+                } else if (response.tipo === 5) {
+                    barChartStacked(response.opciones, response.votos, response.subPreguntas, 1);
+                } else if (response.opciones.length < 4) {
+                    pieChart(response.opciones, response.votos, 1, '');
+                } else {
+                    columnChart(response.opciones, response.porcentajes, 1, '');
+                }
+            }
+        },
+        error: function (errorMsg) {
+            $('#reportes-feedback').html('Ha ocurrido un error. Favor de intentar de nuevo.');
+        }
+    });
+}
+
 $(document).on('ready', function () {
     $('#reportes-header-option').addClass('selected');
     fillClientesSelect();
@@ -310,6 +412,7 @@ $(document).on('ready', function () {
     }, 500);
 
     $('#download-reportes').hide();
+    $('#refresh').hide();
     $('#edad-select').hide();
     $('#genero-select').hide();
     $('#estado-select').hide();
@@ -326,6 +429,7 @@ $(document).on('ready', function () {
         $('#encuestas-filter-select').hide();
         $('#preguntas-filter-select').hide();
         $('#download-reportes').hide();
+        $('#refresh').hide();
         $('#preguntas-filter-select').hide();
         $('#edad-select').hide();
         $('#genero-select').hide();
@@ -350,6 +454,7 @@ $(document).on('ready', function () {
         $('#encuestas-filter-select').hide();
         $('#preguntas-filter-select').hide();
         $('#download-reportes').hide();
+        $('#refresh').hide();
         $('#preguntas-filter-select').hide();
         $('#edad-select').hide();
         $('#genero-select').hide();
@@ -373,6 +478,7 @@ $(document).on('ready', function () {
         var idEncuesta = parseInt($(this).val(), 10);
         $('#preguntas-filter-select').empty();
         $('#download-reportes').hide();
+        $('#refresh').hide();
         $('#preguntas-filter-select').hide();
         $('#edad-select').hide();
         $('#genero-select').hide();
@@ -402,6 +508,7 @@ $(document).on('ready', function () {
             success: function (response) {
                 if ($('#panelistas-header-option').is(':visible') && $('#usuarios-header-option').is(':visible')) {
                     $('#download-reportes').show();
+                    $('#refresh').show();
                 }
 
                 var currentHTML = '<option value="-1">Selecciona una pregunta</option>';
@@ -422,120 +529,29 @@ $(document).on('ready', function () {
     });
 
     $('#preguntas-filter-select').on('change', function () {
-        var numPregunta = parseInt($(this).val(), 10);
+        currentPregunta = parseInt($(this).val(), 10);
+
         $('#edad-select').hide();
         $('#genero-select').hide();
         $('#estado-select').hide();
         $('#educacion-select').hide();
         $('#filtros-button').hide();
+        $('#reportes-feedback').html('');
+        $('#reportes-filtros-feedback').html('');
 
-        if ($('#reportes-feedback').html()) {
-            $('#reportes-feedback').empty();
-        }
+        getData();
+    });
 
-        if ($('#reportes-filtros-feedback').html()) {
-            $('#reportes-filtros-feedback').empty();
-        }
+    $('#refresh').on('click', function () {
+        $('#edad-select').hide();
+        $('#genero-select').hide();
+        $('#estado-select').hide();
+        $('#educacion-select').hide();
+        $('#filtros-button').hide();
+        $('#reportes-feedback').html('');
+        $('#reportes-filtros-feedback').html('');
 
-        if (numPregunta < 0) {
-            $('#abiertas-table').empty();
-            $('#chart1').empty();
-            $('#chart2').empty();
-            $('#chart3').empty();
-            $('#chart4').empty();
-            return;
-        }
-
-        var data = {
-            action: 'REPORT_DATA',
-            encuesta: parseInt($('#encuestas-filter-select').val(), 10),
-            numPregunta: numPregunta
-        };
-
-        $.ajax({
-            url: '../api/controller.php',
-            type: 'POST',
-            data: data,
-            dataType: 'json',
-            success: function (response) {
-                if (response.status === 'NO_DATA') {
-                    $('#reportes-feedback').html('No hay información para la encuesta y pregunta seleccionadas');
-                    return;
-                }
-
-                $('#abiertas-table').empty();
-                $('#chart1').empty();
-                $('#chart2').empty();
-                $('#chart3').empty();
-                $('#chart4').empty();
-
-                if (response.tipo !== 1) {
-                    // Show filter options with default values
-                    $('#edad-select').show();
-                    $('#edad-select').val('0');
-
-                    $('#genero-select').show();
-                    $('#genero-select').val('-1');
-
-                    $('#estado-select').show();
-                    $('#estado-select').val('0');
-
-                    $('#educacion-select').show();
-                    $('#educacion-select').val('0');
-
-                    $('#filtros-button').show();
-
-                    $('#abiertas-table').hide();
-                }
-
-                if (numPregunta === 0) {
-                    //General
-                    $('#edad-select').hide();
-                    $('#genero-select').hide();
-                    $('#estado-select').hide();
-                    $('#educacion-select').hide();
-                    $('#filtros-button').hide();
-
-                    pieChart(convertGenderArray(Object.keys(response.genero)),
-                            getObjectProperties(response.genero),
-                            1, 'Género');
-                    pieChart(convertAgeRange(Object.keys(response.edad)),
-                            getObjectProperties(response.edad),
-                            2, 'Edad');
-                    pieChart(convertEducation(Object.keys(response.educacion)),
-                            getObjectProperties(response.educacion),
-                            3, 'Educación');
-                    columnChart(convertState(Object.keys(response.estado)),
-                            getObjectProperties(response.estadoPercentage),
-                            4, 'Estado');
-
-                } else {
-                    if (response.tipo === 1) {
-                        var html = '';
-                        $('#abiertas-table').show();
-                        for (var i = 0; i < response.votos.length; i++) {
-                            var even = i % 2 === 0;
-                            html += (even ? '<tr>' : '') + '<td>' + response.votos[i] + '</td>' + (even ? '' : '</tr>');
-                        }
-
-                        $('#abiertas-table').append(html);
-                    } else if (response.tipo === 4) {
-                        barChart(response.opciones, response.porcentajes, 1, '');
-                    } else if (response.tipo === 6) {
-                        averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 1);
-                    } else if (response.tipo === 5) {
-                        barChartStacked(response.opciones, response.votos, response.subPreguntas, 1);
-                    } else if (response.opciones.length < 4) {
-                        pieChart(response.opciones, response.votos, 1, '');
-                    } else {
-                        columnChart(response.opciones, response.porcentajes, 1, '');
-                    }
-                }
-            },
-            error: function (errorMsg) {
-                $('#reportes-feedback').html('Ha ocurrido un error. Favor de intentar de nuevo.');
-            }
-        });
+        getData();
     });
 
     $('#filtros-button').on('click', function () {
@@ -628,6 +644,11 @@ $(document).on('ready', function () {
             $('#reportes-filtros-feedback').empty();
         }
     });
+
+    $('#refresh').on('click', function () {
+
+    });
+
 
     $('#download-reportes').on('click', function () {
         var encuestaId = parseInt($('#encuestas-filter-select').val(), 10);

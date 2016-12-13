@@ -66,6 +66,12 @@
                     <select id='paneles-filter-select'></select>
                 </div>
 
+                <div class='button-wrapper'>
+                    <button type='button' id='refresh'>Actualizar</button>
+                </div>
+
+                <br><br>
+
                 <table id='all-encuestas'></table>
                 <span id='selects-feedback' class='feedback-text'></span>
             </div>

@@ -70,6 +70,12 @@
                     <select id='clientes-filter-select'></select>
                 </div>
 
+                <div class='button-wrapper'>
+                    <button type='button' id='refresh'>Actualizar</button>
+                </div>
+
+                <br><br>
+
                 <table id='all-panels'></table>
                 <span id='available-paneles-feedback' class='feedback-text'></span>
             </div>
