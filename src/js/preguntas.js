@@ -55,9 +55,9 @@ function appendAnswers (typeQuestion, questionID) {
     } else if (typeQuestion == 6) {
         currentHTML += '<div class="input-wrapper answer">';
         currentHTML += '<label>Escala</label>';
-        currentHTML += '<input type="number" class="respuesta1 required-input" id="opcion1" type="text"/>';
+        currentHTML += '<input class="respuesta1 required-input" id="opcion1" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>';
         currentHTML += ' - ';
-        currentHTML += '<input type="number" class="respuesta2 required-input" id="opcion2" type="text"/>';
+        currentHTML += '<input class="respuesta2 required-input" id="opcion2" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>';
         currentHTML += '</div>';
     }
 
@@ -294,4 +294,5 @@ $(document).on('ready', function () {
             }
         });
     });
+
 });

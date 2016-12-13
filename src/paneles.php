@@ -30,7 +30,7 @@
 
                 <div class='input-wrapper'>
                     <label>Número de Participantes<span class='required-input'>*</span></label>
-                    <input id='participantes' type='number' />
+                    <input id='participantes' onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
                 </div>
 
                 <div class='input-wrapper'>
