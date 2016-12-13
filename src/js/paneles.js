@@ -1,14 +1,21 @@
 'use strict';
 
-var currentClienteID = 0;
+var currentCliente = 0;
 
-function ajaxfillPaneles(){
+function getData () {
+    if (currentCliente <= 0) {
+        $('#refresh').hide();
+        return;
+    }
+
+    $('#refresh').show();
+
     $.ajax({
         type: 'POST',
         url: '../api/controller.php',
         data: {
             'action': 'GET_PANELES',
-            'cliente': currentClienteID
+            'cliente': currentCliente
         },
         dataType: 'json',
         success: function (response) {
@@ -43,7 +50,6 @@ function ajaxfillPaneles(){
 
             currentHTML += '</tbody>';
             $('#all-panels').append(currentHTML);
-            $('#refresh').show();
         },
         error: function (error) {
             $('#feedback').html('Error cargando los paneles');
@@ -104,16 +110,19 @@ $(document).on('ready', function () {
     // -----------------------------------------------------------------------------------------------
 
     $('#clientes-filter-select').on('change', function() {
-        var clienteId = parseInt($('#clientes-filter-select').val(), 10);
-        currentClienteID = clienteId;
+        currentCliente = parseInt($('#clientes-filter-select').val(), 10);
+
         $('#all-panels').empty();
         $('#available-paneles-feedback').html('');
 
-        if (clienteId === 0) {
-            return;
-        }
+        getData();
+    });
 
-        ajaxfillPaneles();
+    $('#refresh').on('click', function (){
+        $('#all-panels').empty();
+        $('#available-paneles-feedback').html('');
+
+        getData();
     });
 
     // -----------------------------------------------------------------------------------------------
@@ -278,11 +287,6 @@ $(document).on('ready', function () {
 
         $('ul.tabs li').last().addClass('current');
         $('#tab-view-paneles').addClass('current');
-    });
-
-    $('#refresh').on('click', function (){
-        $('#all-panels').empty();
-        ajaxfillPaneles();
     });
 
     $('#mes, #anio').on('change', function () {

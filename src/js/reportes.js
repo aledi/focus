@@ -9,9 +9,7 @@ var educationObject = {
     6: 'Ninguno'
 }
 
-var currentNumeroPregunta = 0;
-
-//http://www.w3schools.com/colors/colors_shades.asp
+var currentPregunta = 0;
 var colorArray = ['#202382', '#707070', '#6265A7', '#A6A6A6',
                   '#A6A7CD', '#BCBCBC', '#BCBDD9', '#C7C7C7',
                   '#505160', '#68829E', '#AEBD38', '#598234',
@@ -174,7 +172,7 @@ function columnChart (opciones, percent, chartNumber, title) {
     }
 }
 
-function averageChart(min, max, value, chartNumber) {
+function averageChart (min, max, value, chartNumber) {
     google.charts.setOnLoadCallback(drawStuff);
 
     function drawStuff () {
@@ -284,7 +282,22 @@ function getObjectProperties (object) {
     return properties;
 }
 
-function ajaxReportCall(data, numPregunta){
+function getData () {
+    if (currentPregunta < 0) {
+        $('#abiertas-table').empty();
+        $('#chart1').empty();
+        $('#chart2').empty();
+        $('#chart3').empty();
+        $('#chart4').empty();
+        return;
+    }
+
+    var data = {
+        action: 'REPORT_DATA',
+        encuesta: parseInt($('#encuestas-filter-select').val(), 10),
+        numPregunta: currentPregunta
+    };
+
     $.ajax({
         url: '../api/controller.php',
         type: 'POST',
@@ -302,8 +315,8 @@ function ajaxReportCall(data, numPregunta){
             $('#chart3').empty();
             $('#chart4').empty();
 
+            // Show filter options with default values
             if (response.tipo !== 1) {
-                // Show filter options with default values
                 $('#edad-select').show();
                 $('#edad-select').val('0');
 
@@ -321,8 +334,8 @@ function ajaxReportCall(data, numPregunta){
                 $('#abiertas-table').hide();
             }
 
-            if (numPregunta === 0) {
-                //General
+            //General
+            if (currentPregunta === 0) {
                 $('#edad-select').hide();
                 $('#genero-select').hide();
                 $('#estado-select').hide();
@@ -370,8 +383,6 @@ function ajaxReportCall(data, numPregunta){
         }
     });
 }
-
-
 
 $(document).on('ready', function () {
     $('#reportes-header-option').addClass('selected');
@@ -517,50 +528,30 @@ $(document).on('ready', function () {
         });
     });
 
-    $('#refresh').on('click', function (){
-        var data = {
-            action: 'REPORT_DATA',
-            encuesta: parseInt($('#encuestas-filter-select').val(), 10),
-            numPregunta: currentNumeroPregunta
-        };
-
-        ajaxReportCall(data, currentNumeroPregunta);
-    });
-
-
     $('#preguntas-filter-select').on('change', function () {
-        var numPregunta = parseInt($(this).val(), 10);
-        currentNumeroPregunta = numPregunta;
+        currentPregunta = parseInt($(this).val(), 10);
+
         $('#edad-select').hide();
         $('#genero-select').hide();
         $('#estado-select').hide();
         $('#educacion-select').hide();
         $('#filtros-button').hide();
+        $('#reportes-feedback').html('');
+        $('#reportes-filtros-feedback').html('');
 
-        if ($('#reportes-feedback').html()) {
-            $('#reportes-feedback').empty();
-        }
+        getData();
+    });
 
-        if ($('#reportes-filtros-feedback').html()) {
-            $('#reportes-filtros-feedback').empty();
-        }
+    $('#refresh').on('click', function () {
+        $('#edad-select').hide();
+        $('#genero-select').hide();
+        $('#estado-select').hide();
+        $('#educacion-select').hide();
+        $('#filtros-button').hide();
+        $('#reportes-feedback').html('');
+        $('#reportes-filtros-feedback').html('');
 
-        if (numPregunta < 0) {
-            $('#abiertas-table').empty();
-            $('#chart1').empty();
-            $('#chart2').empty();
-            $('#chart3').empty();
-            $('#chart4').empty();
-            return;
-        }
-
-        var data = {
-            action: 'REPORT_DATA',
-            encuesta: parseInt($('#encuestas-filter-select').val(), 10),
-            numPregunta: numPregunta
-        };
-
-        ajaxReportCall(data, numPregunta);
+        getData();
     });
 
     $('#filtros-button').on('click', function () {

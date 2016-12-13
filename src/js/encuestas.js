@@ -1,14 +1,21 @@
 'use strict';
 
-var currentPanelID = 0;
+var currentPanel = 0;
 
-function ajaxFillEncuestas(){
+function getData () {
+    if (currentPanel <= 0) {
+        $('#refresh').hide();
+        return;
+    }
+
+    $('#refresh').show();
+
     $.ajax({
         type: 'POST',
         url: '../api/controller.php',
         data: {
             'action': 'GET_ENCUESTAS',
-            'panel': currentPanelID
+            'panel': currentPanel
         },
         dataType: 'json',
         success: function (response) {
@@ -65,10 +72,11 @@ $(document).on('ready', function () {
 
     $('#clientes-filter-select').on('change', function() {
         var value = parseInt($('#clientes-filter-select').val(), 10);
+
         $('#paneles-filter-select').hide();
         $('#all-encuestas').empty();
-        $('#refresh').hide();
         $('#selects-feedback').html('');
+        $('#refresh').hide();
 
         if (value > 0) {
             fillPanelesSelect(value);
@@ -76,17 +84,19 @@ $(document).on('ready', function () {
     });
 
     $('#paneles-filter-select').on('change', function() {
-        var panelId = parseInt($('#paneles-filter-select').val(), 10);
-        currentPanelID = panelId;
+        currentPanel = parseInt($('#paneles-filter-select').val(), 10);
+
         $('#all-encuestas').empty();
         $('#selects-feedback').html('');
 
-        if (panelId === 0) {
-            return;
-        }
+        getData();
+    });
 
-        ajaxFillEncuestas();
-        $('#refresh').show();
+    $('#refresh').on('click', function () {
+        $('#all-encuestas').empty();
+        $('#selects-feedback').html('');
+
+        getData();
     });
 
     // -----------------------------------------------------------------------------------------------
@@ -168,6 +178,7 @@ $(document).on('ready', function () {
         }
 
         var actionText = idEncuesta !== '' ? 'editada' : 'agregada';
+
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
@@ -275,12 +286,6 @@ $(document).on('ready', function () {
         $('ul.tabs li').last().addClass('current');
         $('#tab-view-encuestas').addClass('current');
     });
-
-    $('#refresh').on('click', function () {
-        $('#all-encuestas').empty();
-        ajaxFillEncuestas();
-    });
-
 
     $('#mes, #anio').on('change', function() {
         changeSelect('Inicio');

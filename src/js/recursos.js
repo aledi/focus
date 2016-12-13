@@ -4,7 +4,7 @@ function changeType (tipo, action) {
     return action === 0 ? (tipo === 1 ? 'Imagen' : 'Video') : (tipo === 'Imagen' ? 1 : 2);
 }
 
-function ajaxFillResources(){
+function getData () {
     $.ajax({
         type: 'POST',
         url: '../api/controller.php',
@@ -104,8 +104,17 @@ $(document).on('ready', function () {
     // -----------------------------------------------------------------------------------------------
 
     setTimeout(function () {
+        $('#all-resources').empty();
         $('#feedback').html('');
-        ajaxFillResources();
+
+        getData();
+    });
+
+    $('#refresh').on('click', function () {
+        $('#all-resources').empty();
+        $('#feedback').html('');
+
+        getData();
     });
 
     // -----------------------------------------------------------------------------------------------
@@ -138,11 +147,6 @@ $(document).on('ready', function () {
                 }
             });
         }
-    });
-
-    $('#refresh').on('click', function (){
-        $('#all-resources').empty();
-        ajaxFillResources();
     });
 
 });

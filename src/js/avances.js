@@ -2,17 +2,23 @@
 
 var currentEncuesta = 0;
 
-function ajaxAvance(idEncuesta){
+function getData () {
+    if (currentEncuesta <= 0) {
+        $('#refresh').hide();
+        return;
+    }
+
+    $('#refresh').show();
+
     $.ajax({
-        url: '../api/controller.php',
         type: 'POST',
+        url: '../api/controller.php',
         data: {
             'action': 'CURRENT_ANSWERS',
-            'encuesta': idEncuesta
+            'encuesta': currentEncuesta
         },
         dataType: 'json',
         success: function (response) {
-            $('#refresh').show();
             var summaryHTLM = 'Respuestas: ' + response.respuestas + ' (' + (response.porcentaje * 100).toFixed(2) + '%)';
             summaryHTLM += '<br>';
             summaryHTLM += readableDate(response.fechaInicio) + ' - ' + readableDate(response.fechaFin) + ' (' + (response.dias < 0 ? 0 : response.dias) + ' días restantes)';
@@ -71,6 +77,7 @@ $(document).on('ready', function () {
 
     $('#clientes-filter-select').on('change', function() {
         var value = parseInt($('#clientes-filter-select').val(), 10);
+
         $('#paneles-filter-select').hide();
         $('#encuestas-filter-select').hide();
         $('#avances-table').empty();
@@ -85,6 +92,7 @@ $(document).on('ready', function () {
 
     $('#paneles-filter-select').on('change', function() {
         var value = parseInt($('#paneles-filter-select').val(), 10);
+
         $('#encuestas-filter-select').hide();
         $('#avances-table').empty();
         $('#avance-summary').empty();
@@ -96,22 +104,22 @@ $(document).on('ready', function () {
         }
     });
 
-    $('#encuestas-filter-select').on('change', function () {
-        var idEncuesta = parseInt($(this).val(), 10);
-        currentEncuesta = idEncuesta;
+    $('#encuestas-filter-select').on('change', function() {
+        currentEncuesta = parseInt($(this).val(), 10);
+
         $('#avances-table').empty();
         $('#avance-summary').empty();
         $('#selects-feedback').html('');
-        $('#refresh').hide();
 
-        if (idEncuesta < 1) {
-            return;
-        }
-        ajaxAvance(currentEncuesta);
+        getData();
     });
 
-    $('#refresh').on('click', function(){
-        ajaxAvance(currentEncuesta);
+    $('#refresh').on('click', function() {
+        $('#avances-table').empty();
+        $('#avance-summary').empty();
+        $('#selects-feedback').html('');
+
+        getData();
     });
 
 });
