@@ -59,7 +59,6 @@
 
             <div id='tab-view-clientes' class='tab-content'>
                 <h2>Clientes Disponibles</h2>
-                <button type='button' id='refresh'>Refresh</button>
 
                 <table id='allUsers'></table>
             </div>
