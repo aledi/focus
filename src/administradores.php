@@ -59,7 +59,6 @@
 
             <div id='tab-view-administradores' class='tab-content'>
                 <h2>Administradores Disponibles</h2>
-                <button type='button' id='refresh'>Refresh</button>
 
                 <table id='allAdmins'></table>
             </div>
