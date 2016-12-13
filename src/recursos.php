@@ -33,8 +33,9 @@
             </div>
             <div class='button-wrapper'>
                 <button type='submit' name='submit' id='upload-data'>Guardar</button>
-                <button type='button' id='refresh'>Refresh</button>
+                <button type='button' id='refresh'>Actualizar</button>
             </div>
+
             <span id='feedback' class='feedback-text'></span>
             <div>
                 <table id='all-resources'></table>

@@ -64,8 +64,13 @@
 
                 <div class='input-wrapper'>
                     <select id='paneles-filter-select'></select>
-                    <button type='button' id='refresh'>Refresh</button>
                 </div>
+
+                <div class='button-wrapper'>
+                    <button type='button' id='refresh'>Actualizar</button>
+                </div>
+
+                <br><br>
 
                 <table id='all-encuestas'></table>
                 <span id='selects-feedback' class='feedback-text'></span>
