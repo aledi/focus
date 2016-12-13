@@ -1281,7 +1281,7 @@ function currentAnswers ($encuesta) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT Panelista.id, nombre, apellidos, genero, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, educacion, municipio, estado FROM Panelista LEFT JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = (SELECT panel FROM Encuesta WHERE id = '$encuesta')";
+        $sql = "SELECT Panelista.id, Panelista.nombre, Panelista.apellidos, Panelista.genero, TIMESTAMPDIFF(YEAR, Panelista.fechaNacimiento, CURDATE()) AS edad, Panelista.educacion, Panelista.municipio, Panelista.estado FROM Panelista LEFT JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = (SELECT Encuesta.panel FROM Encuesta WHERE id = '$encuesta')";
         $result = $conn->query($sql);
 
         $response = array();
