@@ -35,17 +35,11 @@ function checkAll (checkedBox) {
     }
 
     for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].parentElement.parentElement.style.display !== 'none') {
+        if (checkboxes[i].parentElement.parentElement.style.display !== 'none' && checkboxes[i].className !== 'hidden') {
             checkboxes[i].checked = checkedBox.checked;
-            if (checkedBox.checked) {
-                currentChecked += 1;
-            }
-            else{
-                currentChecked -= 1;
-            }
+            currentChecked += checkboxes[i].checked ? 1 : -1;
         }
     }
-
 
     $('#current-checked').html(currentChecked + ' / ' + limit);
 }
