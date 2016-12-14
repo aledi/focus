@@ -34,11 +34,10 @@ function checkAll (checkedBox) {
         return;
     }
 
-    currentChecked = checkedBox.checked ? tableSize : 0;
-
     for (var i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].parentElement.parentElement.style.display !== 'none') {
             checkboxes[i].checked = checkedBox.checked;
+            currentChecked += 1;
         }
     }
 
