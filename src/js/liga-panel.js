@@ -27,6 +27,7 @@ function checkNumberPanelistas (checkedBox) {
 function checkAll (checkedBox) {
     var tableSize = $('#fbody > tr').length;
     var checkboxes = document.getElementsByName('panelista-checkbox');
+
     if (tableSize > limit && checkedBox.checked) {
         alert('Cantidad de panelistas seleccionados exceden el límite de ' + limit + ' panelistas permitidos.');
         checkedBox.checked = false;
@@ -34,11 +35,15 @@ function checkAll (checkedBox) {
         return;
     }
 
+    currentChecked = 0;
+
     for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].parentElement.parentElement.style.display !== 'none' && checkboxes[i].className !== 'hidden') {
+        if (checkboxes[i].className !== 'hidden' && checkboxes[i].parentElement.parentElement.style.display !== 'none') {
             checkboxes[i].checked = checkedBox.checked;
-            currentChecked += checkboxes[i].checked ? 1 : -1;
+
         }
+
+        currentChecked += checkboxes[i].checked ? 1 : 0;
     }
 
     $('#current-checked').html(currentChecked + ' / ' + limit);
