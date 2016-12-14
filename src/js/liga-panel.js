@@ -27,7 +27,6 @@ function checkNumberPanelistas (checkedBox) {
 function checkAll (checkedBox) {
     var tableSize = $('#fbody > tr').length;
     var checkboxes = document.getElementsByName('panelista-checkbox');
-
     if (tableSize > limit && checkedBox.checked) {
         alert('Cantidad de panelistas seleccionados exceden el límite de ' + limit + ' panelistas permitidos.');
         checkedBox.checked = false;
@@ -38,7 +37,7 @@ function checkAll (checkedBox) {
     currentChecked = checkedBox.checked ? tableSize : 0;
 
     for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].className !== 'hidden') {
+        if (checkboxes[i].parentElement.parentElement.style.display !== 'none') {
             checkboxes[i].checked = checkedBox.checked;
         }
     }
