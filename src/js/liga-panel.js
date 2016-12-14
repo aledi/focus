@@ -37,9 +37,15 @@ function checkAll (checkedBox) {
     for (var i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].parentElement.parentElement.style.display !== 'none') {
             checkboxes[i].checked = checkedBox.checked;
-            currentChecked += 1;
+            if (checkedBox.checked) {
+                currentChecked += 1;
+            }
+            else{
+                currentChecked -= 1;
+            }
         }
     }
+
 
     $('#current-checked').html(currentChecked + ' / ' + limit);
 }
