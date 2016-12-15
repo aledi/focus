@@ -35,12 +35,14 @@ function checkAll (checkedBox) {
         return;
     }
 
-    currentChecked = checkedBox.checked ? tableSize : 0;
+    currentChecked = 0;
 
     for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].className !== 'hidden') {
+        if (checkboxes[i].className !== 'hidden' && checkboxes[i].parentElement.parentElement.style.display !== 'none') {
             checkboxes[i].checked = checkedBox.checked;
         }
+
+        currentChecked += checkboxes[i].checked ? 1 : 0;
     }
 
     $('#current-checked').html(currentChecked + ' / ' + limit);
