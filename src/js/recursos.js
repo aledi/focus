@@ -22,13 +22,11 @@ function getData () {
 
             for (var i = 0; i < response.results.length; i++) {
                 var result = response.results[i];
+                var urlToResource = result.tipo == 1 ? "../resources/images/" : "../resources/videos/";
+                urlToResource += result.nombre;
+
                 currentHTML += '<tr id="'+ result.id + '&' + result.nombre + '&' + result.tipo +'">';
-                if (result.tipo == 1) {
-                    currentHTML += '<td><a href="../resources/images/' + result.nombre + '" target="_blank">' + result.nombre + '</a></td>';
-                }
-                else {
-                    currentHTML += '<td><a href="../resources/videos/"' + result.nombre + '" target="_blank">' + result.nombre + '</a></td>';
-                }
+                currentHTML += '<td><a href="' + urlToResource + '" target="_blank">' + result.nombre + '</a></td>';
                 currentHTML += '<td>' + changeType(result.tipo, 0) + '</td>';
                 currentHTML += '<td class="deleteButton"><button id="delete" type="button">Eliminar</button></td>';
                 currentHTML += '</tr>';
