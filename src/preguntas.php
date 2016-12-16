@@ -28,16 +28,21 @@
                             <input id='titulo' class='titulo full-width' type='text' />
                         </div>
                         <div class='input-wrapper'>
-                            <label>Imagen</label>
-                            <select id='imagen1' class='imagen' type='text'>
-                                <option value=''>Selecciona una imagen</option>
-                            </select>
+                            <div class='preview-resource'>
+                                <select id='imagen1' class='imagen' type='text'>
+                                    <option value=''>Selecciona una imagen</option>
+                                </select>
+                                <label class='preview'>Vista Previa</label>
+                            </div>
                         </div>
                         <div class='input-wrapper'>
                             <label>Video</label>
-                            <select id='video1' class='video' type='text'>
-                                <option value=''>Selecciona un video</option>
-                            </select>
+                            <div class='preview-resource'>
+                                <select id='video1' class='video' type='text'>
+                                    <option value=''>Selecciona un video</option>
+                                </select>
+                                <label class='preview'>Vista Previa</label>
+                            </div>
                         </div>
                         <div class='input-wrapper'>
                             <label>Pregunta</label>

@@ -74,13 +74,19 @@ function appendQuestions (lastQuestion) {
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
         '<label>Imagen</label>' +
+        '<div class="preview-resource">' +
         '<select id="imagen' + lastQuestion + '" class="imagen" type="text">' +
         '<option value="">Selecciona una Imagen</option></select>' +
+        '<label class="preview">Vista Previa</label>' +
+        '</div>' +
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
         '<label>Video</label>' +
+        '<div class="preview-resource">' +
         '<select id="video' + lastQuestion + '" class="video" type="text">' +
         '<option value="">Selecciona un video</option></select>' +
+        '<label class="preview">Vista Previa</label>' +
+        '</div>' +
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
         '<label>Pregunta</label>' +
