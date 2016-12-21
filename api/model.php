@@ -1293,7 +1293,7 @@ function currentAnswers ($encuesta) {
             $fechaFin = NULL;
             $horaFin = NULL;
 
-            $sql2 = "SELECT fechaIni, horaIni, fechaFin, horaFin FROM Respuesta WHERE panelista = '$panelistaId' AND encuesta = '$encuesta' AND respuestas != ''";
+            $sql2 = "SELECT fechaIni, horaIni, fechaFin, horaFin FROM Respuesta WHERE panelista = '$panelistaId' AND encuesta = '$encuesta'";
             $result2 = $conn->query($sql2);
 
             if ($result2->num_rows > 0) {
@@ -1311,6 +1311,10 @@ function currentAnswers ($encuesta) {
         $conn->close();
 
         usort($response, function ($item1, $item2) {
+            if ($item2['fechaFin'] == NULL && $item1['fechaFin'] == NULL) {
+                return $item2['fechaIni'] >= $item1['fechaIni'];
+            }
+
             return $item2['fechaFin'] >= $item1['fechaFin'];
         });
 
