@@ -4,6 +4,43 @@ function changeType (tipo, action) {
     return action === 0 ? (tipo === 1 ? 'Imagen' : 'Video') : (tipo === 'Imagen' ? 1 : 2);
 }
 
+function getData () {
+    $.ajax({
+        type: 'POST',
+        url: '../api/controller.php',
+        data: {action: 'GET_RECURSOS'},
+        dataType: 'json',
+        success: function (response) {
+            var currentHTML = '<thead>';
+            currentHTML += '<tr>';
+            currentHTML += '<th>Nombre</th>';
+            currentHTML += '<th>Tipo</th>';
+            currentHTML += '<th>Eliminar</th>';
+            currentHTML += '</tr>';
+            currentHTML += '</thead>';
+            currentHTML += '<tbody>';
+
+            for (var i = 0; i < response.results.length; i++) {
+                var result = response.results[i];
+
+                currentHTML += '<tr id="'+ result.id + '&' + result.nombre + '&' + result.tipo +'">';
+                currentHTML += '<td>' + result.nombre + '</td>';
+                currentHTML += '<td>' + changeType(result.tipo, 0) + '</td>';
+                currentHTML += '<td class="deleteButton"><button id="delete" type="button">Eliminar</button></td>';
+                currentHTML += '</tr>';
+
+                $('#all-resources').append(currentHTML);
+                currentHTML = '';
+            }
+
+            currentHTML += '</tbody>';
+        },
+        error: function (error) {
+            $('#feedback').html('Error cargando los recursos');
+        }
+    });
+}
+
 $(document).on('ready', function () {
     $('#recursos-header-option').addClass('selected');
 
@@ -67,42 +104,17 @@ $(document).on('ready', function () {
     // -----------------------------------------------------------------------------------------------
 
     setTimeout(function () {
+        $('#all-resources').empty();
         $('#feedback').html('');
 
-        $.ajax({
-            type: 'POST',
-            url: '../api/controller.php',
-            data: {action: 'GET_RECURSOS'},
-            dataType: 'json',
-            success: function (response) {
-                var currentHTML = '<thead>';
-                currentHTML += '<tr>';
-                currentHTML += '<th>Nombre</th>';
-                currentHTML += '<th>Tipo</th>';
-                currentHTML += '<th>Eliminar</th>';
-                currentHTML += '</tr>';
-                currentHTML += '</thead>';
-                currentHTML += '<tbody>';
+        getData();
+    });
 
-                for (var i = 0; i < response.results.length; i++) {
-                    var result = response.results[i];
+    $('#refresh').on('click', function () {
+        $('#all-resources').empty();
+        $('#feedback').html('');
 
-                    currentHTML += '<tr id="'+ result.id + '&' + result.nombre + '&' + result.tipo +'">';
-                    currentHTML += '<td>' + result.nombre + '</td>';
-                    currentHTML += '<td>' + changeType(result.tipo, 0) + '</td>';
-                    currentHTML += '<td class="deleteButton"><button id="delete" type="button">Eliminar</button></td>';
-                    currentHTML += '</tr>';
-
-                    $('#all-resources').append(currentHTML);
-                    currentHTML = '';
-                }
-
-                currentHTML += '</tbody>';
-            },
-            error: function (error) {
-                $('#feedback').html('Error cargando los recursos');
-            }
-        });
+        getData();
     });
 
     // -----------------------------------------------------------------------------------------------

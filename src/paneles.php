@@ -30,7 +30,7 @@
 
                 <div class='input-wrapper'>
                     <label>Número de Participantes<span class='required-input'>*</span></label>
-                    <input id='participantes' type='number' />
+                    <input id='participantes' onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
                 </div>
 
                 <div class='input-wrapper'>
@@ -69,6 +69,12 @@
                 <div class='input-wrapper'>
                     <select id='clientes-filter-select'></select>
                 </div>
+
+                <div class='button-wrapper'>
+                    <button type='button' id='refresh'>Actualizar</button>
+                </div>
+
+                <br><br>
 
                 <table id='all-panels'></table>
                 <span id='available-paneles-feedback' class='feedback-text'></span>

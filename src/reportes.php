@@ -42,7 +42,10 @@
                 </div>
 
                 <span id='selects-feedback' class='feedback-text'></span>
-                <button type='button' id='download-reportes' class='download-button'>Descargar Reporte</button>
+                <div class='button-wrapper'>
+                    <button type='button' id='download-reportes' class='download-button'>Descargar Reporte</button>
+                    <button type='button' id='refresh'>Actualizar</button>
+                </div>
             </div>
 
             <div id='chart1' class='chart1'></div>

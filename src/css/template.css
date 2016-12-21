@@ -331,3 +331,8 @@ table tbody tr td button {
     font-size: 11px;
     color: #4D4F9B;
 }
+
+.button-wrapper > button {
+    display: inline;
+    align-items: center;
+}
