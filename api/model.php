@@ -704,39 +704,50 @@ function fetchPanelistaPassword ($username, $email) {
 function savePanelistasPanel ($panel, $panelistas) {
     $conn = connect();
 
-    $inserts = 0;
-    $errors = 0;
-    $deletes = 0;
+    $added = 0;
+    $deleted = 0;
 
     if ($conn != null) {
-        $sql = "SELECT * FROM PanelistaEnPanel WHERE panel = '$panel'";
-        $result = $conn->query($sql);
-        $deletes = $result->num_rows;
-        $sql = "DELETE FROM PanelistaEnPanel WHERE panel = '$panel'";
+        $sql = "SELECT panelista FROM PanelistaEnPanel WHERE panel = '$panel'";
         $result = $conn->query($sql);
 
+        $currentIds = array();
         $tokens = array();
 
-        foreach ($panelistas as &$panelista) {
-            $sql = "INSERT INTO PanelistaEnPanel (panelista, panel) VALUES ('$panelista', '$panel')";
-            $sql2 = "SELECT deviceToken FROM Panelista WHERE id = '$panelista' AND deviceToken != ''";
+        while ($row = $result->fetch_assoc()) {
+            $currentIds[] = (int)$row['panelista'];
+        }
 
-            if ($conn->query($sql) === TRUE) {
-                $inserts = $inserts + 1;
-            } else {
-                $errors = $errors + 1;
-            }
+        for ($i = 0; $i < count($currentIds); $i++) {
+            $panelista = $currentIds[$i];
 
-            $result = $conn->query($sql2);
-            if ($row = $result->fetch_assoc()) {
-                array_push($tokens, $row['deviceToken']);
+            if (!in_array($panelista, $panelistas)) {
+                $sql = "DELETE FROM PanelistaEnPanel WHERE panel = '$panel' AND panelista = '$panelista'";
+                $conn->query($sql);
+                $deleted += 1;
             }
         }
 
-        $deletes = $deletes - $errors - $inserts;
+        for ($i = 0; $i < count($panelistas); $i++) {
+            $panelista = $panelistas[$i];
+
+            if (!in_array($panelista, $currentIds)) {
+                $sql = "INSERT INTO PanelistaEnPanel (panelista, panel) VALUES ('$panelista', '$panel')";
+                $sql2 = "SELECT deviceToken FROM Panelista WHERE id = '$panelista' AND deviceToken != ''";
+
+                $conn->query($sql);
+
+                $result = $conn->query($sql2);
+                if ($row = $result->fetch_assoc()) {
+                    array_push($tokens, $row['deviceToken']);
+                }
+
+                $added += 1;
+            }
+        }
 
         $conn->close();
-        return array('status' => 'SUCCESS', 'inserts' => $inserts, 'errors' => $errors, 'deletes' => $deletes, 'deviceTokens' => $tokens);
+        return array('status' => 'SUCCESS', 'added' => $added, 'deleted' => $deleted, 'deviceTokens' => $tokens);
     }
 
     return array('status' => 'DATABASE_ERROR');
