@@ -291,6 +291,22 @@ function changePanelistaPassword ($panelista, $old, $new) {
     return array('status' => 'DATABASE_ERROR');
 }
 
+function invitationResponse ($panelista, $panel, $estado) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "UPDATE PanelistaEnPanel SET estado = '$estado' WHERE panelista = '$panelista' AND panel = '$panel'";
+        $conn->query($sql);
+
+        $sql = "UPDATE Historial SET estado = '$estado' WHERE panelista = '$panelista' AND panel = '$panel'";
+        $conn->query($sql);
+
+        return array('status' => 'SUCCESS', 'panel' => $panel, 'estado' => $estado);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 // -------------------------------
 // Fetch
 // -------------------------------
