@@ -153,7 +153,7 @@ $(document).on('ready', function () {
                     getData();
                 },
                 error: function (errorMsg) {
-                    alert('Error eliminando recurso.');
+                    alert('Error eliminando intento.');
                 }
             });
         }
