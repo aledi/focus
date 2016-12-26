@@ -733,7 +733,7 @@ function fetchHistorial ($panelista) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT * FROM Historial WHERE panelista = '$panelista' AND encuesta != 0 AND estado != 0";
+        $sql = "SELECT nombrePanel, fechaInicioPanel, fechaFinPanel, nombreEncuesta, fechaInicioEncuesta, fechaFinEncuesta, fechaRespuesta, horaRespuesta FROM Historial WHERE panelista = '$panelista' AND encuesta != 0 AND estado != 0";
         $result = $conn->query($sql);
 
         $response = array();
