@@ -86,6 +86,9 @@ switch ($_POST['action']) {
     case 'DELETE_ANSWER':
         deleteRecord('Respuesta');
         break;
+    case 'DELETE_PANELISTA_EN_PANEL':
+        deleteRecord('PanelistaEnPanel');
+        break;
     case 'DELETE_RECURSO':
         deleteRecord('Recurso');
         break;

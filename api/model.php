@@ -1281,7 +1281,7 @@ function currentAnswers ($encuesta) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT Panelista.id, Panelista.nombre, Panelista.apellidos, Panelista.genero, TIMESTAMPDIFF(YEAR, Panelista.fechaNacimiento, CURDATE()) AS edad, Panelista.educacion, Panelista.municipio, Panelista.estado FROM Panelista LEFT JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = (SELECT Encuesta.panel FROM Encuesta WHERE id = '$encuesta')";
+        $sql = "SELECT Panelista.id, Panelista.nombre, Panelista.apellidos, Panelista.genero, TIMESTAMPDIFF(YEAR, Panelista.fechaNacimiento, CURDATE()) AS edad, Panelista.educacion, Panelista.municipio, Panelista.estado, PanelistaEnPanel.id AS idRecord FROM Panelista LEFT JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = (SELECT Encuesta.panel FROM Encuesta WHERE id = '$encuesta')";
         $result = $conn->query($sql);
 
         $response = array();
@@ -1306,7 +1306,7 @@ function currentAnswers ($encuesta) {
                 $horaFin = $row2['horaFin'];
             }
 
-            $panelista = array('idRespuesta' => (int)$idRespuesta, 'nombre' => $row['nombre'].' '.$row['apellidos'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'fechaIni' => $fechaIni, 'horaIni' => $horaIni, 'fechaFin' => $fechaFin, 'horaFin' => $horaFin);
+            $panelista = array('idRecord' => (int)$row['idRecord'], 'idRespuesta' => (int)$idRespuesta, 'nombre' => $row['nombre'].' '.$row['apellidos'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'fechaIni' => $fechaIni, 'horaIni' => $horaIni, 'fechaFin' => $fechaFin, 'horaFin' => $horaFin);
             $response[] = $panelista;
         }
 
@@ -1502,7 +1502,7 @@ function downloadData ($encuesta) {
 
             if ($numSubPreguntas > 0) {
                 $subPreguntas = explode('&', $row['subPreguntas']);
-                
+
                 for ($i = 0; $i < $numSubPreguntas; $i++) {
                     $columnas[] = $row['pregunta'].' '.$subPreguntas[$i];
                 }
