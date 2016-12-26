@@ -1288,23 +1288,25 @@ function currentAnswers ($encuesta) {
 
         while ($row = $result->fetch_assoc()) {
             $panelistaId = $row['id'];
+            $idRespuesta = -1;
             $fechaIni = NULL;
             $horaIni = NULL;
             $fechaFin = NULL;
             $horaFin = NULL;
 
-            $sql2 = "SELECT fechaIni, horaIni, fechaFin, horaFin FROM Respuesta WHERE panelista = '$panelistaId' AND encuesta = '$encuesta'";
+            $sql2 = "SELECT id, fechaIni, horaIni, fechaFin, horaFin FROM Respuesta WHERE panelista = '$panelistaId' AND encuesta = '$encuesta'";
             $result2 = $conn->query($sql2);
 
             if ($result2->num_rows > 0) {
                 $row2 = $result2->fetch_assoc();
+                $idRespuesta = $row2['id'];
                 $fechaIni = $row2['fechaIni'];
                 $horaIni = $row2['horaIni'];
                 $fechaFin = $row2['fechaFin'];
                 $horaFin = $row2['horaFin'];
             }
 
-            $panelista = array('nombre' => $row['nombre'].' '.$row['apellidos'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'fechaIni' => $fechaIni, 'horaIni' => $horaIni, 'fechaFin' => $fechaFin, 'horaFin' => $horaFin);
+            $panelista = array('idRespuesta' => (int)$idRespuesta, 'nombre' => $row['nombre'].' '.$row['apellidos'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'fechaIni' => $fechaIni, 'horaIni' => $horaIni, 'fechaFin' => $fechaFin, 'horaFin' => $horaFin);
             $response[] = $panelista;
         }
 
