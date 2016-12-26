@@ -53,6 +53,9 @@ switch ($_POST['action']) {
     case 'GET_RECURSOS':
         getRecords('RESOURCES');
         break;
+    case 'GET_HISTORIAL':
+        getRecords('HISTORIAL');
+        break;
     case 'GET_MUNICIPIOS':
         echo json_encode(getMunicipiosFromFile(), JSON_UNESCAPED_UNICODE);
         break;
@@ -312,6 +315,9 @@ function getRecords ($type) {
             }
 
             echo json_encode(fetchResources());
+            break;
+        case 'HISTORIAL':
+            echo json_encode(fetchHistorial($_POST['panelista']));
             break;
     }
 }
