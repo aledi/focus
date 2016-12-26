@@ -379,7 +379,10 @@ function fetchPanelistas () {
         $response = array();
 
         while ($row = $result->fetch_assoc()) {
-            $panelista = array('id' => (int)$row['id'], 'username' => $row['username'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos'], 'email' => $row['email'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'calleNumero' => $row['calleNumero'], 'colonia' => $row['colonia'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cp' => (int)$row['cp'], 'fechaRegistro' => $row['fechaRegistro']);
+            $idPanelista = (int)$row['id'];
+            $panelesCount = panelistaPanelesCount($idPanelista);
+
+            $panelista = array('id' => $idPanelista, 'username' => $row['username'], 'nombre' => $row['nombre'], 'apellidos' => $row['apellidos'], 'email' => $row['email'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'calleNumero' => $row['calleNumero'], 'colonia' => $row['colonia'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'cp' => (int)$row['cp'], 'fechaRegistro' => $row['fechaRegistro'], 'paneles' => (int)$panelesCount);
             $response[] = $panelista;
         }
 
@@ -388,6 +391,21 @@ function fetchPanelistas () {
     }
 
     return array('status' => 'DATABASE_ERROR');
+}
+
+function panelistaPanelesCount ($panelista) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT COUNT(DISTINCT panel) AS count FROM Historial WHERE panelista = '$panelista'";
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+
+        $conn->close();
+        return $row['count'];
+    }
+
+    return 0;
 }
 
 function fetchPanelista ($id) {
@@ -743,11 +761,59 @@ function savePanelistasPanel ($panel, $panelistas) {
                 }
 
                 $added += 1;
+
+                addToHistory($panelista, $panel);
             }
         }
 
         $conn->close();
         return array('status' => 'SUCCESS', 'added' => $added, 'deleted' => $deleted, 'deviceTokens' => $tokens);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function addToHistory ($panelista, $panel) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $nombrePanelista = '';
+        $nombrePanel = '';
+        $fechaInicioPanel = NULL;
+        $fechaFinPanel = NULL;
+
+        $sql = "SELECT nombre, apellidos FROM Panelista WHERE id = '$panelista'";
+        $result = $conn->query($sql);
+        if ($row = $result->fetch_assoc()) {
+            $nombrePanelista = $row['nombre'].' '.$row['apellidos'];
+        }
+
+        $sql = "SELECT nombre, fechaInicio, fechaFin FROM Panel WHERE id = '$panel'";
+        $result = $conn->query($sql);
+        if ($row = $result->fetch_assoc()) {
+            $nombrePanel = $row['nombre'];
+            $fechaInicioPanel = $row['fechaInicio'];
+            $fechaFinPanel = $row['fechaFin'];
+        }
+
+        $sql = "INSERT INTO Historial (panelista, nombrePanelista, panel, nombrePanel, fechaInicioPanel, fechaFinPanel) VALUES ('$panelista', '$nombrePanelista', '$panel', '$nombrePanel', '$fechaInicioPanel', '$fechaFinPanel')";
+        $conn->query($sql);
+
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE panel = '$panel'";
+        $result = $conn->query($sql);
+
+        while ($row = $result->fetch_assoc()) {
+            $encuesta = $row['id'];
+            $nombreEncuesta = $row['nombre'];
+            $fechaInicioEncuesta = $row['fechaInicio'];
+            $fechaFinEncuesta = $row['fechaFin'];
+
+            $sql = "INSERT INTO Historial (panelista, nombrePanelista, panel, nombrePanel, fechaInicioPanel, fechaFinPanel, encuesta, nombreEncuesta, fechaInicioEncuesta, fechaFinEncuesta) VALUES ('$panelista', '$nombrePanelista', '$panel', '$nombrePanel', '$fechaInicioPanel', '$fechaFinPanel', '$encuesta', '$nombreEncuesta', '$fechaInicioEncuesta', '$fechaFinEncuesta')";
+            $conn->query($sql);
+        }
+
+        $conn->close();
+        return array('status' => 'SUCCESS');
     }
 
     return array('status' => 'DATABASE_ERROR');
