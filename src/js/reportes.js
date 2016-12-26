@@ -704,6 +704,7 @@ $(document).on('ready', function () {
                 currentHTML += '</tbody>';
                 $('#reportes-table').append(currentHTML);
                 exportTable();
+                $('#reportes-table').empty();
             },
             error: function (errorMsg) {
                 $('#reportes-feedback').html('Ha ocurrido un error. Favor de intentar de nuevo.');

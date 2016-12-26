@@ -1491,6 +1491,26 @@ function downloadData ($encuesta) {
     $conn = connect();
 
     if ($conn != null) {
+        $sql = "SELECT pregunta, tipo, numSubPreguntas, subPreguntas FROM Pregunta WHERE encuesta = '$encuesta'";
+        $result = $conn->query($sql);
+        $columnas = array('Nombre', 'Género', 'Edad', 'Educación', 'Municipio', 'Estado', 'Fecha de Inicio', 'Hora de Inicio', 'Fecha de Fin', 'Hora de Fin');
+        $types = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $types[] = (int)$row['tipo'];
+            $numSubPreguntas = (int)$row['numSubPreguntas'];
+
+            if ($numSubPreguntas > 0) {
+                $subPreguntas = explode('&', $row['subPreguntas']);
+                
+                for ($i = 0; $i < $numSubPreguntas; $i++) {
+                    $columnas[] = $row['pregunta'].' '.$subPreguntas[$i];
+                }
+            } else {
+                $columnas[] = $row['pregunta'];
+            }
+        }
+
         $sql = "SELECT Panelista.id as id, nombre, apellidos, genero, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, educacion, municipio, Panelista.estado FROM Panelista LEFT JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = (SELECT panel FROM Encuesta WHERE id = '$encuesta')";
         $result = $conn->query($sql);
         $filas = array();
@@ -1511,12 +1531,23 @@ function downloadData ($encuesta) {
 
                 $answer = str_replace('&', ', ', rtrim($row2['respuestas'], '|'));
                 $answers = explode('|', $answer);
+                $realAnswers = [];
 
                 for ($i = 0; $i < count($answers); $i++) {
                     $answers[$i] = rtrim($answers[$i], ', ');
+
+                    if ($types[$i] === 5) {
+                        $subAnswers = explode(', ', $answers[$i]);
+
+                        for ($j = 0; $j < count($subAnswers); $j++) {
+                            $realAnswers[] = $subAnswers[$j];
+                        }
+                    } else {
+                        $realAnswers[] = $answers[$i];
+                    }
                 }
 
-                $fila['respuestas'] = $answers;
+                $fila['respuestas'] = $realAnswers;
                 $filas[] = $fila;
             }
         }
@@ -1524,14 +1555,6 @@ function downloadData ($encuesta) {
         usort($filas, function ($item1, $item2) {
             return $item2['fechaFin'] >= $item1['fechaFin'];
         });
-
-        $sql = "SELECT pregunta FROM Pregunta WHERE encuesta = '$encuesta'";
-        $result = $conn->query($sql);
-        $columnas = array('Nombre', 'Género', 'Edad', 'Educación', 'Municipio', 'Estado', 'Fecha de Inicio', 'Hora de Inicio', 'Fecha de Fin', 'Hora de Fin');
-
-        while ($row = $result->fetch_assoc()) {
-            $columnas[] = $row['pregunta'];
-        }
 
         return array('status' => 'SUCCESS', 'columnas' => $columnas, 'filas' => $filas);
     }
