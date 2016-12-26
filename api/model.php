@@ -175,7 +175,7 @@ function registerEncuesta ($nombre, $fechaInicio, $fechaFin, $panel) {
         $sql = "INSERT INTO Encuesta (nombre, fechaInicio, fechaFin, panel) VALUES ('$nombre', '$fechaInicio', '$fechaFin', '$panel')";
 
         if ($conn->query($sql) === TRUE) {
-            $lastId = mysqli_insert_id($conn);
+            $encuestaId = mysqli_insert_id($conn);
 
             $tokens = array();
 
@@ -187,11 +187,48 @@ function registerEncuesta ($nombre, $fechaInicio, $fechaFin, $panel) {
             }
 
             $conn->close();
-            return array('status' => 'SUCCESS', 'id' => $lastId, 'deviceTokens' => $tokens);
+            registerEncuestaHistory($encuestaId, $nombre, $fechaInicio, $fechaFin, $panel);
+
+            return array('status' => 'SUCCESS', 'id' => $encuestaId, 'deviceTokens' => $tokens);
         }
 
         $conn->close();
         return array('status' => 'ERROR');
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function registerEncuestaHistory ($encuesta, $nombreEncuesta, $fechaInicioEncuesta, $fechaFinEncuesta, $panel) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $nombrePanelista = '';
+        $nombrePanel = '';
+        $fechaInicioPanel = NULL;
+        $fechaFinPanel = NULL;
+
+        $sql = "SELECT nombre, fechaInicio, fechaFin FROM Panel WHERE id = '$panel'";
+        $result = $conn->query($sql);
+        if ($row = $result->fetch_assoc()) {
+            $nombrePanel = $row['nombre'];
+            $fechaInicioPanel = $row['fechaInicio'];
+            $fechaFinPanel = $row['fechaFin'];
+        }
+
+        $sql = "SELECT Panelista.id, Panelista.nombre, Panelista.apellidos, PanelistaEnPanel.estado FROM Panelista INNER JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = '$panel'";
+        $result = $conn->query($sql);
+        while ($row = $result->fetch_assoc()) {
+            $panelista = $row['id'];
+            $nombrePanelista = $row['nombre'].' '.$row['apellidos'];
+            $estado = $row['estado'];
+
+            $sql2 = "INSERT INTO Historial (panelista, nombrePanelista, panel, nombrePanel, fechaInicioPanel, fechaFinPanel, encuesta, nombreEncuesta, fechaInicioEncuesta, fechaFinEncuesta, estado) VALUES ('$panelista', '$nombrePanelista', '$panel', '$nombrePanel', '$fechaInicioPanel', '$fechaFinPanel', '$encuesta', '$nombreEncuesta', '$fechaInicioEncuesta', '$fechaFinEncuesta', '$estado')";
+            $conn->query($sql2);
+        }
+
+        $conn->close();
+        return array('status' => 'SUCCESS');
     }
 
     return array('status' => 'DATABASE_ERROR');
