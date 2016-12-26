@@ -179,7 +179,7 @@ function registerEncuesta ($nombre, $fechaInicio, $fechaFin, $panel) {
 
             $tokens = array();
 
-            $sql2 = "SELECT deviceToken FROM Panelista INNER JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = '$panel' AND Panelista.deviceToken != ''";
+            $sql2 = "SELECT deviceToken FROM Panelista INNER JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.estado = 1 AND PanelistaEnPanel.panel = '$panel' AND Panelista.deviceToken != ''";
 
             $result = $conn->query($sql2);
             while ($row = $result->fetch_assoc()) {
@@ -286,6 +286,22 @@ function changePanelistaPassword ($panelista, $old, $new) {
             $conn->close();
             return array('status' => 'SUCCESS');
         }
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function invitationResponse ($panelista, $panel, $estado) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "UPDATE PanelistaEnPanel SET estado = '$estado' WHERE panelista = '$panelista' AND panel = '$panel'";
+        $conn->query($sql);
+
+        $sql = "UPDATE Historial SET estado = '$estado' WHERE panelista = '$panelista' AND panel = '$panel'";
+        $conn->query($sql);
+
+        return array('status' => 'SUCCESS', 'panel' => $panel, 'estado' => $estado);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -627,7 +643,7 @@ function fetchMobileData ($panelista) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT Panel.id, nombre, fechaInicio, fechaFin FROM Panel INNER JOIN PanelistaEnPanel ON Panel.id = PanelistaEnPanel.panel WHERE Panel.fechaInicio <= CURDATE() AND Panel.fechaFin >= CURDATE() AND PanelistaEnPanel.panelista = '$panelista' ORDER BY nombre";
+        $sql = "SELECT Panel.id, Panel.nombre, Panel.fechaInicio, Panel.fechaFin, Panel.descripcion, PanelistaEnPanel.estado FROM Panel INNER JOIN PanelistaEnPanel ON Panel.id = PanelistaEnPanel.panel WHERE PanelistaEnPanel.estado != 2 AND Panel.fechaInicio <= CURDATE() AND Panel.fechaFin >= CURDATE() AND PanelistaEnPanel.panelista = '$panelista' ORDER BY nombre";
         $result = $conn->query($sql);
 
         $paneles = array();
@@ -676,7 +692,7 @@ function fetchMobileData ($panelista) {
                 $encuestas[] = $encuesta;
             }
 
-            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'encuestas' => $encuestas);
+            $panel = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'descripcion' => $row['descripcion'], 'estado' => (int)$row['estado'], 'encuestas' => $encuestas);
             $paneles[] = $panel;
         }
 
@@ -808,7 +824,7 @@ function savePanelistasPanel ($panel, $panelistas) {
             $panelista = $panelistas[$i];
 
             if (!in_array($panelista, $currentIds)) {
-                $sql = "INSERT INTO PanelistaEnPanel (panelista, panel) VALUES ('$panelista', '$panel')";
+                $sql = "INSERT INTO PanelistaEnPanel (panelista, panel, estado) VALUES ('$panelista', '$panel', 0)";
                 $sql2 = "SELECT deviceToken FROM Panelista WHERE id = '$panelista' AND deviceToken != ''";
 
                 $conn->query($sql);
@@ -854,7 +870,7 @@ function addToHistory ($panelista, $panel) {
             $fechaFinPanel = $row['fechaFin'];
         }
 
-        $sql = "INSERT INTO Historial (panelista, nombrePanelista, panel, nombrePanel, fechaInicioPanel, fechaFinPanel) VALUES ('$panelista', '$nombrePanelista', '$panel', '$nombrePanel', '$fechaInicioPanel', '$fechaFinPanel')";
+        $sql = "INSERT INTO Historial (panelista, nombrePanelista, panel, nombrePanel, fechaInicioPanel, fechaFinPanel, estado) VALUES ('$panelista', '$nombrePanelista', '$panel', '$nombrePanel', '$fechaInicioPanel', '$fechaFinPanel', 0)";
         $conn->query($sql);
 
         $sql = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE panel = '$panel'";
@@ -866,7 +882,7 @@ function addToHistory ($panelista, $panel) {
             $fechaInicioEncuesta = $row['fechaInicio'];
             $fechaFinEncuesta = $row['fechaFin'];
 
-            $sql = "INSERT INTO Historial (panelista, nombrePanelista, panel, nombrePanel, fechaInicioPanel, fechaFinPanel, encuesta, nombreEncuesta, fechaInicioEncuesta, fechaFinEncuesta) VALUES ('$panelista', '$nombrePanelista', '$panel', '$nombrePanel', '$fechaInicioPanel', '$fechaFinPanel', '$encuesta', '$nombreEncuesta', '$fechaInicioEncuesta', '$fechaFinEncuesta')";
+            $sql = "INSERT INTO Historial (panelista, nombrePanelista, panel, nombrePanel, fechaInicioPanel, fechaFinPanel, encuesta, nombreEncuesta, fechaInicioEncuesta, fechaFinEncuesta, estado) VALUES ('$panelista', '$nombrePanelista', '$panel', '$nombrePanel', '$fechaInicioPanel', '$fechaFinPanel', '$encuesta', '$nombreEncuesta', '$fechaInicioEncuesta', '$fechaFinEncuesta', 0)";
             $conn->query($sql);
         }
 
@@ -1173,7 +1189,7 @@ function getSummary ($encuesta) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT COUNT(*) as total FROM Panelista INNER JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = (SELECT panel FROM Encuesta WHERE id = '$encuesta')";
+        $sql = "SELECT COUNT(*) as total FROM Panelista INNER JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.estado = 1 AND PanelistaEnPanel.panel = (SELECT panel FROM Encuesta WHERE id = '$encuesta')";
         $result = $conn->query($sql);
         $total = 0;
         $answers = 0;
@@ -1215,7 +1231,7 @@ function generalReportData ($encuesta) {
             $panel = (int)$row['panel'];
         }
 
-        $sql = "SELECT COUNT(*) as total FROM PanelistaEnPanel WHERE panel = '$panel'";
+        $sql = "SELECT COUNT(*) as total FROM PanelistaEnPanel WHERE panel = '$panel' AND estado = 1";
         $result = $conn->query($sql);
         $total = 0;
         $answers = 0;
@@ -1416,7 +1432,7 @@ function currentAnswers ($encuesta) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT Panelista.id, Panelista.nombre, Panelista.apellidos, Panelista.genero, TIMESTAMPDIFF(YEAR, Panelista.fechaNacimiento, CURDATE()) AS edad, Panelista.educacion, Panelista.municipio, Panelista.estado, PanelistaEnPanel.id AS idRecord FROM Panelista LEFT JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = (SELECT Encuesta.panel FROM Encuesta WHERE id = '$encuesta')";
+        $sql = "SELECT Panelista.id, Panelista.nombre, Panelista.apellidos, Panelista.genero, TIMESTAMPDIFF(YEAR, Panelista.fechaNacimiento, CURDATE()) AS edad, Panelista.educacion, Panelista.municipio, Panelista.estado, PanelistaEnPanel.id AS idRecord FROM Panelista LEFT JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.estado = 1 AND PanelistaEnPanel.panel = (SELECT Encuesta.panel FROM Encuesta WHERE id = '$encuesta')";
         $result = $conn->query($sql);
 
         $response = array();
@@ -1646,7 +1662,7 @@ function downloadData ($encuesta) {
             }
         }
 
-        $sql = "SELECT Panelista.id as id, nombre, apellidos, genero, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, educacion, municipio, Panelista.estado FROM Panelista LEFT JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.panel = (SELECT panel FROM Encuesta WHERE id = '$encuesta')";
+        $sql = "SELECT Panelista.id as id, nombre, apellidos, genero, TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) AS edad, educacion, municipio, Panelista.estado FROM Panelista LEFT JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.estado = 1 AND PanelistaEnPanel.panel = (SELECT panel FROM Encuesta WHERE id = '$encuesta')";
         $result = $conn->query($sql);
         $filas = array();
 

@@ -122,6 +122,9 @@ switch ($_POST['action']) {
     case 'FORGOT_PANELISTA_PASSWORD':
         recoverPasword();
         break;
+    case 'INVITATION_RESPONSE':
+        echo json_encode(invitationResponse($_POST['panelista'], $_POST['panel'], $_POST['estado']));
+        break;
     case 'LOG_OUT':
         logOut();
         break;
