@@ -729,6 +729,27 @@ function fetchResourcesOfType($type) {
     return array('status' => 'DATABASE_ERROR');
 }
 
+function fetchHistorial ($panelista) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "SELECT nombrePanel, fechaInicioPanel, fechaFinPanel, nombreEncuesta, fechaInicioEncuesta, fechaFinEncuesta, fechaRespuesta, horaRespuesta FROM Historial WHERE panelista = '$panelista' AND encuesta != 0 AND estado != 0";
+        $result = $conn->query($sql);
+
+        $response = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $record = array('nombrePanel' => $row['nombrePanel'], 'fechaInicioPanel' => $row['fechaInicioPanel'], 'fechaFinPanel' => $row['fechaFinPanel'], 'nombreEncuesta' => $row['nombreEncuesta'], 'fechaInicioEncuesta' => $row['fechaInicioEncuesta'], 'fechaFinEncuesta' => $row['fechaFinEncuesta'], 'fechaRespuesta' => $row['fechaRespuesta'], 'horaRespuesta' => $row['horaRespuesta']);
+            $response[] = $record;
+        }
+
+        $conn->close();
+        return array('status' => 'SUCCESS', 'results' => $response);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
 function emptyString ($string) {
     return($string !== '');
 }
