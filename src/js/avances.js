@@ -32,10 +32,10 @@ function getData () {
             currentHTML += '<th>Educación</th>';
             currentHTML += '<th>Municipio</th>';
             currentHTML += '<th>Estado</th>';
-            currentHTML += '<th>Fecha Inicio</th>';
-            currentHTML += '<th>Hora Inicio</th>';
-            currentHTML += '<th>Fecha Fin</th>';
-            currentHTML += '<th>Hora Fin</th>';
+            currentHTML += '<th>Inicio</th>';
+            currentHTML += '<th>Fin</th>';
+            currentHTML += '<th>Intento</th>';
+            currentHTML += '<th>Remover</th>';
             currentHTML += '</tr>';
             currentHTML += '</thead>';
             currentHTML += '<tbody>';
@@ -43,17 +43,17 @@ function getData () {
             for (var i = 0; i < response.panelistas.length; i++) {
                 var panelista = response.panelistas[i];
 
-                currentHTML += '<tr class="' + (panelista.fechaFin ? '' : 'red') + '">';
+                currentHTML += '<tr id="' + panelista.idRespuesta + '&' + panelista.idRecord + '" class="' + (panelista.fechaFin ? '' : 'red') + '">';
                 currentHTML += '<td>' + panelista.nombre + '</td>';
                 currentHTML += '<td>' + convertGenero(panelista.genero) + '</td>';
                 currentHTML += '<td class="centered">' + panelista.edad + '</td>';
                 currentHTML += '<td>' + convertEducacion(panelista.educacion) + '</td>';
                 currentHTML += '<td>' + panelista.municipio + '</td>';
                 currentHTML += '<td class="centered">' + panelista.estado + '</td>';
-                currentHTML += '<td>' + readableDate(panelista.fechaIni) + '</td>';
-                currentHTML += '<td>' + validateHour(panelista.horaIni) + '</td>';
-                currentHTML += '<td>' + readableDate(panelista.fechaFin) + '</td>';
-                currentHTML += '<td>' + validateHour(panelista.horaFin) + '</td>';
+                currentHTML += '<td>' + readableDate(panelista.fechaIni) + ' ' + validateHour(panelista.horaIni) + '</td>';
+                currentHTML += '<td>' + readableDate(panelista.fechaFin) + ' ' + validateHour(panelista.horaFin) + '</td>';
+                currentHTML += '<td class="deleteButton">' + (panelista.idRespuesta === -1 ? '' : '<button id="delete" type="button">Borrar Intento</button>') + '</td>';
+                currentHTML += '<td class="removeButton"><button id="delete" type="button">Remover Panelista</button></td>';
                 currentHTML += '</tr>';
             }
 
@@ -120,6 +120,78 @@ $(document).on('ready', function () {
         $('#selects-feedback').html('');
 
         getData();
+    });
+
+    // -----------------------------------------------------------------------------------------------
+    // Delete/Remove
+    // -----------------------------------------------------------------------------------------------
+
+    $('#avances-table').on('click', '.deleteButton', function () {
+        $('#feedback').html('');
+
+        var self = this;
+        var idVal = $(this).parent().attr('id').split('&');
+        var idRespuesta = parseInt(idVal[0], 10);
+
+        if (idRespuesta === -1) {
+            return;
+        }
+
+        if (confirmDelete('este Intento')) {
+            $.ajax({
+                url: '../api/controller.php',
+                type: 'POST',
+                data: {
+                    action: 'DELETE_ANSWER',
+                    id: idRespuesta,
+                },
+                dataType: 'json',
+                success: function (response) {
+                    alert('Intento eliminado exitosamente.');
+
+                    $('#avances-table').empty();
+                    $('#avance-summary').empty();
+                    $('#selects-feedback').html('');
+
+                    getData();
+                },
+                error: function (errorMsg) {
+                    alert('Error eliminando intento.');
+                }
+            });
+        }
+    });
+
+    $('#avances-table').on('click', '.removeButton', function () {
+        $('#feedback').html('');
+
+        var self = this;
+        var idVal = $(this).parent().attr('id').split('&');
+        var idRecord = parseInt(idVal[1], 10);
+
+        if (confirmDelete('este Panelista del Panel')) {
+            $.ajax({
+                url: '../api/controller.php',
+                type: 'POST',
+                data: {
+                    action: 'DELETE_PANELISTA_EN_PANEL',
+                    id: idRecord,
+                },
+                dataType: 'json',
+                success: function (response) {
+                    alert('Panelista removido exitosamente.');
+
+                    $('#avances-table').empty();
+                    $('#avance-summary').empty();
+                    $('#selects-feedback').html('');
+
+                    getData();
+                },
+                error: function (errorMsg) {
+                    alert('Error removiendo panelista.');
+                }
+            });
+        }
     });
 
 });
