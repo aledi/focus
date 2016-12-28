@@ -157,7 +157,7 @@ function columnChart (opciones, percent, chartNumber, title) {
                 alwaysOutside: true
             },
             bar: {
-                width: opciones.length > 1 ? '80%' : '40%'
+                width: opciones.length > 1 ? '80%' : '60%'
             },
             vAxis: {
                 format: 'percent',
