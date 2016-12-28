@@ -136,20 +136,26 @@ function columnChart (opciones, percent, chartNumber, title) {
 
     function drawStuff () {
         var data = new google.visualization.DataTable();
+        var rawOpciones = 0;
         data.addColumn('string', '');
         data.addColumn('number', '');
+        data.addColumn({type: 'string', role: 'annotation'});
         data.addColumn({type: 'string', role: 'tooltip'});
 
         for (var x = 0; x < opciones.length; x++) {
+            rawOpciones = opciones[x];
             opciones[x] += '\n(' + String((percent[x] * 100).toFixed(2)) + '%)';
 
-            data.addRows([[opciones[x], percent[x], opciones[x]]]);
+            data.addRows([[rawOpciones, percent[x], String((percent[x] * 100).toFixed(1)) + '%', opciones[x]]]);
         }
 
         var options = {
-            width: 800,
+            width: 1200,
             height: 400,
             colors: colorArray,
+            annotations: {
+                alwaysOutside: true
+            },
             bar: {
                 width: opciones.length > 1 ? '80%' : '40%'
             },
@@ -160,7 +166,7 @@ function columnChart (opciones, percent, chartNumber, title) {
                     max: 1
                 }
             },
-            legend: {position: 'none'}
+            legend: {position: 'none'},
         };
 
         options.title = title;
