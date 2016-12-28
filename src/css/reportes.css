@@ -24,8 +24,8 @@
     margin: 0 auto;
 }
 
-.column-chart, .bar-chart {
-    width: 1200px;
+.column-chart, .bar-chart, .average-chart, .stacked-chart {
+    width: 100%;
 }
 
 .pie-chart {
