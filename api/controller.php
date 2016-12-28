@@ -53,6 +53,9 @@ switch ($_POST['action']) {
     case 'GET_RECURSOS':
         getRecords('RESOURCES');
         break;
+    case 'GET_HISTORIAL':
+        getRecords('HISTORIAL');
+        break;
     case 'GET_MUNICIPIOS':
         echo json_encode(getMunicipiosFromFile(), JSON_UNESCAPED_UNICODE);
         break;
@@ -83,6 +86,12 @@ switch ($_POST['action']) {
     case 'DELETE_ENCUESTA':
         deleteRecord('Encuesta');
         break;
+    case 'DELETE_ANSWER':
+        deleteRecord('Respuesta');
+        break;
+    case 'DELETE_PANELISTA_EN_PANEL':
+        deleteRecord('PanelistaEnPanel');
+        break;
     case 'DELETE_RECURSO':
         deleteRecord('Recurso');
         break;
@@ -112,6 +121,9 @@ switch ($_POST['action']) {
         break;
     case 'FORGOT_PANELISTA_PASSWORD':
         recoverPasword();
+        break;
+    case 'INVITATION_RESPONSE':
+        echo json_encode(invitationResponse($_POST['panelista'], $_POST['panel'], $_POST['estado']));
         break;
     case 'LOG_OUT':
         logOut();
@@ -306,6 +318,9 @@ function getRecords ($type) {
             }
 
             echo json_encode(fetchResources());
+            break;
+        case 'HISTORIAL':
+            echo json_encode(fetchHistorial($_POST['panelista']));
             break;
     }
 }
