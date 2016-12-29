@@ -35,7 +35,7 @@ function pieChart (opciones, votes, chartNumber, title) {
         }
 
         var options = {
-            width: 700,
+            width: '100%',
             height: 350,
             colors: colorArray,
             sliceVisibilityThreshold: 0,
@@ -56,15 +56,17 @@ function barChart (opciones, votes, chartNumber, title) {
 
     function drawChart() {
         var data = new google.visualization.DataTable();
+
         data.addColumn('string', '');
         data.addColumn('number', 'Posición Promedio');
+        data.addColumn({type: 'string', role: 'annotation'});
 
         for (var x = 0; x < opciones.length; x++) {
-            data.addRows([[opciones[x], votes[x]]]);
+            data.addRows([[opciones[x], votes[x], String(votes[x])]]);
         }
 
         var options = {
-            width: 800,
+            width: '100%',
             height: 500,
             colors: colorArray,
             bar: {
@@ -73,10 +75,10 @@ function barChart (opciones, votes, chartNumber, title) {
             },
             hAxis: {
                 format: '#',
-                ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
                 viewWindow : {
                     min: 0,
-                    max: 10
+                    max: votes.length
                 }
             }
         };
@@ -115,7 +117,7 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber) 
 
         var options = {
             isStacked: 'percent',
-            width: 800,
+            width: '100%',
             height: 500,
             colors: colorArray,
             hAxis: {
@@ -125,7 +127,7 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber) 
         };
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' bar-chart';
+        chart.className += ' stacked-chart';
         var googleChart = new google.visualization.BarChart(chart);
         googleChart.draw(data, options);
     }
@@ -136,20 +138,24 @@ function columnChart (opciones, percent, chartNumber, title) {
 
     function drawStuff () {
         var data = new google.visualization.DataTable();
+
         data.addColumn('string', '');
         data.addColumn('number', '');
+        data.addColumn({type: 'string', role: 'annotation'});
         data.addColumn({type: 'string', role: 'tooltip'});
 
         for (var x = 0; x < opciones.length; x++) {
-            opciones[x] += '\n(' + String((percent[x] * 100).toFixed(2)) + '%)';
-
-            data.addRows([[opciones[x], percent[x], opciones[x]]]);
+            var annotation = String((percent[x] * 100).toFixed(2)) + '%';
+            data.addRows([[opciones[x], percent[x], annotation, (opciones[x] + '\n(' + annotation + ')')]]);
         }
 
         var options = {
-            width: 800,
+            width: '100%',
             height: 400,
             colors: colorArray,
+            annotations: {
+                alwaysOutside: true
+            },
             bar: {
                 width: opciones.length > 1 ? '80%' : '40%'
             },
@@ -179,13 +185,14 @@ function averageChart (min, max, value, chartNumber) {
         var data = new google.visualization.DataTable();
         data.addColumn('string', '');
         data.addColumn('number', '');
+        data.addColumn({type: 'string', role: 'annotation'});
         data.addColumn({type: 'string', role: 'tooltip'});
 
-        var label = 'Promedio' + '\n(' + String(value.toFixed(2)) + ')';
-        data.addRows([[label, value, label]]);
+        var annotation = String(value.toFixed(2));
+        data.addRows([['Promedio', value, annotation, ('Promedio' + '\n(' + annotation + ')')]]);
 
         var options = {
-            width: 800,
+            width: '100%',
             height: 400,
             colors: colorArray,
             bar: {
@@ -193,7 +200,7 @@ function averageChart (min, max, value, chartNumber) {
             },
             vAxis: {
                 viewWindow : {
-                    min: min,
+                    min: 0,
                     max: max
                 }
             },
@@ -201,7 +208,7 @@ function averageChart (min, max, value, chartNumber) {
         };
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' column-chart';
+        chart.className += ' average-chart';
         var googleChart = new google.visualization.ColumnChart(chart);
         googleChart.draw(data, options);
     }
@@ -704,6 +711,7 @@ $(document).on('ready', function () {
                 currentHTML += '</tbody>';
                 $('#reportes-table').append(currentHTML);
                 exportTable();
+                $('#reportes-table').empty();
             },
             error: function (errorMsg) {
                 $('#reportes-feedback').html('Ha ocurrido un error. Favor de intentar de nuevo.');
