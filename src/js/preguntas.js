@@ -242,14 +242,14 @@ $(document).on('ready', function () {
 
     $('#questions').on('change','.imagen', function (){
         var currentValueImage = $(this).val();
-
         if(currentValueImage == ""){
             $(this).parent().find('label').hide();
         }
-
-        $(this).parent().find('label').show();
-        $(this).parent().find('.preview-link').attr('href','../resources/images/' + currentValueImage);
-        $(this).parent().find('.preview-link').attr('target','_blank');
+        else {
+            $(this).parent().find('label').show();
+            $(this).parent().find('.preview-link').attr('href','../resources/images/' + currentValueImage);
+            $(this).parent().find('.preview-link').attr('target','_blank');
+        }
     });
 
     $('#questions').on('change','.video', function (){
@@ -258,10 +258,11 @@ $(document).on('ready', function () {
         if(currentValueVideo == ""){
             $(this).parent().find('label').hide();
         }
-
-        $(this).parent().find('label').show();
-        $(this).parent().find('.preview-link').attr('href','../resources/videos/' + currentValueVideo);
-        $(this).parent().find('.preview-link').attr('target','_blank');
+        else {
+            $(this).parent().find('label').show();
+            $(this).parent().find('.preview-link').attr('href','../resources/videos/' + currentValueVideo);
+            $(this).parent().find('.preview-link').attr('target','_blank');
+        }
     });
 
 

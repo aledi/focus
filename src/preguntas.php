@@ -29,7 +29,7 @@
                         </div>
                         <div class='input-wrapper'>
                             <label>Imagen</label>
-                            <div class='preview-resource'>
+                            <div class='preview-resource-image'>
                                 <select id='imagen1' class='imagen' type='text'>
                                     <option value=''>Selecciona una imagen</option>
                                 </select>
@@ -38,7 +38,7 @@
                         </div>
                         <div class='input-wrapper'>
                             <label>Video</label>
-                            <div class='preview-resource'>
+                            <div class='preview-resource-video'>
                                 <select id='video1' class='video' type='text'>
                                     <option value=''>Selecciona un video</option>
                                 </select>
