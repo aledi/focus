@@ -263,7 +263,7 @@ $(document).on('ready', function () {
                 data: data,
                 dataType: 'json',
                 success: function (response) {
-                    alert('Panelista eliminado exitosamente.');
+                    alert('Panel eliminado exitosamente.');
                     $(self).parent().remove();
                 },
                 error: function (errorMsg) {
