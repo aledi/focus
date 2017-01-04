@@ -171,8 +171,7 @@ $(document).on('ready', function () {
 
                     if (response.results[x].imagen == "") {
                         $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview').hide();
-                    }
-                    else{
+                    } else{
                         $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview').show();
                         $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview > .preview-link').attr('href','../resources/images/' + response.results[x].imagen);
                         $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview > .preview-link').attr('target','_blank');
@@ -182,8 +181,7 @@ $(document).on('ready', function () {
 
                     if (response.results[x].video == "") {
                         $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview').hide();
-                    }
-                    else{
+                    } else{
                         $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview').show();
                         $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview > .preview-link').attr('href','../resources/videos/' + response.results[x].video);
                         $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview > .preview-link').attr('target','_blank');
