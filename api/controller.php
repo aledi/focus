@@ -367,7 +367,7 @@ function initEncuesta () {
 }
 
 function setRespuestas () {
-    $saveResult = saveRespuestas($_POST['id'], $_POST['respuestas']);
+    $saveResult = saveRespuestas($_POST['id'], $_POST['respuestas'], $_POST['panelista'], $_POST['encuesta']);
 
     echo json_encode($saveResult);
 }
