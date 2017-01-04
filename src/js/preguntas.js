@@ -120,6 +120,9 @@ $(document).on('ready', function () {
     var idEncuesta = window.location.search.substring(1);
     idEncuesta = idEncuesta.substring(3);
 
+    $('#imagen1').parent().find('label').hide();
+    $('#video1').parent().find('label').hide();
+
     $.ajax({
         type: 'POST',
         url: '../api/controller.php',
