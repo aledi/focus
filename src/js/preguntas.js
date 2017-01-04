@@ -228,7 +228,7 @@ $(document).on('ready', function () {
         lastQuestion = parseInt(lastQuestion) + 1;
 
         appendQuestions(lastQuestion);
-        
+
         $('#imagen' + lastQuestion).parent().find('label').hide();
         $('#video' + lastQuestion).parent().find('label').hide();
     });
