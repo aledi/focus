@@ -312,12 +312,29 @@ function getRecords ($type) {
             echo json_encode(fetchMobileData($_POST['panelista']));
             break;
         case 'RESOURCES':
-            if (isset($_POST['tipo'])) {
-                echo json_encode(fetchResourcesOfType($_POST['tipo']));
-                return;
+            $response = array();
+
+            if (!isset($_POST['tipo']) || $_POST['tipo'] == 1) {
+                foreach (glob('../resources/images/*.{jpg,png}', GLOB_BRACE) as $filename){
+                    $filename = substr(strrchr($filename, '/'), 1);
+                    $recurso = array('nombre' => $filename, 'tipo' => 1);
+                    $response[] = $recurso;
+                }
             }
 
-            echo json_encode(fetchResources());
+            if (!isset($_POST['tipo']) || $_POST['tipo'] == 2) {
+                foreach (glob('../resources/videos/*.mp4') as $filename)  {
+                    $filename = substr(strrchr($filename, '/'), 1);
+                    $recurso = array('nombre' => $filename, 'tipo' => 2);
+                    $response[] = $recurso;
+                }
+            }
+
+            usort($response, function ($item1, $item2) {
+                return $item1['nombre'] >= $item2['nombre'];
+            });
+
+            echo json_encode(array('results' => $response));
             break;
         case 'HISTORIAL':
             echo json_encode(fetchHistorial($_POST['panelista']));
@@ -359,6 +376,9 @@ function deleteRecord ($table) {
     if ($table === 'Recurso') {
         $path = '../resources/'.((int)$_POST['tipo'] == 1 ? 'images/' : 'videos/').$_POST['nombre'];
         unlink($path);
+
+        echo json_encode(array('status' => 'SUCCESS'));
+        return;
     }
 
     $deleteResult = removeRecord($_POST['id'], $table);
