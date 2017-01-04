@@ -942,7 +942,7 @@ function saveRespuestas ($id, $respuestas, $panelista, $encuesta) {
         $sql = "UPDATE Respuesta SET respuestas = '$respuestas', fechaFin = '$date', horaFin = '$hour' WHERE id = '$id'";
         $conn->query($sql);
 
-        $sql = "UPDATE HISTORIAL SET fechaRespuesta = '$date', horaRespuesta = '$hour' WHERE panelista = '$panelista' AND encuesta = '$encuesta'";
+        $sql = "UPDATE Historial SET fechaRespuesta = '$date', horaRespuesta = '$hour' WHERE panelista = '$panelista' AND encuesta = '$encuesta'";
         $conn->query($sql);
 
         $conn->close();
