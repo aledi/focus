@@ -932,7 +932,7 @@ function startEncuesta ($encuesta, $panelista) {
     return array('status' => 'DATABASE_ERROR');
 }
 
-function saveRespuestas ($id, $respuestas) {
+function saveRespuestas ($id, $respuestas, $panelista, $encuesta) {
     $conn = connect();
 
     if ($conn != null) {
@@ -940,14 +940,13 @@ function saveRespuestas ($id, $respuestas) {
         $hour = date('H:i:s');
 
         $sql = "UPDATE Respuesta SET respuestas = '$respuestas', fechaFin = '$date', horaFin = '$hour' WHERE id = '$id'";
+        $conn->query($sql);
 
-        if ($conn->query($sql) === TRUE) {
-            $conn->close();
-            return array('status' => 'SUCCESS');
-        }
+        $sql = "UPDATE Historial SET fechaRespuesta = '$date', horaRespuesta = '$hour' WHERE panelista = '$panelista' AND encuesta = '$encuesta'";
+        $conn->query($sql);
 
         $conn->close();
-        return array('status' => 'ERROR');
+        return array('status' => 'SUCCESS');
     }
 
     return array('status' => 'DATABASE_ERROR');
