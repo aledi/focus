@@ -30,7 +30,7 @@ function getData () {
             currentHTML += '<th>Fecha Inicio</th>';
             currentHTML += '<th>Fecha Fin</th>';
             currentHTML += '<th>Panel</th>';
-            currentHTML += '<th columnSpan = "2">Acción</th>';
+            currentHTML += '<th colspan="3">Acción</th>';
             currentHTML += '</tr>';
             currentHTML += '</thead>';
             currentHTML += '<tbody>';
@@ -44,6 +44,7 @@ function getData () {
                 currentHTML += '<td>' + readableDate(result.fechaFin) + '</td>';
                 currentHTML += '<td>' + result.panel + '</td>';
                 currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
+                currentHTML += '<td class=duplicate-button><button id=duplicate type=button>Duplicar</button></td>';
                 currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                 currentHTML += '</tr>';
             }
