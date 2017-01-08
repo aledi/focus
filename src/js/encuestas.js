@@ -288,6 +288,53 @@ $(document).on('ready', function () {
         $('#tab-view-encuestas').addClass('current');
     });
 
+    // -----------------------------------------------------------------------------------------------
+    // Duplicate Encuesta
+    // -----------------------------------------------------------------------------------------------
+
+    $('#all-encuestas').on('click', '.duplicate-button', function() {
+        var parentIdEncuesta = $(this).parent().attr('id');
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $('ul.tabs li').first().addClass('current');
+        $("#tab-agregar-encuesta").addClass('current');
+
+        $('#header-title').text('Duplicar Encuesta');
+        $('#save-encuesta').text('Duplicar');
+
+        $('#cancel-edit').show();
+
+        $.ajax({
+            url: '../api/controller.php',
+            type: 'POST',
+            data: {
+                action: 'GET_ENCUESTAS',
+                id: parentIdEncuesta
+            },
+            dataType: 'json',
+            success: function (response) {
+                var result = response.result;
+                $('#nombre').val(result.nombre);
+                getDatefromString(result.fechaInicio, 0);
+                getDatefromString(result.fechaFin, 1);
+                $('#select-paneles').val(result.panel);
+
+                var myURL = window.location.href.split('?')[0];
+                myURL += '?id=' + result.id;
+                history.pushState({}, null, myURL);
+            },
+            error: function (errorMsg) {
+                alert('Error editando encuesta.');
+            }
+        });
+    });
+
+    // -----------------------------------------------------------------------------------------------
+    // Date Functions
+    // -----------------------------------------------------------------------------------------------
+
     $('#mes, #anio').on('change', function() {
         changeSelect('Inicio');
     });
