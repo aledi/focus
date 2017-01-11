@@ -131,8 +131,6 @@ $(document).on('ready', function () {
         dataToSend.encuesta = idEncuesta;
     }
 
-    idEncuesta = idEncuesta.substring(3);
-
     $('#imagen1').parent().find('label').hide();
     $('#video1').parent().find('label').hide();
 
