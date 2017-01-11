@@ -2,6 +2,21 @@
 
 var currentPanel = 0;
 
+function locationRedirect (actionText, response, parentIdEncuesta) {
+    (actionText == 'agregada') ? 'preguntas.php?id=' + response.id : 'encuestas.php'
+    switch (actionText) {
+        case 'agregada' :
+            return 'preguntas.php?id=' + response.id;
+        break;
+        case 'editada' :
+            return 'encuestas.php';
+        break;
+        case 'duplicada' :
+            return 'preguntas.php?id=' + response.id + '?parentid=' + parentIdEncuesta;
+        break;
+    }
+}
+
 function getData () {
     if (currentPanel <= 0) {
         $('#refresh').hide();
@@ -140,8 +155,23 @@ $(document).on('ready', function () {
     $('#save-encuesta').on('click', function (event) {
         event.preventDefault();
 
+        var parentIdEncuesta = 0;
         var idEncuesta = window.location.search.substring(1);
-        idEncuesta = idEncuesta.substring(3);
+        var actionText = '';
+
+        if (idEncuesta.includes('parentid')) {
+            parentIdEncuesta =  idEncuesta.substring(9);
+            idEncuesta = '';
+            actionText = 'duplicada';
+        }
+        else if (idEncuesta.substring(3) !== '' && actionText === '') {
+            actionText = 'editada';
+            idEncuesta = idEncuesta.substring(3);
+        }
+        else {
+            actionText = 'agregada';
+            idEncuesta = '';
+        }
 
         var nombre = $('#nombre').val();
         var fechaInicio = getCompleteDate(1);
@@ -174,11 +204,12 @@ $(document).on('ready', function () {
             panel: panel
         };
 
-        if (idEncuesta != '') {
+        if (actionText == 'editada') {
             data.id = idEncuesta;
         }
-
-        var actionText = idEncuesta !== '' ? 'editada' : 'agregada';
+        else if (actionText == 'duplicada') {
+            data.parentid = parentIdEncuesta;
+        }
 
         $.ajax({
             type: 'POST',
@@ -188,7 +219,7 @@ $(document).on('ready', function () {
             success: function (response) {
                 if (response.status === 'SUCCESS') {
                     alert('Encuesta ' + actionText + ' exitosamente.');
-                    location.replace((actionText == 'agregada') ? 'preguntas.php?id=' + response.id : 'encuestas.php');
+                    location.replace(locationRedirect(actionText, response, parentIdEncuesta));
                 } else if (response.status === 'RECORD_EXISTS') {
                     $('#feedback').html('La encuesta ya existe. Por favor, elija un nombre diferente.');
                 } else {
@@ -322,7 +353,7 @@ $(document).on('ready', function () {
                 $('#select-paneles').val(result.panel);
 
                 var myURL = window.location.href.split('?')[0];
-                myURL += '?id=' + result.id;
+                myURL += '?parentid=' + result.id;
                 history.pushState({}, null, myURL);
             },
             error: function (errorMsg) {
