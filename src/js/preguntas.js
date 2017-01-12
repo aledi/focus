@@ -8,14 +8,13 @@ var globalVideo = [];
 // -----------------------------------------------------------------------------------------------
 
 function updateQuestionIndex (totalQuestions, nextQuestion, nextinDOM) {
-    console.log(totalQuestions, nextQuestion);
     for (; nextQuestion - 1 < totalQuestions; nextQuestion += 1) {
-        console.log('Entra');
         $(nextinDOM).attr('id', nextQuestion);
 
         $('#' + nextQuestion + ' > .input-wrapper > .preview-resource-image > #imagen' + (nextQuestion - 1)).attr('id', 'imagen' + nextQuestion);
         $('#' + nextQuestion + ' > .input-wrapper > .preview-resource-video > #video' + (nextQuestion - 1)).attr('id', 'video' + nextQuestion);
         $('#' + nextQuestion + ' > #Answers' + (nextQuestion - 1)).attr('id', 'Answers' + nextQuestion);
+
         nextinDOM = $(nextinDOM).next();
     }
 }
@@ -253,7 +252,6 @@ $(document).on('ready', function () {
         $('#imagen' + nextQuestion).parent().find('label').hide();
         $('#video' + nextQuestion).parent().find('label').hide();
 
-        console.log(totalQuestions, currentQuestion, nextQuestion);
         if (currentQuestion < totalQuestions) {
             var nextinDOM = $(this).parent().next().next();
             updateQuestionIndex(totalQuestions + 1, nextQuestion + 1, nextinDOM);
