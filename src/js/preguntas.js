@@ -104,6 +104,7 @@ function appendQuestions (lastQuestion) {
         '</select>' +
         '</div>';
     currentHTML += '<div id="Answers' + lastQuestion + '"></div>' +
+        '<button type="button" id="addQuestion" class="no-background">Agregar Nueva Pregunta</button>' +
         '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
         '</div>';
 
@@ -224,7 +225,7 @@ $(document).on('ready', function () {
         appendAnswers(typeQuestion, questionID);
     });
 
-    $('#addQuestion').on('click', function() {
+    $('#questions').on('click', '#addQuestion',  function() {
         var lastQuestion = $('#questions').children().length;
         lastQuestion = parseInt(lastQuestion) + 1;
 
