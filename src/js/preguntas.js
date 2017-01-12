@@ -65,8 +65,9 @@ function appendAnswers (typeQuestion, questionID) {
     currentHTML = '';
 }
 
-function appendQuestions (lastQuestion) {
-    var currentHTML = '<div id="' + lastQuestion + '" class="questionForm">';
+function appendQuestions (nextQuestion) {
+    var currentQuestion = nextQuestion - 1;
+    var currentHTML = '<div id="' + nextQuestion + '" class="questionForm">';
     currentHTML += '<hr>';
     currentHTML += '<div class="input-wrapper">' +
         '<label>Título</label>' +
@@ -75,7 +76,7 @@ function appendQuestions (lastQuestion) {
     currentHTML += '<div class="input-wrapper">' +
         '<label>Imagen</label>' +
         '<div class="preview-resource-image">' +
-        '<select id="imagen' + lastQuestion + '" class="imagen" type="text">' +
+        '<select id="imagen' + nextQuestion + '" class="imagen" type="text">' +
         '<option value="">Selecciona una Imagen</option></select>' +
         '<label class="preview"><a class="preview-link">Vista Previa</a></label>' +
         '</div>' +
@@ -83,7 +84,7 @@ function appendQuestions (lastQuestion) {
     currentHTML += '<div class="input-wrapper">' +
         '<label>Video</label>' +
         '<div class="preview-resource-video">' +
-        '<select id="video' + lastQuestion + '" class="video" type="text">' +
+        '<select id="video' + nextQuestion + '" class="video" type="text">' +
         '<option value="">Selecciona un video</option></select>' +
         '<label class="preview"><a class="preview-link">Vista Previa</a></label>' +
         '</div>' +
@@ -103,14 +104,14 @@ function appendQuestions (lastQuestion) {
         '<option value="6">Escala</option>' +
         '</select>' +
         '</div>';
-    currentHTML += '<div id="Answers' + lastQuestion + '"></div>' +
+    currentHTML += '<div id="Answers' + nextQuestion + '"></div>' +
         '<button type="button" id="addQuestion" class="no-background">Agregar Nueva Pregunta</button>' +
         '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
         '</div>';
 
-    $('#questions').append(currentHTML);
-    appendSelect(lastQuestion);
-    appendAnswers(1, lastQuestion);
+    $('#' + currentQuestion).after(currentHTML);
+    appendSelect(nextQuestion);
+    appendAnswers(1, nextQuestion);
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -226,13 +227,18 @@ $(document).on('ready', function () {
     });
 
     $('#questions').on('click', '#addQuestion',  function() {
-        var lastQuestion = $('#questions').children().length;
-        lastQuestion = parseInt(lastQuestion) + 1;
+        var currentQuestion = $(this).parent().attr('id');
+        var nextQuestion = 0;
+        var totalQuestions = $('#questions').children().length;
 
-        appendQuestions(lastQuestion);
+        totalQuestions = parseInt(totalQuestions);
+        currentQuestion = parseInt(currentQuestion);
+        nextQuestion = currentQuestion + 1;
 
-        $('#imagen' + lastQuestion).parent().find('label').hide();
-        $('#video' + lastQuestion).parent().find('label').hide();
+        appendQuestions(nextQuestion);
+
+        $('#imagen' + nextQuestion).parent().find('label').hide();
+        $('#video' + nextQuestion).parent().find('label').hide();
     });
 
     $('#questions').on('click', '#removeQuestion', function () {
