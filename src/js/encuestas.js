@@ -155,20 +155,17 @@ $(document).on('ready', function () {
         var parentIdEncuesta = 0;
         var idEncuesta = 0;
         var parameters = window.location.search.substring(1);
-        var bDuplicated = false;
         var actionText = '';
 
         if (parameters.includes('parentid')) {
             parentIdEncuesta =  parameters.substring(9);
             idEncuesta = '';
             actionText = 'duplicada';
-            bDuplicated = true;
         }
         else if (parameters.substring(3) !== '' && actionText === '') {
             actionText = 'editada';
             idEncuesta = parameters.substring(3);
-        }
-        else {
+        } else {
             actionText = 'agregada';
             idEncuesta = '';
         }
@@ -196,7 +193,7 @@ $(document).on('ready', function () {
             return;
         }
 
-        var data = {
+        var parameters = {
             action: 'ALTA_ENCUESTA',
             nombre: nombre,
             fechaInicio: fechaInicio,
@@ -205,16 +202,15 @@ $(document).on('ready', function () {
         };
 
         if (idEncuesta !== '') {
-            data.id = idEncuesta;
+            parameters.id = idEncuesta;
+        } else if (actionText == 'duplicada') {
+            parameters.parentid = parentIdEncuesta;
         }
-        else if (bDuplicated) {
-            data.parentid = parentIdEncuesta;
-        }
-        
+
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: data,
+            data: parameters,
             dataType: 'json',
             success: function (response) {
                 if (response.status === 'SUCCESS') {

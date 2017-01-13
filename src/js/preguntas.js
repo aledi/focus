@@ -118,17 +118,16 @@ function appendQuestions (lastQuestion) {
 
 $(document).on('ready', function () {
     var idEncuesta = window.location.search.substring(1);
-    var dataToSend = { action : 'GET_PREGUNTAS' };
+    var parameters = { action : 'GET_PREGUNTAS' };
 
     if (idEncuesta.includes('parentid')) {
         var idArray = idEncuesta.split('&');
         var parentidEncuesta = idArray[1].substring(9);
         idEncuesta = idArray[0].substring(3);
-        dataToSend.encuesta = parentidEncuesta;
-    }
-    else {
+        parameters.encuesta = parentidEncuesta;
+    } else {
         idEncuesta = idEncuesta.substring(3);
-        dataToSend.encuesta = idEncuesta;
+        parameters.encuesta = idEncuesta;
     }
 
     $('#imagen1').parent().find('label').hide();
@@ -159,7 +158,7 @@ $(document).on('ready', function () {
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
-            data: dataToSend,
+            data: parameters,
             dataType: 'json',
             success: function (response) {
                 for (var x = 2; x <= response.results.length; x++) {
