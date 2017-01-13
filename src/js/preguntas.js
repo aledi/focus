@@ -121,7 +121,7 @@ $(document).on('ready', function () {
     var dataToSend = { action : 'GET_PREGUNTAS' };
 
     if (idEncuesta.includes('parentid')) {
-        var idArray = idEncuesta.split('?');
+        var idArray = idEncuesta.split('&');
         var parentidEncuesta = idArray[1].substring(9);
         idEncuesta = idArray[0].substring(3);
         dataToSend.encuesta = parentidEncuesta;
