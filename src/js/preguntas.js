@@ -7,16 +7,20 @@ var globalVideo = [];
 // Helper Functions
 // -----------------------------------------------------------------------------------------------
 
-function updateQuestionIndex (totalQuestions, nextQuestion, nextinDOM) {
+function updateQuestionIndex (totalQuestions, nextQuestion, nextinDOM, action) {
     for (; nextQuestion <= totalQuestions; nextQuestion += 1) {
         // console.log("nextQuestion" + nextQuestion);
         // console.log("DOM" + $(nextinDOM).attr('id'));
         $(nextinDOM).attr('id', nextQuestion);
-
-        $('#' + nextQuestion + ' > .input-wrapper > .preview-resource-image > #imagen' + (nextQuestion)).attr('id', 'imagen' + nextQuestion);
-        $('#' + nextQuestion + ' > .input-wrapper > .preview-resource-video > #video' + (nextQuestion)).attr('id', 'video' + nextQuestion);
-        $('#' + nextQuestion + ' > #Answers' + (nextQuestion)).attr('id', 'Answers' + nextQuestion);
-
+        if (action == 'addQuestion') {
+            $('#' + nextQuestion + ' > .input-wrapper > .preview-resource-image > #imagen' + (nextQuestion - 1)).attr('id', 'imagen' + nextQuestion);
+            $('#' + nextQuestion + ' > .input-wrapper > .preview-resource-video > #video' + (nextQuestion - 1)).attr('id', 'video' + nextQuestion);
+            $('#' + nextQuestion + ' > #Answers' + (nextQuestion - 1)).attr('id', 'Answers' + nextQuestion);
+        } else {
+            $('#' + nextQuestion + ' > .input-wrapper > .preview-resource-image > #imagen' + (nextQuestion + 1)).attr('id', 'imagen' + nextQuestion);
+            $('#' + nextQuestion + ' > .input-wrapper > .preview-resource-video > #video' + (nextQuestion + 1)).attr('id', 'video' + nextQuestion);
+            $('#' + nextQuestion + ' > #Answers' + (nextQuestion + 1)).attr('id', 'Answers' + nextQuestion);
+        }
         nextinDOM = $(nextinDOM).next();
     }
 }
@@ -256,7 +260,7 @@ $(document).on('ready', function () {
 
         if (currentQuestion < totalQuestions) {
             var nextinDOM = $(this).parent().next();
-            updateQuestionIndex(totalQuestions + 1, nextQuestion, nextinDOM);
+            updateQuestionIndex(totalQuestions + 1, nextQuestion, nextinDOM, 'addQuestion');
         }
     });
 
@@ -274,7 +278,7 @@ $(document).on('ready', function () {
             $(this).parent().remove();
 
             if (deletedQuestion < totalQuestions) {
-                updateQuestionIndex(totalQuestions, deletedQuestion, nextinDOM);
+                updateQuestionIndex(totalQuestions, deletedQuestion, nextinDOM, 'removeQuestion');
             }
         }
     });
