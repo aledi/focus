@@ -664,6 +664,8 @@ $(document).on('ready', function () {
             return;
         }
 
+        var encuestaName = $('#encuestas-filter-select option:selected').text().replace(' ', '-');
+
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
@@ -710,7 +712,7 @@ $(document).on('ready', function () {
 
                 currentHTML += '</tbody>';
                 $('#reportes-table').append(currentHTML);
-                exportTable();
+                exportTable(encuestaName);
                 $('#reportes-table').empty();
             },
             error: function (errorMsg) {
@@ -720,49 +722,17 @@ $(document).on('ready', function () {
     });
 });
 
-function exportTable () {
+function exportTable (fileName) {
     var uri = 'data:application/vnd.ms-excel;base64,';
-    var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+    var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
     var table = document.getElementById('reportes-table');
     var ctx = {
         worksheet: 'reportes',
         table: table.innerHTML
     };
 
-    while (ctx.table.indexOf('á') !== -1) {
-        ctx.table = ctx.table.replace('á', '&aacute;');
-    }
-
-    while (ctx.table.indexOf('é') !== -1) {
-        ctx.table = ctx.table.replace('é', '&eacute;');
-    }
-
-    while (ctx.table.indexOf('í') !== -1) {
-        ctx.table = ctx.table.replace('í', '&iacute;');
-    }
-
-    while (ctx.table.indexOf('ó') !== -1) {
-        ctx.table = ctx.table.replace('ó', '&oacute;');
-    }
-
-    while (ctx.table.indexOf('ú') !== -1) {
-        ctx.table = ctx.table.replace('ú', '&uacute;');
-    }
-
-    while (ctx.table.indexOf('ü') !== -1) {
-        ctx.table = ctx.table.replace('ü', '&uuml;');
-    }
-
-    while (ctx.table.indexOf('ñ') !== -1) {
-        ctx.table = ctx.table.replace('ñ', '&ntilde;');
-    }
-
-    while (ctx.table.indexOf('¿') !== -1) {
-        ctx.table = ctx.table.replace('¿', '&iquest;');
-    }
-
     document.getElementById('dlink').href = uri + base64(format(template, ctx));
-    document.getElementById('dlink').download = 'reporte.xls';
+    document.getElementById('dlink').download = fileName + '.xls';
     document.getElementById('dlink').click();
 }
 
