@@ -42,7 +42,7 @@ function getData () {
             currentHTML += '<th>Fecha Inicio</th>';
             currentHTML += '<th>Fecha Fin</th>';
             currentHTML += '<th>Panel</th>';
-            currentHTML += '<th colspan="3">Acciónes</th>';
+            currentHTML += '<th colspan="3">Acciones</th>';
             currentHTML += '</tr>';
             currentHTML += '</thead>';
             currentHTML += '<tbody>';
@@ -161,8 +161,7 @@ $(document).on('ready', function () {
             parentIdEncuesta =  parameters.substring(9);
             idEncuesta = '';
             actionText = 'duplicada';
-        }
-        else if (parameters.substring(3) !== '' && actionText === '') {
+        } else if (parameters.substring(3) !== '' && actionText === '') {
             actionText = 'editada';
             idEncuesta = parameters.substring(3);
         } else {
