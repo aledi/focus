@@ -336,3 +336,16 @@ table tbody tr td button {
     display: inline;
     align-items: center;
 }
+
+/* -----------------------------------------------------------------------------------------------
+/ Resources
+/ ----------------------------------------------------------------------------------------------- */
+
+.preview-resource {
+    overflow: hidden;
+}
+
+.preview {
+    float: right;
+    width: 40%;
+}

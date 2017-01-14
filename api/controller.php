@@ -53,6 +53,9 @@ switch ($_POST['action']) {
     case 'GET_RECURSOS':
         getRecords('RESOURCES');
         break;
+    case 'GET_HISTORIAL':
+        getRecords('HISTORIAL');
+        break;
     case 'GET_MUNICIPIOS':
         echo json_encode(getMunicipiosFromFile(), JSON_UNESCAPED_UNICODE);
         break;
@@ -83,6 +86,12 @@ switch ($_POST['action']) {
     case 'DELETE_ENCUESTA':
         deleteRecord('Encuesta');
         break;
+    case 'DELETE_ANSWER':
+        deleteRecord('Respuesta');
+        break;
+    case 'DELETE_PANELISTA_EN_PANEL':
+        deleteRecord('PanelistaEnPanel');
+        break;
     case 'DELETE_RECURSO':
         deleteRecord('Recurso');
         break;
@@ -112,6 +121,9 @@ switch ($_POST['action']) {
         break;
     case 'FORGOT_PANELISTA_PASSWORD':
         recoverPasword();
+        break;
+    case 'INVITATION_RESPONSE':
+        echo json_encode(invitationResponse($_POST['panelista'], $_POST['panel'], $_POST['estado']));
         break;
     case 'LOG_OUT':
         logOut();
@@ -300,12 +312,32 @@ function getRecords ($type) {
             echo json_encode(fetchMobileData($_POST['panelista']));
             break;
         case 'RESOURCES':
-            if (isset($_POST['tipo'])) {
-                echo json_encode(fetchResourcesOfType($_POST['tipo']));
-                return;
+            $response = array();
+
+            if (!isset($_POST['tipo']) || $_POST['tipo'] == 1) {
+                foreach (glob('../resources/images/*.{jpg,png}', GLOB_BRACE) as $filename){
+                    $filename = substr(strrchr($filename, '/'), 1);
+                    $recurso = array('nombre' => $filename, 'tipo' => 1);
+                    $response[] = $recurso;
+                }
             }
 
-            echo json_encode(fetchResources());
+            if (!isset($_POST['tipo']) || $_POST['tipo'] == 2) {
+                foreach (glob('../resources/videos/*.mp4') as $filename)  {
+                    $filename = substr(strrchr($filename, '/'), 1);
+                    $recurso = array('nombre' => $filename, 'tipo' => 2);
+                    $response[] = $recurso;
+                }
+            }
+
+            usort($response, function ($item1, $item2) {
+                return $item1['nombre'] >= $item2['nombre'];
+            });
+
+            echo json_encode(array('results' => $response));
+            break;
+        case 'HISTORIAL':
+            echo json_encode(fetchHistorial($_POST['panelista']));
             break;
     }
 }
@@ -335,7 +367,7 @@ function initEncuesta () {
 }
 
 function setRespuestas () {
-    $saveResult = saveRespuestas($_POST['id'], $_POST['respuestas']);
+    $saveResult = saveRespuestas($_POST['id'], $_POST['respuestas'], $_POST['panelista'], $_POST['encuesta']);
 
     echo json_encode($saveResult);
 }
@@ -344,6 +376,9 @@ function deleteRecord ($table) {
     if ($table === 'Recurso') {
         $path = '../resources/'.((int)$_POST['tipo'] == 1 ? 'images/' : 'videos/').$_POST['nombre'];
         unlink($path);
+
+        echo json_encode(array('status' => 'SUCCESS'));
+        return;
     }
 
     $deleteResult = removeRecord($_POST['id'], $table);

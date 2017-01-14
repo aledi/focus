@@ -91,18 +91,22 @@ function fillMonth () {
 }
 
 function fillYear (option) {
+    var minYear = 2016;
     var currentYear = new Date().getFullYear();
     var currentHTML = '';
 
     if (option === 0) {
-        for (var x = currentYear; x < currentYear + 10; x++) {
+        for (var x = minYear; x < currentYear + 10; x++) {
             currentHTML += '<option value="' + x + '">' + x + '</option>';
         }
 
         $('#anio').append(currentHTML);
         $('#anio-fin').append(currentHTML);
+
+        $('#anio').val(currentYear);
+        $('#anio-fin').val(currentYear);
     } else {
-        for (var x = currentYear - 18; x > currentYear - 100 ; x--) {
+        for (var x = currentYear - 18; x > currentYear - 100; x--) {
             currentHTML += '<option value="' + x + '">' + x + '</option>';
         }
 

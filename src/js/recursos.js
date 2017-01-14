@@ -22,9 +22,11 @@ function getData () {
 
             for (var i = 0; i < response.results.length; i++) {
                 var result = response.results[i];
+                var urlToResource = result.tipo == 1 ? "../resources/images/" : "../resources/videos/";
+                urlToResource += result.nombre;
 
-                currentHTML += '<tr id="'+ result.id + '&' + result.nombre + '&' + result.tipo +'">';
-                currentHTML += '<td>' + result.nombre + '</td>';
+                currentHTML += '<tr id="' + result.nombre + '&' + result.tipo +'">';
+                currentHTML += '<td><a href="' + urlToResource + '" target="_blank">' + result.nombre + '</a></td>';
                 currentHTML += '<td>' + changeType(result.tipo, 0) + '</td>';
                 currentHTML += '<td class="deleteButton"><button id="delete" type="button">Eliminar</button></td>';
                 currentHTML += '</tr>';
@@ -46,7 +48,9 @@ $(document).on('ready', function () {
 
     $('input[type=radio][name=tipo]').change(function () {
         var currentHTML = '';
+
         $('#extension').empty();
+
         if (this.value == '1') {
             currentHTML += '<option value="jpg">jpg</option>' +
             '<option value="png">png</option>';
@@ -133,9 +137,8 @@ $(document).on('ready', function () {
                 type: 'POST',
                 data: {
                     action: 'DELETE_RECURSO',
-                    id: data[0],
-                    nombre: data[1],
-                    tipo: data[2]
+                    nombre: data[0],
+                    tipo: data[1]
                 },
                 dataType: 'json',
                 success: function (response) {

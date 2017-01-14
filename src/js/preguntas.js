@@ -74,13 +74,19 @@ function appendQuestions (lastQuestion) {
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
         '<label>Imagen</label>' +
+        '<div class="preview-resource-image">' +
         '<select id="imagen' + lastQuestion + '" class="imagen" type="text">' +
         '<option value="">Selecciona una Imagen</option></select>' +
+        '<label class="preview"><a class="preview-link">Vista Previa</a></label>' +
+        '</div>' +
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
         '<label>Video</label>' +
+        '<div class="preview-resource-video">' +
         '<select id="video' + lastQuestion + '" class="video" type="text">' +
         '<option value="">Selecciona un video</option></select>' +
+        '<label class="preview"><a class="preview-link">Vista Previa</a></label>' +
+        '</div>' +
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
         '<label>Pregunta</label>' +
@@ -113,6 +119,9 @@ function appendQuestions (lastQuestion) {
 $(document).on('ready', function () {
     var idEncuesta = window.location.search.substring(1);
     idEncuesta = idEncuesta.substring(3);
+
+    $('#imagen1').parent().find('label').hide();
+    $('#video1').parent().find('label').hide();
 
     $.ajax({
         type: 'POST',
@@ -160,8 +169,25 @@ $(document).on('ready', function () {
 
                     appendAnswers(response.results[x].tipo, (x + 1));
 
-                    $('#' + (x + 1) + ' > .input-wrapper > #imagen' + (x + 1)).val(response.results[x].imagen);
-                    $('#' + (x + 1) + ' > .input-wrapper > #video' + (x + 1)).val(response.results[x].video);
+                    if (response.results[x].imagen == "") {
+                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview').hide();
+                    } else{
+                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview').show();
+                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview > .preview-link').attr('href','../resources/images/' + response.results[x].imagen);
+                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview > .preview-link').attr('target','_blank');
+                    }
+
+                    $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > #imagen' + (x + 1)).val(response.results[x].imagen);
+
+                    if (response.results[x].video == "") {
+                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview').hide();
+                    } else{
+                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview').show();
+                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview > .preview-link').attr('href','../resources/videos/' + response.results[x].video);
+                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview > .preview-link').attr('target','_blank');
+                    }
+
+                    $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > #video' + (x + 1)).val(response.results[x].video);
 
                     if (response.results[x].tipo !== 1) {
                         var opciones = response.results[x].opciones;
@@ -203,6 +229,9 @@ $(document).on('ready', function () {
         lastQuestion = parseInt(lastQuestion) + 1;
 
         appendQuestions(lastQuestion);
+
+        $('#imagen' + lastQuestion).parent().find('label').hide();
+        $('#video' + lastQuestion).parent().find('label').hide();
     });
 
     $('#questions').on('click', '#removeQuestion', function () {
@@ -214,6 +243,32 @@ $(document).on('ready', function () {
             $(this).parent().remove();
         }
     });
+
+    $('#questions').on('change','.imagen', function (){
+        var currentValueImage = $(this).val();
+        if(currentValueImage == ""){
+            $(this).parent().find('label').hide();
+        }
+        else {
+            $(this).parent().find('label').show();
+            $(this).parent().find('.preview-link').attr('href','../resources/images/' + currentValueImage);
+            $(this).parent().find('.preview-link').attr('target','_blank');
+        }
+    });
+
+    $('#questions').on('change','.video', function (){
+        var currentValueVideo = $(this).val();
+
+        if(currentValueVideo == ""){
+            $(this).parent().find('label').hide();
+        }
+        else {
+            $(this).parent().find('label').show();
+            $(this).parent().find('.preview-link').attr('href','../resources/videos/' + currentValueVideo);
+            $(this).parent().find('.preview-link').attr('target','_blank');
+        }
+    });
+
 
     $('#submitQuestions').on('click', function () {
         var numeroPregunta = 1;

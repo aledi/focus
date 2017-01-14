@@ -65,7 +65,8 @@ $(document).on('ready', function () {
                 currentHTML += '<th>Edad</th>';
                 currentHTML += '<th>Municipio</th>';
                 currentHTML += '<th>Estado</th>';
-                currentHTML += '<th>Fecha Registro</th>';
+                currentHTML += '<th>Registro</th>';
+                currentHTML += '<th>Historial de Paneles</th>';
                 currentHTML += '<th colspan="2">Acción</th>';
                 currentHTML += '</tr>';
                 currentHTML += '</thead>';
@@ -82,6 +83,7 @@ $(document).on('ready', function () {
                     currentHTML += '<td>' + result.municipio + '</td>';
                     currentHTML += '<td>' + result.estado + '</td>';
                     currentHTML += '<td>' + readableDate(result.fechaRegistro) + '</td>';
+                    currentHTML += '<td>' + result.paneles + '</td>';
                     currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
                     currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                     currentHTML += '</tr>';

@@ -29,15 +29,21 @@
                         </div>
                         <div class='input-wrapper'>
                             <label>Imagen</label>
-                            <select id='imagen1' class='imagen' type='text'>
-                                <option value=''>Selecciona una imagen</option>
-                            </select>
+                            <div class='preview-resource-image'>
+                                <select id='imagen1' class='imagen' type='text'>
+                                    <option value=''>Selecciona una imagen</option>
+                                </select>
+                                <label class='preview'><a class="preview-link">Vista Previa</a></label>
+                            </div>
                         </div>
                         <div class='input-wrapper'>
                             <label>Video</label>
-                            <select id='video1' class='video' type='text'>
-                                <option value=''>Selecciona un video</option>
-                            </select>
+                            <div class='preview-resource-video'>
+                                <select id='video1' class='video' type='text'>
+                                    <option value=''>Selecciona un video</option>
+                                </select>
+                                <label class='preview'><a class="preview-link">Vista Previa</a></label>
+                            </div>
                         </div>
                         <div class='input-wrapper'>
                             <label>Pregunta</label>

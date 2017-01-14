@@ -35,7 +35,7 @@ function pieChart (opciones, votes, chartNumber, title) {
         }
 
         var options = {
-            width: 700,
+            width: '100%',
             height: 350,
             colors: colorArray,
             sliceVisibilityThreshold: 0,
@@ -56,15 +56,17 @@ function barChart (opciones, votes, chartNumber, title) {
 
     function drawChart() {
         var data = new google.visualization.DataTable();
+
         data.addColumn('string', '');
         data.addColumn('number', 'Posición Promedio');
+        data.addColumn({type: 'string', role: 'annotation'});
 
         for (var x = 0; x < opciones.length; x++) {
-            data.addRows([[opciones[x], votes[x]]]);
+            data.addRows([[opciones[x], votes[x], String(votes[x])]]);
         }
 
         var options = {
-            width: 800,
+            width: '100%',
             height: 500,
             colors: colorArray,
             bar: {
@@ -73,10 +75,10 @@ function barChart (opciones, votes, chartNumber, title) {
             },
             hAxis: {
                 format: '#',
-                ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
                 viewWindow : {
                     min: 0,
-                    max: 10
+                    max: votes.length
                 }
             }
         };
@@ -115,7 +117,7 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber) 
 
         var options = {
             isStacked: 'percent',
-            width: 800,
+            width: '100%',
             height: 500,
             colors: colorArray,
             hAxis: {
@@ -125,7 +127,7 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber) 
         };
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' bar-chart';
+        chart.className += ' stacked-chart';
         var googleChart = new google.visualization.BarChart(chart);
         googleChart.draw(data, options);
     }
@@ -136,20 +138,24 @@ function columnChart (opciones, percent, chartNumber, title) {
 
     function drawStuff () {
         var data = new google.visualization.DataTable();
+
         data.addColumn('string', '');
         data.addColumn('number', '');
+        data.addColumn({type: 'string', role: 'annotation'});
         data.addColumn({type: 'string', role: 'tooltip'});
 
         for (var x = 0; x < opciones.length; x++) {
-            opciones[x] += '\n(' + String((percent[x] * 100).toFixed(2)) + '%)';
-
-            data.addRows([[opciones[x], percent[x], opciones[x]]]);
+            var annotation = String((percent[x] * 100).toFixed(2)) + '%';
+            data.addRows([[opciones[x], percent[x], annotation, (opciones[x] + '\n(' + annotation + ')')]]);
         }
 
         var options = {
-            width: 800,
+            width: '100%',
             height: 400,
             colors: colorArray,
+            annotations: {
+                alwaysOutside: true
+            },
             bar: {
                 width: opciones.length > 1 ? '80%' : '40%'
             },
@@ -179,13 +185,14 @@ function averageChart (min, max, value, chartNumber) {
         var data = new google.visualization.DataTable();
         data.addColumn('string', '');
         data.addColumn('number', '');
+        data.addColumn({type: 'string', role: 'annotation'});
         data.addColumn({type: 'string', role: 'tooltip'});
 
-        var label = 'Promedio' + '\n(' + String(value.toFixed(2)) + ')';
-        data.addRows([[label, value, label]]);
+        var annotation = String(value.toFixed(2));
+        data.addRows([['Promedio', value, annotation, ('Promedio' + '\n(' + annotation + ')')]]);
 
         var options = {
-            width: 800,
+            width: '100%',
             height: 400,
             colors: colorArray,
             bar: {
@@ -193,7 +200,7 @@ function averageChart (min, max, value, chartNumber) {
             },
             vAxis: {
                 viewWindow : {
-                    min: min,
+                    min: 0,
                     max: max
                 }
             },
@@ -201,7 +208,7 @@ function averageChart (min, max, value, chartNumber) {
         };
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' column-chart';
+        chart.className += ' average-chart';
         var googleChart = new google.visualization.ColumnChart(chart);
         googleChart.draw(data, options);
     }
@@ -657,6 +664,8 @@ $(document).on('ready', function () {
             return;
         }
 
+        var encuestaName = $('#encuestas-filter-select option:selected').text().replace(' ', '-');
+
         $.ajax({
             url: '../api/controller.php',
             type: 'POST',
@@ -703,7 +712,8 @@ $(document).on('ready', function () {
 
                 currentHTML += '</tbody>';
                 $('#reportes-table').append(currentHTML);
-                exportTable();
+                exportTable(encuestaName);
+                $('#reportes-table').empty();
             },
             error: function (errorMsg) {
                 $('#reportes-feedback').html('Ha ocurrido un error. Favor de intentar de nuevo.');
@@ -712,49 +722,17 @@ $(document).on('ready', function () {
     });
 });
 
-function exportTable () {
+function exportTable (fileName) {
     var uri = 'data:application/vnd.ms-excel;base64,';
-    var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+    var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
     var table = document.getElementById('reportes-table');
     var ctx = {
         worksheet: 'reportes',
         table: table.innerHTML
     };
 
-    while (ctx.table.indexOf('á') !== -1) {
-        ctx.table = ctx.table.replace('á', '&aacute;');
-    }
-
-    while (ctx.table.indexOf('é') !== -1) {
-        ctx.table = ctx.table.replace('é', '&eacute;');
-    }
-
-    while (ctx.table.indexOf('í') !== -1) {
-        ctx.table = ctx.table.replace('í', '&iacute;');
-    }
-
-    while (ctx.table.indexOf('ó') !== -1) {
-        ctx.table = ctx.table.replace('ó', '&oacute;');
-    }
-
-    while (ctx.table.indexOf('ú') !== -1) {
-        ctx.table = ctx.table.replace('ú', '&uacute;');
-    }
-
-    while (ctx.table.indexOf('ü') !== -1) {
-        ctx.table = ctx.table.replace('ü', '&uuml;');
-    }
-
-    while (ctx.table.indexOf('ñ') !== -1) {
-        ctx.table = ctx.table.replace('ñ', '&ntilde;');
-    }
-
-    while (ctx.table.indexOf('¿') !== -1) {
-        ctx.table = ctx.table.replace('¿', '&iquest;');
-    }
-
     document.getElementById('dlink').href = uri + base64(format(template, ctx));
-    document.getElementById('dlink').download = 'reporte.xls';
+    document.getElementById('dlink').download = fileName + '.xls';
     document.getElementById('dlink').click();
 }
 

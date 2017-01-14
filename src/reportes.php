@@ -43,7 +43,7 @@
 
                 <span id='selects-feedback' class='feedback-text'></span>
                 <div class='button-wrapper'>
-                    <button type='button' id='download-reportes' class='download-button'>Descargar Reporte</button>
+                    <button type='button' id='download-reportes' class='download-button'>Descargar Base de Datos</button>
                     <button type='button' id='refresh'>Actualizar</button>
                 </div>
             </div>
