@@ -7,6 +7,23 @@ var globalVideo = [];
 // Helper Functions
 // -----------------------------------------------------------------------------------------------
 
+function updateQuestionIndex (totalQuestions, nextQuestion, nextinDOM, action) {
+    for (; nextQuestion <= totalQuestions; nextQuestion += 1) {
+        $(nextinDOM).attr('id', nextQuestion);
+
+        if (action == 'addQuestion') {
+            $('#' + nextQuestion + ' > .input-wrapper > .preview-resource-image > #imagen' + (nextQuestion - 1)).attr('id', 'imagen' + nextQuestion);
+            $('#' + nextQuestion + ' > .input-wrapper > .preview-resource-video > #video' + (nextQuestion - 1)).attr('id', 'video' + nextQuestion);
+            $('#' + nextQuestion + ' > #Answers' + (nextQuestion - 1)).attr('id', 'Answers' + nextQuestion);
+        } else {
+            $('#' + nextQuestion + ' > .input-wrapper > .preview-resource-image > #imagen' + (nextQuestion + 1)).attr('id', 'imagen' + nextQuestion);
+            $('#' + nextQuestion + ' > .input-wrapper > .preview-resource-video > #video' + (nextQuestion + 1)).attr('id', 'video' + nextQuestion);
+            $('#' + nextQuestion + ' > #Answers' + (nextQuestion + 1)).attr('id', 'Answers' + nextQuestion);
+        }
+        nextinDOM = $(nextinDOM).next();
+    }
+}
+
 function appendSelect (lastQuestion) {
     var currentHTML = '';
     for(var x = 0; x < globalImages.length; x++) {
@@ -65,8 +82,9 @@ function appendAnswers (typeQuestion, questionID) {
     currentHTML = '';
 }
 
-function appendQuestions (lastQuestion) {
-    var currentHTML = '<div id="' + lastQuestion + '" class="questionForm">';
+function appendQuestions (nextQuestion) {
+    var currentQuestion = nextQuestion - 1;
+    var currentHTML = '<div id="' + nextQuestion + '" class="questionForm">';
     currentHTML += '<hr>';
     currentHTML += '<div class="input-wrapper">' +
         '<label>Título</label>' +
@@ -75,7 +93,7 @@ function appendQuestions (lastQuestion) {
     currentHTML += '<div class="input-wrapper">' +
         '<label>Imagen</label>' +
         '<div class="preview-resource-image">' +
-        '<select id="imagen' + lastQuestion + '" class="imagen" type="text">' +
+        '<select id="imagen' + nextQuestion + '" class="imagen" type="text">' +
         '<option value="">Selecciona una Imagen</option></select>' +
         '<label class="preview"><a class="preview-link">Vista Previa</a></label>' +
         '</div>' +
@@ -83,7 +101,7 @@ function appendQuestions (lastQuestion) {
     currentHTML += '<div class="input-wrapper">' +
         '<label>Video</label>' +
         '<div class="preview-resource-video">' +
-        '<select id="video' + lastQuestion + '" class="video" type="text">' +
+        '<select id="video' + nextQuestion + '" class="video" type="text">' +
         '<option value="">Selecciona un video</option></select>' +
         '<label class="preview"><a class="preview-link">Vista Previa</a></label>' +
         '</div>' +
@@ -103,13 +121,14 @@ function appendQuestions (lastQuestion) {
         '<option value="6">Escala</option>' +
         '</select>' +
         '</div>';
-    currentHTML += '<div id="Answers' + lastQuestion + '"></div>' +
+    currentHTML += '<div id="Answers' + nextQuestion + '"></div>' +
+        '<button type="button" id="addQuestion" class="no-background">Agregar Nueva Pregunta</button>' +
         '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
         '</div>';
 
-    $('#questions').append(currentHTML);
-    appendSelect(lastQuestion);
-    appendAnswers(1, lastQuestion);
+    $('#' + currentQuestion).after(currentHTML);
+    appendSelect(nextQuestion);
+    appendAnswers(1, nextQuestion);
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -224,14 +243,24 @@ $(document).on('ready', function () {
         appendAnswers(typeQuestion, questionID);
     });
 
-    $('#addQuestion').on('click', function() {
-        var lastQuestion = $('#questions').children().length;
-        lastQuestion = parseInt(lastQuestion) + 1;
+    $('#questions').on('click', '#addQuestion',  function() {
+        var currentQuestion = $(this).parent().attr('id');
+        var nextQuestion = 0;
+        var totalQuestions = $('#questions').children().length;
 
-        appendQuestions(lastQuestion);
+        totalQuestions = parseInt(totalQuestions);
+        currentQuestion = parseInt(currentQuestion);
+        nextQuestion = currentQuestion + 1;
 
-        $('#imagen' + lastQuestion).parent().find('label').hide();
-        $('#video' + lastQuestion).parent().find('label').hide();
+        appendQuestions(nextQuestion);
+
+        $('#imagen' + nextQuestion).parent().find('label').hide();
+        $('#video' + nextQuestion).parent().find('label').hide();
+
+        if (currentQuestion < totalQuestions) {
+            var nextinDOM = $(this).parent().next();
+            updateQuestionIndex(totalQuestions + 1, nextQuestion, nextinDOM, 'addQuestion');
+        }
     });
 
     $('#questions').on('click', '#removeQuestion', function () {
@@ -240,7 +269,15 @@ $(document).on('ready', function () {
                 return;
             }
 
+            var deletedQuestion = parseInt($(this).parent().attr('id'));
+            var totalQuestions = $('#questions').children().length;
+            var nextinDOM = $(this).parent().next();
+
             $(this).parent().remove();
+
+            if (deletedQuestion < totalQuestions) {
+                updateQuestionIndex(totalQuestions, deletedQuestion, nextinDOM, 'removeQuestion');
+            }
         }
     });
 
