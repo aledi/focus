@@ -159,14 +159,12 @@ $(document).on('ready', function () {
 
         if (parameters.includes('parentid')) {
             parentIdEncuesta =  parameters.substring(9);
-            idEncuesta = '';
             actionText = 'duplicada';
         } else if (parameters.substring(3) !== '' && actionText === '') {
             actionText = 'editada';
             idEncuesta = parameters.substring(3);
         } else {
             actionText = 'agregada';
-            idEncuesta = '';
         }
 
         var nombre = $('#nombre').val();
@@ -200,7 +198,7 @@ $(document).on('ready', function () {
             panel: panel
         };
 
-        if (idEncuesta !== '') {
+        if (idEncuesta !== 0) {
             parameters.id = idEncuesta;
         }
 
