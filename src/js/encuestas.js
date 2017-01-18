@@ -202,8 +202,6 @@ $(document).on('ready', function () {
 
         if (idEncuesta !== '') {
             parameters.id = idEncuesta;
-        } else if (actionText == 'duplicada') {
-            parameters.parentid = parentIdEncuesta;
         }
 
         $.ajax({
