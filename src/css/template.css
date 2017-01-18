@@ -349,3 +349,14 @@ table tbody tr td button {
     float: right;
     width: 40%;
 }
+
+
+.addOption, .removeOption {
+    float: right;
+    width: 5%;
+    height: 30px;
+}
+
+input[type='text'].optionWidth {
+    width: 90%;
+}

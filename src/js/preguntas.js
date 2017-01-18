@@ -54,12 +54,12 @@ function appendAnswers (typeQuestion, questionID) {
             currentHTML += '</div>';
         }
 
-        for (var x = 1; x <= 20; x++) {
-            currentHTML += '<div class="input-wrapper answer">';
-            currentHTML += '<label>Opción ' + x + '</label>';
-            currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' full-width" type="text"/>';
-            currentHTML += '</div>';
-        }
+        currentHTML += '<div class="input-wrapper answer">';
+        currentHTML += '<label>Opción 1</label>';
+        currentHTML += '<input id="opcion1" class="respuesta1 optionWidth" type="text"/>';
+        currentHTML += '<button class="addOption">+</button>';
+        currentHTML += '<button class="removeOption">-</button>';
+        currentHTML += '</div>';
 
         if (typeQuestion == 5) {
             for (var x = 1; x <= 20; x++) {
