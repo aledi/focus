@@ -53,7 +53,7 @@ function appendSelect (lastQuestion) {
     $('#video' + lastQuestion).append(currentHTML);
 }
 
-function appendAnswers (typeQuestion, questionID, optionLength) {
+function appendAnswers (typeQuestion, questionID, optionLength, subPreguntasLength) {
     var currentHTML = '';
 
     $('#Answers' + questionID).empty();
@@ -68,7 +68,7 @@ function appendAnswers (typeQuestion, questionID, optionLength) {
         }
         for (var x = 1; x <= optionLength; x++) {
             currentHTML += '<div class="input-wrapper answer">';
-            currentHTML += '<label>Opción' + x + '</label>';
+            currentHTML += '<label>Opción ' + x + '</label>';
             currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' optionWidth" type="text"/>';
             currentHTML += '<button class="addOption">+</button>';
             currentHTML += '<button class="removeOption">-</button>';
@@ -76,7 +76,7 @@ function appendAnswers (typeQuestion, questionID, optionLength) {
         }
 
         if (typeQuestion == 5) {
-            for (var x = 1; x <= 20; x++) {
+            for (var x = 1; x <= subPreguntasLength; x++) {
                 currentHTML += '<div class="input-wrapper answer">';
                 currentHTML += '<label>Subpregunta ' + x + '</label>';
                 currentHTML += '<input id="subpregunta' + x + '" class="subpregunta' + x + ' full-width" type="text"/>';
@@ -142,7 +142,7 @@ function appendQuestions (nextQuestion) {
 
     $('#' + currentQuestion).after(currentHTML);
     appendSelect(nextQuestion);
-    appendAnswers(1, nextQuestion, 1);
+    appendAnswers(1, nextQuestion, 1, 1);
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -208,7 +208,7 @@ $(document).on('ready', function () {
                     $('#' + (x + 1) + ' > .input-wrapper > #tipo').val(response.results[x].tipo);
                     $('#' + (x + 1) + ' > .input-wrapper > #titulo').val(response.results[x].titulo);
 
-                    appendAnswers(result.tipo, (x + 1), result.opciones.length);
+                    appendAnswers(result.tipo, (x + 1), result.opciones.length, result.subPreguntas.length);
 
                     if (response.results[x].imagen == "") {
                         $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview').hide();
@@ -262,7 +262,7 @@ $(document).on('ready', function () {
         var questionID = $(this).parent().parent().attr('id');
         var answersClass = 'div#Answers' + questionID;
 
-        appendAnswers(typeQuestion, questionID, 1);
+        appendAnswers(typeQuestion, questionID, 1, 1);
     });
 
     $('#questions').on('click', '#addQuestion',  function() {
