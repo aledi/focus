@@ -29,8 +29,8 @@ function appendOption (questionID, optionToAppend) {
     var currentHTML = '<div class="input-wrapper answer">';
     currentHTML += '<label>Opción ' + optionToAppend + '</label>';
     currentHTML += '<input id="opcion' + optionToAppend + '" class="respuesta' + optionToAppend + ' optionWidth" type="text"/>';
-    currentHTML += '<button class="addOption">+</button>';
     currentHTML += '<button class="removeOption">-</button>';
+    currentHTML += '<button class="addOption">+</button>';
     currentHTML += '</div>';
 
     $('#Answers' + questionID).append(currentHTML);
@@ -70,8 +70,8 @@ function appendAnswers (typeQuestion, questionID, optionLength, subPreguntasLeng
             currentHTML += '<div class="input-wrapper answer">';
             currentHTML += '<label>Opción ' + x + '</label>';
             currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' optionWidth" type="text"/>';
-            currentHTML += '<button class="addOption">+</button>';
             currentHTML += '<button class="removeOption">-</button>';
+            currentHTML += '<button class="addOption">+</button>';
             currentHTML += '</div>';
         }
 
@@ -79,7 +79,9 @@ function appendAnswers (typeQuestion, questionID, optionLength, subPreguntasLeng
             for (var x = 1; x <= subPreguntasLength; x++) {
                 currentHTML += '<div class="input-wrapper answer">';
                 currentHTML += '<label>Subpregunta ' + x + '</label>';
-                currentHTML += '<input id="subpregunta' + x + '" class="subpregunta' + x + ' full-width" type="text"/>';
+                currentHTML += '<input id="subpregunta' + x + '" class="subpregunta' + x + ' optionWidth" type="text"/>';
+                currentHTML += '<button class="removeSub">-</button>';
+                currentHTML += '<button class="addSub">+</button>';
                 currentHTML += '</div>';
             }
          }
@@ -194,7 +196,6 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (response) {
-                console.log(response);
                 for (var x = 2; x <= response.results.length; x++) {
                     appendQuestions(x);
                 }
@@ -305,7 +306,7 @@ $(document).on('ready', function () {
 
     $('#questions').on('click', '.addOption', function () {
         var currentQuestion = parseInt($(this).parent().parent().parent().attr('id'));
-        var nextOption = parseInt($(this).prev().attr('id').substring(6)) + 1;
+        var nextOption = parseInt($(this).prev().prev().attr('id').substring(6)) + 1;
 
         console.log($(this).parent().parent().last());
 
