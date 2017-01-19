@@ -24,6 +24,19 @@ function updateQuestionIndex (totalQuestions, nextQuestion, nextinDOM, action) {
     }
 }
 
+function appendOption (questionID, optionToAppend) {
+
+    var currentHTML = '<div class="input-wrapper answer">';
+    currentHTML += '<label>Opción ' + optionToAppend + '</label>';
+    currentHTML += '<input id="opcion' + optionToAppend + '" class="respuesta' + optionToAppend + ' optionWidth" type="text"/>';
+    currentHTML += '<button class="addOption">+</button>';
+    currentHTML += '<button class="removeOption">-</button>';
+    currentHTML += '</div>';
+
+    $('#Answers' + questionID).append(currentHTML);
+}
+
+
 function appendSelect (lastQuestion) {
     var currentHTML = '';
     for(var x = 0; x < globalImages.length; x++) {
@@ -40,7 +53,7 @@ function appendSelect (lastQuestion) {
     $('#video' + lastQuestion).append(currentHTML);
 }
 
-function appendAnswers (typeQuestion, questionID) {
+function appendAnswers (typeQuestion, questionID, optionLength) {
     var currentHTML = '';
 
     $('#Answers' + questionID).empty();
@@ -53,13 +66,14 @@ function appendAnswers (typeQuestion, questionID) {
             currentHTML += '<input type="radio" value="1" name="combo' + questionID + '"> Combo </input>';
             currentHTML += '</div>';
         }
-
-        currentHTML += '<div class="input-wrapper answer">';
-        currentHTML += '<label>Opción 1</label>';
-        currentHTML += '<input id="opcion1" class="respuesta1 optionWidth" type="text"/>';
-        currentHTML += '<button class="addOption">+</button>';
-        currentHTML += '<button class="removeOption">-</button>';
-        currentHTML += '</div>';
+        for (var x = 1; x <= optionLength; x++) {
+            currentHTML += '<div class="input-wrapper answer">';
+            currentHTML += '<label>Opción' + x + '</label>';
+            currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' optionWidth" type="text"/>';
+            currentHTML += '<button class="addOption">+</button>';
+            currentHTML += '<button class="removeOption">-</button>';
+            currentHTML += '</div>';
+        }
 
         if (typeQuestion == 5) {
             for (var x = 1; x <= 20; x++) {
@@ -128,7 +142,7 @@ function appendQuestions (nextQuestion) {
 
     $('#' + currentQuestion).after(currentHTML);
     appendSelect(nextQuestion);
-    appendAnswers(1, nextQuestion);
+    appendAnswers(1, nextQuestion, 1);
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -180,6 +194,7 @@ $(document).on('ready', function () {
             data: parameters,
             dataType: 'json',
             success: function (response) {
+                console.log(response);
                 for (var x = 2; x <= response.results.length; x++) {
                     appendQuestions(x);
                 }
@@ -193,7 +208,7 @@ $(document).on('ready', function () {
                     $('#' + (x + 1) + ' > .input-wrapper > #tipo').val(response.results[x].tipo);
                     $('#' + (x + 1) + ' > .input-wrapper > #titulo').val(response.results[x].titulo);
 
-                    appendAnswers(response.results[x].tipo, (x + 1));
+                    appendAnswers(result.tipo, (x + 1), result.opciones.length);
 
                     if (response.results[x].imagen == "") {
                         $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview').hide();
@@ -247,7 +262,7 @@ $(document).on('ready', function () {
         var questionID = $(this).parent().parent().attr('id');
         var answersClass = 'div#Answers' + questionID;
 
-        appendAnswers(typeQuestion, questionID);
+        appendAnswers(typeQuestion, questionID, 1);
     });
 
     $('#questions').on('click', '#addQuestion',  function() {
@@ -285,6 +300,17 @@ $(document).on('ready', function () {
             if (deletedQuestion < totalQuestions) {
                 updateQuestionIndex(totalQuestions, deletedQuestion, nextinDOM, 'removeQuestion');
             }
+        }
+    });
+
+    $('#questions').on('click', '.addOption', function () {
+        var currentQuestion = parseInt($(this).parent().parent().parent().attr('id'));
+        var nextOption = parseInt($(this).prev().attr('id').substring(6)) + 1;
+
+        console.log($(this).parent().parent().last());
+
+        if (nextOption < 21) {
+            appendOption(currentQuestion, nextOption);
         }
     });
 
