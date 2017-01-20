@@ -307,11 +307,20 @@ $(document).on('ready', function () {
     $('#questions').on('click', '.addOption', function () {
         var currentQuestion = parseInt($(this).parent().parent().parent().attr('id'));
         var nextOption = parseInt($(this).prev().prev().attr('id').substring(6)) + 1;
+        var totalOptions = $('#Answers' + currentQuestion + ' > .answer').length;
+        var options = 1;
 
-        console.log($(this).parent().parent().last());
-
-        if (nextOption < 21) {
+        if (totalOptions < 20) {
             appendOption(currentQuestion, nextOption);
+            $('#Answers' + currentQuestion + ' > .answer').each(function () {
+                $(this).children().eq(0).text('Opción ' + options);
+                $(this).children().eq(1).attr('class', 'respuesta' + options + ' optionWidth');
+                $(this).children().eq(1).attr('id', 'opcion' + options);
+                options++;
+            });
+            if (totalOptions == 19){
+                $(this).parent().parent().children().last().children().eq(3).hide();
+            }
         }
     });
 
