@@ -318,18 +318,19 @@ $(document).on('ready', function () {
     $('#questions').on('click', '.removeOption', function () {
         var currentQuestion = parseInt($(this).parent().parent().parent().attr('id'));
         var totalOptions = $('#Answers' + currentQuestion + ' > .answer').length;
+        var questionType = $(this).parent().parent().parent().find('.input-wrapper > #tipo').val();
 
-        if (totalOptions - 1 == 1) {
-            console.log("Remove button");
-            console.log($(this).parent().parent().children('.answer').first().children().eq(2));
-            $(this).parent().parent().children('.answer').first().children().eq(2).hide();
-        }
+        if (parseInt(questionType) !== 5) {
+            if (totalOptions - 1 == 1) {
+                $(this).parent().parent().children('.answer').first().children().eq(2).hide();
+            }
 
-        if (totalOptions > 1) {
-            $(this).parent().parent().children().last().children().eq(3).show();
-            $(this).parent().remove();
+            if (totalOptions > 1) {
+                $(this).parent().parent().children().last().children().eq(3).show();
+                $(this).parent().remove();
 
-            updateOptionIndex(currentQuestion);
+                updateOptionIndex(currentQuestion);
+            }
         }
     });
 
@@ -337,17 +338,20 @@ $(document).on('ready', function () {
         var currentQuestion = parseInt($(this).parent().parent().parent().attr('id'));
         var nextOption = parseInt($(this).prev().prev().attr('id').substring(6)) + 1;
         var totalOptions = $('#Answers' + currentQuestion + ' > .answer').length;
+        var questionType = $(this).parent().parent().parent().find('.input-wrapper > #tipo').val();
 
-        if (totalOptions < 20) {
-            appendOption(currentQuestion, nextOption);
-            updateOptionIndex(currentQuestion);
+        if (parseInt(questionType) !== 5) {
+            if (totalOptions < 20) {
+                appendOption(currentQuestion, nextOption);
+                updateOptionIndex(currentQuestion);
 
-            if (totalOptions == 19){
-                $(this).parent().parent().children().last().children().eq(3).hide();
-            }
+                if (totalOptions == 19){
+                    $(this).parent().parent().children().last().children().eq(3).hide();
+                }
 
-            if (totalOptions == 1) {
-                $(this).parent().parent().children('.answer').first().children().eq(2).show();
+                if (totalOptions == 1) {
+                    $(this).parent().parent().children('.answer').first().children().eq(2).show();
+                }
             }
         }
     });
