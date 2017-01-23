@@ -352,7 +352,7 @@ $(document).on('ready', function () {
             $(this).parent().parent().children('.sub').first().children().eq(2).hide();
         }
 
-        if (totalOptions > 1) {
+        if (totalSubQuestions > 1) {
             $(this).parent().parent().children().last().children().eq(3).show();
             $(this).parent().remove();
 
