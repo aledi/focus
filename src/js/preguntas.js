@@ -37,7 +37,7 @@ function updateOptionIndex (currentQuestion) {
     });
 }
 
-function updateSubQuestionIndex () {
+function updateSubQuestionIndex (currentQuestion) {
     var subQuestions = 1;
 
     $('#Answers' + currentQuestion + ' > .sub').each(function () {
@@ -46,7 +46,7 @@ function updateSubQuestionIndex () {
         $(this).children().eq(1).attr('class', 'subpregunta' + subQuestions + ' optionWidth');
         $(this).children().eq(1).attr('id', 'subpregunta' + subQuestions);
         $(this).attr('class', 'input-wrapper answer sub subQuestion' + subQuestions);
-        options++;
+        subQuestions++;
     });
 }
 
@@ -59,7 +59,8 @@ function appendSubQuestion (questionID, subQuestionToAppend) {
     currentHTML += '<button class="addSub">+</button>';
     currentHTML += '</div>';
 
-    $('#Answers' + questionID + '> .option' + (subQuestionToAppend - 1)).after(currentHTML);
+    console.log(subQuestionToAppend);
+    $('#Answers' + questionID + '> .subQuestion' + (subQuestionToAppend - 1)).after(currentHTML);
 
 }
 
@@ -343,22 +344,55 @@ $(document).on('ready', function () {
         }
     });
 
+    $('#questions').on('click', '.removeSub', function () {
+        var currentQuestion = parseInt($(this).parent().parent().parent().attr('id'));
+        var totalSubQuestions = $('#Answers' + currentQuestion + ' > .sub').length;
+
+        if (totalSubQuestions - 1 == 1) {
+            $(this).parent().parent().children('.sub').first().children().eq(2).hide();
+        }
+
+        if (totalOptions > 1) {
+            $(this).parent().parent().children().last().children().eq(3).show();
+            $(this).parent().remove();
+
+            updateSubQuestionIndex(currentQuestion);
+        }
+    });
+
+    $('#questions').on('click', '.addSub', function () {
+        var currentQuestion = parseInt($(this).parent().parent().parent().attr('id'));
+        var nextSubQuestion = parseInt($(this).prev().prev().attr('id').substring(11)) + 1;
+        var totalSubQuestions = $('#Answers' + currentQuestion + ' > .sub').length;
+
+        if (totalSubQuestions < 20) {
+            appendSubQuestion(currentQuestion, nextSubQuestion);
+            updateSubQuestionIndex(currentQuestion);
+
+            if (totalSubQuestions == 19){
+                $(this).parent().parent().children('.sub').last().children().eq(3).hide();
+            }
+
+            if (totalSubQuestions == 1) {
+                $(this).parent().parent().children('.sub').first().children().eq(2).show();
+            }
+        }
+
+    });
+
     $('#questions').on('click', '.removeOption', function () {
         var currentQuestion = parseInt($(this).parent().parent().parent().attr('id'));
-        var totalOptions = $('#Answers' + currentQuestion + ' > .answer').length;
-        var questionType = $(this).parent().parent().parent().find('.input-wrapper > #tipo').val();
+        var totalOptions = $('#Answers' + currentQuestion + ' > .op').length;
 
-        if (parseInt(questionType) !== 5) {
-            if (totalOptions - 1 == 1) {
-                $(this).parent().parent().children('.answer').first().children().eq(2).hide();
-            }
+        if (totalOptions - 1 == 1) {
+            $(this).parent().parent().children('.op').first().children().eq(2).hide();
+        }
 
-            if (totalOptions > 1) {
-                $(this).parent().parent().children().last().children().eq(3).show();
-                $(this).parent().remove();
+        if (totalOptions > 1) {
+            $(this).parent().parent().children('.op').last().children().eq(3).show();
+            $(this).parent().remove();
 
-                updateOptionIndex(currentQuestion);
-            }
+            updateOptionIndex(currentQuestion);
         }
     });
 
