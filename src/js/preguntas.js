@@ -7,6 +7,75 @@ var globalVideo = [];
 // Helper Functions
 // -----------------------------------------------------------------------------------------------
 
+function updateQuestionIndex (totalQuestions, nextQuestion, nextinDOM, action) {
+    for (; nextQuestion <= totalQuestions; nextQuestion += 1) {
+        $(nextinDOM).attr('id', nextQuestion);
+
+        if (action == 'addQuestion') {
+            $('#' + nextQuestion + ' > .input-wrapper > .preview-resource-image > #imagen' + (nextQuestion - 1)).attr('id', 'imagen' + nextQuestion);
+            $('#' + nextQuestion + ' > .input-wrapper > .preview-resource-video > #video' + (nextQuestion - 1)).attr('id', 'video' + nextQuestion);
+            $('#' + nextQuestion + ' > #Answers' + (nextQuestion - 1)).attr('id', 'Answers' + nextQuestion);
+        } else {
+            $('#' + nextQuestion + ' > .input-wrapper > .preview-resource-image > #imagen' + (nextQuestion + 1)).attr('id', 'imagen' + nextQuestion);
+            $('#' + nextQuestion + ' > .input-wrapper > .preview-resource-video > #video' + (nextQuestion + 1)).attr('id', 'video' + nextQuestion);
+            $('#' + nextQuestion + ' > #Answers' + (nextQuestion + 1)).attr('id', 'Answers' + nextQuestion);
+        }
+        nextinDOM = $(nextinDOM).next();
+    }
+}
+
+function updateOptionIndex (currentQuestion) {
+    var options = 1;
+
+    $('#Answers' + currentQuestion + ' > .op').each(function () {
+        $(this).eq(1).attr('class', 'respuesta' + options + ' optionWidth');
+        $(this).children().eq(0).text('Opción ' + options);
+        $(this).children().eq(1).attr('class', 'respuesta' + options + ' optionWidth');
+        $(this).children().eq(1).attr('id', 'opcion' + options);
+        $(this).attr('class', 'input-wrapper answer op option' + options);
+        options++;
+    });
+}
+
+function updateSubQuestionIndex (currentQuestion) {
+    var subQuestions = 1;
+
+    $('#Answers' + currentQuestion + ' > .sub').each(function () {
+        $(this).eq(1).attr('class', 'subpregunta' + subQuestions + ' optionWidth');
+        $(this).children().eq(0).text('Subpregunta ' + subQuestions);
+        $(this).children().eq(1).attr('class', 'subpregunta' + subQuestions + ' optionWidth');
+        $(this).children().eq(1).attr('id', 'subpregunta' + subQuestions);
+        $(this).attr('class', 'input-wrapper answer sub subQuestion' + subQuestions);
+        subQuestions++;
+    });
+}
+
+function appendSubQuestion (questionID, subQuestionToAppend) {
+
+    var currentHTML = '<div class="input-wrapper answer sub subQuestion' + subQuestionToAppend + '">';
+    currentHTML += '<label>Subpregunta ' + subQuestionToAppend + '</label>';
+    currentHTML += '<input id="subpregunta' + subQuestionToAppend + '" class="subpregunta' + subQuestionToAppend + ' optionWidth" type="text"/>';
+    currentHTML += '<button class="removeSub">-</button>';
+    currentHTML += '<button class="addSub">+</button>';
+    currentHTML += '</div>';
+
+    $('#Answers' + questionID + '> .subQuestion' + (subQuestionToAppend - 1)).after(currentHTML);
+
+}
+
+function appendOption (questionID, optionToAppend) {
+
+    var currentHTML = '<div class="input-wrapper answer op option' + optionToAppend + '">';
+    currentHTML += '<label>Opción ' + optionToAppend + '</label>';
+    currentHTML += '<input id="opcion' + optionToAppend + '" class="respuesta' + optionToAppend + ' optionWidth" type="text"/>';
+    currentHTML += '<button class="removeOption">-</button>';
+    currentHTML += '<button class="addOption">+</button>';
+    currentHTML += '</div>';
+
+    $('#Answers' + questionID + '> .option' + (optionToAppend - 1)).after(currentHTML);
+}
+
+
 function appendSelect (lastQuestion) {
     var currentHTML = '';
     for(var x = 0; x < globalImages.length; x++) {
@@ -23,7 +92,7 @@ function appendSelect (lastQuestion) {
     $('#video' + lastQuestion).append(currentHTML);
 }
 
-function appendAnswers (typeQuestion, questionID) {
+function appendAnswers (typeQuestion, questionID, optionLength, subPreguntasLength) {
     var currentHTML = '';
 
     $('#Answers' + questionID).empty();
@@ -36,19 +105,22 @@ function appendAnswers (typeQuestion, questionID) {
             currentHTML += '<input type="radio" value="1" name="combo' + questionID + '"> Combo </input>';
             currentHTML += '</div>';
         }
-
-        for (var x = 1; x <= 20; x++) {
-            currentHTML += '<div class="input-wrapper answer">';
+        for (var x = 1; x <= optionLength; x++) {
+            currentHTML += '<div class="input-wrapper answer op option' + x + '">';
             currentHTML += '<label>Opción ' + x + '</label>';
-            currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' full-width" type="text"/>';
+            currentHTML += '<input id="opcion' + x + '" class="respuesta' + x + ' optionWidth" type="text"/>';
+            currentHTML += '<button class="removeOption">-</button>';
+            currentHTML += '<button class="addOption">+</button>';
             currentHTML += '</div>';
         }
 
         if (typeQuestion == 5) {
-            for (var x = 1; x <= 20; x++) {
-                currentHTML += '<div class="input-wrapper answer">';
+            for (var x = 1; x <= subPreguntasLength; x++) {
+                currentHTML += '<div class="input-wrapper answer sub subQuestion' + x + '">';
                 currentHTML += '<label>Subpregunta ' + x + '</label>';
-                currentHTML += '<input id="subpregunta' + x + '" class="subpregunta' + x + ' full-width" type="text"/>';
+                currentHTML += '<input id="subpregunta' + x + '" class="subpregunta' + x + ' optionWidth" type="text"/>';
+                currentHTML += '<button class="removeSub">-</button>';
+                currentHTML += '<button class="addSub">+</button>';
                 currentHTML += '</div>';
             }
          }
@@ -65,8 +137,9 @@ function appendAnswers (typeQuestion, questionID) {
     currentHTML = '';
 }
 
-function appendQuestions (lastQuestion) {
-    var currentHTML = '<div id="' + lastQuestion + '" class="questionForm">';
+function appendQuestions (nextQuestion) {
+    var currentQuestion = nextQuestion - 1;
+    var currentHTML = '<div id="' + nextQuestion + '" class="questionForm">';
     currentHTML += '<hr>';
     currentHTML += '<div class="input-wrapper">' +
         '<label>Título</label>' +
@@ -75,7 +148,7 @@ function appendQuestions (lastQuestion) {
     currentHTML += '<div class="input-wrapper">' +
         '<label>Imagen</label>' +
         '<div class="preview-resource-image">' +
-        '<select id="imagen' + lastQuestion + '" class="imagen" type="text">' +
+        '<select id="imagen' + nextQuestion + '" class="imagen" type="text">' +
         '<option value="">Selecciona una Imagen</option></select>' +
         '<label class="preview"><a class="preview-link">Vista Previa</a></label>' +
         '</div>' +
@@ -83,7 +156,7 @@ function appendQuestions (lastQuestion) {
     currentHTML += '<div class="input-wrapper">' +
         '<label>Video</label>' +
         '<div class="preview-resource-video">' +
-        '<select id="video' + lastQuestion + '" class="video" type="text">' +
+        '<select id="video' + nextQuestion + '" class="video" type="text">' +
         '<option value="">Selecciona un video</option></select>' +
         '<label class="preview"><a class="preview-link">Vista Previa</a></label>' +
         '</div>' +
@@ -103,13 +176,14 @@ function appendQuestions (lastQuestion) {
         '<option value="6">Escala</option>' +
         '</select>' +
         '</div>';
-    currentHTML += '<div id="Answers' + lastQuestion + '"></div>' +
+    currentHTML += '<div id="Answers' + nextQuestion + '"></div>' +
+        '<button type="button" id="addQuestion" class="no-background">Agregar Nueva Pregunta</button>' +
         '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
         '</div>';
 
-    $('#questions').append(currentHTML);
-    appendSelect(lastQuestion);
-    appendAnswers(1, lastQuestion);
+    $('#' + currentQuestion).after(currentHTML);
+    appendSelect(nextQuestion);
+    appendAnswers(1, nextQuestion, 1, 1);
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -174,7 +248,7 @@ $(document).on('ready', function () {
                     $('#' + (x + 1) + ' > .input-wrapper > #tipo').val(response.results[x].tipo);
                     $('#' + (x + 1) + ' > .input-wrapper > #titulo').val(response.results[x].titulo);
 
-                    appendAnswers(response.results[x].tipo, (x + 1));
+                    appendAnswers(result.tipo, (x + 1), result.opciones.length, result.subPreguntas.length);
 
                     if (response.results[x].imagen == "") {
                         $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview').hide();
@@ -188,7 +262,7 @@ $(document).on('ready', function () {
 
                     if (response.results[x].video == "") {
                         $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview').hide();
-                    } else{
+                    } else {
                         $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview').show();
                         $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview > .preview-link').attr('href','../resources/videos/' + response.results[x].video);
                         $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview > .preview-link').attr('target','_blank');
@@ -228,17 +302,27 @@ $(document).on('ready', function () {
         var questionID = $(this).parent().parent().attr('id');
         var answersClass = 'div#Answers' + questionID;
 
-        appendAnswers(typeQuestion, questionID);
+        appendAnswers(typeQuestion, questionID, 1, 1);
     });
 
-    $('#addQuestion').on('click', function() {
-        var lastQuestion = $('#questions').children().length;
-        lastQuestion = parseInt(lastQuestion) + 1;
+    $('#questions').on('click', '#addQuestion',  function() {
+        var currentQuestion = $(this).parent().attr('id');
+        var nextQuestion = 0;
+        var totalQuestions = $('#questions').children().length;
 
-        appendQuestions(lastQuestion);
+        totalQuestions = parseInt(totalQuestions);
+        currentQuestion = parseInt(currentQuestion);
+        nextQuestion = currentQuestion + 1;
 
-        $('#imagen' + lastQuestion).parent().find('label').hide();
-        $('#video' + lastQuestion).parent().find('label').hide();
+        appendQuestions(nextQuestion);
+
+        $('#imagen' + nextQuestion).parent().find('label').hide();
+        $('#video' + nextQuestion).parent().find('label').hide();
+
+        if (currentQuestion < totalQuestions) {
+            var nextinDOM = $(this).parent().next();
+            updateQuestionIndex(totalQuestions + 1, nextQuestion, nextinDOM, 'addQuestion');
+        }
     });
 
     $('#questions').on('click', '#removeQuestion', function () {
@@ -247,8 +331,88 @@ $(document).on('ready', function () {
                 return;
             }
 
+            var deletedQuestion = parseInt($(this).parent().attr('id'));
+            var totalQuestions = $('#questions').children().length;
+            var nextinDOM = $(this).parent().next();
+
             $(this).parent().remove();
+
+            if (deletedQuestion < totalQuestions) {
+                updateQuestionIndex(totalQuestions, deletedQuestion, nextinDOM, 'removeQuestion');
+            }
         }
+    });
+
+    $('#questions').on('click', '.removeSub', function () {
+        var currentQuestion = parseInt($(this).parent().parent().parent().attr('id'));
+        var totalSubQuestions = $('#Answers' + currentQuestion + ' > .sub').length;
+
+        if (totalSubQuestions - 1 == 1) {
+            $(this).parent().parent().children('.sub').first().children().eq(2).hide();
+        }
+
+        if (totalSubQuestions > 1) {
+            $(this).parent().parent().children().last().children().eq(3).show();
+            $(this).parent().remove();
+
+            updateSubQuestionIndex(currentQuestion);
+        }
+    });
+
+    $('#questions').on('click', '.addSub', function () {
+        var currentQuestion = parseInt($(this).parent().parent().parent().attr('id'));
+        var nextSubQuestion = parseInt($(this).prev().prev().attr('id').substring(11)) + 1;
+        var totalSubQuestions = $('#Answers' + currentQuestion + ' > .sub').length;
+
+        if (totalSubQuestions < 20) {
+            appendSubQuestion(currentQuestion, nextSubQuestion);
+            updateSubQuestionIndex(currentQuestion);
+
+            if (totalSubQuestions == 19){
+                $(this).parent().parent().children('.sub').last().children().eq(3).hide();
+            }
+
+            if (totalSubQuestions == 1) {
+                $(this).parent().parent().children('.sub').first().children().eq(2).show();
+            }
+        }
+
+    });
+
+    $('#questions').on('click', '.removeOption', function () {
+        var currentQuestion = parseInt($(this).parent().parent().parent().attr('id'));
+        var totalOptions = $('#Answers' + currentQuestion + ' > .op').length;
+
+        if (totalOptions - 1 == 1) {
+            $(this).parent().parent().children('.op').first().children().eq(2).hide();
+        }
+
+        if (totalOptions > 1) {
+            $(this).parent().parent().children('.op').last().children().eq(3).show();
+            $(this).parent().remove();
+
+            updateOptionIndex(currentQuestion);
+        }
+    });
+
+    $('#questions').on('click', '.addOption', function () {
+        var currentQuestion = parseInt($(this).parent().parent().parent().attr('id'));
+        var nextOption = parseInt($(this).prev().prev().attr('id').substring(6)) + 1;
+        var totalOptions = $('#Answers' + currentQuestion + ' > .op').length;
+
+        if (totalOptions < 20) {
+            appendOption(currentQuestion, nextOption);
+            updateOptionIndex(currentQuestion);
+
+            if (totalOptions == 19){
+                $(this).parent().parent().children('op').last().children().eq(3).hide();
+            }
+
+            if (totalOptions == 1) {
+                $(this).parent().parent().children('.op').first().children().eq(2).show();
+            }
+        }
+
     });
 
     $('#questions').on('change','.imagen', function (){

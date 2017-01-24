@@ -61,12 +61,12 @@
                             </select>
                         </div>
                         <div id='Answers1'></div>
+                        <button type='button' id='addQuestion' class='no-background'>Agregar Nueva Pregunta</button>
                         <button type='button' id='removeQuestion' class='no-background'>Eliminar Pregunta</button>
                     </div>
                 </div>
 
                 <hr>
-                <button type='button' id='addQuestion' class='no-background'>Agregar Nueva Pregunta</button>
                 <button type='submit' id='submitQuestions'>Confimar Preguntas</button>
 
                 <span id='feedback' class='feedback-text'></span>

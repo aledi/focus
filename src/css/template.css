@@ -349,3 +349,18 @@ table tbody tr td button {
     float: right;
     width: 40%;
 }
+
+
+.addOption, .removeOption, .addSub, .removeSub {
+    float: right;
+    width: 5%;
+    height: 30px;
+}
+
+/* -----------------------------------------------------------------------------------------------
+/ Preguntas - Options
+/ ----------------------------------------------------------------------------------------------- */
+
+input[type='text'].optionWidth {
+    width: 90%;
+}
