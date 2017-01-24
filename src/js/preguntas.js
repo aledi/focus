@@ -45,7 +45,7 @@ function fillQuestionData (thisQuestion, currentQuestion) {
 
         questionData.combo = !asCombo ? 0 : asCombo;
 
-        while ($(thisQuestion).parent().find('#opcion' + opcion).val()) {
+        while ($(thisQuestion).find('#opcion' + opcion).val()) {
             questionData.opciones.push($(thisQuestion).find('#opcion' + opcion).val());
             opcion++;
         }
@@ -61,6 +61,54 @@ function fillQuestionData (thisQuestion, currentQuestion) {
     }
 
     return questionData;
+}
+
+function completeQuestionInformation (questionData, currentQuestion) {
+    $('#' + currentQuestion + ' > .input-wrapper > #pregunta').val(questionData.pregunta);
+    $('#' + currentQuestion + ' > .input-wrapper > #tipo').val(questionData.tipo);
+    $('#' + currentQuestion + ' > .input-wrapper > #titulo').val(questionData.titulo);
+
+    appendAnswers(questionData.tipo, currentQuestion, questionData.opciones.length, questionData.subPreguntas.length);
+
+    if (questionData.imagen == "") {
+        $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > .preview').hide();
+    } else{
+        $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > .preview').show();
+        $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > .preview > .preview-link').attr('href','../resources/images/' + questionData.imagen);
+        $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > .preview > .preview-link').attr('target','_blank');
+    }
+
+    $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > #imagen' + currentQuestion).val(questionData.imagen);
+
+    if (questionData.video == "") {
+        $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-video > .preview').hide();
+    } else {
+        $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-video > .preview').show();
+        $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-video > .preview > .preview-link').attr('href','../resources/videos/' + questionData.video);
+        $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-video > .preview > .preview-link').attr('target','_blank');
+    }
+
+    $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-video > #video' + currentQuestion).val(questionData.video);
+
+    if (questionData.tipo !== 1) {
+        var opciones = questionData.opciones;
+        var subPreguntas = questionData.subPreguntas;
+        var comboRadio = $('input[name="combo' + currentQuestion + '"][value="' + questionData.combo + '"]')
+
+        if (comboRadio) {
+            comboRadio.prop('checked', true);
+        }
+
+        for (var i = 0; i < opciones.length; i++) {
+            $('#' + currentQuestion + ' > #Answers' + currentQuestion + ' > .answer > .respuesta' + (i + 1)).val(opciones[i]);
+        }
+
+        if (questionData.tipo == 5) {
+            for (var i = 0; i < subPreguntas.length; i++) {
+                $('#' + currentQuestion + ' > #Answers' + currentQuestion + ' > .answer > .subpregunta' + (i + 1)).val(subPreguntas[i]);
+            }
+        }
+    }
 }
 
 
@@ -301,52 +349,7 @@ $(document).on('ready', function () {
 
                 for (var x = 0; x < response.results.length; x++) {
                     var result = response.results[x];
-
-                    $('#' + (x + 1) + ' > .input-wrapper > #pregunta').val(response.results[x].pregunta);
-                    $('#' + (x + 1) + ' > .input-wrapper > #tipo').val(response.results[x].tipo);
-                    $('#' + (x + 1) + ' > .input-wrapper > #titulo').val(response.results[x].titulo);
-
-                    appendAnswers(result.tipo, (x + 1), result.opciones.length, result.subPreguntas.length);
-
-                    if (response.results[x].imagen == "") {
-                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview').hide();
-                    } else{
-                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview').show();
-                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview > .preview-link').attr('href','../resources/images/' + response.results[x].imagen);
-                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview > .preview-link').attr('target','_blank');
-                    }
-
-                    $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > #imagen' + (x + 1)).val(response.results[x].imagen);
-
-                    if (response.results[x].video == "") {
-                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview').hide();
-                    } else {
-                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview').show();
-                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview > .preview-link').attr('href','../resources/videos/' + response.results[x].video);
-                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview > .preview-link').attr('target','_blank');
-                    }
-
-                    $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > #video' + (x + 1)).val(response.results[x].video);
-
-                    if (response.results[x].tipo !== 1) {
-                        var opciones = response.results[x].opciones;
-                        var subPreguntas = response.results[x].subPreguntas;
-                        var comboRadio = $('input[name="combo' + (x + 1) + '"][value="' + response.results[x].combo + '"]')
-
-                        if (comboRadio) {
-                            comboRadio.prop('checked', true);
-                        }
-
-                        for (var i = 0; i < opciones.length; i++) {
-                            $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta' + (i + 1)).val(opciones[i]);
-                        }
-
-                        if (response.results[x].tipo == 5) {
-                            for (var i = 0; i < subPreguntas.length; i++) {
-                                $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .subpregunta' + (i + 1)).val(subPreguntas[i]);
-                            }
-                        }
-                    }
+                    completeQuestionInformation(result, (x + 1));
                 }
             },
             error: function (errorMsg) {
@@ -368,6 +371,7 @@ $(document).on('ready', function () {
         var currentQuestion = addQuestion($(this));
 
         questionData = fillQuestionData($(this).parent(), currentQuestion);
+        completeQuestionInformation(questionData, currentQuestion + 1);
     });
 
     $('#questions').on('click', '#addQuestion',  function() {
