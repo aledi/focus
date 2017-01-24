@@ -7,7 +7,7 @@ var globalVideo = [];
 // Helper Functions
 // -----------------------------------------------------------------------------------------------
 
-function addQuestion(thisQuestion) {
+function addQuestion (thisQuestion) {
     var currentQuestion = $(thisQuestion).parent().attr('id');
     var nextQuestion = 0;
     var totalQuestions = $('#questions').children().length;
@@ -25,7 +25,44 @@ function addQuestion(thisQuestion) {
         var nextinDOM = $(thisQuestion).parent().next();
         updateQuestionIndex(totalQuestions + 1, nextQuestion, nextinDOM, 'addQuestion');
     }
+
+    return currentQuestion;
 }
+
+function fillQuestionData (thisQuestion, currentQuestion) {
+    var questionData = {}
+    questionData.opciones = [];
+    questionData.subPreguntas = [];
+    questionData.pregunta = $(thisQuestion).find('#pregunta').val();
+    questionData.tipo = $(thisQuestion).find('#tipo').val();
+    questionData.titulo = $(thisQuestion).find('#titulo').val();
+    questionData.imagen = $(thisQuestion).find('.imagen').val();
+    questionData.video = $(thisQuestion).find('.video').val();
+
+    if (questionData.tipo !== 1) {
+        var opcion = 1;
+        var asCombo = $(thisQuestion).find('input[name=combo' + currentQuestion + ']:checked').val();
+
+        questionData.combo = !asCombo ? 0 : asCombo;
+
+        while ($(thisQuestion).parent().find('#opcion' + opcion).val()) {
+            questionData.opciones.push($(thisQuestion).find('#opcion' + opcion).val());
+            opcion++;
+        }
+
+        if (questionData.tipo == 5) {
+            var subPregunta = 1;
+
+            while ($(thisQuestion).find('#subpregunta' + subPregunta).val()) {
+                questionData.subPreguntas.push($(thisQuestion).find('#subpregunta' + subPregunta).val());
+                subPregunta++;
+            }
+        }
+    }
+
+    return questionData;
+}
+
 
 function updateQuestionIndex (totalQuestions, nextQuestion, nextinDOM, action) {
     for (; nextQuestion <= totalQuestions; nextQuestion += 1) {
@@ -327,7 +364,10 @@ $(document).on('ready', function () {
     });
 
     $('#questions').on('click', '#duplicateQuestion', function () {
-        addQuestion($(this));
+        var questionData = {};
+        var currentQuestion = addQuestion($(this));
+
+        questionData = fillQuestionData($(this).parent(), currentQuestion);
     });
 
     $('#questions').on('click', '#addQuestion',  function() {
@@ -459,12 +499,7 @@ $(document).on('ready', function () {
         questionObject.subPreguntas = [];
 
         $('#questions').children().each(function () {
-            questionObject.numPregunta = numeroPregunta;
-            questionObject.titulo = $(this).find('#titulo').val();
-            questionObject.imagen = $(this).find('.imagen').val();
-            questionObject.video = $(this).find('.video').val();
-            questionObject.pregunta = $(this).find('#pregunta').val();
-            questionObject.tipo = $(this).find('#tipo').val();
+            questionObject = fillQuestionData($(this), numeroPregunta);
 
             if (questionObject.tipo == 6) {
                 if (parseInt($(this).find('#opcion1').val()) == 0 || parseInt($(this).find('#opcion2').val()) == 0) {
@@ -473,27 +508,6 @@ $(document).on('ready', function () {
                 } else if (parseInt($(this).find('#opcion1').val()) >= parseInt($(this).find('#opcion2').val())) {
                     alert("El valor inicial de la escala de la pregunta #" + questionObject.numPregunta + " deben ser menor al valor final.");
                     questionValidated = false;
-                }
-            }
-
-            if (questionObject.tipo !== 1) {
-                var opcion = 1;
-                var asCombo = $(this).find('input[name=combo' + numeroPregunta + ']:checked').val();
-
-                questionObject.combo = !asCombo ? 0 : asCombo;
-
-                while ($(this).find('#opcion' + opcion).val()) {
-                    questionObject.opciones.push($(this).find('#opcion' + opcion).val());
-                    opcion++;
-                }
-
-                if (questionObject.tipo == 5) {
-                    var subPregunta = 1;
-
-                    while ($(this).find('#subpregunta' + subPregunta).val()) {
-                        questionObject.subPreguntas.push($(this).find('#subpregunta' + subPregunta).val());
-                        subPregunta++;
-                    }
                 }
             }
 
