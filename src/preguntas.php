@@ -62,6 +62,7 @@
                         </div>
                         <div id='Answers1'></div>
                         <button type='button' id='addQuestion' class='no-background'>Agregar Nueva Pregunta</button>
+                        <button type="button" id="duplicateQuestion" class="no-background">Duplicar Pregunta</button>
                         <button type='button' id='removeQuestion' class='no-background'>Eliminar Pregunta</button>
                     </div>
                 </div>

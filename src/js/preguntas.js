@@ -7,6 +7,26 @@ var globalVideo = [];
 // Helper Functions
 // -----------------------------------------------------------------------------------------------
 
+function addQuestion(thisQuestion) {
+    var currentQuestion = $(thisQuestion).parent().attr('id');
+    var nextQuestion = 0;
+    var totalQuestions = $('#questions').children().length;
+
+    totalQuestions = parseInt(totalQuestions);
+    currentQuestion = parseInt(currentQuestion);
+    nextQuestion = currentQuestion + 1;
+
+    appendQuestions(nextQuestion);
+
+    $('#imagen' + nextQuestion).parent().find('label').hide();
+    $('#video' + nextQuestion).parent().find('label').hide();
+
+    if (currentQuestion < totalQuestions) {
+        var nextinDOM = $(thisQuestion).parent().next();
+        updateQuestionIndex(totalQuestions + 1, nextQuestion, nextinDOM, 'addQuestion');
+    }
+}
+
 function updateQuestionIndex (totalQuestions, nextQuestion, nextinDOM, action) {
     for (; nextQuestion <= totalQuestions; nextQuestion += 1) {
         $(nextinDOM).attr('id', nextQuestion);
@@ -178,6 +198,7 @@ function appendQuestions (nextQuestion) {
         '</div>';
     currentHTML += '<div id="Answers' + nextQuestion + '"></div>' +
         '<button type="button" id="addQuestion" class="no-background">Agregar Nueva Pregunta</button>' +
+        '<button type="button" id="duplicateQuestion" class="no-background">Duplicar Pregunta</button>' +
         '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
         '</div>';
 
@@ -305,24 +326,12 @@ $(document).on('ready', function () {
         appendAnswers(typeQuestion, questionID, 1, 1);
     });
 
+    $('#questions').on('click', '#duplicateQuestion', function () {
+        addQuestion($(this));
+    });
+
     $('#questions').on('click', '#addQuestion',  function() {
-        var currentQuestion = $(this).parent().attr('id');
-        var nextQuestion = 0;
-        var totalQuestions = $('#questions').children().length;
-
-        totalQuestions = parseInt(totalQuestions);
-        currentQuestion = parseInt(currentQuestion);
-        nextQuestion = currentQuestion + 1;
-
-        appendQuestions(nextQuestion);
-
-        $('#imagen' + nextQuestion).parent().find('label').hide();
-        $('#video' + nextQuestion).parent().find('label').hide();
-
-        if (currentQuestion < totalQuestions) {
-            var nextinDOM = $(this).parent().next();
-            updateQuestionIndex(totalQuestions + 1, nextQuestion, nextinDOM, 'addQuestion');
-        }
+        addQuestion($(this));
     });
 
     $('#questions').on('click', '#removeQuestion', function () {
