@@ -59,7 +59,6 @@ function appendSubQuestion (questionID, subQuestionToAppend) {
     currentHTML += '<button class="addSub">+</button>';
     currentHTML += '</div>';
 
-    console.log(subQuestionToAppend);
     $('#Answers' + questionID + '> .subQuestion' + (subQuestionToAppend - 1)).after(currentHTML);
 
 }
