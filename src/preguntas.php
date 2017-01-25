@@ -68,7 +68,31 @@
                 </div>
 
                 <hr>
+                <button type='button' id='previewQuestions'>Vista Previa</button>
+                <br/>
                 <button type='submit' id='submitQuestions'>Confimar Preguntas</button>
+
+                <div id="questionModal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <span class="close">&times;</span>
+                          <h2 id="previewHeader">Vista Previa</h2>
+                      </div>
+                      <div class="modal-body">
+                          <p>Prueba Texto</p>
+                          <p>Prueba Texto</p>
+                          <p>Prueba Texto</p>
+                          <p>Prueba Texto</p>
+                          <p>Prueba Texto</p>
+                          <p>Prueba Texto</p>
+                      </div>
+                      <div class="modal-footer">
+                          <button type='button' id='closePreview'>Regresar</button>
+                      </div>
+                  </div>
+
+              </div>
 
                 <span id='feedback' class='feedback-text'></span>
             </div>

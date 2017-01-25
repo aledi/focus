@@ -493,6 +493,23 @@ $(document).on('ready', function () {
         }
     });
 
+    $('#previewQuestions').on('click', function () {
+        var modal = $('#questionModal')[0];
+        var closeButton = $('#closePreview')[0];
+
+        modal.style.display = "block";
+
+        closeButton.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    });
+
 
     $('#submitQuestions').on('click', function () {
         var numeroPregunta = 1;
