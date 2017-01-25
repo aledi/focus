@@ -7,6 +7,111 @@ var globalVideo = [];
 // Helper Functions
 // -----------------------------------------------------------------------------------------------
 
+function addQuestion (thisQuestion) {
+    var currentQuestion = $(thisQuestion).parent().attr('id');
+    var nextQuestion = 0;
+    var totalQuestions = $('#questions').children().length;
+
+    totalQuestions = parseInt(totalQuestions);
+    currentQuestion = parseInt(currentQuestion);
+    nextQuestion = currentQuestion + 1;
+
+    appendQuestions(nextQuestion);
+
+    $('#imagen' + nextQuestion).parent().find('label').hide();
+    $('#video' + nextQuestion).parent().find('label').hide();
+
+    if (currentQuestion < totalQuestions) {
+        var nextinDOM = $(thisQuestion).parent().next();
+        updateQuestionIndex(totalQuestions + 1, nextQuestion, nextinDOM, 'addQuestion');
+    }
+
+    return currentQuestion;
+}
+
+function fillQuestionData (thisQuestion, currentQuestion) {
+    var questionData = {}
+    questionData.opciones = [];
+    questionData.subPreguntas = [];
+    questionData.pregunta = $(thisQuestion).find('#pregunta').val();
+    questionData.tipo = $(thisQuestion).find('#tipo').val();
+    questionData.titulo = $(thisQuestion).find('#titulo').val();
+    questionData.imagen = $(thisQuestion).find('.imagen').val();
+    questionData.video = $(thisQuestion).find('.video').val();
+
+    if (questionData.tipo !== 1) {
+        var opcion = 1;
+        var asCombo = $(thisQuestion).find('input[name=combo' + currentQuestion + ']:checked').val();
+
+        questionData.combo = !asCombo ? 0 : asCombo;
+
+        while ($(thisQuestion).find('#opcion' + opcion).val()) {
+            questionData.opciones.push($(thisQuestion).find('#opcion' + opcion).val());
+            opcion++;
+        }
+
+        if (questionData.tipo == 5) {
+            var subPregunta = 1;
+
+            while ($(thisQuestion).find('#subpregunta' + subPregunta).val()) {
+                questionData.subPreguntas.push($(thisQuestion).find('#subpregunta' + subPregunta).val());
+                subPregunta++;
+            }
+        }
+    }
+
+    return questionData;
+}
+
+function completeQuestionInformation (questionData, currentQuestion) {
+    $('#' + currentQuestion + ' > .input-wrapper > #pregunta').val(questionData.pregunta);
+    $('#' + currentQuestion + ' > .input-wrapper > #tipo').val(questionData.tipo);
+    $('#' + currentQuestion + ' > .input-wrapper > #titulo').val(questionData.titulo);
+
+    appendAnswers(questionData.tipo, currentQuestion, questionData.opciones.length, questionData.subPreguntas.length);
+
+    if (questionData.imagen == "") {
+        $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > .preview').hide();
+    } else{
+        $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > .preview').show();
+        $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > .preview > .preview-link').attr('href','../resources/images/' + questionData.imagen);
+        $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > .preview > .preview-link').attr('target','_blank');
+    }
+
+    $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > #imagen' + currentQuestion).val(questionData.imagen);
+
+    if (questionData.video == "") {
+        $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-video > .preview').hide();
+    } else {
+        $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-video > .preview').show();
+        $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-video > .preview > .preview-link').attr('href','../resources/videos/' + questionData.video);
+        $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-video > .preview > .preview-link').attr('target','_blank');
+    }
+
+    $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-video > #video' + currentQuestion).val(questionData.video);
+
+    if (questionData.tipo !== 1) {
+        var opciones = questionData.opciones;
+        var subPreguntas = questionData.subPreguntas;
+        var comboRadio = $('input[name="combo' + currentQuestion + '"][value="' + questionData.combo + '"]')
+
+        if (comboRadio) {
+            comboRadio.prop('checked', true);
+        }
+
+        for (var i = 0; i < opciones.length; i++) {
+            $('#' + currentQuestion + ' > #Answers' + currentQuestion + ' > .answer > .respuesta' + (i + 1)).val(opciones[i]);
+        }
+
+        if (questionData.tipo == 5) {
+            for (var i = 0; i < subPreguntas.length; i++) {
+                $('#' + currentQuestion + ' > #Answers' + currentQuestion + ' > .answer > .subpregunta' + (i + 1)).val(subPreguntas[i]);
+            }
+        }
+    }
+}
+
+
 function updateQuestionIndex (totalQuestions, nextQuestion, nextinDOM, action) {
     for (; nextQuestion <= totalQuestions; nextQuestion += 1) {
         $(nextinDOM).attr('id', nextQuestion);
@@ -178,6 +283,7 @@ function appendQuestions (nextQuestion) {
         '</div>';
     currentHTML += '<div id="Answers' + nextQuestion + '"></div>' +
         '<button type="button" id="addQuestion" class="no-background">Agregar Nueva Pregunta</button>' +
+        '<button type="button" id="duplicateQuestion" class="no-background">Duplicar Pregunta</button>' +
         '<button type="button" id="removeQuestion" class="no-background">Eliminar Pregunta</button>' +
         '</div>';
 
@@ -243,52 +349,7 @@ $(document).on('ready', function () {
 
                 for (var x = 0; x < response.results.length; x++) {
                     var result = response.results[x];
-
-                    $('#' + (x + 1) + ' > .input-wrapper > #pregunta').val(response.results[x].pregunta);
-                    $('#' + (x + 1) + ' > .input-wrapper > #tipo').val(response.results[x].tipo);
-                    $('#' + (x + 1) + ' > .input-wrapper > #titulo').val(response.results[x].titulo);
-
-                    appendAnswers(result.tipo, (x + 1), result.opciones.length, result.subPreguntas.length);
-
-                    if (response.results[x].imagen == "") {
-                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview').hide();
-                    } else{
-                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview').show();
-                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview > .preview-link').attr('href','../resources/images/' + response.results[x].imagen);
-                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > .preview > .preview-link').attr('target','_blank');
-                    }
-
-                    $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-image > #imagen' + (x + 1)).val(response.results[x].imagen);
-
-                    if (response.results[x].video == "") {
-                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview').hide();
-                    } else {
-                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview').show();
-                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview > .preview-link').attr('href','../resources/videos/' + response.results[x].video);
-                        $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > .preview > .preview-link').attr('target','_blank');
-                    }
-
-                    $('#' + (x + 1) + ' > .input-wrapper > .preview-resource-video > #video' + (x + 1)).val(response.results[x].video);
-
-                    if (response.results[x].tipo !== 1) {
-                        var opciones = response.results[x].opciones;
-                        var subPreguntas = response.results[x].subPreguntas;
-                        var comboRadio = $('input[name="combo' + (x + 1) + '"][value="' + response.results[x].combo + '"]')
-
-                        if (comboRadio) {
-                            comboRadio.prop('checked', true);
-                        }
-
-                        for (var i = 0; i < opciones.length; i++) {
-                            $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .respuesta' + (i + 1)).val(opciones[i]);
-                        }
-
-                        if (response.results[x].tipo == 5) {
-                            for (var i = 0; i < subPreguntas.length; i++) {
-                                $('#' + (x + 1) + ' > #Answers' + (x + 1) + ' > .answer > .subpregunta' + (i + 1)).val(subPreguntas[i]);
-                            }
-                        }
-                    }
+                    completeQuestionInformation(result, (x + 1));
                 }
             },
             error: function (errorMsg) {
@@ -305,24 +366,16 @@ $(document).on('ready', function () {
         appendAnswers(typeQuestion, questionID, 1, 1);
     });
 
+    $('#questions').on('click', '#duplicateQuestion', function () {
+        var questionData = {};
+        var currentQuestion = addQuestion($(this));
+
+        questionData = fillQuestionData($(this).parent(), currentQuestion);
+        completeQuestionInformation(questionData, currentQuestion + 1);
+    });
+
     $('#questions').on('click', '#addQuestion',  function() {
-        var currentQuestion = $(this).parent().attr('id');
-        var nextQuestion = 0;
-        var totalQuestions = $('#questions').children().length;
-
-        totalQuestions = parseInt(totalQuestions);
-        currentQuestion = parseInt(currentQuestion);
-        nextQuestion = currentQuestion + 1;
-
-        appendQuestions(nextQuestion);
-
-        $('#imagen' + nextQuestion).parent().find('label').hide();
-        $('#video' + nextQuestion).parent().find('label').hide();
-
-        if (currentQuestion < totalQuestions) {
-            var nextinDOM = $(this).parent().next();
-            updateQuestionIndex(totalQuestions + 1, nextQuestion, nextinDOM, 'addQuestion');
-        }
+        addQuestion($(this));
     });
 
     $('#questions').on('click', '#removeQuestion', function () {
@@ -450,12 +503,7 @@ $(document).on('ready', function () {
         questionObject.subPreguntas = [];
 
         $('#questions').children().each(function () {
-            questionObject.numPregunta = numeroPregunta;
-            questionObject.titulo = $(this).find('#titulo').val();
-            questionObject.imagen = $(this).find('.imagen').val();
-            questionObject.video = $(this).find('.video').val();
-            questionObject.pregunta = $(this).find('#pregunta').val();
-            questionObject.tipo = $(this).find('#tipo').val();
+            questionObject = fillQuestionData($(this), numeroPregunta);
 
             if (questionObject.tipo == 6) {
                 if (parseInt($(this).find('#opcion1').val()) == 0 || parseInt($(this).find('#opcion2').val()) == 0) {
@@ -464,27 +512,6 @@ $(document).on('ready', function () {
                 } else if (parseInt($(this).find('#opcion1').val()) >= parseInt($(this).find('#opcion2').val())) {
                     alert("El valor inicial de la escala de la pregunta #" + questionObject.numPregunta + " deben ser menor al valor final.");
                     questionValidated = false;
-                }
-            }
-
-            if (questionObject.tipo !== 1) {
-                var opcion = 1;
-                var asCombo = $(this).find('input[name=combo' + numeroPregunta + ']:checked').val();
-
-                questionObject.combo = !asCombo ? 0 : asCombo;
-
-                while ($(this).find('#opcion' + opcion).val()) {
-                    questionObject.opciones.push($(this).find('#opcion' + opcion).val());
-                    opcion++;
-                }
-
-                if (questionObject.tipo == 5) {
-                    var subPregunta = 1;
-
-                    while ($(this).find('#subpregunta' + subPregunta).val()) {
-                        questionObject.subPreguntas.push($(this).find('#subpregunta' + subPregunta).val());
-                        subPregunta++;
-                    }
                 }
             }
 
