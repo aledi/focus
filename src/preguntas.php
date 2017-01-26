@@ -80,18 +80,13 @@
                           <h2 id="previewHeader">Vista Previa</h2>
                       </div>
                       <div class="modal-body">
-                          <p>Prueba Texto</p>
-                          <p>Prueba Texto</p>
-                          <p>Prueba Texto</p>
-                          <p>Prueba Texto</p>
-                          <p>Prueba Texto</p>
-                          <p>Prueba Texto</p>
+                          <div id='modalQuestions'>
+                          </div>
                       </div>
                       <div class="modal-footer">
                           <button type='button' id='closePreview'>Regresar</button>
                       </div>
                   </div>
-
               </div>
 
                 <span id='feedback' class='feedback-text'></span>

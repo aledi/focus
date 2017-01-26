@@ -7,6 +7,30 @@ var globalVideo = [];
 // Helper Functions
 // -----------------------------------------------------------------------------------------------
 
+function addModalPreview (questionsArray) {
+    var currentHTML = '';
+    var currentQuestion = 1;
+    var filePath = '';
+    questionsArray.forEach(function (question) {
+        console.log(question);
+        question.video != "" ? (filePath = '../resources/videos/' + question.video) : (filePath = '../resources/images/' + question.image);
+        switch (question.tipo) {
+            case '1' :
+                currentHTML = '<div id="questionModal' + currentQuestion + '" class="qModal">' +
+                '<h2>Pregunta Abierta</h2>' +
+                '<h3>' + question.titulo +'</h3>' +
+                '<iframe src="' + filePath + '"></iframe>' +
+                '<h3>' + question.pregunta + '</h3>' +
+                '<textarea rows="4" cols="50"></textarea>' +
+                '<hr>' +
+                '</div>';
+                $('#modalQuestions').append(currentHTML);
+            break;
+        }
+        currentQuestion++;
+    });
+}
+
 function addQuestion (thisQuestion) {
     var currentQuestion = $(thisQuestion).parent().attr('id');
     var nextQuestion = 0;
@@ -494,20 +518,39 @@ $(document).on('ready', function () {
     });
 
     $('#previewQuestions').on('click', function () {
+        var numeroPregunta = 1;
         var modal = $('#questionModal')[0];
         var closeButton = $('#closePreview')[0];
+        var questionsArray = [];
+        var questionObject = {};
+        questionObject.opciones = [];
+        questionObject.subPreguntas = [];
+
+        $('#questions').children().each(function () {
+            questionObject = fillQuestionData($(this), numeroPregunta);
+
+            questionsArray.push(questionObject);
+            numeroPregunta++;
+
+            questionObject = {};
+            questionObject.opciones = [];
+            questionObject.subPreguntas = [];
+        });
 
         modal.style.display = "block";
 
         closeButton.onclick = function() {
+            questionsArray = [];
             modal.style.display = "none";
         }
 
         window.onclick = function(event) {
             if (event.target == modal) {
+                questionsArray = [];
                 modal.style.display = "none";
             }
         }
+        addModalPreview(questionsArray);
     });
 
 
