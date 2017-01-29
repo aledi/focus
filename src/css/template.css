@@ -470,6 +470,13 @@ button#addQuestion {
     margin-top: 2%;
 }
 
+.addSubPrev, .removeSubPrev {
+    width: 10%;
+    float:right;
+    margin-top: 2%;
+}
+
 hr {
     width: 100%;
+    clear: both;
 }

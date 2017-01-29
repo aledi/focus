@@ -164,6 +164,20 @@ function addModalPreview (questionsArray) {
             break;
 
             case '6' :
+                currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
+                '<h2>Escala</h2>'+
+                '<h3>' + question.titulo +'</h3>' +
+                filePath +
+                '<h3>' + question.pregunta + '</h3>';
+                currentHTML += '<div class="allOptions">';
+
+                for (var pregunta = 0; pregunta < question.opciones.length; pregunta += 1) {
+                    currentHTML += '<div class="listOptions">' +
+                    '<p>' + question.opciones[pregunta] + '</p>' +
+                    '<button class="addSubPrev">+</button>' +
+                    '<button class="removeSubPrev">-</button>' +
+                    '</div>';
+                }
 
             break;
         }
