@@ -6,15 +6,6 @@ var globalVideo = [];
 // -----------------------------------------------------------------------------------------------
 // Helper Functions
 // -----------------------------------------------------------------------------------------------
-/*
-currentHTML = '<div id="questionModal' + currentQuestion + '" class="qModal">' +
-'<h2>Selección Única</h2>'+
-'<h3>' + question.titulo +'</h3>' +
-'<iframe src="' + filePath + '"></iframe>' +
-'<h3>' + question.pregunta + '</h3>' +
-'<hr>' +
-'</div>';
-*/
 
 function addModalPreview (questionsArray) {
     $('#modalQuestions').empty();
