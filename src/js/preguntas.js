@@ -6,27 +6,82 @@ var globalVideo = [];
 // -----------------------------------------------------------------------------------------------
 // Helper Functions
 // -----------------------------------------------------------------------------------------------
+/*
+currentHTML = '<div id="questionModal' + currentQuestion + '" class="qModal">' +
+'<h2>Selección Única</h2>'+
+'<h3>' + question.titulo +'</h3>' +
+'<iframe src="' + filePath + '"></iframe>' +
+'<h3>' + question.pregunta + '</h3>' +
+'<hr>' +
+'</div>';
+*/
 
 function addModalPreview (questionsArray) {
+    $('#modalQuestions').empty();
     var currentHTML = '';
     var currentQuestion = 1;
     var filePath = '';
+    var imageProperties = [];
+
     questionsArray.forEach(function (question) {
         console.log(question);
-        question.video != "" ? (filePath = '../resources/videos/' + question.video) : (filePath = '../resources/images/' + question.image);
+        if (question.video != "") {
+            filePath = '<p><a href="../resources/videos/' + question.video + '" target="_blank">Ver Recurso</a></p>';
+
+        }
+
+        if (question.imagen != "") {
+            filePath = '<p><a href="../resources/images/' + question.imagen + '" target="_blank">Ver Recurso</a></p>';
+        }
+
         switch (question.tipo) {
             case '1' :
-                currentHTML = '<div id="questionModal' + currentQuestion + '" class="qModal">' +
+                currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
                 '<h2>Pregunta Abierta</h2>' +
                 '<h3>' + question.titulo +'</h3>' +
-                '<iframe src="' + filePath + '"></iframe>' +
+                filePath +
                 '<h3>' + question.pregunta + '</h3>' +
                 '<textarea rows="4" cols="50"></textarea>' +
                 '<hr>' +
+                $('#modalQuestions').append(currentHTML);
+                currentHTML = '';
+            break;
+            case '2' :
+                currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
+                '<h2>Selección Única</h2>'+
+                '<h3>' + question.titulo +'</h3>' +
+                filePath +
+                '<h3>' + question.pregunta + '</h3>';
+
+                if (question.combo == '0') {
+                    currentHTML += '<div class="allOptions">';
+
+                    for (var pregunta = 0; pregunta < question.opciones.length; pregunta += 1) {
+                        currentHTML += '<div class="listOptions">' +
+                        '<p>' + question.opciones[pregunta] + '</p>' +
+                        '<input type="radio" value="0" name="comboView' + currentQuestion + '" checked="checked"></input>' +
+                        '</div>';
+                    }
+
+                    currentHTML += '</div>';
+
+                } else {
+                    currentHTML += '<select id="combo' + currentQuestion + '" type="text">';
+
+                    for (var pregunta = 0; pregunta < question.opciones.length; pregunta += 1) {
+                        currentHTML += '<option value=' + pregunta + '>' + question.opciones[pregunta] + '</option>';
+                    }
+
+                    currentHTML += '</select>';
+                }
+
+                currentHTML += '<hr>' +
                 '</div>';
                 $('#modalQuestions').append(currentHTML);
+                currentHTML = '';
             break;
         }
+        filePath = '';
         currentQuestion++;
     });
 }
@@ -96,7 +151,7 @@ function completeQuestionInformation (questionData, currentQuestion) {
 
     if (questionData.imagen == "") {
         $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > .preview').hide();
-    } else{
+    } else {
         $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > .preview').show();
         $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > .preview > .preview-link').attr('href','../resources/images/' + questionData.imagen);
         $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > .preview > .preview-link').attr('target','_blank');

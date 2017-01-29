@@ -458,3 +458,18 @@ button#addQuestion {
 #previewHeader {
     text-align: center;
 }
+
+.listOptions p {
+    width: 80%;
+    float: left;
+}
+
+.listOptions input {
+    width: 15%;
+    float: right;
+    margin-top: 2%;
+}
+
+hr {
+    width: 100%;
+}
