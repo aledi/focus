@@ -116,13 +116,7 @@ function addModalPreview (questionsArray) {
                 for (var pregunta = 0; pregunta < question.opciones.length; pregunta += 1) {
                     currentHTML += '<div class="listOptions">' +
                     '<p>' + question.opciones[pregunta] + '</p>' +
-                    '<select>';
-
-                    for (var opcion = 1; opcion <= question.opciones.length; opcion += 1) {
-                        currentHTML += '<option>' + opcion + '</option>';
-                    }
-
-                    currentHTML += '</select>' +
+                    '<input type="checkbox" class="orderMe" value="0" name="ordViewCombo' + currentQuestion + '"></input>' +
                     '</div>';
                 }
 
@@ -682,6 +676,7 @@ $(document).on('ready', function () {
         questionObject.subPreguntas = [];
 
         $('#questions').children().each(function () {
+            globalCheckedBox = 1;
             questionObject = fillQuestionData($(this), numeroPregunta);
 
             questionsArray.push(questionObject);
