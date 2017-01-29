@@ -464,7 +464,7 @@ button#addQuestion {
     float: left;
 }
 
-.listOptions input {
+.listOptions input, .listOptions select {
     width: 15%;
     float: right;
     margin-top: 2%;
