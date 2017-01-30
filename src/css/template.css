@@ -473,10 +473,26 @@ button#addQuestion {
 .addSubPrev, .removeSubPrev {
     width: 10%;
     float:right;
-    margin-top: 2%;
 }
 
 hr {
     width: 100%;
     clear: both;
+}
+
+/* -----------------------------------------------------------------------------------------------
+/ Preguntas Preview - Modal Styling
+/ ----------------------------------------------------------------------------------------------- */
+
+.tituloQuestion {
+    font-size: 110%;
+}
+
+.modalContent {
+    margin-left: 15%;
+}
+
+.modalContent label {
+    font-weight: bold;
+    font-size: 103%;
 }

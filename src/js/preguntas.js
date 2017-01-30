@@ -25,25 +25,33 @@ function addModalPreview (questionsArray) {
             filePath = '<p><a href="../resources/images/' + question.imagen + '" target="_blank">Ver Recurso</a></p>';
         }
 
+        if (question.imagen == "" && question.video == "") {
+            filePath = '<br>';
+        }
+
         switch (question.tipo) {
             case '1' :
                 currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
-                '<h2>Pregunta Abierta</h2>' +
-                '<h3>' + question.titulo +'</h3>' +
+                '<h2>Pregunta ' + currentQuestion + '</h2>' +
+                '<label class="tituloQuestion">' + question.titulo +'</label>' +
                 filePath +
-                '<h3>' + question.pregunta + '</h3>' +
+                '<div class="modalContent">' +
+                '<label>' + question.pregunta + '</label>' +
                 '<textarea rows="4" cols="50"></textarea>' +
+                '</div>' +
                 '<hr>' +
+                '</div>';
                 $('#modalQuestions').append(currentHTML);
                 currentHTML = '';
             break;
 
             case '2' :
                 currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
-                '<h2>Selección Única</h2>'+
-                '<h3>' + question.titulo +'</h3>' +
+                '<h2>Pregunta ' + currentQuestion + '</h2>' +
+                '<label>' + question.titulo +'</label></br>' +
                 filePath +
-                '<h3>' + question.pregunta + '</h3>';
+                '<div class="modalContent">' +
+                '<label>' + question.pregunta + '</label>';
 
                 if (question.combo == '0') {
                     currentHTML += '<div class="allOptions">';
@@ -67,7 +75,8 @@ function addModalPreview (questionsArray) {
                     currentHTML += '</select>';
                 }
 
-                currentHTML += '<hr>' +
+                currentHTML += '</div>' +
+                '<hr>' +
                 '</div>';
                 $('#modalQuestions').append(currentHTML);
                 currentHTML = '';
@@ -75,10 +84,11 @@ function addModalPreview (questionsArray) {
 
             case '3' :
                 currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
-                '<h2>Selección Múltiple</h2>'+
-                '<h3>' + question.titulo +'</h3>' +
+                '<h2>Pregunta ' + currentQuestion + '</h2>' +
+                '<label class="tituloQuestion">' + question.titulo +'</label>' +
                 filePath +
-                '<h3>' + question.pregunta + '</h3>';
+                '<div class="modalContent">' +
+                '<label>' + question.pregunta + '</label>';
                 currentHTML += '<div class="allOptions">';
 
                 for (var pregunta = 0; pregunta < question.opciones.length; pregunta += 1) {
@@ -89,6 +99,7 @@ function addModalPreview (questionsArray) {
                 }
 
                 currentHTML += '</div>' +
+                '</div>' +
                 '<hr>' +
                 '</div>';
 
@@ -98,10 +109,11 @@ function addModalPreview (questionsArray) {
 
             case '4' :
                 currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
-                '<h2>Ordenamiento</h2>'+
-                '<h3>' + question.titulo +'</h3>' +
+                '<h2>Pregunta ' + currentQuestion + '</h2>' +
+                '<label class="tituloQuestion">' + question.titulo +'</label>' +
                 filePath +
-                '<h3>' + question.pregunta + '</h3>';
+                '<div class="modalContent">' +
+                '<label>' + question.pregunta + '</label>';
                 currentHTML += '<div class="allOptions">';
 
                 for (var pregunta = 0; pregunta < question.opciones.length; pregunta += 1) {
@@ -112,6 +124,7 @@ function addModalPreview (questionsArray) {
                 }
 
                 currentHTML += '</div>' +
+                '</div>' +
                 '<hr>' +
                 '</div>';
 
@@ -121,10 +134,11 @@ function addModalPreview (questionsArray) {
 
             case '5' :
                 currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
-                '<h2>Matriz</h2>'+
-                '<h3>' + question.titulo +'</h3>' +
+                '<h2>Pregunta ' + currentQuestion + '</h2>' +
+                '<label class="tituloQuestion">' + question.titulo +'</label>' +
                 filePath +
-                '<h3>' + question.pregunta + '</h3>';
+                '<div class="modalContent">' +
+                '<label>' + question.pregunta + '</label>';
                 currentHTML += '<div class="allOptions">';
 
                 for (var subpregunta = 0; subpregunta < question.opciones.length; subpregunta += 1) {
@@ -141,6 +155,7 @@ function addModalPreview (questionsArray) {
                 }
 
                 currentHTML += '</div>' +
+                '<div>' +
                 '<hr>' +
                 '</div>';
 
@@ -150,10 +165,11 @@ function addModalPreview (questionsArray) {
 
             case '6' :
                 currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
-                '<h2>Escala</h2>'+
-                '<h3>' + question.titulo +'</h3>' +
+                '<h2>Pregunta ' + currentQuestion + '</h2>' +
+                '<label class="tituloQuestion">' + question.titulo +'</label>' +
                 filePath +
-                '<h3>' + question.pregunta + '</h3>';
+                '<div class="modalContent">' +
+                '<label>' + question.pregunta + '</label>';
                 currentHTML += '<div class="allOptions">';
 
                 for (var pregunta = 0; pregunta < question.opciones.length; pregunta += 1) {
@@ -163,6 +179,14 @@ function addModalPreview (questionsArray) {
                     '<button class="removeSubPrev">-</button>' +
                     '</div>';
                 }
+
+                currentHTML += '</div>' +
+                '</div>' +
+                '<hr>' +
+                '</div>';
+
+                $('#modalQuestions').append(currentHTML);
+                currentHTML = '';
 
             break;
         }
@@ -667,7 +691,6 @@ $(document).on('ready', function () {
         questionObject.subPreguntas = [];
 
         $('#questions').children().each(function () {
-            globalCheckedBox = 1;
             questionObject = fillQuestionData($(this), numeroPregunta);
 
             questionsArray.push(questionObject);
