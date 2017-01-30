@@ -15,7 +15,6 @@ function addModalPreview (questionsArray) {
     var imageProperties = [];
 
     questionsArray.forEach(function (question) {
-        console.log(question);
         if (question.video != "") {
             filePath = '<p><a href="../resources/videos/' + question.video + '" target="_blank">Ver Recurso</a></p>';
 
