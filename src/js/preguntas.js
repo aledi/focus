@@ -15,16 +15,15 @@ function addModalPreview (questionsArray) {
     var imageProperties = [];
 
     questionsArray.forEach(function (question) {
-        if (question.video != "") {
+        if (question.video != '') {
             filePath += '<p><a href="../resources/videos/' + question.video + '" target="_blank">Ver Video</a></p>';
-
         }
 
-        if (question.imagen != "") {
+        if (question.imagen != '') {
             filePath += '<p><a href="../resources/images/' + question.imagen + '" target="_blank">Ver Imagen</a></p>';
         }
 
-        if (question.imagen == "" && question.video == "") {
+        if (question.imagen == '' && question.video == '') {
             filePath = '<br>';
         }
 
@@ -40,11 +39,8 @@ function addModalPreview (questionsArray) {
                 '</div>' +
                 '<hr>' +
                 '</div>';
-                $('#modalQuestions').append(currentHTML);
-                currentHTML = '';
 
                 break;
-
             case '2' :
                 currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
                 '<h2>Pregunta ' + currentQuestion + '</h2>' +
@@ -64,7 +60,6 @@ function addModalPreview (questionsArray) {
                     }
 
                     currentHTML += '</div>';
-
                 } else {
                     currentHTML += '<select id="combo' + currentQuestion + '" type="text">';
 
@@ -78,11 +73,8 @@ function addModalPreview (questionsArray) {
                 currentHTML += '</div>' +
                 '<hr>' +
                 '</div>';
-                $('#modalQuestions').append(currentHTML);
-                currentHTML = '';
 
                 break;
-
             case '3' :
                 currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
                 '<h2>Pregunta ' + currentQuestion + '</h2>' +
@@ -104,11 +96,7 @@ function addModalPreview (questionsArray) {
                 '<hr>' +
                 '</div>';
 
-                $('#modalQuestions').append(currentHTML);
-                currentHTML = '';
-
                 break;
-
             case '4' :
                 currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
                 '<h2>Pregunta ' + currentQuestion + '</h2>' +
@@ -130,11 +118,7 @@ function addModalPreview (questionsArray) {
                 '<hr>' +
                 '</div>';
 
-                $('#modalQuestions').append(currentHTML);
-                currentHTML = '';
-
                 break;
-
             case '5' :
                 currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
                 '<h2>Pregunta ' + currentQuestion + '</h2>' +
@@ -162,11 +146,7 @@ function addModalPreview (questionsArray) {
                 '<hr>' +
                 '</div>';
 
-                $('#modalQuestions').append(currentHTML);
-                currentHTML = '';
-
                 break;
-
             case '6' :
                 currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
                 '<h2>Pregunta ' + currentQuestion + '</h2>' +
@@ -189,11 +169,11 @@ function addModalPreview (questionsArray) {
                 '<hr>' +
                 '</div>';
 
-                $('#modalQuestions').append(currentHTML);
-                currentHTML = '';
-
                 break;
         }
+
+        $('#modalQuestions').append(currentHTML);
+        currentHTML = '';
         filePath = '';
         currentQuestion++;
     });
@@ -348,7 +328,6 @@ function updateSubQuestionIndex (currentQuestion) {
 }
 
 function appendSubQuestion (questionID, subQuestionToAppend) {
-
     var currentHTML = '<div class="input-wrapper answer sub subQuestion' + subQuestionToAppend + '">';
     currentHTML += '<label>Subpregunta ' + subQuestionToAppend + '</label>';
     currentHTML += '<input id="subpregunta' + subQuestionToAppend + '" class="subpregunta' + subQuestionToAppend + ' optionWidth" type="text"/>';
@@ -357,11 +336,9 @@ function appendSubQuestion (questionID, subQuestionToAppend) {
     currentHTML += '</div>';
 
     $('#Answers' + questionID + '> .subQuestion' + (subQuestionToAppend - 1)).after(currentHTML);
-
 }
 
 function appendOption (questionID, optionToAppend) {
-
     var currentHTML = '<div class="input-wrapper answer op option' + optionToAppend + '">';
     currentHTML += '<label>Opción ' + optionToAppend + '</label>';
     currentHTML += '<input id="opcion' + optionToAppend + '" class="respuesta' + optionToAppend + ' optionWidth" type="text"/>';
@@ -721,7 +698,6 @@ $(document).on('ready', function () {
         addModalPreview(questionsArray);
     });
 
-
     $('#submitQuestions').on('click', function () {
         var numeroPregunta = 1;
         var questionsArray = [];
@@ -775,5 +751,4 @@ $(document).on('ready', function () {
             }
         });
     });
-
 });
