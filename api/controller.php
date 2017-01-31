@@ -410,18 +410,6 @@ function getDownloadData () {
     echo json_encode(downloadData($_POST['encuesta']));
 }
 
-function registerDevice () {
-    $registrationResult = registerDeviceToken($_POST['id'], $_POST['deviceToken'], $_POST['deviceType']);
-
-    echo json_encode($registrationResult);
-}
-
-function unregisterDevice () {
-    $registrationResult = unregisterDeviceToken($_POST['id']);
-
-    echo json_encode($registrationResult);
-}
-
 function recoverPasword () {
     $passwordResult = fetchPanelistaPassword($_POST['username'], $_POST['email']);
 
@@ -506,6 +494,39 @@ function sendPassword ($email, $nombre, $password) {
     $success = mail($email, $subject, $message, $headers);
 
     return $success ? 'SUCCESS' : 'ERROR';
+}
+
+function registerDevice () {
+    $fields = array(
+        'app_id' => 'b8b1467b-33df-458f-9cc7-f7f6d781560a',
+        'identifier' => $_POST['deviceToken']
+    );
+
+    $fields = json_encode($fields);
+    // print("\nJSON sent:\n");
+    // print($fields);
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://onesignal.com/api/v1/players');
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_POST, TRUE);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+    $response = json_decode(curl_exec($ch), true);
+    curl_close($ch);
+
+    if ($response['success']) {
+        $registrationResult = registerDeviceToken($_POST['id'], $response['id'], $_POST['deviceType']);
+        echo json_encode($registrationResult);
+    }
+}
+
+function unregisterDevice () {
+    $registrationResult = unregisterDeviceToken($_POST['id']);
+    echo json_encode($registrationResult);
 }
 
 function sendPushNotification ($message, $deviceTokens) {
