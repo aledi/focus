@@ -16,12 +16,12 @@ function addModalPreview (questionsArray) {
 
     questionsArray.forEach(function (question) {
         if (question.video != "") {
-            filePath = '<p><a href="../resources/videos/' + question.video + '" target="_blank">Ver Recurso</a></p>';
+            filePath += '<p><a href="../resources/videos/' + question.video + '" target="_blank">Ver Video</a></p>';
 
         }
 
         if (question.imagen != "") {
-            filePath = '<p><a href="../resources/images/' + question.imagen + '" target="_blank">Ver Recurso</a></p>';
+            filePath += '<p><a href="../resources/images/' + question.imagen + '" target="_blank">Ver Imagen</a></p>';
         }
 
         if (question.imagen == "" && question.video == "") {
@@ -42,7 +42,8 @@ function addModalPreview (questionsArray) {
                 '</div>';
                 $('#modalQuestions').append(currentHTML);
                 currentHTML = '';
-            break;
+
+                break;
 
             case '2' :
                 currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
@@ -79,7 +80,8 @@ function addModalPreview (questionsArray) {
                 '</div>';
                 $('#modalQuestions').append(currentHTML);
                 currentHTML = '';
-            break;
+
+                break;
 
             case '3' :
                 currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
@@ -104,7 +106,8 @@ function addModalPreview (questionsArray) {
 
                 $('#modalQuestions').append(currentHTML);
                 currentHTML = '';
-            break;
+
+                break;
 
             case '4' :
                 currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
@@ -129,7 +132,8 @@ function addModalPreview (questionsArray) {
 
                 $('#modalQuestions').append(currentHTML);
                 currentHTML = '';
-            break;
+
+                break;
 
             case '5' :
                 currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
@@ -160,7 +164,8 @@ function addModalPreview (questionsArray) {
 
                 $('#modalQuestions').append(currentHTML);
                 currentHTML = '';
-            break;
+
+                break;
 
             case '6' :
                 currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
@@ -174,12 +179,12 @@ function addModalPreview (questionsArray) {
                 for (var pregunta = 0; pregunta < question.opciones.length; pregunta += 1) {
                     currentHTML += '<div class="listOptions">' +
                     '<p>' + question.opciones[pregunta] + '</p>' +
-                    '<button class="addSubPrev">+</button>' +
-                    '<button class="removeSubPrev">-</button>' +
                     '</div>';
                 }
 
-                currentHTML += '</div>' +
+                currentHTML += '<button class="addSubPrev">+</button>' +
+                '<button class="removeSubPrev">-</button>' +
+                '</div>' +
                 '</div>' +
                 '<hr>' +
                 '</div>';
@@ -187,7 +192,7 @@ function addModalPreview (questionsArray) {
                 $('#modalQuestions').append(currentHTML);
                 currentHTML = '';
 
-            break;
+                break;
         }
         filePath = '';
         currentQuestion++;
