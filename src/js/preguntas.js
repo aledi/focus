@@ -61,7 +61,7 @@ function addModalPreview (questionsArray) {
 
                     currentHTML += '</div>';
                 } else {
-                    currentHTML += '<select id="combo' + currentQuestion + '" type="text">';
+                    currentHTML += '<select id="combo' + currentQuestion + '" type="text"><br>';
 
                     for (var pregunta = 0; pregunta < question.opciones.length; pregunta += 1) {
                         currentHTML += '<option value=' + pregunta + '>' + question.opciones[pregunta] + '</option>';
@@ -142,7 +142,7 @@ function addModalPreview (questionsArray) {
                 }
 
                 currentHTML += '</div>' +
-                '<div>' +
+                '</div>' +
                 '<hr>' +
                 '</div>';
 

@@ -118,4 +118,14 @@ hr {
 .modalContent label {
     font-weight: bold;
     font-size: 103%;
+    width: 100%;
+    clear: both;
+}
+
+.modalContent select {
+    margin-left: 40%;
+}
+
+.listOptions select {
+    margin-top: -5%;
 }
