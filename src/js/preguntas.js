@@ -666,6 +666,7 @@ $(document).on('ready', function () {
         var numeroPregunta = 1;
         var modal = $('#questionModal')[0];
         var closeButton = $('#closePreview')[0];
+        var closeSecondary = $('.close')[0];
         var questionsArray = [];
         var questionObject = {};
         questionObject.opciones = [];
@@ -685,6 +686,11 @@ $(document).on('ready', function () {
         modal.style.display = "block";
 
         closeButton.onclick = function() {
+            questionsArray = [];
+            modal.style.display = "none";
+        }
+
+        closeSecondary.onclick = function() {
             questionsArray = [];
             modal.style.display = "none";
         }
