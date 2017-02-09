@@ -219,9 +219,7 @@ function newEncuesta () {
         $registrationResult = registerEncuesta($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['panel']);
 
         if ($registrationResult['status'] === 'SUCCESS') {
-            foreach ($registrationResult['deviceTokens'] as $deviceToken) {
-                sendPushNotification('¡Nueva Encuesta Disponible!', $deviceToken);
-            }
+            $registrationResult['pushResponse'] = sendPushNotification('¡Nueva Encuesta Disponible!', $registrationResult['deviceTokens']);
         }
     }
 
@@ -345,13 +343,11 @@ function getRecords ($type) {
 function setPanelistasPanel () {
     $saveResult = savePanelistasPanel($_POST['panel'], $_POST['panelistas']);
 
-    echo json_encode($saveResult);
-
     if ($saveResult['status'] === 'SUCCESS') {
-        foreach ($saveResult['deviceTokens'] as $deviceToken) {
-            sendPushNotification('¡Has sido registrado a un nuevo Panel! Pronto recibirás encuestas para responder.', $deviceToken);
-        }
+        $saveResult['pushResponse'] = sendPushNotification('¡Has sido invitado a participar en un nuevo Panel! Acepta la invitación para comenzar a participar.', $saveResult['deviceTokens']);
     }
+
+    echo json_encode($saveResult);
 }
 
 function setPreguntasEncuesta () {
@@ -412,18 +408,6 @@ function getDownloadData () {
     }
 
     echo json_encode(downloadData($_POST['encuesta']));
-}
-
-function registerDevice () {
-    $registrationResult = registerDeviceToken($_POST['id'], $_POST['deviceToken'], $_POST['deviceType']);
-
-    echo json_encode($registrationResult);
-}
-
-function unregisterDevice () {
-    $registrationResult = unregisterDeviceToken($_POST['id']);
-
-    echo json_encode($registrationResult);
 }
 
 function recoverPasword () {
@@ -512,48 +496,72 @@ function sendPassword ($email, $nombre, $password) {
     return $success ? 'SUCCESS' : 'ERROR';
 }
 
-function sendPushNotification ($message, $deviceToken) {
-    $ctx = stream_context_create();
-    stream_context_set_option($ctx, 'ssl', 'local_cert', 'FocusPushKey.pem');
-    stream_context_set_option($ctx, 'ssl', 'passphrase', 'Focuscg233');
-
-    // Open a connection to the APNS server
-    $fp = stream_socket_client(
-        'ssl://gateway.sandbox.push.apple.com:2195',
-        $err,
-        $errstr,
-        60,
-        STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT,
-        $ctx
+function registerDevice () {
+    $fields = array(
+        'app_id' => 'b8b1467b-33df-458f-9cc7-f7f6d781560a',
+        'identifier' => $_POST['deviceToken']
     );
 
-    if (!$fp)
-      exit('Failed to connect: $err $errstr' . PHP_EOL);
+    $fields = json_encode($fields);
+    // print("\nJSON sent:\n");
+    // print($fields);
 
-    // echo 'Connected to APNS' . PHP_EOL;
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://onesignal.com/api/v1/players');
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_POST, TRUE);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 
-    // Create the payload body
-    $body['aps'] = array(
-      'alert' => $message,
-      'sound' => 'default'
+    $response = json_decode(curl_exec($ch), true);
+    curl_close($ch);
+
+    if ($response['success']) {
+        $registrationResult = registerDeviceToken($_POST['id'], $response['id'], $_POST['deviceType']);
+        echo json_encode($registrationResult);
+    }
+}
+
+function unregisterDevice () {
+    $registrationResult = unregisterDeviceToken($_POST['id']);
+    echo json_encode($registrationResult);
+}
+
+function sendPushNotification ($message, $deviceTokens) {
+    if (count($deviceTokens) == 0) {
+        return 'No Tokens';
+    }
+
+    $content = array(
+        'en' => $message
+        );
+
+    $fields = array(
+        'app_id' => 'b8b1467b-33df-458f-9cc7-f7f6d781560a',
+        'include_player_ids' => $deviceTokens,
+        'contents' => $content
     );
 
-    // Encode the payload as JSON
-    $payload = json_encode($body);
+    $fields = json_encode($fields);
+    // print("\nJSON sent:\n");
+    // print($fields);
 
-    // Build the binary notification
-    $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://onesignal.com/api/v1/notifications');
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
+                                               'Authorization: Basic MzMxZGMyZmItZGZjZS00ODEzLWEwYjUtMWY3ZTNkYmQ3Mjhi'));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_POST, TRUE);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 
-    // Send it to the server
-    $result = fwrite($fp, $msg, strlen($msg));
+    $response = curl_exec($ch);
+    curl_close($ch);
 
-    // if (!$result)
-    //   echo 'Message not delivered' . PHP_EOL;
-    // else
-    //   echo 'Message successfully delivered' . PHP_EOL;
-
-    // Close the connection to the server
-    fclose($fp);
+    return $response;
 }
 
 ?>
