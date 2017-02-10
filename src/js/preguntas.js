@@ -7,6 +7,178 @@ var globalVideo = [];
 // Helper Functions
 // -----------------------------------------------------------------------------------------------
 
+function addModalPreview (questionsArray) {
+    $('#modalQuestions').empty();
+    var currentHTML = '';
+    var currentQuestion = 1;
+    var filePath = '';
+    var imageProperties = [];
+
+    questionsArray.forEach(function (question) {
+        if (question.video != '') {
+            filePath += '<p><a href="../resources/videos/' + question.video + '" target="_blank">Ver Video</a></p>';
+        }
+
+        if (question.imagen != '') {
+            filePath += '<p><a href="../resources/images/' + question.imagen + '" target="_blank">Ver Imagen</a></p>';
+        }
+
+        if (question.imagen == '' && question.video == '') {
+            filePath = '<br>';
+        }
+
+        switch (question.tipo) {
+            case '1' :
+                currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
+                '<h2>Pregunta ' + currentQuestion + '</h2>' +
+                '<label class="tituloQuestion">' + question.titulo +'</label>' +
+                filePath +
+                '<div class="modalContent">' +
+                '<label>' + question.pregunta + '</label>' +
+                '<textarea rows="4" cols="50"></textarea>' +
+                '</div>' +
+                '<hr>' +
+                '</div>';
+
+                break;
+            case '2' :
+                currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
+                '<h2>Pregunta ' + currentQuestion + '</h2>' +
+                '<label>' + question.titulo +'</label></br>' +
+                filePath +
+                '<div class="modalContent">' +
+                '<label>' + question.pregunta + '</label>';
+
+                if (question.combo == '0') {
+                    currentHTML += '<div class="allOptions">';
+
+                    for (var pregunta = 0; pregunta < question.opciones.length; pregunta += 1) {
+                        currentHTML += '<div class="listOptions">' +
+                        '<p>' + question.opciones[pregunta] + '</p>' +
+                        '<input type="radio" value="0" name="comboView' + currentQuestion + '" checked="checked"></input>' +
+                        '</div>';
+                    }
+
+                    currentHTML += '</div>';
+                } else {
+                    currentHTML += '<select id="combo' + currentQuestion + '" type="text"><br>';
+
+                    for (var pregunta = 0; pregunta < question.opciones.length; pregunta += 1) {
+                        currentHTML += '<option value=' + pregunta + '>' + question.opciones[pregunta] + '</option>';
+                    }
+
+                    currentHTML += '</select>';
+                }
+
+                currentHTML += '</div>' +
+                '<hr>' +
+                '</div>';
+
+                break;
+            case '3' :
+                currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
+                '<h2>Pregunta ' + currentQuestion + '</h2>' +
+                '<label class="tituloQuestion">' + question.titulo +'</label>' +
+                filePath +
+                '<div class="modalContent">' +
+                '<label>' + question.pregunta + '</label>';
+                currentHTML += '<div class="allOptions">';
+
+                for (var pregunta = 0; pregunta < question.opciones.length; pregunta += 1) {
+                    currentHTML += '<div class="listOptions">' +
+                    '<p>' + question.opciones[pregunta] + '</p>' +
+                    '<input type="checkbox" value="0" name="comboView' + currentQuestion + '"></input>' +
+                    '</div>';
+                }
+
+                currentHTML += '</div>' +
+                '</div>' +
+                '<hr>' +
+                '</div>';
+
+                break;
+            case '4' :
+                currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
+                '<h2>Pregunta ' + currentQuestion + '</h2>' +
+                '<label class="tituloQuestion">' + question.titulo +'</label>' +
+                filePath +
+                '<div class="modalContent">' +
+                '<label>' + question.pregunta + '</label>';
+                currentHTML += '<div class="allOptions">';
+
+                for (var pregunta = 0; pregunta < question.opciones.length; pregunta += 1) {
+                    currentHTML += '<div class="listOptions">' +
+                    '<p>' + question.opciones[pregunta] + '</p>' +
+                    '<input type="checkbox" class="orderMe" value="0" name="ordViewCombo' + currentQuestion + '"></input>' +
+                    '</div>';
+                }
+
+                currentHTML += '</div>' +
+                '</div>' +
+                '<hr>' +
+                '</div>';
+
+                break;
+            case '5' :
+                currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
+                '<h2>Pregunta ' + currentQuestion + '</h2>' +
+                '<label class="tituloQuestion">' + question.titulo +'</label>' +
+                filePath +
+                '<div class="modalContent">' +
+                '<label>' + question.pregunta + '</label>';
+                currentHTML += '<div class="allOptions">';
+
+                for (var subpregunta = 0; subpregunta < question.opciones.length; subpregunta += 1) {
+                    currentHTML += '<div class="listOptions">' +
+                    '<p>' + question.subPreguntas[subpregunta] + '</p>' +
+                    '<select>';
+
+                    for (var opcion = 0; opcion < question.opciones.length; opcion += 1) {
+                        currentHTML += '<option>' + question.opciones[opcion] + '</option>';
+                    }
+
+                    currentHTML += '</select>' +
+                    '</div>';
+                }
+
+                currentHTML += '</div>' +
+                '</div>' +
+                '<hr>' +
+                '</div>';
+
+                break;
+            case '6' :
+                currentHTML += '<div id="questionModal' + currentQuestion + '" class="qModal">' +
+                '<h2>Pregunta ' + currentQuestion + '</h2>' +
+                '<label class="tituloQuestion">' + question.titulo +'</label>' +
+                filePath +
+                '<div class="modalContent">' +
+                '<label>' + question.pregunta + '</label>';
+                currentHTML += '<div class="allOptions">';
+
+                for (var pregunta = 0; pregunta < question.opciones.length; pregunta += 1) {
+                    currentHTML += '<div class="listOptions">' +
+                    '<p>' + question.opciones[pregunta] + '</p>' +
+                    '</div>';
+                }
+
+                currentHTML += '<button class="addSubPrev">+</button>' +
+                '<button class="removeSubPrev">-</button>' +
+                '</div>' +
+                '</div>' +
+                '<hr>' +
+                '</div>';
+
+                break;
+        }
+
+        $('#modalQuestions').append(currentHTML);
+        currentHTML = '';
+        filePath = '';
+        currentQuestion++;
+    });
+}
+
 function addQuestion (thisQuestion) {
     var currentQuestion = $(thisQuestion).parent().attr('id');
     var nextQuestion = 0;
@@ -72,7 +244,7 @@ function completeQuestionInformation (questionData, currentQuestion) {
 
     if (questionData.imagen == "") {
         $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > .preview').hide();
-    } else{
+    } else {
         $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > .preview').show();
         $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > .preview > .preview-link').attr('href','../resources/images/' + questionData.imagen);
         $('#' + currentQuestion + ' > .input-wrapper > .preview-resource-image > .preview > .preview-link').attr('target','_blank');
@@ -156,7 +328,6 @@ function updateSubQuestionIndex (currentQuestion) {
 }
 
 function appendSubQuestion (questionID, subQuestionToAppend) {
-
     var currentHTML = '<div class="input-wrapper answer sub subQuestion' + subQuestionToAppend + '">';
     currentHTML += '<label>Subpregunta ' + subQuestionToAppend + '</label>';
     currentHTML += '<input id="subpregunta' + subQuestionToAppend + '" class="subpregunta' + subQuestionToAppend + ' optionWidth" type="text"/>';
@@ -165,11 +336,9 @@ function appendSubQuestion (questionID, subQuestionToAppend) {
     currentHTML += '</div>';
 
     $('#Answers' + questionID + '> .subQuestion' + (subQuestionToAppend - 1)).after(currentHTML);
-
 }
 
 function appendOption (questionID, optionToAppend) {
-
     var currentHTML = '<div class="input-wrapper answer op option' + optionToAppend + '">';
     currentHTML += '<label>Opción ' + optionToAppend + '</label>';
     currentHTML += '<input id="opcion' + optionToAppend + '" class="respuesta' + optionToAppend + ' optionWidth" type="text"/>';
@@ -493,6 +662,47 @@ $(document).on('ready', function () {
         }
     });
 
+    $('#previewQuestions').on('click', function () {
+        var numeroPregunta = 1;
+        var modal = $('#questionModal')[0];
+        var closeButton = $('#closePreview')[0];
+        var closeSecondary = $('.close')[0];
+        var questionsArray = [];
+        var questionObject = {};
+        questionObject.opciones = [];
+        questionObject.subPreguntas = [];
+
+        $('#questions').children().each(function () {
+            questionObject = fillQuestionData($(this), numeroPregunta);
+
+            questionsArray.push(questionObject);
+            numeroPregunta++;
+
+            questionObject = {};
+            questionObject.opciones = [];
+            questionObject.subPreguntas = [];
+        });
+
+        modal.style.display = "block";
+
+        closeButton.onclick = function() {
+            questionsArray = [];
+            modal.style.display = "none";
+        }
+
+        closeSecondary.onclick = function() {
+            questionsArray = [];
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                questionsArray = [];
+                modal.style.display = "none";
+            }
+        }
+        addModalPreview(questionsArray);
+    });
 
     $('#submitQuestions').on('click', function () {
         var numeroPregunta = 1;
@@ -547,5 +757,4 @@ $(document).on('ready', function () {
             }
         });
     });
-
 });
