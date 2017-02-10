@@ -349,3 +349,29 @@ table tbody tr td button {
     float: right;
     width: 40%;
 }
+
+/* -----------------------------------------------------------------------------------------------
+/ Preguntas - Options and buttons
+/ ----------------------------------------------------------------------------------------------- */
+
+input[type='text'].optionWidth {
+    width: 90%;
+}
+
+.addOption, .removeOption, .addSub, .removeSub {
+    float: right;
+    width: 5%;
+    height: 30px;
+}
+
+#duplicateQuestion, #addQuestion{
+    width: 50%:
+}
+
+button#duplicateQuestion {
+    float: right;
+}
+
+button#addQuestion {
+    float: left;
+}

@@ -2,6 +2,18 @@
 
 var currentPanel = 0;
 
+function locationRedirect (actionText, response, parentIdEncuesta) {
+
+    switch (actionText) {
+        case 'agregada' :
+            return 'preguntas.php?id=' + response.id;
+        case 'editada' :
+            return 'encuestas.php';
+        case 'duplicada' :
+            return 'preguntas.php?id=' + response.id + '&parentid=' + parentIdEncuesta;
+    }
+}
+
 function getData () {
     if (currentPanel <= 0) {
         $('#refresh').hide();
@@ -30,7 +42,7 @@ function getData () {
             currentHTML += '<th>Fecha Inicio</th>';
             currentHTML += '<th>Fecha Fin</th>';
             currentHTML += '<th>Panel</th>';
-            currentHTML += '<th columnSpan = "2">Acción</th>';
+            currentHTML += '<th colspan="3">Acciones</th>';
             currentHTML += '</tr>';
             currentHTML += '</thead>';
             currentHTML += '<tbody>';
@@ -44,6 +56,7 @@ function getData () {
                 currentHTML += '<td>' + readableDate(result.fechaFin) + '</td>';
                 currentHTML += '<td>' + result.panel + '</td>';
                 currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
+                currentHTML += '<td class=duplicate-button><button id=duplicate type=button>Duplicar</button></td>';
                 currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
                 currentHTML += '</tr>';
             }
@@ -139,8 +152,20 @@ $(document).on('ready', function () {
     $('#save-encuesta').on('click', function (event) {
         event.preventDefault();
 
-        var idEncuesta = window.location.search.substring(1);
-        idEncuesta = idEncuesta.substring(3);
+        var parentIdEncuesta = 0;
+        var idEncuesta = 0;
+        var parameters = window.location.search.substring(1);
+        var actionText = '';
+
+        if (parameters.includes('parentid')) {
+            parentIdEncuesta =  parameters.substring(9);
+            actionText = 'duplicada';
+        } else if (parameters.substring(3) !== '' && actionText === '') {
+            actionText = 'editada';
+            idEncuesta = parameters.substring(3);
+        } else {
+            actionText = 'agregada';
+        }
 
         var nombre = $('#nombre').val();
         var fechaInicio = getCompleteDate(1);
@@ -165,7 +190,7 @@ $(document).on('ready', function () {
             return;
         }
 
-        var data = {
+        var parameters = {
             action: 'ALTA_ENCUESTA',
             nombre: nombre,
             fechaInicio: fechaInicio,
@@ -173,21 +198,19 @@ $(document).on('ready', function () {
             panel: panel
         };
 
-        if (idEncuesta != '') {
-            data.id = idEncuesta;
+        if (idEncuesta !== 0) {
+            parameters.id = idEncuesta;
         }
-
-        var actionText = idEncuesta !== '' ? 'editada' : 'agregada';
 
         $.ajax({
             type: 'POST',
             url: '../api/controller.php',
-            data: data,
+            data: parameters,
             dataType: 'json',
             success: function (response) {
                 if (response.status === 'SUCCESS') {
                     alert('Encuesta ' + actionText + ' exitosamente.');
-                    location.replace((actionText == 'agregada') ? 'preguntas.php?id=' + response.id : 'encuestas.php');
+                    location.replace(locationRedirect(actionText, response, parentIdEncuesta));
                 } else if (response.status === 'RECORD_EXISTS') {
                     $('#feedback').html('La encuesta ya existe. Por favor, elija un nombre diferente.');
                 } else {
@@ -286,6 +309,53 @@ $(document).on('ready', function () {
         $('ul.tabs li').last().addClass('current');
         $('#tab-view-encuestas').addClass('current');
     });
+
+    // -----------------------------------------------------------------------------------------------
+    // Duplicate Encuesta
+    // -----------------------------------------------------------------------------------------------
+
+    $('#all-encuestas').on('click', '.duplicate-button', function() {
+        var parentIdEncuesta = $(this).parent().attr('id');
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $('ul.tabs li').first().addClass('current');
+        $("#tab-agregar-encuesta").addClass('current');
+
+        $('#header-title').text('Agregar Encuesta');
+        $('#save-encuesta').text('Agregar');
+
+        $('#cancel-edit').show();
+
+        $.ajax({
+            url: '../api/controller.php',
+            type: 'POST',
+            data: {
+                action: 'GET_ENCUESTAS',
+                id: parentIdEncuesta
+            },
+            dataType: 'json',
+            success: function (response) {
+                var result = response.result;
+                $('#nombre').val(result.nombre);
+                getDatefromString(result.fechaInicio, 0);
+                getDatefromString(result.fechaFin, 1);
+                $('#select-paneles').val(result.panel);
+
+                var myURL = window.location.href.split('?')[0];
+                myURL += '?parentid=' + result.id;
+                history.pushState({}, null, myURL);
+            },
+            error: function (errorMsg) {
+                alert('Error agregando encuesta.');
+            }
+        });
+    });
+
+    // -----------------------------------------------------------------------------------------------
+    // Date Functions
+    // -----------------------------------------------------------------------------------------------
 
     $('#mes, #anio').on('change', function() {
         changeSelect('Inicio');

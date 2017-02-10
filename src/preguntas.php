@@ -5,6 +5,7 @@
     <link rel='icon' href='img/focusicon.ico' type='image/x-icon'>
     <meta http-equiv='content-type' content='text/html; charset=UTF-8' />
     <link href='css/template.css' type='text/css' rel='stylesheet'/>
+    <link href='css/modal.css' type='text/css' rel='stylesheet'/>
     <script src='js/jquery-1.12.3.js'></script>
     <script src='js/preguntas.js' type='text/javascript'></script>
     <title> Focus - Preguntas</title>
@@ -61,13 +62,33 @@
                             </select>
                         </div>
                         <div id='Answers1'></div>
+                        <button type='button' id='addQuestion' class='no-background'>Agregar Nueva Pregunta</button>
+                        <button type="button" id="duplicateQuestion" class="no-background">Duplicar Pregunta</button>
                         <button type='button' id='removeQuestion' class='no-background'>Eliminar Pregunta</button>
                     </div>
                 </div>
 
                 <hr>
-                <button type='button' id='addQuestion' class='no-background'>Agregar Nueva Pregunta</button>
+                <button type='button' id='previewQuestions'>Vista Previa</button>
+                <br/>
                 <button type='submit' id='submitQuestions'>Confimar Preguntas</button>
+
+                <div id="questionModal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <span class="close">&times;</span>
+                          <h2 id="previewHeader">Vista Previa</h2>
+                      </div>
+                      <div class="modal-body">
+                          <div id='modalQuestions'>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                          <button type='button' id='closePreview'>Regresar</button>
+                      </div>
+                  </div>
+              </div>
 
                 <span id='feedback' class='feedback-text'></span>
             </div>
