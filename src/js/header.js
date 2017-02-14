@@ -102,9 +102,9 @@ function convertEdoCivil (estadoCivil) {
 function convertGenero (genero) {
     switch (genero) {
         case 0:
-            return 'Masculino';
+            return 'M';
         case 1:
-            return 'Femenino';
+            return 'F';
         default:
             return '';
     }

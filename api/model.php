@@ -596,12 +596,13 @@ function fetchPanelistasPanel ($panel) {
             $sql2 = "SELECT id FROM PanelistaEnPanel WHERE panel = '$panel' AND panelista = '$id'";
             $result2 = $conn->query($sql2);
             $checked = FALSE;
+            $panelesCount = panelistaPanelesCount($id);
 
             if ($result2->num_rows > 0) {
                 $checked = TRUE;
             }
 
-            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'] . ' ' . $row['apellidos'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'fechaRegistro' => $row['fechaRegistro'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'checked' => $checked);
+            $panelista = array('id' => (int)$row['id'], 'nombre' => $row['nombre'] . ' ' . $row['apellidos'], 'genero' => (int)$row['genero'], 'edad' => (int)$row['edad'], 'educacion' => (int)$row['educacion'], 'fechaRegistro' => $row['fechaRegistro'], 'municipio' => $row['municipio'], 'estado' => $row['estado'], 'checked' => $checked, 'paneles' => (int)$panelesCount);
             $response[] = $panelista;
         }
 

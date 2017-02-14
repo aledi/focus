@@ -26,7 +26,7 @@ function getData () {
 
             var currentHTML = '<thead>';
             currentHTML += '<tr>';
-            currentHTML += '<th class="left">Nombre</th>';
+            currentHTML += '<th>Nombre</th>';
             currentHTML += '<th>Género</th>';
             currentHTML += '<th>Edad</th>';
             currentHTML += '<th>Educación</th>';
@@ -45,7 +45,7 @@ function getData () {
 
                 currentHTML += '<tr id="' + panelista.idRespuesta + '&' + panelista.idRecord + '" class="' + (panelista.fechaFin ? '' : 'red') + '">';
                 currentHTML += '<td>' + panelista.nombre + '</td>';
-                currentHTML += '<td>' + convertGenero(panelista.genero) + '</td>';
+                currentHTML += '<td class="centered">' + convertGenero(panelista.genero) + '</td>';
                 currentHTML += '<td class="centered">' + panelista.edad + '</td>';
                 currentHTML += '<td>' + convertEducacion(panelista.educacion) + '</td>';
                 currentHTML += '<td>' + panelista.municipio + '</td>';

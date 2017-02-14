@@ -108,10 +108,11 @@ $(document).on('ready', function () {
                 currentHTML += '<th>Nombre</th>';
                 currentHTML += '<th>Género</th>';
                 currentHTML += '<th>Edad</th>';
-                currentHTML += '<th>Educación</th>';
-                currentHTML += '<th>Fecha Registro</th>';
                 currentHTML += '<th>Municipio</th>';
                 currentHTML += '<th>Estado</th>';
+                currentHTML += '<th>Educación</th>';
+                currentHTML += '<th>Registro</th>';
+                currentHTML += '<th>Historial</th>';
                 currentHTML += '<th><input type="checkbox" onclick="checkAll(this)"/></th>';
                 currentHTML += '</tr>';
                 currentHTML += '</thead>';
@@ -123,12 +124,13 @@ $(document).on('ready', function () {
 
                     currentHTML += '<tr value="' + result.id + '" class="' + (elegible ? '' : 'red') + '">';
                     currentHTML += '<td>' + result.nombre + '</td>';
-                    currentHTML += '<td>' + convertGenero(result.genero) + '</td>';
+                    currentHTML += '<td class="centered">' + convertGenero(result.genero) + '</td>';
                     currentHTML += '<td class="centered">' + result.edad + '</td>';
-                    currentHTML += '<td>' + convertEducacion(result.educacion) + '</td>';
-                    currentHTML += '<td>' + readableDate(result.fechaRegistro) + '</td>';
                     currentHTML += '<td>' + result.municipio + '</td>';
                     currentHTML += '<td class="centered">' + result.estado + '</td>';
+                    currentHTML += '<td>' + convertEducacion(result.educacion) + '</td>';
+                    currentHTML += '<td>' + readableDate(result.fechaRegistro) + '</td>';
+                    currentHTML += '<td class="centered">' + result.paneles + '</td>';
                     currentHTML += '<td class="centered"><input type="checkbox" onclick="checkNumberPanelistas(this)" value=' + result.id + ' name="panelista-checkbox"' + (result.checked ?  ' checked' : '') + ' class="' + (elegible ? '' : 'hidden') + '"></td>';
                     currentHTML += '</tr>';
 

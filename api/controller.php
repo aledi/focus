@@ -534,9 +534,7 @@ function sendPushNotification ($message, $deviceTokens) {
         return 'No Tokens';
     }
 
-    $content = array(
-        'en' => $message
-        );
+    $content = array('en' => $message);
 
     $fields = array(
         'app_id' => 'b8b1467b-33df-458f-9cc7-f7f6d781560a',
