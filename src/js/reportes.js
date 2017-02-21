@@ -664,7 +664,7 @@ $(document).on('ready', function () {
             return;
         }
 
-        var encuestaName = $('#encuestas-filter-select option:selected').text().replace(' ', '-');
+        var encuestaName = $('#encuestas-filter-select option:selected').text().replace(/ /g, '-');
 
         $.ajax({
             url: '../api/controller.php',
@@ -683,8 +683,7 @@ $(document).on('ready', function () {
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
                 for (var i = 0; i < response.columnas.length; i++) {
-                    var columna = response.columnas[i];
-                    currentHTML += '<th>' + columna + '</th>';
+                    currentHTML += '<th>' + response.columnas[i] + '</th>';
                 }
 
                 currentHTML += '</tr></thead><tbody>';

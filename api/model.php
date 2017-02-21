@@ -1600,7 +1600,7 @@ function downloadData ($encuesta) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT pregunta, tipo, numSubPreguntas, subPreguntas FROM Pregunta WHERE encuesta = '$encuesta'";
+        $sql = "SELECT pregunta, tipo, numSubPreguntas, subPreguntas, numOpciones FROM Pregunta WHERE encuesta = '$encuesta'";
         $result = $conn->query($sql);
         $columnas = array('Nombre', 'Género', 'Edad', 'Educación', 'Municipio', 'Estado', 'Fecha de Inicio', 'Hora de Inicio', 'Fecha de Fin', 'Hora de Fin');
         $types = [];
@@ -1613,7 +1613,13 @@ function downloadData ($encuesta) {
                 $subPreguntas = explode('&', $row['subPreguntas']);
 
                 for ($i = 0; $i < $numSubPreguntas; $i++) {
-                    $columnas[] = $row['pregunta'].' '.$subPreguntas[$i];
+                    $columnas[] = $row['pregunta'].' - '.$subPreguntas[$i];
+                }
+            } else if ((int)$row['tipo'] === 4) {
+                $numOpciones = (int)$row['numOpciones'];
+
+                for ($i = 1; $i <= $numOpciones; $i++) {
+                    $columnas[] = $row['pregunta'].' - '.$i;
                 }
             } else {
                 $columnas[] = $row['pregunta'];
@@ -1645,7 +1651,7 @@ function downloadData ($encuesta) {
                 for ($i = 0; $i < count($answers); $i++) {
                     $answers[$i] = rtrim($answers[$i], ', ');
 
-                    if ($types[$i] === 5) {
+                    if ($types[$i] === 4 || $types[$i] === 5) {
                         $subAnswers = explode(', ', $answers[$i]);
 
                         for ($j = 0; $j < count($subAnswers); $j++) {
