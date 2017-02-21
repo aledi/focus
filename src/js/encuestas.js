@@ -42,7 +42,7 @@ function getData () {
             currentHTML += '<th>Fecha Inicio</th>';
             currentHTML += '<th>Fecha Fin</th>';
             currentHTML += '<th>Panel</th>';
-            currentHTML += '<th colspan="3">Acciones</th>';
+            currentHTML += '<th colspan="4">Acciones</th>';
             currentHTML += '</tr>';
             currentHTML += '</thead>';
             currentHTML += '<tbody>';
@@ -50,14 +50,15 @@ function getData () {
             for (var i = 0; i < response.results.length; i++) {
                 var result = response.results[i];
 
-                currentHTML += '<tr id="' + result.id + '">';
+                currentHTML += '<tr id="' + result.id + '" value="' + result.disponible + '">';
                 currentHTML += '<td><a href="preguntas.php?id=' + result.id + '">' + result.nombre + '</a></td>';
                 currentHTML += '<td>' + readableDate(result.fechaInicio) + '</td>';
                 currentHTML += '<td>' + readableDate(result.fechaFin) + '</td>';
                 currentHTML += '<td>' + result.panel + '</td>';
+                currentHTML += '<td class=publish-button><button id=publish type=button>' + (result.disponible == 0 ? 'Publicar' : 'Anular') + '</button></td>';
                 currentHTML += '<td class=edit-button><button id=edit type=button>Editar</button></td>';
                 currentHTML += '<td class=duplicate-button><button id=duplicate type=button>Duplicar</button></td>';
-                currentHTML += '<td class=deleteButton><button id=delete type=button>Eliminar</button></td>';
+                currentHTML += '<td class=delete-button><button id=delete type=button>Eliminar</button></td>';
                 currentHTML += '</tr>';
             }
 
@@ -224,6 +225,43 @@ $(document).on('ready', function () {
     });
 
     // -----------------------------------------------------------------------------------------------
+    // Publish/Unpublish Encuesta
+    // -----------------------------------------------------------------------------------------------
+
+    $('#all-encuestas').on('click', '.publish-button', function() {
+        var self = this;
+
+        var published = parseInt($(this).parent().attr('value'), 10);
+        published = (published + 1) % 2;
+
+        if (confirm('¿Estás seguro de querer ' + (published === 1 ? 'publicar' : 'anular la publicación de') + ' esta encuesta?')) {
+            $.ajax({
+                url: '../api/controller.php',
+                type: 'POST',
+                data: {
+                    action: 'PUBLISH_ENCUESTA',
+                    id: $(this).parent().attr('id'),
+                    panel: parseInt($('#paneles-filter-select').val(), 10),
+                    publish: published
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status === 'SUCCESS') {
+                        console.log(response);
+                        alert('Encuesta ' + (published == 1 ? 'publicada' : 'anulada') + ' exitosamente.');
+                        $('#refresh').trigger('click');
+                    } else {
+                        alert('Error ' + (published == 1 ? 'publicando' : 'anulando') + ' encuesta.');
+                    }
+                },
+                error: function (errorMsg) {
+                    alert('Error ' + (published == 1 ? 'publicando' : 'anulando') + ' encuesta.');
+                }
+            });
+        }
+    });
+
+    // -----------------------------------------------------------------------------------------------
     // Edit Encuesta
     // -----------------------------------------------------------------------------------------------
 
@@ -266,11 +304,28 @@ $(document).on('ready', function () {
         });
     });
 
+    $('#cancel-edit').on('click', function (event) {
+        $('#tab-agregar-encuesta').find('input').val('');
+        $('#allPanels input').removeAttr('checked');
+        $('#header-title').text('Agregar Encuesta');
+        $('#save-encuesta').text('Agregar');
+        $('#cancel-edit').hide();
+
+        var myURL = window.location.href.split('?')[0];
+        history.pushState({}, null, myURL);
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $('ul.tabs li').last().addClass('current');
+        $('#tab-view-encuestas').addClass('current');
+    });
+
     // -----------------------------------------------------------------------------------------------
     // Delete Encuesta
     // -----------------------------------------------------------------------------------------------
 
-    $('#all-encuestas').on('click', '.deleteButton', function() {
+    $('#all-encuestas').on('click', '.delete-button', function() {
         var self = this;
 
         if (confirmDelete('esta Encuesta')) {
@@ -291,23 +346,6 @@ $(document).on('ready', function () {
                 }
             });
         }
-    });
-
-    $('#cancel-edit').on('click', function (event) {
-        $('#tab-agregar-encuesta').find('input').val('');
-        $('#allPanels input').removeAttr('checked');
-        $('#header-title').text('Agregar Encuesta');
-        $('#save-encuesta').text('Agregar');
-        $('#cancel-edit').hide();
-
-        var myURL = window.location.href.split('?')[0];
-        history.pushState({}, null, myURL);
-
-        $('ul.tabs li').removeClass('current');
-        $('.tab-content').removeClass('current');
-
-        $('ul.tabs li').last().addClass('current');
-        $('#tab-view-encuestas').addClass('current');
     });
 
     // -----------------------------------------------------------------------------------------------

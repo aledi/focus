@@ -365,7 +365,7 @@ input[type='text'].optionWidth {
 }
 
 #duplicateQuestion, #addQuestion{
-    width: 50%:
+    width: 50%;
 }
 
 button#duplicateQuestion {

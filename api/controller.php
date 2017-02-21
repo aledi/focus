@@ -65,6 +65,9 @@ switch ($_POST['action']) {
     case 'SET_PREGUNTAS_ENCUESTA':
         setPreguntasEncuesta();
         break;
+    case 'PUBLISH_ENCUESTA':
+        publishEncuesta();
+        break;
     case 'START_ENCUESTA':
         initEncuesta();
         break;
@@ -217,13 +220,19 @@ function newEncuesta () {
         $registrationResult = updateEncuesta($_POST['id'], $_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['panel']);
     } else {
         $registrationResult = registerEncuesta($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['panel']);
-
-        if ($registrationResult['status'] === 'SUCCESS') {
-            $registrationResult['pushResponse'] = sendPushNotification('¡Nueva Encuesta Disponible!', $registrationResult['deviceTokens']);
-        }
     }
 
     echo json_encode($registrationResult);
+}
+
+function publishEncuesta() {
+    $publishResult = updateEncuestaStatus((int)$_POST['id'], (int)$_POST['panel'], (int)$_POST['publish']);
+
+    if ($publishResult['status'] === 'SUCCESS' && $publishResult['disponible'] === 1) {
+        $publishResult['pushResponse'] = sendPushNotification('¡Nueva Encuesta Disponible!', $publishResult['deviceTokens']);
+    }
+
+    echo json_encode($publishResult);
 }
 
 function newResource() {

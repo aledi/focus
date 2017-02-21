@@ -176,20 +176,9 @@ function registerEncuesta ($nombre, $fechaInicio, $fechaFin, $panel) {
 
         if ($conn->query($sql) === TRUE) {
             $encuestaId = mysqli_insert_id($conn);
-
-            $tokens = array();
-
-            $sql2 = "SELECT deviceToken FROM Panelista INNER JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.estado = 1 AND PanelistaEnPanel.panel = '$panel' AND Panelista.deviceToken != ''";
-
-            $result = $conn->query($sql2);
-            while ($row = $result->fetch_assoc()) {
-                array_push($tokens, $row['deviceToken']);
-            }
-
-            $conn->close();
             registerEncuestaHistory($encuestaId, $nombre, $fechaInicio, $fechaFin, $panel);
 
-            return array('status' => 'SUCCESS', 'id' => $encuestaId, 'deviceTokens' => $tokens);
+            return array('status' => 'SUCCESS', 'id' => $encuestaId);
         }
 
         $conn->close();
@@ -302,6 +291,29 @@ function invitationResponse ($panelista, $panel, $estado) {
         $conn->query($sql);
 
         return array('status' => 'SUCCESS', 'panel' => $panel, 'estado' => $estado);
+    }
+
+    return array('status' => 'DATABASE_ERROR');
+}
+
+function updateEncuestaStatus ($idEncuesta, $panel, $publish) {
+    $conn = connect();
+
+    if ($conn != null) {
+        $sql = "UPDATE Encuesta SET disponible = '$publish' WHERE id = '$idEncuesta'";
+        $tokens = array();
+
+        if ($conn->query($sql) === TRUE && $publish === 1) {
+            $sql2 = "SELECT deviceToken FROM Panelista INNER JOIN PanelistaEnPanel ON Panelista.id = PanelistaEnPanel.panelista WHERE PanelistaEnPanel.estado = 1 AND PanelistaEnPanel.panel = '$panel' AND Panelista.deviceToken != ''";
+
+            $result = $conn->query($sql2);
+            while ($row = $result->fetch_assoc()) {
+                array_push($tokens, $row['deviceToken']);
+            }
+        }
+
+        $conn->close();
+        return array('status' => 'SUCCESS', 'encuesta' => $idEncuesta, 'panel' => $panel, 'disponible' => $publish, 'deviceTokens' => $tokens);
     }
 
     return array('status' => 'DATABASE_ERROR');
@@ -484,7 +496,7 @@ function fetchEncuestas () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel FROM Encuesta ORDER BY fechaInicio DESC";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel, disponible FROM Encuesta ORDER BY fechaInicio DESC";
         $result = $conn->query($sql);
 
         $response = array();
@@ -495,7 +507,7 @@ function fetchEncuestas () {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $encuesta = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
+            $encuesta = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre'], 'disponible' => $row['disponible']);
             $response[] = $encuesta;
         }
 
@@ -510,7 +522,7 @@ function fetchEncuestasForPanel ($panel) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel FROM Encuesta WHERE panel = '$panel' ORDER BY fechaInicio DESC";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel, disponible FROM Encuesta WHERE panel = '$panel' ORDER BY fechaInicio DESC";
         $result = $conn->query($sql);
 
         $response = array();
@@ -521,7 +533,7 @@ function fetchEncuestasForPanel ($panel) {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $encuesta = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
+            $encuesta = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre'], 'disponible' => $row['disponible']);
             $response[] = $encuesta;
         }
 
@@ -536,7 +548,7 @@ function fetchEncuestasForCliente ($cliente) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT Encuesta.id as id, Encuesta.nombre as nombre, Encuesta.fechaInicio as fechaInicio, Encuesta.fechaFin as fechaFin, panel FROM Encuesta INNER JOIN Panel ON Encuesta.panel = Panel.id WHERE Panel.cliente = '$cliente'";
+        $sql = "SELECT Encuesta.id as id, Encuesta.nombre as nombre, Encuesta.fechaInicio as fechaInicio, Encuesta.fechaFin as fechaFin, panel, disponible FROM Encuesta INNER JOIN Panel ON Encuesta.panel = Panel.id WHERE Panel.cliente = '$cliente'";
         $result = $conn->query($sql);
 
         $response = array();
@@ -547,7 +559,7 @@ function fetchEncuestasForCliente ($cliente) {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $encuesta = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre']);
+            $encuesta = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['nombre'], 'disponible' => $row['disponible']);
             $response[] = $encuesta;
         }
 
@@ -562,7 +574,7 @@ function fetchEncuesta ($id) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel FROM Encuesta WHERE id = '$id'";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel, disponible FROM Encuesta WHERE id = '$id'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -572,7 +584,7 @@ function fetchEncuesta ($id) {
             $result2 = $conn->query($sql2);
             $row2 = $result2->fetch_assoc();
 
-            $encuesta = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['id']);
+            $encuesta = array('id' => (int)$row['id'], 'nombre' => $row['nombre'], 'fechaInicio' => $row['fechaInicio'], 'fechaFin' => $row['fechaFin'], 'panel' => $row2['id'], 'disponible' => $row['disponible']);
         }
 
         $conn->close();
@@ -651,7 +663,7 @@ function fetchMobileData ($panelista) {
 
         while ($row = $result->fetch_assoc()) {
             $panelId = $row['id'];
-            $sql2 = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE panel = '$panelId' AND fechaInicio <= CURDATE() AND fechaFin >= CURDATE() ORDER BY fechaFin DESC";
+            $sql2 = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE disponible = '1' AND panel = '$panelId' AND fechaInicio <= CURDATE() AND fechaFin >= CURDATE() ORDER BY fechaFin DESC";
             $result2 = $conn->query($sql2);
 
             $encuestas = array();
