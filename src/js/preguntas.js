@@ -205,7 +205,7 @@ function fillQuestionData (thisQuestion, currentQuestion) {
     var questionData = {}
     questionData.opciones = [];
     questionData.subPreguntas = [];
-    question.numPregunta = currentQuestion;
+    questionData.numPregunta = currentQuestion;
     questionData.pregunta = $(thisQuestion).find('#pregunta').val();
     questionData.tipo = $(thisQuestion).find('#tipo').val();
     questionData.titulo = $(thisQuestion).find('#titulo').val();
