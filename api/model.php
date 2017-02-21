@@ -367,7 +367,7 @@ function fetchPaneles () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, numParticipantes, cliente FROM Panel ORDER BY fechaInicio DESC";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, numParticipantes, cliente FROM Panel ORDER BY fechaInicio DESC, id DESC";
         $result = $conn->query($sql);
 
         $response = array();
@@ -393,7 +393,7 @@ function fetchPanelesForCliente ($client) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, numParticipantes, cliente FROM Panel WHERE cliente = '$client' ORDER BY fechaInicio DESC";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, numParticipantes, cliente FROM Panel WHERE cliente = '$client' ORDER BY fechaInicio DESC, id DESC";
         $result = $conn->query($sql);
 
         $response = array();
@@ -496,7 +496,7 @@ function fetchEncuestas () {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel, disponible FROM Encuesta ORDER BY fechaInicio DESC";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel, disponible FROM Encuesta ORDER BY fechaInicio DESC, id DESC";
         $result = $conn->query($sql);
 
         $response = array();
@@ -522,7 +522,7 @@ function fetchEncuestasForPanel ($panel) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel, disponible FROM Encuesta WHERE panel = '$panel' ORDER BY fechaInicio DESC";
+        $sql = "SELECT id, nombre, fechaInicio, fechaFin, panel, disponible FROM Encuesta WHERE panel = '$panel' ORDER BY fechaInicio DESC, id DESC";
         $result = $conn->query($sql);
 
         $response = array();
@@ -656,21 +656,21 @@ function fetchMobileData ($panelista) {
     $conn = connect();
 
     if ($conn != null) {
-        $sql = "SELECT Panel.id, Panel.nombre, Panel.fechaInicio, Panel.fechaFin, Panel.descripcion, PanelistaEnPanel.estado FROM Panel INNER JOIN PanelistaEnPanel ON Panel.id = PanelistaEnPanel.panel WHERE PanelistaEnPanel.estado != 2 AND Panel.fechaInicio <= CURDATE() AND Panel.fechaFin >= CURDATE() AND PanelistaEnPanel.panelista = '$panelista' ORDER BY nombre";
+        $sql = "SELECT Panel.id, Panel.nombre, Panel.fechaInicio, Panel.fechaFin, Panel.descripcion, PanelistaEnPanel.estado FROM Panel INNER JOIN PanelistaEnPanel ON Panel.id = PanelistaEnPanel.panel WHERE PanelistaEnPanel.estado != 2 AND Panel.fechaInicio <= CURDATE() AND Panel.fechaFin >= CURDATE() AND PanelistaEnPanel.panelista = '$panelista' ORDER BY Panel.fechaInicio DESC, Panel.id DESC";
         $result = $conn->query($sql);
 
         $paneles = array();
 
         while ($row = $result->fetch_assoc()) {
             $panelId = $row['id'];
-            $sql2 = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE disponible = '1' AND panel = '$panelId' AND fechaInicio <= CURDATE() AND fechaFin >= CURDATE() ORDER BY fechaFin DESC";
+            $sql2 = "SELECT id, nombre, fechaInicio, fechaFin FROM Encuesta WHERE disponible = '1' AND panel = '$panelId' AND fechaInicio <= CURDATE() AND fechaFin >= CURDATE() ORDER BY fechaInicio DESC, id DESC";
             $result2 = $conn->query($sql2);
 
             $encuestas = array();
 
             while ($row2 = $result2->fetch_assoc()) {
                 $encuestaId = $row2['id'];
-                $sql3 = "SELECT id, tipo, numPregunta, titulo, pregunta, video, imagen, combo, opciones, subPreguntas FROM Pregunta WHERE encuesta = '$encuestaId'";
+                $sql3 = "SELECT id, tipo, numPregunta, titulo, pregunta, video, imagen, combo, opciones, subPreguntas FROM Pregunta WHERE encuesta = '$encuestaId' ORDER BY numPregunta";
                 $result3 = $conn->query($sql3);
 
                 $preguntas = array();
