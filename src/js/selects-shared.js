@@ -12,18 +12,29 @@ function fillClientesSelect () {
                 return;
             }
 
-            var currentHTML = '<option value="0"> Selecciona un cliente </option>';
+            var currentHTML = '';
 
-            for (var i = 0; i < response.results.length; i++) {
-                var result = response.results[i];
+            if (response.cliente == 1) {
+                var result = response.results[0];
 
                 currentHTML += '<option value="' + result.id + '">';
                 currentHTML += result.nombre + ' ' + result.apellidos;
                 currentHTML += '</option>';
+            } else {
+                currentHTML = '<option value="0"> Selecciona un cliente </option>';
+
+                for (var i = 0; i < response.results.length; i++) {
+                    var result = response.results[i];
+
+                    currentHTML += '<option value="' + result.id + '">';
+                    currentHTML += result.nombre + ' ' + result.apellidos;
+                    currentHTML += '</option>';
+                }
             }
 
             $('#clientes-filter-select').append(currentHTML);
             $('#clientes-filter-select').show();
+            $('#clientes-filter-select').trigger('change');
         },
         error: function (error) {
             $('#selects-feedback').html('Error cargando los clientes');
