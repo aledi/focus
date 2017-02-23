@@ -26,7 +26,7 @@
                     <div id='1' class='questionForm'>
                         <div class='input-wrapper'>
                             <label>Título</label>
-                            <input id='titulo' class='titulo full-width' type='text' />
+                            <input id='titulo' class='titulo full-width' type='text' autofocus/>
                         </div>
                         <div class='input-wrapper'>
                             <label>Imagen</label>

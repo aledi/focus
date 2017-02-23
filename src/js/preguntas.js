@@ -331,7 +331,7 @@ function updateSubQuestionIndex (currentQuestion) {
 function appendSubQuestion (questionID, subQuestionToAppend) {
     var currentHTML = '<div class="input-wrapper answer sub subQuestion' + subQuestionToAppend + '">';
     currentHTML += '<label>Subpregunta ' + subQuestionToAppend + '</label>';
-    currentHTML += '<input id="subpregunta' + subQuestionToAppend + '" class="subpregunta' + subQuestionToAppend + ' optionWidth" type="text"/>';
+    currentHTML += '<input id="subpregunta' + subQuestionToAppend + '" class="subpregunta' + subQuestionToAppend + ' optionWidth" type="text" autofocus/>';
     currentHTML += '<button class="removeSub">-</button>';
     currentHTML += '<button class="addSub">+</button>';
     currentHTML += '</div>';
@@ -342,7 +342,7 @@ function appendSubQuestion (questionID, subQuestionToAppend) {
 function appendOption (questionID, optionToAppend) {
     var currentHTML = '<div class="input-wrapper answer op option' + optionToAppend + '">';
     currentHTML += '<label>Opción ' + optionToAppend + '</label>';
-    currentHTML += '<input id="opcion' + optionToAppend + '" class="respuesta' + optionToAppend + ' optionWidth" type="text"/>';
+    currentHTML += '<input id="opcion' + optionToAppend + '" class="respuesta' + optionToAppend + ' optionWidth" type="text" autofocus/>';
     currentHTML += '<button class="removeOption">-</button>';
     currentHTML += '<button class="addOption">+</button>';
     currentHTML += '</div>';
@@ -418,7 +418,7 @@ function appendQuestions (nextQuestion) {
     currentHTML += '<hr>';
     currentHTML += '<div class="input-wrapper">' +
         '<label>Título</label>' +
-        '<input id="titulo" class="titulo full-width" type="text" />' +
+        '<input id="titulo" class="titulo full-width" type="text" autofocus/>' +
         '</div>';
     currentHTML += '<div class="input-wrapper">' +
         '<label>Imagen</label>' +
