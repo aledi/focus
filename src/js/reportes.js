@@ -96,6 +96,17 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber) 
     function drawChartStacked() {
         var arrayOpciones = [];
         var arraySubPreguntas = [];
+        var arrayViewParameters = [];
+        var totalVotes = 0;
+        var formatPercent = new google.visualization.NumberFormat({
+            pattern: '#,##0.0%'
+        });
+
+        console.log(votesPercentage);
+        
+        for(var vote = 0; vote < votesPercentage[0].length; vote++){
+            totalVotes += votesPercentage[0][vote];
+        }
 
         opciones.unshift('SubPregunta');
         arrayOpciones.push(opciones);
@@ -112,6 +123,44 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber) 
         }
 
         var data = new google.visualization.arrayToDataTable(arrayOpciones);
+        var view = new google.visualization.DataView(data);
+
+        view.setColumns([0,
+                        1,
+                       { calc: function (dt, row){
+                            
+                            if (dt.getValue(row, 1) != 0){
+                                //console.log(dt.getValue(row, 1));
+                                return formatPercent.formatValue(dt.getValue(row, 1) / totalVotes);
+                            }
+                        },
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2,
+                       { calc: function (dt, row){
+                            
+                            if (dt.getValue(row, 2) != 0){
+                                //console.log(dt.getValue(row, 2));
+                                return formatPercent.formatValue(dt.getValue(row, 2) / totalVotes);
+                            }
+                        },
+                         sourceColumn: 2,
+                         type: "string",
+                         role: "annotation" },
+                       3,
+                        { calc: function (dt, row){
+                            
+                            if (dt.getValue(row, 3) != 0){
+                                //console.log(dt.getValue(row, 3) / (dt.getValue(row, 1) + dt.getValue(row, 2) + dt.getValue(row, 3)));
+                                return formatPercent.formatValue(dt.getValue(row, 3) / totalVotes);
+                            }
+                        },
+                         sourceColumn: 3,
+                         type: "string",
+                         role: "annotation" }]);
+
+        //view.setColumns(getViewParameters(calc.dt, calc.row, totalVotes, votesPercentage.length));
 
         var options = {
             isStacked: 'percent',
@@ -126,7 +175,7 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber) 
         var chart = document.getElementById('chart' + chartNumber);
         chart.className += ' stacked-chart';
         var googleChart = new google.visualization.BarChart(chart);
-        googleChart.draw(data, options);
+        googleChart.draw(view, options);
     }
 }
 
@@ -212,6 +261,13 @@ function averageChart (min, max, value, chartNumber) {
 // -----------------------------------------------------------------------------------------------
 // Helper Functions
 // -----------------------------------------------------------------------------------------------
+
+function getViewParameters (dt, row, totalVotes, iteratorLimit) {
+    var arrayViewParameters = [0];
+    var objectViewParameters = {};
+
+    return arrayViewParameters;
+}
 
 function getNumberofArrays (response) {
     var obj;
