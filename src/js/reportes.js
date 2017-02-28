@@ -44,7 +44,7 @@ function pieChart (opciones, votes, chartNumber, title) {
         options.title = title;
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' pie-chart';
+        chart.className = 'chart' + chartNumber + ' pie-chart';
         var googleChart = new google.visualization.PieChart(chart);
         googleChart.draw(data, options);
     }
@@ -84,7 +84,7 @@ function barChart (opciones, votes, chartNumber, title) {
         options.title = title;
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' bar-chart';
+        chart.className = 'chart' + chartNumber + ' bar-chart';
         var googleChart = new google.visualization.BarChart(chart);
         googleChart.draw(data, options);
     }
@@ -125,13 +125,17 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber) 
         var data = new google.visualization.arrayToDataTable(arrayOpciones);
         var view = new google.visualization.DataView(data);
 
+        //console.log(votesPercentage.length, totalVotes);
+        //view.setColumns(getViewParameters(data, 2, opciones.length - 1));
+        
         view.setColumns([0,
                         1,
                        { calc: function (dt, row){
-                            
+                            console.log(row);
                             if (dt.getValue(row, 1) != 0){
-                                //console.log(dt.getValue(row, 1));
-                                return formatPercent.formatValue(dt.getValue(row, 1) / totalVotes);
+                                
+                                //console.log(formatPercent.formatValue(dt.getValue(row, 1) / totalVotes));
+                                return "50.0%";
                             }
                         },
                          sourceColumn: 1,
@@ -139,9 +143,9 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber) 
                          role: "annotation" },
                        2,
                        { calc: function (dt, row){
-                            
+                            console.log(row);
                             if (dt.getValue(row, 2) != 0){
-                                //console.log(dt.getValue(row, 2));
+                                
                                 return formatPercent.formatValue(dt.getValue(row, 2) / totalVotes);
                             }
                         },
@@ -150,17 +154,42 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber) 
                          role: "annotation" },
                        3,
                         { calc: function (dt, row){
-                            
+                            console.log(row);
                             if (dt.getValue(row, 3) != 0){
+                                
                                 //console.log(dt.getValue(row, 3) / (dt.getValue(row, 1) + dt.getValue(row, 2) + dt.getValue(row, 3)));
                                 return formatPercent.formatValue(dt.getValue(row, 3) / totalVotes);
                             }
                         },
                          sourceColumn: 3,
                          type: "string",
+                         role: "annotation" },
+                         4,
+                            { calc: function (dt, row){
+                            console.log(row);
+                            if (dt.getValue(row, 4) != 0){
+                                
+                                //console.log(dt.getValue(row, 3) / (dt.getValue(row, 1) + dt.getValue(row, 2) + dt.getValue(row, 3)));
+                                return formatPercent.formatValue(dt.getValue(row, 4) / totalVotes);
+                            }
+                        },
+                         sourceColumn: 4,
+                         type: "string",
+                         role: "annotation" },
+                         5,
+                        { calc: function (dt, row){
+                            console.log(row);
+                            if (dt.getValue(row, 5) != 0){
+                                
+                                //console.log(dt.getValue(row, 3) / (dt.getValue(row, 1) + dt.getValue(row, 2) + dt.getValue(row, 3)));
+                                return formatPercent.formatValue(dt.getValue(row, 5) / totalVotes);
+                            }
+                        },
+                         sourceColumn: 5,
+                         type: "string",
                          role: "annotation" }]);
 
-        //view.setColumns(getViewParameters(calc.dt, calc.row, totalVotes, votesPercentage.length));
+        console.log(view.getViewColumns());
 
         var options = {
             isStacked: 'percent',
@@ -173,7 +202,7 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber) 
         };
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' stacked-chart';
+        chart.className = 'chart' + chartNumber + ' stacked-chart';
         var googleChart = new google.visualization.BarChart(chart);
         googleChart.draw(view, options);
     }
@@ -217,7 +246,7 @@ function columnChart (opciones, percent, chartNumber, title) {
         options.title = title;
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' column-chart';
+        chart.className = 'chart' + chartNumber + ' column-chart';
         var googleChart = new google.visualization.ColumnChart(chart);
         googleChart.draw(data, options);
     }
@@ -252,7 +281,7 @@ function averageChart (min, max, value, chartNumber) {
         };
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' average-chart';
+        chart.className = 'chart' + chartNumber + ' average-chart';
         var googleChart = new google.visualization.ColumnChart(chart);
         googleChart.draw(data, options);
     }
@@ -262,10 +291,49 @@ function averageChart (min, max, value, chartNumber) {
 // Helper Functions
 // -----------------------------------------------------------------------------------------------
 
-function getViewParameters (dt, row, totalVotes, iteratorLimit) {
+function getViewParameters (dataTable, totalVotes, iteratorLimit) {
     var arrayViewParameters = [0];
     var objectViewParameters = {};
+    var formatPercent = new google.visualization.NumberFormat({
+        pattern: '#,##0.0%'
+    });
+    console.log("IL", iteratorLimit);
+    for (var viewParameter = 1; viewParameter < iteratorLimit; viewParameter++) {
+        arrayViewParameters.push(viewParameter);
 
+        arrayViewParameters.push(
+            {
+                calc: function (dt, row) {
+                    var value = dt.getValue(row, 1);
+
+                    if (value != 0) {
+                        return formatPercent.formatValue(value / totalVotes);
+                    }
+                },
+                sourceColumn: 1,
+                type: "string",
+                role: "annotation"
+            }
+        );
+
+        // objectViewParameters.calc = function (dataTable, row) {
+        //     console.log("Hola");
+        //     var value = dataTable.getValue(row, viewParameter);
+        //     console.log(value);
+        //     if (value != 0){
+        //             //console.log(formatPercent.formatValue(dataTable.getValue(viewParameter, viewParameter) / totalVotes));
+        //             return formatPercent.formatValue(value / totalVotes);
+        //         }
+        //     }
+
+        // objectViewParameters.sourceColumn = viewParameter;
+        // objectViewParameters.type = "string";
+        // objectViewParameters.role = "annotation";
+
+        // arrayViewParameters.push(objectViewParameters);
+        // objectViewParameters = {};
+    }
+    console.log(arrayViewParameters);
     return arrayViewParameters;
 }
 
@@ -428,6 +496,7 @@ function getData () {
                 } else if (response.tipo === 6) {
                     averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 1);
                 } else if (response.tipo === 5) {
+                    console.log(response);
                     barChartStacked(response.opciones, response.votos, response.subPreguntas, 1);
                 } else if (response.opciones.length < 4) {
                     pieChart(response.opciones, response.votos, 1, '');
@@ -601,6 +670,7 @@ $(document).on('ready', function () {
     });
 
     $('#refresh').on('click', function () {
+        console.log("Refresh");
         $('#edad-select').hide();
         $('#genero-select').hide();
         $('#estado-select').hide();
@@ -664,6 +734,7 @@ $(document).on('ready', function () {
                 } else if (response.tipo === 6) {
                     averageChart(parseInt(response.opciones[0], 10), parseInt(response.opciones[1], 10), response.porcentajes[0], 2);
                 } else if (response.tipo === 5) {
+                    console.log(response);
                     barChartStacked(response.opciones, response.votos, response.subPreguntas, 2);
                 } else if (response.opciones.length < 4) {
                     pieChart(response.opciones, response.votos, 2, '');
@@ -702,11 +773,6 @@ $(document).on('ready', function () {
             $('#reportes-filtros-feedback').empty();
         }
     });
-
-    $('#refresh').on('click', function () {
-
-    });
-
 
     $('#download-reportes').on('click', function () {
         var encuestaId = parseInt($('#encuestas-filter-select').val(), 10);
