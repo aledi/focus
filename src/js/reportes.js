@@ -44,7 +44,7 @@ function pieChart (opciones, votes, chartNumber, title) {
         options.title = title;
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' pie-chart';
+        chart.className = 'chart' + chartNumber + ' pie-chart';
         var googleChart = new google.visualization.PieChart(chart);
         googleChart.draw(data, options);
     }
@@ -84,7 +84,7 @@ function barChart (opciones, votes, chartNumber, title) {
         options.title = title;
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' bar-chart';
+        chart.className = 'chart' + chartNumber + ' bar-chart';
         var googleChart = new google.visualization.BarChart(chart);
         googleChart.draw(data, options);
     }
@@ -124,7 +124,7 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber) 
         };
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' stacked-chart';
+        chart.className = 'chart' + chartNumber + ' stacked-chart';
         var googleChart = new google.visualization.BarChart(chart);
         googleChart.draw(data, options);
     }
@@ -168,7 +168,7 @@ function columnChart (opciones, percent, chartNumber, title) {
         options.title = title;
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' column-chart';
+        chart.className = 'chart' + chartNumber + ' column-chart';
         var googleChart = new google.visualization.ColumnChart(chart);
         googleChart.draw(data, options);
     }
@@ -203,7 +203,7 @@ function averageChart (min, max, value, chartNumber) {
         };
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' average-chart';
+        chart.className = 'chart' + chartNumber + ' average-chart';
         var googleChart = new google.visualization.ColumnChart(chart);
         googleChart.draw(data, options);
     }
@@ -646,11 +646,6 @@ $(document).on('ready', function () {
             $('#reportes-filtros-feedback').empty();
         }
     });
-
-    $('#refresh').on('click', function () {
-
-    });
-
 
     $('#download-reportes').on('click', function () {
         var encuestaId = parseInt($('#encuestas-filter-select').val(), 10);
