@@ -574,7 +574,7 @@ $(document).on('ready', function () {
             modal.style.display = "none";
             nextQuestionType = $('#tipoModal').val();
 
-            if(nextQuestionType == 5) {
+            if(questionData.tipo != 5 && nextQuestionType == 5) {
                 questionData.subPreguntas = [""];
             }
 
