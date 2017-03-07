@@ -578,6 +578,14 @@ $(document).on('ready', function () {
                 questionData.subPreguntas = [""];
             }
 
+            if(questionData.tipo == 6 && nextQuestionType != 6) {
+                questionData.opciones = [""];
+            }
+
+            if(questionData.tipo == 1 && nextQuestionType != 1) {
+                questionData.opciones = [""];
+            }
+
             questionData.tipo = nextQuestionType;
             completeQuestionInformation(questionData, currentQuestion + 1);
         }
