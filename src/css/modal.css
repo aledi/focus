@@ -131,3 +131,8 @@ hr {
 .listOptions select {
     margin-top: -5%;
 }
+
+.modalSpecial {
+    padding-top: 2%;
+    padding-bottom: 15%;
+}

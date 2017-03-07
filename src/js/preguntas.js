@@ -7,6 +7,24 @@ var globalVideo = [];
 // Helper Functions
 // -----------------------------------------------------------------------------------------------
 
+function addModalDuplicate() {
+    $('#modalQuestions').empty();
+    var currentHTML = '<div class="input-wrapper modalSpecial">' +
+        '<label>Tipo de pregunta</label>' +
+        '<select id="tipo" class="tipoPregunta" required>' +
+        '<option value="1">Abiertas</option>' +
+        '<option value="2">Selección Única</option>' +
+        '<option value="3">Selección Múltiple</option>' +
+        '<option value="4">Ordenamiento</option>' +
+        '<option value="5">Matriz</option>' +
+        '<option value="6">Escala</option>' +
+        '</select>' +
+        '</div>';
+
+    $('#modalQuestions').append(currentHTML);
+}
+
+
 function addModalPreview (questionsArray) {
     $('#modalQuestions').empty();
     var currentHTML = '';
@@ -539,8 +557,15 @@ $(document).on('ready', function () {
     $('#questions').on('click', '#duplicateQuestion', function () {
         var questionData = {};
         var currentQuestion = addQuestion($(this));
+        var modal = $('#questionModal')[0];
+        var closeButton = $('#closePreview')[0];
+        var closeSecondary = $('.close')[0];
+        $('#previewHeader').text("Duplicate Question");
 
         questionData = fillQuestionData($(this).parent(), currentQuestion);
+        console.log(questionData);
+        modal.style.display = "block";
+        addModalDuplicate();
         completeQuestionInformation(questionData, currentQuestion + 1);
     });
 
@@ -672,6 +697,7 @@ $(document).on('ready', function () {
         var questionObject = {};
         questionObject.opciones = [];
         questionObject.subPreguntas = [];
+        $('#previewHeader').text("Vista Previa");
 
         $('#questions').children().each(function () {
             questionObject = fillQuestionData($(this), numeroPregunta);
