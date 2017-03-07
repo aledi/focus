@@ -85,7 +85,7 @@
                           </div>
                       </div>
                       <div class="modal-footer">
-                          <button type='button' id='closePreview'>Regresar</button>
+                          <button type='button' id='closePreview'></button>
                       </div>
                   </div>
               </div>
