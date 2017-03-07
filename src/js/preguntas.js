@@ -571,7 +571,6 @@ $(document).on('ready', function () {
         closeButton.onclick = function() {
             currentQuestion = addQuestion(currentQuestion);
             questionData = fillQuestionData(currentQuestionData, currentQuestion);
-            console.log(questionData);
             modal.style.display = "none";
             nextQuestionType = $('#tipoModal').val();
 
