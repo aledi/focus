@@ -136,3 +136,9 @@ hr {
     padding-top: 2%;
     padding-bottom: 15%;
 }
+
+.modal-contentSpecial {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}

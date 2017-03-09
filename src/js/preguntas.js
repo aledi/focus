@@ -564,6 +564,7 @@ $(document).on('ready', function () {
         var closeSecondary = $('.close')[0];
         $('#previewHeader').text("Duplicar Pregunta");
         $('#closePreview').text("Duplicar");
+        $('.modal-content').addClass('modal-contentSpecial');
         
         
         modal.style.display = "block";
@@ -736,6 +737,7 @@ $(document).on('ready', function () {
         questionObject.subPreguntas = [];
         $('#previewHeader').text("Vista Previa");
         $('#closePreview').text("Regresar");
+        $('.modal-content').removeClass('modal-contentSpecial');
 
         $('#questions').children().each(function () {
             questionObject = fillQuestionData($(this), numeroPregunta);
