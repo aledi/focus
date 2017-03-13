@@ -26,7 +26,7 @@
                     <div id='1' class='questionForm'>
                         <div class='input-wrapper'>
                             <label>Título</label>
-                            <input id='titulo' class='titulo full-width' type='text' />
+                            <input id='titulo' class='titulo full-width' type='text' autofocus/>
                         </div>
                         <div class='input-wrapper'>
                             <label>Imagen</label>
@@ -78,14 +78,14 @@
                   <div class="modal-content">
                       <div class="modal-header">
                           <span class="close">&times;</span>
-                          <h2 id="previewHeader">Vista Previa</h2>
+                          <h2 id="previewHeader"></h2>
                       </div>
                       <div class="modal-body">
                           <div id='modalQuestions'>
                           </div>
                       </div>
                       <div class="modal-footer">
-                          <button type='button' id='closePreview'>Regresar</button>
+                          <button type='button' id='closePreview'></button>
                       </div>
                   </div>
               </div>

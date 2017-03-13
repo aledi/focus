@@ -65,6 +65,9 @@ switch ($_POST['action']) {
     case 'SET_PREGUNTAS_ENCUESTA':
         setPreguntasEncuesta();
         break;
+    case 'PUBLISH_ENCUESTA':
+        publishEncuesta();
+        break;
     case 'START_ENCUESTA':
         initEncuesta();
         break;
@@ -136,7 +139,7 @@ switch ($_POST['action']) {
         break;
 }
 
-function startSession ($id, $tipo, $username, $email, $nombre) {
+function startSession ($id, $tipo, $username, $email, $nombre, $apellidos) {
     session_start();
 
     $_SESSION['id'] = $id;
@@ -144,13 +147,14 @@ function startSession ($id, $tipo, $username, $email, $nombre) {
     $_SESSION['username'] = $username;
     $_SESSION['email'] = $email;
     $_SESSION['nombre'] = $nombre;
+    $_SESSION['apellidos'] = $apellidos;
 }
 
 function hasActiveSession () {
     session_start();
 
     if (isset($_SESSION['id'])) {
-        return array('status' => 'SUCCESS', 'id' => $_SESSION['id'], 'tipo' => $_SESSION['tipo'], 'username' => $_SESSION['username'], 'email' => $_SESSION['email'], 'nombre' => $_SESSION['nombre']);
+        return array('status' => 'SUCCESS', 'id' => $_SESSION['id'], 'tipo' => $_SESSION['tipo'], 'username' => $_SESSION['username'], 'email' => $_SESSION['email'], 'nombre' => $_SESSION['nombre'], 'apellidos' => $_SESSION['apellidos']);
     }
 
     return array('status' => 'ERROR');
@@ -171,9 +175,8 @@ function signinToDatabase ($tipo) {
         $signinResult = validateWebCredentials($_POST['username'], $_POST['password']);
 
         if ($signinResult['status'] === 'SUCCESS') {
-            startSession($signinResult['id'], $signinResult['tipo'], $signinResult['username'], $signinResult['email'], $signinResult['nombre']);
+            startSession($signinResult['id'], $signinResult['tipo'], $signinResult['username'], $signinResult['email'], $signinResult['nombre'], $signinResult['apellidos']);
         }
-
     } else if ($tipo === 2) {
         $signinResult = validatePanelistaCredentials($_POST['username'], $_POST['password']);
     }
@@ -217,13 +220,19 @@ function newEncuesta () {
         $registrationResult = updateEncuesta($_POST['id'], $_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['panel']);
     } else {
         $registrationResult = registerEncuesta($_POST['nombre'], $_POST['fechaInicio'], $_POST['fechaFin'], $_POST['panel']);
-
-        if ($registrationResult['status'] === 'SUCCESS') {
-            $registrationResult['pushResponse'] = sendPushNotification('¡Nueva Encuesta Disponible!', $registrationResult['deviceTokens']);
-        }
     }
 
     echo json_encode($registrationResult);
+}
+
+function publishEncuesta() {
+    $publishResult = updateEncuestaStatus((int)$_POST['id'], (int)$_POST['panel'], (int)$_POST['publish']);
+
+    if ($publishResult['status'] === 'SUCCESS' && $publishResult['disponible'] === 1) {
+        $publishResult['pushResponse'] = sendPushNotification('¡Nueva Encuesta Disponible!', $publishResult['deviceTokens']);
+    }
+
+    echo json_encode($publishResult);
 }
 
 function newResource() {
@@ -249,6 +258,12 @@ function getRecords ($type) {
         case 'CLIENTES':
             if (isset($_POST['id'])) {
                 echo json_encode(fetchUser(1, $_POST['id']));
+                return;
+            }
+
+            $sessionData = hasActiveSession();
+            if ($sessionData['tipo'] == 1) {
+                echo json_encode(array('results' => array($sessionData), 'cliente' => 1));
                 return;
             }
 
@@ -534,9 +549,7 @@ function sendPushNotification ($message, $deviceTokens) {
         return 'No Tokens';
     }
 
-    $content = array(
-        'en' => $message
-        );
+    $content = array('en' => $message);
 
     $fields = array(
         'app_id' => 'b8b1467b-33df-458f-9cc7-f7f6d781560a',

@@ -10,11 +10,11 @@ var educationObject = {
 }
 
 var currentPregunta = 0;
-var colorArray = ['#202382', '#707070', '#6265A7', '#A6A6A6',
-                  '#A6A7CD', '#BCBCBC', '#BCBDD9', '#C7C7C7',
-                  '#505160', '#68829E', '#AEBD38', '#598234',
-                  '#2E5600', '#486B00', '#A2C523', '#7D4427',
-                  '#021C1E', '#004445', '#2C7873', '#6FB98F'];
+// var colorArray = ['#202382', '#707070', '#6265A7', '#A6A6A6',
+//                   '#A6A7CD', '#BCBCBC', '#BCBDD9', '#C7C7C7',
+//                   '#505160', '#68829E', '#AEBD38', '#598234',
+//                   '#2E5600', '#486B00', '#A2C523', '#7D4427',
+//                   '#021C1E', '#004445', '#2C7873', '#6FB98F'];
 
 google.charts.load('current', {'packages': ['corechart', 'bar']});
 
@@ -37,7 +37,6 @@ function pieChart (opciones, votes, chartNumber, title) {
         var options = {
             width: '100%',
             height: 350,
-            colors: colorArray,
             sliceVisibilityThreshold: 0,
             tooltip: { text: 'percentage' }
         };
@@ -45,7 +44,7 @@ function pieChart (opciones, votes, chartNumber, title) {
         options.title = title;
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' pie-chart';
+        chart.className = 'chart' + chartNumber + ' pie-chart';
         var googleChart = new google.visualization.PieChart(chart);
         googleChart.draw(data, options);
     }
@@ -68,7 +67,6 @@ function barChart (opciones, votes, chartNumber, title) {
         var options = {
             width: '100%',
             height: 500,
-            colors: colorArray,
             bar: {
                 groupWidth: '61.48%',
                 width: '20%'
@@ -86,7 +84,7 @@ function barChart (opciones, votes, chartNumber, title) {
         options.title = title;
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' bar-chart';
+        chart.className = 'chart' + chartNumber + ' bar-chart';
         var googleChart = new google.visualization.BarChart(chart);
         googleChart.draw(data, options);
     }
@@ -119,7 +117,6 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber) 
             isStacked: 'percent',
             width: '100%',
             height: 500,
-            colors: colorArray,
             hAxis: {
                 minValue: 0,
                 ticks: [0, .25, .50, .75, 1]
@@ -127,7 +124,7 @@ function barChartStacked (opciones, votesPercentage, subPreguntas, chartNumber) 
         };
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' stacked-chart';
+        chart.className = 'chart' + chartNumber + ' stacked-chart';
         var googleChart = new google.visualization.BarChart(chart);
         googleChart.draw(data, options);
     }
@@ -152,7 +149,6 @@ function columnChart (opciones, percent, chartNumber, title) {
         var options = {
             width: '100%',
             height: 400,
-            colors: colorArray,
             annotations: {
                 alwaysOutside: true
             },
@@ -172,7 +168,7 @@ function columnChart (opciones, percent, chartNumber, title) {
         options.title = title;
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' column-chart';
+        chart.className = 'chart' + chartNumber + ' column-chart';
         var googleChart = new google.visualization.ColumnChart(chart);
         googleChart.draw(data, options);
     }
@@ -194,7 +190,6 @@ function averageChart (min, max, value, chartNumber) {
         var options = {
             width: '100%',
             height: 400,
-            colors: colorArray,
             bar: {
                 width: '40%'
             },
@@ -208,7 +203,7 @@ function averageChart (min, max, value, chartNumber) {
         };
 
         var chart = document.getElementById('chart' + chartNumber);
-        chart.className += ' average-chart';
+        chart.className = 'chart' + chartNumber + ' average-chart';
         var googleChart = new google.visualization.ColumnChart(chart);
         googleChart.draw(data, options);
     }
@@ -652,11 +647,6 @@ $(document).on('ready', function () {
         }
     });
 
-    $('#refresh').on('click', function () {
-
-    });
-
-
     $('#download-reportes').on('click', function () {
         var encuestaId = parseInt($('#encuestas-filter-select').val(), 10);
 
@@ -664,7 +654,7 @@ $(document).on('ready', function () {
             return;
         }
 
-        var encuestaName = $('#encuestas-filter-select option:selected').text().replace(' ', '-');
+        var encuestaName = $('#encuestas-filter-select option:selected').text().replace(/ /g, '-');
 
         $.ajax({
             url: '../api/controller.php',
@@ -683,8 +673,7 @@ $(document).on('ready', function () {
                 var currentHTML = '<thead>';
                 currentHTML += '<tr>';
                 for (var i = 0; i < response.columnas.length; i++) {
-                    var columna = response.columnas[i];
-                    currentHTML += '<th>' + columna + '</th>';
+                    currentHTML += '<th>' + response.columnas[i] + '</th>';
                 }
 
                 currentHTML += '</tr></thead><tbody>';
