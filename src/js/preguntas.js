@@ -7,6 +7,24 @@ var globalVideo = [];
 // Helper Functions
 // -----------------------------------------------------------------------------------------------
 
+function addModalDuplicate() {
+    $('#modalQuestions').empty();
+    var currentHTML = '<div class="input-wrapper modalSpecial">' +
+        '<label>Tipo de pregunta</label>' +
+        '<select id="tipoModal" class="tipoPregunta" required>' +
+        '<option value="1">Abiertas</option>' +
+        '<option value="2">Selección Única</option>' +
+        '<option value="3">Selección Múltiple</option>' +
+        '<option value="4">Ordenamiento</option>' +
+        '<option value="5">Matriz</option>' +
+        '<option value="6">Escala</option>' +
+        '</select>' +
+        '</div>';
+
+    $('#modalQuestions').append(currentHTML);
+}
+
+
 function addModalPreview (questionsArray) {
     $('#modalQuestions').empty();
     var currentHTML = '';
@@ -538,10 +556,55 @@ $(document).on('ready', function () {
 
     $('#questions').on('click', '#duplicateQuestion', function () {
         var questionData = {};
-        var currentQuestion = addQuestion($(this));
+        var nextQuestionType = 0;
+        var currentQuestion = $(this);
+        var currentQuestionData = $(this).parent();
+        var modal = $('#questionModal')[0];
+        var closeButton = $('#closePreview')[0];
+        var closeSecondary = $('.close')[0];
+        $('#previewHeader').text("Duplicar Pregunta");
+        $('#closePreview').text("Duplicar");
+        $('.modal-content').addClass('modal-contentSpecial');
+        
+        
+        modal.style.display = "block";
 
-        questionData = fillQuestionData($(this).parent(), currentQuestion);
-        completeQuestionInformation(questionData, currentQuestion + 1);
+        closeButton.onclick = function() {
+            currentQuestion = addQuestion(currentQuestion);
+            questionData = fillQuestionData(currentQuestionData, currentQuestion);
+            modal.style.display = "none";
+            nextQuestionType = $('#tipoModal').val();
+
+            if(questionData.tipo != 5 && nextQuestionType == 5) {
+                questionData.subPreguntas = [""];
+            }
+
+            if(questionData.tipo == 6 && nextQuestionType != 6) {
+                questionData.opciones = [""];
+            }
+
+            if(questionData.tipo == 1 && nextQuestionType != 1) {
+                questionData.opciones = [""];
+            }
+
+            questionData.tipo = nextQuestionType;
+            completeQuestionInformation(questionData, currentQuestion + 1);
+        }
+
+        closeSecondary.onclick = function() {
+            questionData = {};
+            modal.style.display = "none";
+            return;
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                questionData = {};
+                modal.style.display = "none";
+                return;
+            }
+        }
+        addModalDuplicate();
     });
 
     $('#questions').on('click', '#addQuestion',  function() {
@@ -672,6 +735,9 @@ $(document).on('ready', function () {
         var questionObject = {};
         questionObject.opciones = [];
         questionObject.subPreguntas = [];
+        $('#previewHeader').text("Vista Previa");
+        $('#closePreview').text("Regresar");
+        $('.modal-content').removeClass('modal-contentSpecial');
 
         $('#questions').children().each(function () {
             questionObject = fillQuestionData($(this), numeroPregunta);
