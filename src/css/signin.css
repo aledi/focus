@@ -13,11 +13,8 @@ body {
 header {
     padding: 20px 0;
     position: absolute;
-    top: 10; right: 0; left: 0;
-}
-
-img {
-    margin-left: 80px;
+    top: 0; right: 0; left: 0;
+    text-align: center;
 }
 
 section {
