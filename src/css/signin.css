@@ -6,7 +6,7 @@ html {
 body {
     height: 100%;
     margin: 0;
-    background-color: #707070;
+    background-color: #5C6770;
     font-family: Segoe UI;
 }
 
@@ -14,16 +14,12 @@ header {
     padding: 20px 0;
     position: absolute;
     top: 0; right: 0; left: 0;
-    background-color: #202382;
-}
-
-img {
-    margin-left: 80px;
+    text-align: center;
 }
 
 section {
     position: absolute;
-    top: 85px; right: 0; bottom: 50px; left: 0;
+    top: 0px; right: 0; bottom: 50px; left: 0;
     background-color: white;
 }
 
@@ -32,7 +28,7 @@ section {
     position: relative;
     vertical-align: middle;
     margin: auto;
-    margin-top: 50px;
+    margin-top: 175px;
     background-color: #F6F6F6;
     border: 1px solid #E5E5E5;
     text-align: center;
@@ -74,7 +70,7 @@ button {
     height: 40px;
     width: 200px;
     margin: 20px 10px;
-    background-color: #202382;
+    background-color: #EC3146;
     border: 0;
     letter-spacing: 0.5px;
     text-transform: uppercase;

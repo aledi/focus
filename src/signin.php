@@ -11,10 +11,10 @@
 </head>
 
 <body>
-    <header>
-        <img src='img/focus_logo.png'/>
-    </header>
     <section>
+        <header>
+            <img src='img/focus_logo_home.png'/>
+        </header>
         <div class='form-wrapper'>
             <form>
                 <div class='input-wrapper'>

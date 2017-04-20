@@ -32,7 +32,6 @@ header {
     height: 100%;
     width: 100%;
     position: relative;
-    background-color: #202382;
 }
 
 .logo {
@@ -52,7 +51,7 @@ header {
     padding: 0;
     margin: 0;
     list-style-type: none;
-    background-color: #F3F3F3;
+    background-color: #EEEFF0;
     border-bottom: 1px solid #E7E7E7;
     overflow-x: hidden;
 }
@@ -63,7 +62,7 @@ header {
 }
 
 li.selected {
-    background-color: #BCBDD9;
+    background-color: #F9C1C7;
 }
 
 .signout-item {
@@ -87,11 +86,11 @@ li a {
 }
 
 li a:hover{
-    background-color: #D2D3E6;
+    background-color: #FBD6DA;
 }
 
 li.selected a:hover {
-    background-color: #BCBDD9;
+    background-color: #F9C1C7;
 }
 
 li a, .dropbtn {
@@ -123,7 +122,7 @@ li.dropdown {
 }
 
 .dropdown-content a:hover {
-    background-color: #D2D3E6;
+    background-color: #FBD6DA;
 }
 
 .dropdown:hover .dropdown-content {
@@ -156,7 +155,7 @@ section {
 .avance-info {
     text-align: right;
     margin-right: 20px;
-    color: #6265A7;
+    color: #F16E7D;
 }
 
 .panelistas-wrapper, .paneles-wrapper, .encuestas-wrapper, .liga-panel-wrapper {
@@ -179,7 +178,7 @@ ul.tabs {
     padding: 0;
     margin: 0;
     list-style: none;
-    background-color: #6265A7;
+    background-color: #F16E7D;
     color: white;
 }
 
@@ -192,7 +191,7 @@ ul.tabs li {
 }
 
 ul.tabs li.current {
-    background-color: #36398E;
+    background-color: #ED4558;
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -211,7 +210,7 @@ ul.tabs li.current {
 
 h2 {
     margin-top: 0;
-    color: #6265A7;
+    color: #F16E7D;
     letter-spacing: 1px;
 }
 
@@ -264,7 +263,7 @@ button {
     width: 200px;
     display: block;
     margin: auto;
-    background-color: #202382;
+    background-color: #EC3146;
     border: none;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -276,8 +275,8 @@ button {
 button.no-background {
     height: 30px;
     background-color: transparent;
-    border: 1px solid #202382;
-    color: #202382;
+    border: 1px solid #EC3146;
+    color: #EC3146;
     margin-bottom: 30px;
 }
 
@@ -320,7 +319,7 @@ table tbody tr td {
 }
 
 table tbody tr:nth-child(odd) {
-    background-color: #E8E9F2;
+    background-color: #FDEAEC;
 }
 
 table tbody tr td button {
@@ -329,7 +328,7 @@ table tbody tr td button {
     border: none;
     background-color: transparent;
     font-size: 11px;
-    color: #4D4F9B;
+    color: #F05A6B;
 }
 
 .button-wrapper > button {
