@@ -236,7 +236,11 @@ function publishEncuesta() {
 }
 
 function newResource() {
-    $uploadResult = uploadFile($_POST['file-name'] . '.' . $_POST['fileType'], $_POST['tipo']);
+    $name = $_POST['file-name'];
+    $name = str_replace('ñ', 'n', $name);
+    $name = str_replace('Ñ', 'N', $name);
+
+    $uploadResult = uploadFile($name . '.' . $_POST['fileType'], $_POST['tipo']);
 
     if ($uploadResult['status'] === 'SUCCESS') {
         registerResource($_POST['file-name'] . '.' . $_POST['fileType'], $_POST['tipo']);
